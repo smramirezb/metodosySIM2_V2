@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Pruebas de hipótesis no paramétricas</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"> </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Variable aleatoria</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valos esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Intervalos una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Intervalos dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Pruebas de hipótesis</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Software R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso601.html">Probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso602.html">Variable aleatória</a>
+    </li>
+    <li>
+      <a href="recurso607.html">Modelos de probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso603.html">Estimación</a>
+    </li>
+    <li>
+      <a href="recurso604.html">Intervalos de confianza</a>
+    </li>
+    <li class="dropdown-header">Pruebas paramétricas</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#034a94">
+<strong>Pruebas de hipótesis no paramétricas</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+<p><br/><br/></p>
+<div id="pruebas-no-paramétricas" class="section level1">
+<h1><span style="color:#034a94"><strong>Pruebas no
+paramétricas</strong></span></h1>
+<div id="prueba-de-rachas" class="section level2">
+<h2><span style="color:#034a94"><strong>Prueba de
+rachas</strong></span></h2>
+<p>Se desea extraer una muestra aleatoria del grupo de participantes y
+probar que es aleatoria con respecto al sexo.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(Ho\)</span>: <span
+class="math inline">\(X\)</span> es aleatoria</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(Ha\)</span>: <span
+class="math inline">\(X\)</span> NO es aleatoria</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>library(randtests)
+x=sample(CarreraLuz22$sex, 100)
+rachas&lt;-as.numeric(x==&quot;Hombre&quot;)
+runs.test(rachas,alternative = &quot;left.sided&quot;,threshold = 0.5,pvalue = &quot;exact&quot;,plot=F)</code></pre>
+<pre><code>
+    Runs Test
+
+data:  rachas
+statistic = 0.82148, runs = 55, n1 = 52, n2 = 48, n = 100, p-value =
+0.8215
+alternative hypothesis: trend</code></pre>
+<p><br/><br/><br/></p>
+</div>
+<div id="pruebas-de-normalidad" class="section level2">
+<h2><span style="color:#034a94"><strong>Pruebas de
+normalidad</strong></span></h2>
+<p>Existen varias pruebas de hipótesis para verificar si una variable
+tiene un comportamiento aproximadamente normal.En todos los casos las
+hipótesis planteadas son:</p>
+<p><br/></p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(Ho\)</span>: <span
+class="math inline">\(X\)</span> tiene distribución Normal</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(Ha\)</span>: <span
+class="math inline">\(X\)</span> no tiene distribución Normal</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<pre class="r"><code>plot(density(w))</code></pre>
+<p><img src="recurso606_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div id="prueba-de-shapiro-wilk" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de Shapiro
+Wilk</strong></span></h3>
+<p>La prueba de Shapiro-Wilk se utiliza para verificar si una muestra de
+datos sigue una distribución normal. Se puede utilizar antes de realizar
+pruebas paramétricas que asumen normalidad, como la prueba t de Student
+o el análisis de varianza (ANOVA). Se recomienda realizar la prueba de
+Shapiro-Wilk cuando se tienen dudas sobre la normalidad de los datos,
+especialmente si se trabaja con muestras pequeñas (menos de 50
+observaciones), ya que en muestras grandes la prueba puede ser sensible
+y detectar pequeñas desviaciones de la normalidad que no son relevantes
+en la práctica.</p>
+<pre class="r"><code>shapiro.test(w)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  w
+W = 0.97905, p-value = 0.1121</code></pre>
+<p>Esta prueba no requiere la instalación de paquetes adicionales, está
+disponible en la configuración básica de R</p>
+<p><br/><br/></p>
+</div>
+<div id="paquete-normtest" class="section level3">
+<h3><span style="color:#034a94"><strong>Paquete
+normtest</strong></span></h3>
+<p>Las siguientes pruebas requieren instalar y cargar el paquete:
+<code>normtest</code></p>
+<pre class="r"><code># install.packages(&quot;normtets&quot;)
+library(nortest)</code></pre>
+<p><br/><br/></p>
+</div>
+<div id="prueba-jarque-bera-ajustada" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba Jarque-Bera
+ajustada</strong></h3>
+<p>La prueba de Jarque-Bera ajustada se utiliza para verificar si una
+muestra de datos sigue una distribución normal. A diferencia de la
+prueba de Shapiro-Wilk, la prueba de Jarque-Bera es más adecuada para
+muestras grandes (más de 200 observaciones) debido a su mayor poder
+estadístico. Se recomienda utilizar la prueba de Jarque-Bera ajustada
+cuando se tiene una muestra grande y se quiere verificar la normalidad
+de los datos antes de realizar pruebas paramétricas que asumen
+normalidad.</p>
+<pre class="r"><code>#ajb.norm.test(w)   </code></pre>
+<p><br/><br/></p>
+</div>
+<div id="prueba-de-frosini" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de
+Frosini</strong></span></h3>
+<p>La prueba de Frosini es una prueba estadística diseñada para
+verificar si una muestra de datos sigue una distribución normal. Esta
+prueba se basa en la comparación de la media y la varianza muestral con
+la media y la varianza de una distribución normal estándar. Sin embargo,
+la prueba de Frosini no es tan conocida ni ampliamente utilizada como
+otras pruebas de normalidad más comunes, como la prueba de Shapiro-Wilk
+o la prueba de Kolmogorov-Smirnov.</p>
+<pre class="r"><code>#frosini.norm.test(w)   </code></pre>
+<p><br/><br/></p>
+</div>
+<div id="prueba-de-geary" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de
+Geary</strong></span></h3>
+<p>La prueba de Geary, también conocida como razón de Geary o
+estadístico de Geary, es una medida de auto-correlación espacial que se
+utiliza en análisis espaciales para evaluar si existe autocorrelación
+espacial en un conjunto de datos. La prueba se basa en la comparación de
+las diferencias entre valores observados y valores vecinos en una serie
+de datos espaciales. Una razón de Geary cercana a 1 indica ausencia de
+autocorrelación espacial, mientras que valores significativamente más
+bajos pueden indicar autocorrelación espacial. La prueba de Geary se
+utiliza principalmente en estudios de geografía, ecología y otras
+disciplinas relacionadas con datos espaciales.</p>
+<pre class="r"><code>#geary.norm.test(w) </code></pre>
+<p><br/><br/></p>
+</div>
+<div id="prueba-de-hagazy-green-1" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de Hagazy-Green
+1</strong></span></h3>
+<p>La prueba de Hegazy-Green se utiliza para verificar la normalidad de
+una muestra de datos. Se puede utilizar en diversos contextos, como en
+análisis de datos, estudios estadísticos y en la validación de modelos
+que asumen una distribución normal de los datos.</p>
+<p>Se recomienda utilizar esta prueba cuando se desea verificar si una
+muestra de datos sigue una distribución normal y se quiere tener una
+alternativa a otras pruebas de normalidad más comunes, como la prueba de
+Shapiro-Wilk o la prueba de Kolmogorov-Smirnov. La prueba de
+Hegazy-Green puede ser útil cuando se desea explorar diferentes enfoques
+para verificar la normalidad de los datos, especialmente en
+investigaciones donde la normalidad es un supuesto importante.</p>
+<pre class="r"><code>#hegazy1.norm.test(w)   </code></pre>
+<p><br/></p>
+</div>
+<div id="prueba-de-hagazy-green-2" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de Hagazy-Green
+2</strong></span></h3>
+<pre class="r"><code>#hegazy2.norm.test(w)</code></pre>
+<p><br/><br/></p>
+</div>
+<div id="prueba-de-jarque-bera" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de
+Jarque-Bera</strong></span></h3>
+<p>La prueba de Jarque-Bera es una prueba de normalidad que se utiliza
+para verificar si una muestra de datos sigue una distribución normal.
+Esta prueba se basa en la asimetría y la curtosis de los datos. La
+asimetría mide la falta de simetría en la distribución de los datos,
+mientras que la curtosis mide la forma de la distribución en relación
+con una distribución normal.</p>
+<p>En la prueba de Jarque-Bera, se calcula un estadístico de prueba que
+se distribuye asintóticamente como una distribución chi-cuadrado con 2
+grados de libertad bajo la hipótesis nula de que los datos son
+normalmente distribuidos. Se compara este estadístico con un valor
+crítico de la distribución chi-cuadrado para determinar si se rechaza o
+no la hipótesis nula.</p>
+<pre class="r"><code>#jb.norm.test(w)    </code></pre>
+<p><br/><br/></p>
+</div>
+<div id="prueba-de-kurtosis" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de
+kurtosis</strong></span></h3>
+<p>La kurtosis es una medida que describe la forma de la distribución de
+los datos en relación con una distribución normal. Indica qué tan
+puntiaguda o achatada es la distribución en comparación con una
+distribución normal. Una kurtosis alta indica una distribución más
+puntiaguda (colas más pesadas) que la distribución normal, mientras que
+una kurtosis baja indica una distribución más achatada (colas más
+ligeras) que la distribución normal.</p>
+<p>La prueba de kurtosis se puede utilizar para verificar si la kurtosis
+de una muestra de datos es significativamente diferente de la kurtosis
+de una distribución normal. Sin embargo, es importante tener en cuenta
+que la kurtosis por sí sola no es una medida concluyente de la
+normalidad de los datos, ya que una distribución puede tener una
+kurtosis similar a la de una distribución normal y aún así no ser
+normal.</p>
+<pre class="r"><code>#kurtosis.norm.test(w)</code></pre>
+<p><br/><br/></p>
+</div>
+<div id="prueba-de-sesgo" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de
+sesgo</strong></span></h3>
+<p>La prueba de asimetría se utiliza para evaluar si la asimetría de una
+muestra de datos es significativamente diferente de la de una
+distribución normal. La asimetría mide la falta de simetría en la
+distribución de los datos, indicando si los datos están sesgados hacia
+la izquierda o hacia la derecha en comparación con una distribución
+normal, que tiene una asimetría de 0.</p>
+<p>Hay varias pruebas estadísticas que se pueden utilizar para probar la
+asimetría, como la prueba omnibus de D’Agostino-Pearson, la prueba de
+Jarque-Bera y la prueba de Shapiro-Wilk. Estas pruebas examinan
+diferentes aspectos de la distribución de los datos para determinar si
+se desvía significativamente de la normalidad.</p>
+<pre class="r"><code>#skewness.norm.test(w)  </code></pre>
+<p><br/><br/></p>
+</div>
+<div id="prueba-de-spiegelhalter" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de
+Spiegelhalter</strong></span></h3>
+<p>a prueba de Spiegelhalter es una prueba estadística utilizada para
+evaluar si una muestra de datos sigue una distribución normal. Esta
+prueba se basa en la comparación de la curtosis y la asimetría de los
+datos con los valores esperados bajo una distribución normal.</p>
+<p>La prueba de Spiegelhalter es una de las pruebas de normalidad menos
+comunes y no es tan ampliamente utilizada como otras pruebas más
+establecidas, como la prueba de Shapiro-Wilk o la prueba de
+Kolmogorov-Smirnov. Por lo tanto, se recomienda utilizar las pruebas más
+comunes y ampliamente aceptadas para verificar la normalidad de los
+datos.</p>
+<pre class="r"><code>#spiegelhalter.norm.test(w) </code></pre>
+<p><br/><br/></p>
+</div>
+<div id="prueba-de-weisberg-bingham" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de
+Weisberg-Bingham</strong></span></h3>
+<p>La prueba de Weisberg-Bingham es una prueba de normalidad que se
+utiliza para verificar si una muestra de datos sigue una distribución
+normal. Esta prueba se basa en la comparación de la curtosis y la
+asimetría de los datos con los valores esperados bajo una distribución
+normal.</p>
+<p>Al igual que la prueba de Spiegelhalter, la prueba de
+Weisberg-Bingham no es tan común ni tan ampliamente utilizada como otras
+pruebas de normalidad más establecidas, como la prueba de Shapiro-Wilk o
+la prueba de Kolmogorov-Smirnov. Por lo tanto, se recomienda utilizar
+las pruebas más comunes y ampliamente aceptadas para verificar la
+normalidad de los datos.</p>
+<pre class="r"><code>#wb.norm.test(w)    </code></pre>
+<p><br/><br/><br/></p>
+</div>
+</div>
+<div id="paquete-nortest" class="section level2">
+<h2><span style="color:#034a94"><strong>Paquete
+nortest</strong></span></h2>
+<p>Las siguientes pruebas requieren instalar y cargar el paquete:
+<code>nortest</code></p>
+<pre class="r"><code># install.packages(&quot;nortets&quot;)
+ #library(nortest)</code></pre>
+<p><br/></p>
+<div id="prueba-de-anderson-darling" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de
+Anderson-Darling</strong></span></h3>
+<p>La prueba de Anderson-Darling es una prueba de normalidad que se
+utiliza para verificar si una muestra de datos sigue una distribución
+normal. Esta prueba es una versión mejorada de la prueba de
+Kolmogorov-Smirnov, que es otra prueba comúnmente utilizada para
+verificar la normalidad de los datos.</p>
+<p>La prueba de Anderson-Darling considera la diferencia entre los
+valores observados y los valores esperados bajo una distribución normal,
+dando más peso a las colas de la distribución que la prueba de
+Kolmogorov-Smirnov. Esto la hace más sensible a las desviaciones de la
+normalidad en las colas de la distribución.</p>
+<pre class="r"><code>#ad.test(w)</code></pre>
+<p><br/></p>
+</div>
+<div id="prueba-de-cramer-von-mises" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de Cramer-von
+Mises</strong></span></h3>
+<p>La prueba de Cramer-von Mises es una prueba de bondad de ajuste que
+se utiliza para verificar si una muestra de datos sigue una distribución
+teórica específica, como una distribución normal. Esta prueba es una
+alternativa a la prueba de Anderson-Darling y a la prueba de
+Kolmogorov-Smirnov, y se basa en la comparación de los valores
+acumulados observados y los valores acumulados esperados bajo la
+distribución teórica.</p>
+<p>La prueba de Cramer-von Mises es especialmente útil cuando se desea
+evaluar si los datos siguen una distribución específica en lugar de
+simplemente evaluar si los datos son normales. Esta prueba es sensible a
+las desviaciones de la distribución en la cola, lo que la hace útil para
+detectar desviaciones no solo en la media y la varianza, sino también en
+la forma de la distribución.</p>
+<pre class="r"><code>#cvm.test(w)</code></pre>
+<p><br/></p>
+</div>
+<div id="prueba-de-lilliefors-kolmogorov-smirnov"
+class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de Lilliefors
+(Kolmogorov-Smirnov)</strong></span></h3>
+<p>La prueba de Lilliefors es una versión modificada de la prueba de
+Kolmogorov-Smirnov (KS) que se utiliza para verificar si una muestra de
+datos sigue una distribución normal. Mientras que la prueba de KS
+estándar asume que los parámetros de la distribución subyacente son
+conocidos, la prueba de Lilliefors estima estos parámetros a partir de
+los datos, lo que la hace más apropiada cuando no se conoce la verdadera
+distribución de los datos.</p>
+<p>La prueba de Lilliefors es útil cuando se desea verificar si los
+datos siguen una distribución normal sin tener que asumir que los
+parámetros de la distribución son conocidos. Sin embargo, al igual que
+con la prueba de KS estándar, la interpretación de los resultados de la
+prueba de Lilliefors puede depender del tamaño de la muestra, por lo que
+es importante tener en cuenta este factor al interpretar los
+resultados.</p>
+<pre class="r"><code>lillie.test(w)</code></pre>
+<pre><code>
+    Lilliefors (Kolmogorov-Smirnov) normality test
+
+data:  w
+D = 0.085674, p-value = 0.06747</code></pre>
+<p><br/></p>
+</div>
+<div id="prueba-chi-cuadrado-de-pearson" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba chi-cuadrado de
+Pearson</strong></span></h3>
+<p>La prueba chi-cuadrado de Pearson se utiliza para comparar la
+distribución observada de los datos con una distribución teórica, como
+una distribución normal. En el contexto de la normalidad, esta prueba
+compara la distribución de frecuencias observada en los datos con la
+distribución de frecuencias esperada bajo la hipótesis de que los datos
+siguen una distribución normal.</p>
+<p>Para realizar la prueba chi-cuadrado de Pearson para la normalidad,
+se dividen los datos en intervalos y se cuenta el número de
+observaciones en cada intervalo. Luego, se calcula la frecuencia
+esperada para cada intervalo bajo la hipótesis de normalidad. La prueba
+compara las frecuencias observadas y esperadas utilizando la estadística
+de prueba chi-cuadrado.</p>
+<p>Es importante tener en cuenta que, al igual que otras pruebas de
+normalidad, la interpretación de los resultados de la prueba
+chi-cuadrado de Pearson puede depender del tamaño de la muestra y de
+otros factores. Por lo tanto, es recomendable utilizar esta prueba en
+conjunto con otras pruebas de normalidad y métodos de diagnóstico.</p>
+<pre class="r"><code>pearson.test(w)</code></pre>
+<pre><code>
+    Pearson chi-square normality test
+
+data:  w
+P = 12.06, p-value = 0.2811</code></pre>
+<p><br/></p>
+</div>
+<div id="prueba-de-shapiro-francia" class="section level3">
+<h3><span style="color:#034a94"><strong>Prueba de
+Shapiro-Francia</strong></span></h3>
+<p>La prueba de Shapiro-Francia es una prueba de normalidad que se
+utiliza para verificar si una muestra de datos sigue una distribución
+normal. Es una versión modificada de la prueba de Shapiro-Wilk que
+utiliza un enfoque diferente para calcular el estadístico de prueba.</p>
+<p>Al igual que la prueba de Shapiro-Wilk, la prueba de Shapiro-Francia
+evalúa la hipótesis nula de que los datos provienen de una distribución
+normal. Si el valor p asociado con la prueba es menor que un nivel de
+significancia dado (generalmente 0.05), se rechaza la hipótesis nula y
+se concluye que los datos no siguen una distribución normal.</p>
+<p>La prueba de Shapiro-Francia se considera útil cuando se trabaja con
+muestras pequeñas o moderadamente grandes y se desea una prueba de
+normalidad que tenga un buen rendimiento en términos de poder
+estadístico. Sin embargo, al igual que con cualquier prueba de
+normalidad, es importante considerar otros factores y utilizar múltiples
+pruebas y métodos de diagnóstico para evaluar la normalidad de los
+datos.</p>
+<pre class="r"><code>sf.test(w)</code></pre>
+<pre><code>
+    Shapiro-Francia normality test
+
+data:  w
+W = 0.98099, p-value = 0.1394</code></pre>
+<p>En todos los casos se presenta un valor-p grande por lo cual no se
+rechaza <span class="math inline">\(Ho\)</span>, asumimos que <span
+class="math inline">\(Ho\)</span> es verdad. Asumimos que la
+distribución de la variable <span class="math inline">\(X\)</span> es
+normal</p>
+</div>
+</div>
+<div id="resumen" class="section level2 content-box-gray">
+<h2><span style="color:#686868"><strong>Resumen</strong></span></h2>
+<table>
+<colgroup>
+<col width="24%" />
+<col width="75%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>chisq.test(x=obs,p=esp)</code></td>
+</tr>
+<tr class="even">
+<td align="left">paquete: MASS</td>
+<td align="left"><code>library(MASS)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>chisq.test(M)</code> # M: matriz</td>
+</tr>
+<tr class="even">
+<td align="left">paquete: BSDA</td>
+<td align="left"><code>library(BSDA)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td
+align="left"><code>SIGN.test(x,md=15,alternative = "greater")</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td
+align="left"><code>wilcox.test(g1,g2,paired = FALSE,alternative = "less")</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><strong>Pruebas de normalidad</strong></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><code>shapiro.test(x)</code></td>
+</tr>
+<tr class="odd">
+<td align="left">paquete:normtest</td>
+<td align="left"><code>library(normtest)</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><code>ajb.norm.test(x)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>frosini.norm.test(x)</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><code>geary.norm.test(x)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>hegazy1.norm.test(x)</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><code>hegazy2.norm.test(x)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>jb.norm.test(x)</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><code>kurtosis.norm.test(x)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>skewness.norm.test(x)</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><code>spiegelhalter.norm.test(x)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>wb.norm.test(x)</code></td>
+</tr>
+<tr class="even">
+<td align="left">paquete: nortest</td>
+<td align="left"><code>library(nortest)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>ad.test(x)</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><code>cvm.test(x)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>lillie.test(x)</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><code>pearson.test(x)</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>sf.test(x)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br/><br/></p>
+<div id="referencias" class="section level3">
+<h3><span style="color:#686868"><strong>Referencias</strong></span></h3>
+<ul>
+<li><a href="https://rpubs.com/CJRR/PUJ_DECB_NP"
+class="uri">https://rpubs.com/CJRR/PUJ_DECB_NP</a></li>
+</ul>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

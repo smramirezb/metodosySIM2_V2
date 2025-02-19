@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Variable aleatoria</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"> </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Variable aleatoria</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valos esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Intervalos una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Intervalos dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Pruebas de hipótesis</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Software R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso601.html">Probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso602.html">Variable aleatória</a>
+    </li>
+    <li>
+      <a href="recurso607.html">Modelos de probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso603.html">Estimación</a>
+    </li>
+    <li>
+      <a href="recurso604.html">Intervalos de confianza</a>
+    </li>
+    <li class="dropdown-header">Pruebas paramétricas</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#034a94">
+<strong>Variable aleatoria</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+<p><br/><br/></p>
+<div id="variables-discretas" class="section level1">
+<h1><span style="color:#034a94"><strong>Variables
+discretas</strong></span></h1>
+<p>En el caso de las variables discretas la función de distribución de
+probabilidad <span class="math inline">\(f(x)\)</span> debe cumplir las
+siguientes propiedades</p>
+<ul>
+<li><p><span class="math inline">\(f(x) = P(X=x) &gt; 0\)</span>, la
+probabilidad es un valor mayor a cero</p></li>
+<li><p><span class="math inline">\(\sum_{R_X} f(x) = 1\)</span>, la suma
+de todas las probabilidades es igual a uno</p></li>
+</ul>
+<p><br/></p>
+<p>En este caso se puede utilizar la función sumatoria
+<code>sum(x, na.rm = FALSE)</code>, donde <code>x</code> es un vector y
+<code>na.rm</code> indica si el vector tienen datos faltantes.</p>
+<p><br/><br/></p>
+<p><span style="color:#034a94"> <strong>Ejemplo</strong></span></p>
+<p>Para la función <span class="math inline">\(f(x)\)</span></p>
+<p><span class="math display">\[f_{_{X}}(x) = \left \{
+                \begin{matrix}
+                \displaystyle\binom{40}{x}(0.7)^{x}(0.3)^{40-x} &amp;
+\mbox{si }    x=0,1,2,\ldots,40\\
+                &amp; \\
+                0  &amp; \mbox{en otro caso }
+                \end{matrix}\right.  
+                \]</span></p>
+<p><br/></p>
+<pre class="r"><code># Declaración de la función
+fw=function(w){choose(40,w)*0.70^w*0.30^(40-w)}
+w=0:40
+
+# Gráfico de la función
+plot(w, fw(w), pch=19, col=&quot;#BC2B6A&quot;, las=1)
+grid()</code></pre>
+<p><img src="recurso602_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><br/></p>
+<p>Para verificar que la suma de todas las probabilidades es igual a
+uno</p>
+<pre class="r"><code>fw=function(w){choose(40,w)*0.70^w*0.30^(40-w)}
+w=0:40
+sum(fw(w))</code></pre>
+<pre><code>[1] 1</code></pre>
+<p><br/></p>
+<p>Para calcular la probabilidad <span class="math inline">\(P(20 \leq X
+\leq 30)\)</span></p>
+<pre class="r"><code>sum(fw(20:30))</code></pre>
+<pre><code>[1] 0.8016552</code></pre>
+<p><br/><br/><br/></p>
+<div id="valor-esperado" class="section level3">
+<h3><span style="color:#034a94"><strong>Valor
+esperado</strong></span></h3>
+<p><br/></p>
+<pre class="r"><code>fw=function(w){choose(40,w)*0.70^w*0.30^(40-w)}
+w=0:40
+Ex=sum(fw(w)*w)
+cat(&quot;E[X] = &quot;,Ex)</code></pre>
+<pre><code>E[X] =  28</code></pre>
+<p><br/></p>
+</div>
+<div id="varianza" class="section level3">
+<h3><span style="color:#034a94"><strong>Varianza</strong></span></h3>
+<pre class="r"><code>fw=function(w){choose(40,w)*0.70^w*0.30^(40-w)}
+w=0:40
+Ex=sum(fw(w)*w)
+Ex2=sum(fw(w)*w^2)
+Vx=Ex2-Ex^2
+cat(&quot;V[X] = &quot;,Vx)</code></pre>
+<pre><code>V[X] =  8.4</code></pre>
+<p><br/><br/></p>
+</div>
+</div>
+<div id="variables-continuas" class="section level1">
+<h1><span style="color:#034a94"><strong>Variables
+continuas</strong></span></h1>
+<div id="integración" class="section level2">
+<h2><span style="color:#034a94"><strong>Integración</strong></span></h2>
+<p>El concepto de integración se utiliza en probabilidad para determinar
+el área bajo la curva de una función de densidad <span
+class="math inline">\(f(x)\)</span> para una variable aleatoria
+continua.</p>
+<p>Dos de las propiedades de una <span
+class="math inline">\(f(x)\)</span> son:</p>
+<ul>
+<li><p><span
+class="math inline">\(\displaystyle\int\limits_{-\infty}^{+\infty}
+\dfrac{1}{4} f(x) \:dx = 1\)</span></p></li>
+<li><p><span class="math inline">\(P(a \leq X \leq b) =
+\displaystyle\int\limits_{a}^{b} f(x) \:dx\)</span></p></li>
+</ul>
+<p><br/><br/></p>
+<p>Estas verificaciones se pueden realizar en R con dos
+instrucciones:</p>
+<ul>
+<li>Construcción de la función en R</li>
+<li>Realizar la integral : para ello utilizamos la función
+<code>integrate</code> que tiene los parámetros,
+<code>integrate( f, lower, upper)</code>
+<ul>
+<li><code>f</code>: la función</li>
+<li><code>lower</code> : limite inferior . Puede ser un número o
+<code>-Inf</code></li>
+<li><code>upper</code> : limite superior . Puede ser un número o
+<code>+Inf</code></li>
+</ul></li>
+</ul>
+<p><code>integrate(function(x), lower = 0, upper = 1)</code></p>
+<p><br/><br/></p>
+<p><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></p>
+<p>Para la función <span class="math inline">\(f(x)\)</span></p>
+<p><span class="math display">\[f_{_{X}}(x) = \left \{
+                \begin{matrix}
+                \dfrac{1}{4} e^{-x/4} &amp; \mbox{ , }  x \geq 0\\
+                &amp; \\
+                0  &amp; \mbox{en otro caso }
+                \end{matrix}\right.  
+                \]</span> <br/></p>
+<p><span class="math display">\[P(X &lt; 5)\]</span></p>
+<p><br/></p>
+<pre class="r"><code># Declaración de la función
+fx=function(x){1/4*exp(-x/4)}
+
+# Representación gráfica de la función
+x=0:20
+plot(x,fx(x), type=&quot;l&quot;, col=&quot;#BC2B6A&quot;, lwd=5)
+
+# Área de integración
+x1=seq(0,5,0.01)
+f1=fx(x1)
+polygon(c(0,x1,5),c(0,f1,0),col=&quot;skyblue&quot;)</code></pre>
+<p><img src="recurso602_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><br/></p>
+<pre class="r"><code># Integral entre 5 y 15 : P( X &lt; 5)
+integrate(fx, 0,5)</code></pre>
+<pre><code>0.7134952 with absolute error &lt; 7.9e-15</code></pre>
+<p><br/></p>
+</div>
+<div id="valor-esperado-1" class="section level2">
+<h2><span style="color:#034a94"><strong>Valor
+esperado</strong></span></h2>
+<p><span class="math display">\[E(X) =
+\displaystyle\int\limits_{-\infty}^{+\infty}x f(x)dx\]</span> <br/></p>
+<p>En este caso la función se multiplica por <span
+class="math inline">\(x\)</span></p>
+<pre class="r"><code>Mx=function(x){1/4*exp(-x/4)*x}
+Ex=integrate(Mx, 0, Inf)
+cat(&quot;E[X] = &quot;, Ex$value,&quot;\n&quot;)</code></pre>
+<pre><code>E[X] =  4 </code></pre>
+<p><br/></p>
+</div>
+<div id="varianza-1" class="section level2">
+<h2><span style="color:#034a94"><strong>Varianza</strong></span></h2>
+<p><span class="math display">\[V[X] = E[X^{2}]-(E[X])^{2}  =
+E[X^{2}]-\mu^{2}\]</span></p>
+<pre class="r"><code>fx=function(x){1/4*exp(-x/4)}
+Mx1=function(x){1/4*exp(-x/4)*x}
+Mx2=function(x){1/4*exp(-x/4)*x^2}
+Ex=integrate(Mx1, lower=0,upper=Inf)
+Ex2=integrate(Mx2, lower=0,upper=Inf)
+
+cat(&quot;V[X] = &quot;, Ex2$value-Ex$value^2)</code></pre>
+<pre><code>V[X] =  16</code></pre>
+<p><br/></p>
+<pre class="r"><code>fx=function(x){1/4*exp(-x/4)}
+Mx1=function(x){1/4*exp(-x/4)*x}
+Mx2=function(x){1/4*exp(-x/4)*x^2}
+Ex=integrate(Mx1, lower=0,upper=Inf)
+Ex2=integrate(Mx2, lower=0,upper=Inf)
+cat(&quot;E[X] = &quot;, Ex$value,&quot;\n&quot;)</code></pre>
+<pre><code>E[X] =  4 </code></pre>
+<pre class="r"><code>cat(&quot;V[X] = &quot;, Ex2$value-Ex$value^2)</code></pre>
+<pre><code>V[X] =  16</code></pre>
+<p><br/><br/></p>
+</div>
+</div>
+<div id="caso-discreto-discreto" class="section level1">
+<h1><span style="color:#034a94"><strong>Caso
+Discreto-Discreto</strong></span></h1>
+<p><br/></p>
+<p><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></p>
+<p>El número de veces que falla una máquina <span
+class="math inline">\(X\)</span> con <span
+class="math inline">\(R_{X}=\{1,2,3\}\)</span> durante un día y el
+número de veces en que el operario requiere llamar al técnico para su
+arreglo esta dado por <span class="math inline">\(Y\)</span> con <span
+class="math inline">\(R_{Y}=\{1,2,3\}\)</span>. Su función de
+probabilidad conjunta para <span class="math inline">\(X,Y\)</span> está
+dada por :</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"><span class="math inline">\(x\)</span></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><span class="math inline">\(f(x,y)\)</span></td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(y\)</span></td>
+<td align="center">1</td>
+<td align="center">0.05</td>
+<td align="center">0.05</td>
+<td align="center">0.10</td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center">2</td>
+<td align="center">0.050</td>
+<td align="center">0.10</td>
+<td align="center">0.35</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">3</td>
+<td align="center">0</td>
+<td align="center">0.20</td>
+<td align="center">0.10</td>
+</tr>
+</tbody>
+</table>
+<p><br/><br/></p>
+<p>Función de distribución de probabilidad conjunta</p>
+<pre class="r"><code>fxy=matrix(c(0.05,0.05,0,0.05,0.10,0.20,0.10,0.35,0.10), ncol=3 )
+fxy</code></pre>
+<pre><code>     [,1] [,2] [,3]
+[1,] 0.05 0.05 0.10
+[2,] 0.05 0.10 0.35
+[3,] 0.00 0.20 0.10</code></pre>
+<pre class="r"><code>sum(fxy)</code></pre>
+<pre><code>[1] 1</code></pre>
+<p><br/></p>
+<div id="funciones-distribución-marginales" class="section level3">
+<h3><span style="color:#034a94"><strong>Funciones distribución
+marginales</strong></span></h3>
+<pre class="r"><code>fxy=matrix(c(0.05,0.05,0,0.05,0.10,0.20,0.10,0.35,0.10), ncol=3 )
+fxy=addmargins(fxy,c(1,2))
+colnames(fxy)=c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;h(y)&quot;)
+rownames(fxy)=c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;g(x)&quot;)
+fxy</code></pre>
+<pre><code>        1    2    3 h(y)
+1    0.05 0.05 0.10  0.2
+2    0.05 0.10 0.35  0.5
+3    0.00 0.20 0.10  0.3
+g(x) 0.10 0.35 0.55  1.0</code></pre>
+<p><br/></p>
+</div>
+<div id="representación-gráfica-de-fxy" class="section level3">
+<h3><span style="color:#034a94"><strong>Representación gráfica de <span
+class="math inline">\(f(x,y)\)</span></strong></span></h3>
+<p>Para construir la gráfica de X y Y debemos crear los vectores</p>
+<table style="width:100%;">
+<colgroup>
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(x\)</span></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(y\)</span></td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(f(x,y)\)</span></td>
+<td align="center">0.15</td>
+<td align="center">0.05</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0.20</td>
+<td align="center">0.35</td>
+<td align="center">0</td>
+<td align="center">0.10</td>
+<td align="center">0.15</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># x=1:3
+# y=1:3
+# x=rep(x,each=3)
+# y=rep(y,3)
+# fxy=c(0.15,0.05,0, 0,0.20,0.35, 0,0.10,0.15)
+# 
+# plot3D::scatter3D(x, y, fxy,
+#           colvar = NULL, 
+#           col = &quot;blue&quot;,
+#           pch = 19, cex = 1.5,
+#           phi = 20, theta = 60,  
+#           zlab=&quot;f(xy)&quot;, xlab=&quot;x&quot;, ylab=&quot;y&quot;,
+#           bty = &quot;b2&quot;,
+#           col.panel =&quot;steelblue&quot;,
+#           col.grid = &quot;darkblue&quot;,
+#           add_lines=TRUE)
+# </code></pre>
+<p><br/></p>
+</div>
+<div id="funciones-de-distribución-marginal" class="section level3">
+<h3><span style="color:#034a94"><strong>Funciones de distribución
+marginal</strong></span></h3>
+<pre class="r"><code>fxy=matrix(c(0.05,0.05,0,0.05,0.10,0.20,0.10,0.35,0.10), ncol=3 )
+fxy=addmargins(fxy,c(1,2))
+colnames(fxy)=c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;h(y)&quot;)
+rownames(fxy)=c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;g(x)&quot;)
+fxy</code></pre>
+<pre><code>        1    2    3 h(y)
+1    0.05 0.05 0.10  0.2
+2    0.05 0.10 0.35  0.5
+3    0.00 0.20 0.10  0.3
+g(x) 0.10 0.35 0.55  1.0</code></pre>
+<p><br/></p>
+</div>
+<div id="covarianza-y-correlación" class="section level3">
+<h3><span style="color:#034a94"><strong>Covarianza y
+Correlación</strong></span></h3>
+<pre class="r"><code>x=c(0,1,2) 
+y=c(0,1,2)
+fxy=matrix(c(0.15,0.05,0,0,0.20,0.35,0,0.10,0.15), ncol=3 )
+
+fxy=addmargins(fxy,c(1,2))
+colnames(fxy)=c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;h(y)&quot;)
+rownames(fxy)=c(&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;g(x)&quot;)
+
+fxy=as.table(fxy)
+gx=fxy[,4]
+hy=fxy[4,]
+
+
+Ex=sum(x*gx)
+Ex2=sum(x^2*gx)
+Vx=Ex2-(Ex)^2
+
+Ey=sum(y*hy)
+Ey2=sum(y^2*hy)
+Vy=Ey2-(Ey)^2
+
+x=rep(x,each=3)
+y=rep(y,3)
+fxy=c(0.15,0.05,0,0,0.20,0.35,0,0.10,0.15)
+Exy=sum(x*y*fxy)
+CovXY=Exy-Ex*Ey
+Rho=CovXY/sqrt(Vx*Vy)</code></pre>
+<p><br/></p>
+<pre>
+E(X)    =  1.35 
+E(X2)   =  2.35 
+V(X)    =  0.5275 
+E(Y)    =  1.05 
+E(Y2)   =  1.55 
+V(Y)    =  0.4475 
+E(XY)   =  1.7 
+Cov(XY) =  0.2825 
+Rho     =  0.5814478 
+</pre>
+<!-- ```{r, warning=FALSE, message=FALSE, echo=FALSE} -->
+<!-- cat("E(X)    = ", Ex, "\n") -->
+<!-- cat("E(X2)   = ", Ex2, "\n") -->
+<!-- cat("V(X)    = ", Vx, "\n") -->
+<!-- cat("E(Y)    = ", Ey, "\n") -->
+<!-- cat("E(Y2)   = ", Ey2, "\n") -->
+<!-- cat("V(Y)    = ", Vy, "\n") -->
+<!-- cat("E(XY)   = ", Exy, "\n") -->
+<!-- cat("Cov(XY) = ", CovXY, "\n") -->
+<!-- cat("Rho     = ", Rho, "\n") -->
+<!-- ``` -->
+<p><br/><br/><br/></p>
+</div>
+</div>
+<div id="caso-continuo-continuo" class="section level1">
+<h1><span style="color:#034a94"><strong>Caso
+Continuo-continuo</strong></span></h1>
+<p><br/></p>
+<div id="ejemplo" class="section level3">
+<h3><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></h3>
+<p>Una empresa prestadora se servicios a domicilio tienen dos lineas
+telefónicas para que los clientes puedan realizar sus pedidos. Sea X y Y
+la proporción del tiempo en que las lineas se encuentran ocupadas. La
+función de densidad conjunta que modela <span
+class="math inline">\(f(x,y)\)</span> esta dada por:</p>
+<p><span class="math display">\[f(x,y) = \left \{ \begin{matrix}
+\dfrac{3}{2}(x^{2}+y^{2}) &amp; \mbox{ } 0 \leq x \leq 1\\
+                                     &amp; \mbox{ } 0 \leq y \leq 1 \\
+                                     &amp;\\
+                                   0 &amp; \mbox{ en otro caso
+}\end{matrix}\right.  \]</span> <br/><br/></p>
+<p>Inicialmente se verifica la condición :</p>
+<p><span class="math inline">\(\displaystyle\int_{0}^{1}
+\displaystyle\int_{0}^{1} \dfrac{3}{2}(x^{2}+y^{2}) \:dx \:dy  =
+1\)</span></p>
+<pre class="r"><code>library(cubature) 
+fxy &lt;- function(x) { 3/2*(x[1]^2 + x[2]^2)} # 
+adaptIntegrate(fxy, lowerLimit = c(0, 0), upperLimit = c(1, 1))</code></pre>
+<pre><code>$integral
+[1] 1
+
+$error
+[1] 2.220446e-16
+
+$functionEvaluations
+[1] 17
+
+$returnCode
+[1] 0</code></pre>
+<center>
+<sub> basado en : <a
+href="http://homepages.math.uic.edu/~jyang06/stat401/handouts/handout8.pdf"
+class="uri">http://homepages.math.uic.edu/~jyang06/stat401/handouts/handout8.pdf</a>
+</sub>
+</center>
+<p><br/></p>
+<p>Ahora su representación gráfica</p>
+<pre class="r"><code>x=seq(0,1,length=30)
+y=seq(0,1,length=30)
+fxy=function(x,y){3/2*(x^2+y^2)}
+z=outer(x, y, fxy)
+persp(x,y,z,theta = 40, phi = 10,expand=0.5, col = &quot;#FF7F00&quot;,
+      xlab = &quot;x&quot;, ylab =&quot;y&quot;, zlab = &quot;f(x,y)&quot;,
+      main=&quot; &quot;, col.main=&quot;blue&quot;)</code></pre>
+<img src="recurso602_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<center>
+<sub> Nota: basada en : <a
+href="https://estadistica-dma.ulpgc.es/cursoR4ULPGC/9e-grafPersp.html"
+class="uri">https://estadistica-dma.ulpgc.es/cursoR4ULPGC/9e-grafPersp.html</a>
+</sub>
+</center>
+<p><br/><br/></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
