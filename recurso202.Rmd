@@ -1,0 +1,237 @@
+---
+title: <span style="color:#686868"> **Valor esperado y varianza**</span> 
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = NA)
+
+```
+
+</br></br>
+<h2>Valor esperado</h2>
+
+El valor esperado o esperanza matemática y la varianza son dos conceptos fundamentales asociados a una variable aleatoria.
+
+El concepto de esperanza se originó en el análisis de juegos de azar, donde los jugadores buscaban estimar el valor esperado de sus ganancias al jugar repetidamente. Este análisis fue crucial para comprender el comportamiento de resultados a largo plazo.
+
+La esperanza matemática de una variable aleatoria $X$ es una medida que representa el valor promedio que se espera obtener si el experimento se repite un número muy grande de veces. Este valor es equivalente a la media poblacional de la variable aleatoria y se denota como:
+
+- $E[X]$ (esperanza matemática)
+- $\mu$ (media poblacional)
+
+En términos probabilísticos, la esperanza proporciona una visión central de la distribución de la variable, reflejando su promedio ponderado según las probabilidades de cada resultado posible.
+
+
+</br></br>
+<h3>Definición de valor esperado</h3>
+
+Sea $X$ una variable aleatoria, ya sea **discreta** o **continua**. La **esperanza matemática**, también llamada **valor esperado**, se denota por $E(X)$ o $\mu$ y representa el promedio ponderado de los valores posibles de la variable, considerando sus probabilidades.
+
+
+| **Caso discreto**                         | **Caso continuo**                       |
+|:---------------------------------------:|:-------------------------------------:|
+| $E(X) = \sum_{x_i \in R_X} x_i f(x_i)$ | $E(X) = \int_{-\infty}^{+\infty} x f(x) \,dx$ |
+
+
+
+
+</br></br>
+<h3>Propiedades de valor esperado</h3>
+
+Las siguientes son las principales propiedades del **valor esperado** o **esperanza matemática**:
+
+1. **Linealidad del valor esperado:**  
+   - $E(k) = k$ — El valor esperado de una constante es la misma constante.
+   - $E(kX) = k E(X)$ — El valor esperado de una constante multiplicada por una variable es la constante por el valor esperado.
+   - $E(aX + b) = a E(X) + b$ — El valor esperado de una combinación lineal es la combinación lineal de los valores esperados.
+
+2. **Adición de valores esperados:**  
+   - $E(aX + bY) = a E(X) + b E(Y)$ — El valor esperado de una suma es la suma de los valores esperados.
+
+3. **Multiplicación de variables independientes:**  
+   - $E(XY) = E(X)E(Y)$ — El valor esperado del producto es el producto de los valores esperados **solo si $X$ e $Y$ son independientes**.
+
+Estas propiedades son fundamentales en estadística, ya que permiten simplificar y resolver problemas complejos, especialmente en la combinación de variables aleatorias.
+
+
+</br></br>
+<h2>Momento</h2>
+
+Sea $X$ una variable aleatoria, ya sea **discreta** o **continua**. El **momento de orden $k$** se define como:
+
+| **Caso Discreto**                         | **Caso Continuo**                       |
+|:---------------------------------------:|:-------------------------------------:|
+| $E(X^{k}) = \sum_{x_i \in R_X} x_{i}^{k} f(x_{i})$ | $E(X^{k}) = \int_{-\infty}^{+\infty} x^{k} f(x) \,dx$ |
+
+
+- Los **momentos** son medidas estadísticas que caracterizan la distribución de una variable aleatoria.
+- El **momento de primer orden** ($k=1$) es la **esperanza matemática** o **media**.
+- El **momento de segundo orden** ($k=2$) mide la dispersión de los valores alrededor del promedio.
+
+
+</br></br>
+<h2>Varianza</h2>
+
+
+</br></br>
+<h3>Definición</h3>
+
+La **varianza**, $\text{Var}(X)$, es una medida que representa la **dispersión** de los valores de la variable alrededor de su media. La varianza de una variable aleatoria $X$ se define mediante la esperanza matemática como:
+$$
+\text{Var}(X) = E[(X - E[X])^2]
+$$
+Esta expresión representa la esperanza del cuadrado de las desviaciones de $X$ respecto a su media.
+
+
+También se puede expresar como la diferencia entre el **segundo momento** y el cuadrado del **primer momento**:
+
+$$
+\text{Var}(X) = E(X^2) - [E(X)]^2
+$$
+
+
+</br></br>
+<h3>Propiedades de la varianza</h3>
+
+La **varianza** es una medida fundamental de dispersión que refleja cuánto varían los valores de una variable aleatoria alrededor de su media. A continuación, se presentan sus principales propiedades:
+
+1. **No negatividad:**  
+   $$\text{Var}(X) \geq 0$$  
+   La varianza siempre es no negativa.
+
+2. **Varianza de una constante:**  
+   $$\text{Var}(k) = 0$$  
+   La varianza de una constante es siempre cero.
+
+3. **Desplazamiento por una constante:**  
+   $$\text{Var}(X + k) = \text{Var}(X)$$  
+   La varianza es invariante ante traslaciones.
+
+4. **Escalado por una constante:**  
+   $$\text{Var}(kX) = k^{2}\text{Var}(X)$$  
+   Al multiplicar la variable por una constante, la varianza se multiplica por el cuadrado de esa constante.
+
+5. **Combinación lineal de variables aleatorias:**  
+   Para dos variables aleatorias $X$ e $Y$:
+   $$\text{Var}(aX + bY) = a^{2}\text{Var}(X) + b^{2}\text{Var}(Y) + 2ab \, \text{Cov}[X,Y]$$  
+   donde $a$ y $b$ son números reales.
+   
+   **¿Qué es la covarianza?**
+    La **covarianza** es una medida que indica el grado de relación lineal entre dos variables aleatorias. Se define como:
+    $$\text{Cov}[X,Y] = E[(X - E[X])(Y - E[Y])]$$
+      - Si $\text{Cov}[X,Y] > 0$, ambas variables tienden a aumentar juntas linealmente.
+      - Si $\text{Cov}[X,Y] < 0$, una variable tiende a aumentar linealmente mientras la otra disminuye.
+      - Si $\text{Cov}[X,Y] = 0$, las variables son **no correlacionadas linealmente**.
+
+
+6. **Varianza de la suma de variables independientes:**  
+   Si $X$ e $Y$ son **independientes**, la covarianza es cero ($\text{Cov}[X,Y] = 0$), por lo que:
+   $$\text{Var}(aX + bY) = a^{2}\text{Var}(X) + b^{2}\text{Var}(Y)$$
+
+Estas propiedades son clave para simplificar cálculos en modelos probabilísticos y estadísticos. La linealidad y la independencia son conceptos fundamentales en el análisis de varianza.
+
+
+</br></br>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p>
+Dada la siguiente **función de distribución binomial**, que modela el número de personas que asisten al restaurante:
+
+$$
+f_{X}(x) = \begin{cases} \\
+  \binom{20}{x}(0.7)^{x}(0.3)^{20-x} & \text{si } x = 0, 1, 2, \ldots, 20 \\\\
+  0 & \text{en otro caso} \\\\
+\end{cases}
+$$
+
+El valor esperado de $X$ está dado por:
+$$
+E(X) = \sum_{x=0}^{20} x \, \binom{20}{x}(0.7)^{x}(0.3)^{20-x} =  20 \times 0.7 = 14
+$$
+La varianza de $X$ es:
+$$
+\text{Var}(X) = E[X^2] - (E[X])^2 = 20 \times 0.7 \times 0.3 = 4.2
+$$
+
+También se puede verificar mediante la expresión:
+$$
+\text{Var}(X) = E[X^2] - (E[X])^2 = 4.199829
+$$
+
+Interpretación de los resultados:
+
+- El **valor esperado** $E(X) = 14$ indica que, en promedio, asisten **14 personas** de las **20 reservas**.
+- La **varianza** $\text{Var}(X) = 4.2$ mide la dispersión alrededor del promedio.
+
+Desviación estándar y coeficiente de variación:
+
+- **Desviación estándar:** $\sigma = \sqrt{\text{Var}(X)} = \sqrt{4.2} \approx 2.05$.
+- **Coeficiente de variación:** $\text{CV} = \frac{\sigma}{E(X)} \times 100\% = \frac{2.05}{14} \times 100\% \approx 14.6\%$
+
+El **coeficiente de variación (CV)** indica que la variabilidad relativa es aproximadamente **14.6%** respecto al valor esperado. Esto sugiere una variabilidad moderada en el número de asistentes en relación con la media.
+
+</p>
+</div>
+
+
+
+</br></br>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p>
+Consideremos la siguiente **función de densidad**, que modela el tiempo de duración de un electrodoméstico sin requerir reparaciones:
+
+$$
+f_{X}(x) = \begin{cases} \\
+  \dfrac{1}{4} e^{-x/4} & \text{si } x \geq 0 \\
+  0 & \text{en otro caso} \\
+\end{cases}
+$$
+
+
+El **valor esperado** de $X$, $E(X)$, se obtiene mediante la integral:
+$$
+E(X) = \int_{0}^{+\infty} x \, \frac{1}{4} e^{-x/4} \, dx = \left. -x e^{-x/4} \right|_{0}^{+\infty} + \int_{0}^{+\infty} e^{-x/4} \, dx = \frac{1}{1/4} = 4 \text{ años}
+$$
+
+
+La varianza está dada por:
+$$
+\text{Var}(X) = E[X^2] - (E[X])^2
+$$
+
+El momento $E[X^2]$ se determina mediante integración por partes:
+$$
+E[X^2] = \int_{0}^{+\infty} x^2 \, \frac{1}{4} e^{-x/4} \, dx  = 32
+$$
+
+
+Finalmente:
+$$
+\text{Var}(X) = E[X^2] - (E[X])^2 = 32 - 4^2 = 16
+$$
+
+Interpretación de los resultados:
+
+- El **valor esperado**, $E(X) = 4$ años, indica que, en promedio, el electrodoméstico requerirá una reparación mayor después de **4 años** de uso.
+- La **varianza**, $\text{Var}(X) = 16  \text{años}^2$ , mide la dispersión de los tiempos en torno al promedio.
+
+Desviación estándar y coeficiente de variación:
+
+- **Desviación estándar:** $\sigma = \sqrt{\text{Var}(X)} = \sqrt{16} = 4$ años.
+- **Coeficiente de variación (CV):**
+$$
+\text{CV} = \frac{\sigma}{E(X)} \times 100\% = \frac{4}{16} \times 100\% = 25\%
+$$
+Un **coeficiente de variación (CV)** del **25%**  indica una variabilidad de los tiempos respecto a la media  relativamente alta.
+
+</p>
+</div>

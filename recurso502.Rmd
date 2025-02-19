@@ -1,0 +1,323 @@
+---
+title : <span style="color:#034a94"> **Pruebas de hipótesis para una población**</span>
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = NA)
+
+# install.packages('gtools')
+# install.packages("TeachingSampling")
+
+#load library
+library(gtools)
+library(TeachingSampling)
+library(readr)
+library(paqueteMETODOS)
+
+c1="#FF7F00"
+c2="#034A94"
+c3="#0EB0C6"
+c4="#686868"
+
+data("CarreraLuz22")
+data("evaluacion")
+CarreraLuz22_c2 = subset(CarreraLuz22, CarreraLuz22$categoria=="2. Abierta")
+CarreraLuz22_c3 = subset(CarreraLuz22, CarreraLuz22$categoria=="3. Veteranos A")
+```
+
+<br/><br/>
+
+Se llaman pruebas paramétricas las que están soportadas en supuestos que por lo general corresponden a la distribución de la variable que trabajamos
+
+
+<br/><br/>
+
+
+## <span style="color:#034a94">**Sobre una media**</span>
+
+Dependiendo de las condiciones podemos optar por tres diferentes EdeP para la realización de la prueba para una media, aunque tenemos una cuarta posibilidad en el caso de realizarla mediante un método no paramétrico:
+
+<br/><br/>
+
+Parámetro $\mu$
+
+**Hipótesis**
+
+|    dos colas                       |    cola inferior                       | cola superior                             |
+|:----------------------------------:|:--------------------------------------:|:-----------------------------------------:|              
+|   $H_o : \mu = \mu_{o}$             |   $H_o : \mu \geq \mu_{o}$              | $H_o : \mu \leq \mu_{o}$                   |
+|   $H_a : \mu \neq \mu_{o}$          |   $H_a : \mu <  \mu_{o}$                | $H_a : \mu > \mu_{o}$                      |
+
+
+**Estadísticos de prueba**
+
+|                                    |                                        |                                           |
+|:----------------------------------:|:--------------------------------------:|:-----------------------------------------:|  
+| $Z_{o} = \dfrac{\bar{x}-\mu_{o}}{\sigma / \sqrt{n}} \sim N(0,1$  | $T_{o} = \dfrac{\bar{x}-\mu_{o}}{s / \sqrt{n}} \sim t_{v: n-1}$ | $Z_{o} = \dfrac{\bar{x}-\mu_{o}}{s / \sqrt{n}} \sim N(0,1)$|
+| Supuestos:                        |                                         |                                           |
+| $X$ es normal y la varianza es conocida | $X$ es normal y la varianza es desconocida | $n >>$ el tamaño de muestra es grande y por el TLC $\bar{X}$ se aproxima a una distribución normal| 
+
+
+
+<br/><br/><br/>
+
+### <span style="color:#FF7F00"> **Ejemplo**</span>
+
+Para una muestra de $n=50$ de la edad de los participantes de la Carrera La Luz inicialmente se verifica si su distribución es normal con el fin de determinar que prueba utilizar. Cumplido este supuesto y al no tener conocimiento del valor de la varianza utilizaremos una **prueba t** para una media
+
+
+```{r}
+# x=sample(CarreraLuz22_c2$edad, 50)  # Muestra de tamaño n=50
+x=c(37, 36, 36, 27, 21, 24, 31, 29, 29, 29, 31, 26, 34, 39, 33, 27, 30, 29, 28, 34, 39, 36, 34, 27, 38, 32, 27, 27, 32, 38, 27, 31, 38, 36, 33, 18, 25, 26, 33, 34, 35, 35, 33, 34, 30, 39, 27, 35, 31, 36)
+shapiro.test(x)  # prueba de normalidad
+
+t.test(x,                         #  
+alternative = "two.sided", # tipo de prueba
+mu = 31,                  # valor a contrastar
+conf.level = 0.90)         # nivel de confianza
+```
+
+<br/>
+
+Para tomar una decisión sobre las hipótesis de acuerdo con los resultados podemos utilizar tres reglas:
+
+<br/><br/>
+
+
+<div class="content-box-gray">
+### <span style="color:#034A94"> **Regla 1**</span>
+
+Si el **Estadístico de Prueba** cae en la **Región de Rechazo**, entonce se rechaza la $H_{o}$ y se **acepta** $H_{a}$ como verdadera. Si por el contrario el **Estadístico de Prueba** NO cae en la **Región de Rechazo**, entonces NO se rechaza $H_{o}$, no existe suficiente evidencia para rechazarla, **asumimos** que $H_{o}$ es verdad.
+</div>
+
+En este caso es necesario determinar la Región de Rechazo ($RdeR$) de acuerdo al tipo de hipótesis y a la distribución del estadístico de prueba. En esta caso estamos realizando una prueba de dos colas, para un estadístico de prueba con distribución t-Student con 99 grados de libertad.
+
+<br/><br/>
+
+**Región de Rechazo** 
+
+Para determinar la **Región de Rechazo**, a a prtir del nivel de significancia asumido, se buscan los percentiles $t_{0.025; v=59}$ y $t_{0.975;v=59}$ para la distribución t-Student.
+
+```{r}
+# t = 0.76215, df = 49, p-value = 0.4496    # resultado 
+qt(c(0.025,0.975),99)
+```
+<br/>
+
+```{r,eval=FALSE, fig.width=7, fig.height=3}
+# remotes::install_github("iamamutt/ggdistribute")
+library(ggdistribute)
+p=ggdistribution(dt, seq(-3, +3, 0.1), df = 99, colour = "blue")
+p=ggdistribution(dt, seq(-3, qt(0.025,99), 0.1), df = 99, colour = 'blue', fill="red", p=p)   
+p=ggdistribution(dt, seq(qt(0.975,99),+3, 0.1), df = 99, colour = 'blue', fill="red", p=p)+ 
+ggtitle("Región de rechazo : (-Inf, -1.984217)  (1.984217, +Inf)")
+p
+```
+
+<br/>
+
+### <span style="color:#686868">**Conclusión**</span> 
+
+Como el **Estadístico de Prueba** (`t = 0.76215`) NO cae en la **Región de Rechazo**, entonces NO rechazamos $Ho$, asumimos $Ho$ es verdadera, es decir ASUMIMOS  que $\mu$ de las edades   es igual a 31 años. 
+
+
+<br/><br/>
+
+<div class="content-box-gray">
+### <span style="color:#034A94"> **Regla 2**</span>
+
+Si $\alpha > \text{valor-p}$ entonces rechazamos $H_{o}$, se **acepta** $H_{a}$ como verdadera. Si por el contrario $\alpha <  \text{valor-p}$, no rechazamos $H_{o}$, **asumimos** 	que $H_{o}$ es verdad. 
+
+</div>
+
+<br/><br/><br/>
+
+### <span style="color:#034a94">**Valor-p**</span> 
+
+El **valor-p** corresponde al área delimitada por el $EdeP$ en el sentido que indica la $RdeR$ de la prueba a contrastar. Es decir que corresponde a la probilidad  máxima de cometer error tipo I.
+
+[Gil, Jacky F.; Castañeda, Javier A (2005)](https://www.redalyc.org/pdf/806/80634308.pdf) lo definen como :
+
+>El resultado de la prueba de hipótesis se basa principalmente en el cálculo, en términos de probabilidad, de la fuerza de los hallazgos a favor de la hipótesis nula. Esta probabilidad recibe el nombre de valor-p, y se define como la probabilidad de cometer un falso positivo por efecto del azar, cuando la hipótesis nula es verdadera.
+
+<br/>
+
+### <span style="color:#686868">**Conclusión**</span> 
+
+Como el valor de $\alpha > valor-p$  ($0.05 > p-value = 0.4496$ ) entonces No se rechaza $H_o$, se **asume** que 	$Ho$ es verdad. ASUMIMOS  que $\mu$ de las edades   es igual a 31 años.  
+
+<br/><br/>
+
+<div class="content-box-gray">
+### <span style="color:#034A94"> **Regla 3**</span>
+
+El valor-p se interpreta como el error que puedo cometer al rechazar $Ho$, siendo esta verdadera (cometer *error tipo I*). Si este valor es considerado como pequeño, rechazo $Ho$, se **acepta** $H_a$. Si por el contrario se considera este valor grande, entonce no rechazo $Ho$, asumo que $Ho$ es verdad.
+
+</div>
+
+<br/>
+
+### <span style="color:#686868">**Conclusión**</span> 
+
+En este caso valoramos si el **valor-p** (p-value =  0.4496) si es grande o pequeño. En esta caso se puede considerar que su valor es muy grande y por lo tanto no nos atrevemos a rechazar $H_o$, asumimos que $H_o$ es verdadera, ASUMIMOS  que $\mu$ de las edades   es igual a 31 años. 
+
+<div class="content-box-gray">
+### <span style="color:#686868"> **NOTA**</span>
+
+Al aplicar las últimas dos reglas (2 y 3) no se requiere la construcción de una $RdeR$ para tomar la decisión. Solo con revisar el valor-p entregado por la prueba y aplicar la regla se toma la decisión. En adelante utilizaremos las reglas 2 y 3 dado que al ejecutar las funciones  en R nos suministra información sobre valor-p.
+
+</div>
+
+<br/><br/>
+
+
+## <span style="color:#034a94">**Sobre una proporción**</span>
+
+
+Ho: $p = p_{o}$ <br/>   
+Ha :$p \leq p_{o}$   
+
+<br/>
+
+
+Estadístico de prueba
+
+$$Z = \dfrac{\dfrac{x}{n}-p_{o}}{\sqrt{\dfrac{p_{o}(1-p_{o})}{n}}} \sim N(0,1) $$
+
+
+En este caso debemos tener en cuenta que la muestra sea mayor a 30 con el fin de tener estimaciones mas robustas para estimar la proporción poblacional.
+
+
+<br/><br/>
+
+### <span style="color:#FF7F00">**Ejemplo**</span>
+
+Una empresa al seleccionar su personal, lo somete a un curso de entrenamiento. Por su experiencia se conoce que el 76% de los aspirantes aprueban el curso. Durante el último proceso, los encargados efectúan cambios al programa de entrenamiento, con el fin de realizar una selección más exigente. Para esta versión se inscriben 40 aspirantes de los cuales lo aprueban el proceso 24. ¿Podría afirmarse que los cambios realizados en el programa de entrenamiento reducen la selección?
+
+Debemos realizar una prueba de cola inferior debido al sentido que tienen la afirmación que queremos verificar *los cambios realizados en el programa de entrenamiento reducen la selección*. 
+
+$H_o: p \geq 0.76$ <br/>   
+$H_a: p < 0.76$   <br/>
+
+<br/><br/>
+
+```{r}
+prop.test(24, 40, p = 0.76,
+alternative = "less",
+conf.level = 0.95)
+```
+<br/><br/>
+
+### <span style="color:#686868">**Conclusión**</span>
+
+Como el valor-p (p-value = 0.01447) es menor que el nivel de significancia ($\alpha=0.05$), rechazamos la hipótesis nula, aceptamos la hipótesis alterna. Podemos afirmar que $p<0.76$ . Tienen razón al afirmar que los cambios realizados en el proceso de selección provocaron una disminución significativa en la proporción de aprobación.
+
+<br/><br/>
+
+
+## <span style="color:#034a94">**Sobre una varianza**</span>
+
+<br/>
+
+$H_o: \sigma^{2} = \sigma^{2}_{o}$
+
+$H_a: \sigma^{2} \neq \sigma^{2}_{o}$ 
+
+<br/><br/>
+
+Estadístico de prueba
+
+$$X^{2} =\dfrac{(n-1) s^{2}}{\sigma^{2}_{o}} \sim \chi^{2}_{v: n-1}$$
+
+### <span style="color:#FF7F00"> **Ejemplo**</span>
+
+Un fabricante de baterías para celulares afirma que el tiempo de duración de sus baterías se distribuyen aproximadamente normal con una desviación estándar de 9 horas. Un comprador antes de realizar un pedido de este producto solicita al fabricante una muestra de 10 baterías para verificar la información que le esta dando. Con este propósito son enviadas al laboratorio y se obtienen los siguientes datos Es cierta la información suministrada por el fabricante? (información: 11.1, 15.6, 11.1, 7.5, 7.9, 14.7, 6.3, 8.5, 8.0 , 7.6)   
+
+<br/>
+
+```{r, eval=FALSE, fig.width=7, fig.height=3}
+library(ggdistribute)
+pRdeR=qchisq(c(0.025,0.975),9)
+p=ggdistribution(dchisq, seq(0, 30, 0.1), df = 9, colour = 'blue')
+p=ggdistribution(dchisq, seq(0, pRdeR[1], 0.1), df = 9, colour = 'blue', fill="blue", p=p)
+p=ggdistribution(dchisq, seq(pRdeR[2], 30, 0.1), df = 9, colour = 'blue', fill="blue", p=p)+
+ggtitle("Región de rechazo:  (0; 2.70) (19.0, Inf) ")
+p
+pRdeR
+```
+
+
+```{r, echo=FALSE, out.width="80%", fig.align = "center"}
+#knitr::include_graphics("img/RdeR2.png")
+```
+
+
+```{r}
+t=c(11.1, 15.6, 11.1, 7.5, 7.9, 14.7, 6.3, 8.5, 8.0 , 7.6)
+varx=var(t)
+EdeP=(length(t)-1)*varx/81
+EdeP
+```
+<br/><br/>
+
+### <span style="color:#686868">**Conclusión**</span>
+
+Como el **Estadístico de Prueba** (1.135074) caen en la **Región de Rechazo**, entonces rechazamos la hipótesis nula, aceptamos la hipótesis alterna como verdadera.
+
+Podemos entonce concluir que $\sigma^{2} \neq 81$
+
+
+<br/><br/><br/>
+
+## <span style="color:#686868">**Resumen**</span> 
+
+<div class="content-box-gray">
+
+
+<br/><br/>
+
+### <span style="color:#686868">**Estadístico de prueba**</span> 
+|    |                 |                                                                |
+|:--:|:----------------|:---------------------------------------------------------------|
+|    |Una población    |                                                                |
+|(1) |                 | $Z_{o} =\dfrac{\bar{X}-\mu_{o}}{\sigma/\sqrt{n}}\sim N(0,1)$   |
+|(2) |                 | $Z_{o} =\dfrac{\bar{X}-\mu_{o}}{s/\sqrt{n}} \sim N(0,1)$       |
+|(3) |                 | $T_{o} = \dfrac{\bar{X}-\mu_{o}}{s/\sqrt{n}} \sim t_{v=n-1}$   |
+|(4) |                 | $X^{2}_{o} = \dfrac{(n-1)S^{2}}{\sigma_{o}^{2}} \sim \chi^{2}_{v=n-1}$ | 
+|(5) |                 | $Z_{o} =  \dfrac{X-n \hspace{.1cm} p_{o}}{\sqrt{n \hspace{.1cm }p_{o}}} \sim N(0,1)$ |
+|    |                 | $Z_{o} = \dfrac{\widehat{p}-p_{0}}{\sqrt{p_{o}(1-p_{o})/n}} \sim N(0,1)$ |
+
+</div>
+
+<br/>
+
+<div class="content-box-gray">
+
+### <span style="color:#686868">**Reglas de decisión**</span>
+|                 |                                          |
+|:----------------|:---------------------------------------------------------------|
+| Regla1:         | Si el **Estadístico de Prueba** cae en la **Región de Rechazo**, entonce se rechaza la $H_{o}$ y se **acepta** $H_{a}$ como verdadera. Si por el contrario el **Estadístico de Prueba**  NO cae en la **Región de Rechazo**, entonces NO se rechaza $H_{o}$, no existe suficiente evidencia para rechazarla, **asumimos** que $H_{o}$ es verdad.|
+| Regla2:         | Si $\alpha >$ **valor-p** entonces rechazamos $H_{o}$, se **acepta** $H_{a}$. Si por el contrario $\alpha<$ `valor-p`, no rechazamos $H_{o}$, **asumimos** 	que $H_{o}$ es verdad. |
+| Regla3:         | El **valor-p** se interpreta como el error que puedo cometer al rechazar $H_{o}$, siendo esta verdadera (cometer error tipo I). Si este valor es considerado como pequeño, rechazo $H_{o}$, se **acepta** $H_{a}$. Si por el contrario se considera este valor grande, entonce no rechazo $H_{o}$, asumo que $H_{o}$ es verdad.|
+</div>
+
+</br>
+
+<div class="content-box-gray">
+
+### <span style="color:#686868">**Tipos de pruebas**</span>
+|                   |                                                                 |
+|:------------------|:----------------------------------------------------------------|
+|Dos colas          |$H_{o}: \theta = \theta_{o}$ vs $H_{o}: \theta \neq \theta_{o}$  |
+|Cola superior      |$H_{o}: \theta \leq \theta_{o}$ vs $H_{o}: \theta > \theta_{o}$  |
+|Cola inferior      |$H_{o}: \theta \geq \theta_{o}$ vs $H_{o}: \theta < \theta_{o}$  |
+
+</div>

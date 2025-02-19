@@ -1,0 +1,68 @@
+---
+title : <span style="color:#034A94"> **Experiencia**</span>
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+library(summarytools)
+
+c1 ="#FF7F00"  # naranja - color primario 
+c2 ="#034A94"  # azul oscuro - color secundario
+c3 ="#0EB0C6"  # azul claro - color terciario
+c4 ="#686868"  # gris - color texto
+```
+
+
+```{r, echo=FALSE, out.width="100%", fig.align = "center"}
+knitr::include_graphics("img/banner_presentacion.png")
+```
+
+</br>
+
+El concepto de **probabilidad** es uno de los pilares fundamentales de la estadística, ya que sirve como base para desarrollar conceptos clave, como el de **variable aleatoria**, esenciales para abordar de manera adecuada la **inferencia estadística**.
+
+La relación entre estos conceptos y las etapas de la **Metodología Estadística** permite comprender el contexto y la importancia de los temas tratados en esta unidad. Aunque la **probabilidad** y la **variable aleatoria** no forman parte explícita de la metodología estadística, constituyen herramientas esenciales para interpretar y fundamentar los métodos de **inferencia estadística**, facilitando la toma de decisiones informadas a partir de los datos.
+
+
+</br></br>
+
+<div class="content-box-blue">
+
+#### 1. **Definición del problema**
+#### 2. **Definición de los objetivos**
+#### 3. **Definición de las variables de interés**
+#### 4. **Diseño del experimento**
+#### 5. **Recolección de la información**
+#### 6. **Procesamiento de los datos**
+#### 7. <span style="color:#034A94">**Análisis descriptivo o exploratorio de datos**</span>
+#### $\hspace{.5cm}$    <span style="color:#999999">**Probabilidad**</span>
+#### $\hspace{.5cm}$    <span style="color:#999999">**Variable aleatoria**</span>
+#### 8. <span style="color:#034A94">**Inferencia estadística**</span>
+#### 9. **Conclusiones y recomendaciones**
+
+</div>
+
+</br>
+
+En esta unidad se abordarán los principales conceptos fundamentales para el análisis estadístico:
+
+- **Probabilidad:** Base para la comprensión de fenómenos aleatorios y cálculo de incertidumbre.
+- **Variable aleatoria:** Elemento clave para modelar resultados de experimentos aleatorios.
+- **Inferencia estadística:** Proceso para obtener conclusiones a partir de datos, que incluye:
+  - **Estimación:** Tanto puntual como mediante intervalos de confianza.
+  - **Pruebas de hipótesis:** Enfoques paramétricos y no paramétricos para validar suposiciones.
+
+
+
+  
+

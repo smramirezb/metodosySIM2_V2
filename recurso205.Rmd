@@ -1,0 +1,388 @@
+---
+title : <span style="color:#034a94"> **Modelos continuos**</span>
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = NA)
+```
+
+<br/><br/>
+
+## <span style="color:#034a94">**Algunos modelos continuos**</span>
+
+Las variables continuas proceden en su mayoría de la medición y se clasifican así debido a que su rango esta formado por un conjunto infinito no numerable. A continuación se presentan los principales modelos continuos.
+
+<br/>
+
+|                 |                 |                 |                 |                 |                 | 
+|:---------------:|:---------------:|:---------------:|:---------------:|:---------------:|:---------------:|
+| Uniforme        |   Normal        |  Exponencial    |  Gamma          |  Weibull        | Cauchy          |
+| Lognormal       |   Beta          | Erlang          |  Gumbel         |  Kernel	        |                 |
+|                 |                 |                 |                 |                 |                 |
+
+
+<br/><br/>
+
+### <span style="color:#034a94">**uniforme**</span>
+
+<br/>
+
+<div class="content-box-blue">
+
+### <span style="color:#034a94">**Distribución uniforme**</span>
+
+La distribución **uniforme** Se caracteriza porque su función de densidad es constante en su recorrido o dominio de definición (intervalo [a,b])
+
+$$\begin{equation*}
+	f(x)=\left\lbrace
+	\begin{array}{lll}
+		\dfrac{1}{b-a}	 &,& a \leq x \leq b   \\
+		&&\\
+		0 &,& \mbox{en otro caso}
+	\end{array}
+	\right.
+\end{equation*}$$
+
+</div> 
+
+<br/><br/>
+
+
+<center>
+```{r, echo=FALSE, fig.height=3.5}
+# uniforme
+library(ggplot2)
+x= c(0,1) 
+fx=c(1,1) 
+dat=data.frame(x,fx)
+ggplot(data=dat,aes(x=x, y=fx))+ 
+scale_y_continuous(limits=c(0,1.2))+
+geom_line(size = 1, color="#FF7F00") 
+```
+
+**Figura 2.23** Función de densidad uniforme - $X \sim unif(x, a=0 , b=1)$
+</center>
+<br/><br/>
+
+### <span style="color:#034a94">**normal**</span>
+
+La distribución **normal** es uno de los modelos más utilizados en las aplicaciones de la Estadística. Estas aplicaciones están relacionadas con:
+
+Usos de la distribución normal
+
+* La mayoría de variables en la naturaleza, se distribuyen aproximadamente de manera normal
+
+* A partir de la distribución normal se originan las distribuciones $t-student$, $\chi^{2}$ y $F$-Fisher, utilizadas en inferencia estadística
+
+* En general la media muestral de variables que no tienen distribución normal, tiende a aproximarse a una distribución normal, a medida que el tamaño de muestra aumenta. (Teorema del Límite Central) 
+
+* La regla empírica establece que:
+
+*	Aproximadamente el 68\% de la población se encuentra en el intervalo centrado $$(\mu - \sigma ; \mu + \sigma)$$
+
+* Aproximadamente el 95\% de la población se encuentra en el intervalo centrado $$(\mu - 2\sigma ; \mu + 2\sigma)$$
+
+* Aproximadamente el 99.7\% de la población se encuentra en el intervalo centrado $$(\mu - 3\sigma ; \mu + 3\sigma)$$
+
+Su distribución fue planteada por el matemático francés del siglo 18, Abraham de Moivre, quien a partir de la distribución Binomial, con $n=2$ empezó a aumentar su tamaño hasta observar que se formaba una distribución en forma de campana. Este mismo comportamiento fue detectado por Galileo en el siglo 17, al observar los errores producto de sus mediciones en astronomía. El modelo como se conoce actualmente fue propuesto de manera simultánea por los científicos Robert Adrain y Carl Friedrich Gauss, quien finalmente le dio el nombre.
+
+Su función de densidad esta dada por:
+
+<br/>
+
+<div class="content-box-blue">
+
+
+$$f(x)= \dfrac{1}{\sqrt{2\pi \sigma^{2}}} \hspace{.1cm} e^{-\big(\frac{1}{2\sigma^{2}}(x-\mu)^{2}\big)}	 \hspace{.5cm}  -\infty \leq  x \leq \infty $$  
+
+$$E[X]=\mu$$
+$$V[X]=\sigma^{2}$$
+
+</div> 
+
+
+<br/><br/>
+
+En la siguiente gráfica se muestra el efecto en la curva normal, producto de cambios en la media o en la varianza. A mayor valor de la media la curva se desplaza a la derecha, mientras que a menor varianza la curva se vuelve mas angosta o puntiaguda 
+
+
+
+
+<center>
+
+```{r, echo=FALSE, fig.height=3.5}
+# Distribucion normal
+library(ggfortify)
+
+p=ggdistribution(dnorm, seq(-4, 8, 0.1), mean = 0, sd = 1,colour = "#034A94")
+p=ggdistribution(dnorm, seq(-4, 8, 0.1), mean = 0, sd = 1.5,colour = "#FF7F00", p=p)
+ggdistribution(dnorm, seq(-4, 8, 0.1),   mean = 2, sd = 1.5,colour = "#686868", p=p)
+```
+
+**Figura 2.24** Función de densidad normal : <span style="color:#034A94">$X \sim N(0,1)$</span>, <span style="color:#FF7F00"> $X \sim N(0,1.5)$</span> y <span style="color:#686868"> $X \sim N(2,1.5)$</span>
+
+</center>
+
+<br/>
+
+Dentro del sin número de posibles curvas que se pueden obtener con los parámetros $\mu$ y $\sigma^{2}$, existe una muy especial. Normal estándar ($N(0,1)$) con $\mu=0$ y $\sigma^{2}=1$.  La gran mayoría de libros de Estadística poseen tablas de la función de distribución acumulada de la normal estándar.\\
+
+
+<div class="content-box-blue">
+
+### <span style="color:#034a94">**Distribución normal estándar N(0,1)**</span>
+
+Su función de distribución esta dada por :
+
+$$f(x)= \dfrac{1}{\sqrt{2\pi}} \hspace{.1cm} e^{-\big(\frac{1}{2}(x-\mu)^{2}\big)}	 \hspace{.5cm}  -\infty \leq  x \leq \infty $$ 
+
+Si $X \sim N(\mu, \sigma^{2})$, entonces $Z= \dfrac{X-\mu}{\sigma} \sim N(0,1)$ 
+
+a este proceso se le llama comúnmente estandarizar.
+
+</div> 
+
+
+<center>
+
+```{r, echo=FALSE, fig.height=3.5}
+library(ggfortify)
+ggdistribution(dnorm, seq(-4, 4, 0.1), mean = 0, sd = 1,fill = "#FF7F00")
+```
+
+**Figura 2.25** Función de densidad normal estandar $Z \sim N(0,1)$
+</center>
+
+<br/><br/>
+
+### <span style="color:#034a94">**Propiedad empírica de la distribución normal estándar**</span>
+
+La propiedad empírica de la distribución normal es de gran ayuda cuando una variable  de interés se  puede aproximar al modelo normal. Ella establece un intervalo formado por la media mas o menos una desviación estándar contiene el 68\% de los datos. Si el intervalo tiene un ancho de 4 desviaciones estándar contendrá el 95\% de los datos y si este intervalo corresponde a los valores de la media mas o menos 3 desviaciones estándar contendrá el 99\% de los datos que se representa en la siguiente gráfica.
+
+
+
+
+<center>
+```{r, echo=FALSE, out.width="70%", fig.align = "center"}
+knitr::include_graphics("img/norm01.png")
+```
+**Figura 2.26** Propiedades empiricas de la distribución normal estándar
+
+
+<br/><br/>
+
+
+### <span style="color:#034a94">**exponencial**</span> 
+
+El  modelo **exponencial** fue  planteado por el matemático estadístico e ingeniero Agner Kraru Erlang, experto en el trafico de las comunicaciones y la teoría de colas. 
+Distribución utilizada para modelar el tiempo entre dos eventos consecutivos. 
+
+
+<br/>
+
+<div class="content-box-blue">
+
+### <span style="color:#034a94">**Distribución exponencial**</span>
+
+$$\begin{equation*}
+	f(x)=\left\lbrace
+	\begin{array}{lll}
+		\lambda e^{-\lambda x}  &,& x > 0   \\
+		&&\\
+		0 &,& x \leq 0 
+	\end{array}
+	\right.
+\end{equation*}$$
+
+
+$$E[X]=\dfrac{1}{\lambda}$$
+
+$$V[X]=\dfrac{1}{\lambda^{2}}$$
+
+Observación: algunos autores utilizan $\frac{1}{\beta}$ en lugar de $\lambda$
+
+$$F(x)=P(X \leq x)=1-e^{-\lambda x} \hspace{1cm} x > 0$$
+
+</div> 
+
+<br/><br/>
+
+
+<center>
+
+```{r, echo=FALSE, fig.height=3.5}
+#exponencial
+library(ggfortify)
+p=ggdistribution(dexp, seq(0, 10, 0.1),rate=1 ,colour = "#FF7F00")
+p=ggdistribution(dexp, seq(0, 10, 0.1),rate=2 ,colour ="#034A94", p=p)
+ggdistribution(dexp, seq(0, 10, 0.1),rate=0.5,colour = "#686868", p=p)
+```
+<br/>
+**Figura 2.27** Función de densidad exponencial <br/> <span style="color:#FF7F00"> $X\sim exp(x,\lambda=1)$</span>, <span style="color:#034A94"> $X\sim exp(x,\lambda=2)$</span> y <span style="color:#686868"> $X\sim exp(x,\lambda=5)$</span>
+</center>
+
+<br/><br/>
+
+
+
+<center>
+```{r, echo=FALSE, fig.height=3.5}
+library(ggfortify)
+ggdistribution(pexp, seq(0, 10, 0.1),rate=1 ,colour = "#FF7F00")
+```
+
+**Figura 2.28** Distribución exponencial acumulada
+</center>
+
+<br/><br/>
+
+
+
+### <span style="color:#034a94">**gamma**</span>
+
+Para tratar las distribuciones Gamma y Weibull, es necesario definir la función Gamma como:
+
+$$\Gamma(r)= \int_{0}^{\infty} t^{r-1} e^{t} \,dt $$
+
+Con las siguientes propiedades:
+
+
+* Si $r$ es un entero, $\Gamma(r)=(r-1)!$
+
+* para cualquier valor de $r$, $\Gamma(r+1)=r \Gamma(r)$
+
+* $\Gamma(1/2)=\sqrt{\pi}$
+
+* $\Gamma(1)=1,\hspace{.1cm} \Gamma(2)=1, \hspace{.1cm} \Gamma(3)=2, \hspace{.1cm}\Gamma(n+1)=n!$
+
+
+<br/><br/>
+
+
+
+Esta distribución tiene su origen en la familia de curvas sesgadas propuestas por Karl Pearson. Esta distribución es otra alternativa para modelar los tiempos de espera de ocurrencia de sucesos o eventos. En ocasiones puede relacionarse con la suma de los tiempos de variables exponenciales sucesivas con igual media.
+
+<br/><br/>
+
+<div class="content-box-blue">
+
+
+La distribución **gamma** se obtiene al sumar $r$ variables con distribución exponencial con parámetro $\lambda$. 
+
+Distribución 
+
+Si $Y=X_{1}+X_{2}+....+X_{r}$, $X_{i} \sim Exp(\lambda)$, entonces $Y \sim \Gamma(r,\lambda)$.
+
+$$\begin{equation*}
+	f(x)=\left\lbrace
+	\begin{array}{lll}
+		\dfrac{\lambda^{r}x^{r-1} e^{-\lambda x}}{\Gamma(r)}  &,& x > 0   \\
+		&&\\
+		0 &,&   x \leq 0
+	\end{array}
+	\right.
+\end{equation*}$$
+
+
+Distribuciones exponenciales gamma(3,1)}, gamma(2,1) y gamma(5,1)
+fig_gammas.pdf
+
+Algunos autores utilizan $\frac{1}{\beta}$ en lugar de $\lambda$ y $\alpha$ en lugar de $r$
+
+
+$$E[X]=\dfrac{r}{\lambda}$$
+$$V[X]= \dfrac{r}{\lambda^{2}}$$
+
+</div> 
+
+<br/><br/>
+
+<center>
+
+```{r, echo=FALSE, fig.height=3.5}
+# gamma
+library(ggfortify)
+p=ggdistribution(dgamma, seq(0, 15, 0.1),shape=3,rate=1 ,colour= "#FF7F00")
+p=ggdistribution(dgamma, seq(0, 15, 0.1),shape=2,rate=1 ,colour = "#034A94", p=p)
+ggdistribution(dgamma, seq(0, 15, 0.1),shape=5,rate=1,colour = "#686868", p=p)
+
+```
+<br/>
+**Figura 2.29** Función de densidad gamma <span style="color:#FF7F00">$X\sim gamma(x, \alpha=3,\beta=1)$</span>, <br/> <span style="color:#034A94">$X\sim gamma(x, \alpha=2,\beta=1)$</span> y <span style="color:#686868">$X\sim gamma(x, \alpha=5,\beta=1)$</span>
+
+</center>
+
+
+```{r}
+pgamma(10,3,0.5, lower.tail = FALSE)
+```
+
+<br/><br/>
+
+### <span style="color:#034a94">**Weibull**</span> 
+
+Esta distribución fue descubierta Maurice Frechet matemático francés y luego trabajada por  Rosin y Rammler quienes en 1933 estudiaron el tamaño de una partícula y posteriormente recibe su nombre del  ingeniero y matemático Waloddi Weibull . Esta distribución se utiliza para modelar el tiempo de vida de algunos componentes. La Weibull tiene dos parámetros $\alpha$ y $\beta$. Su función de distribución y sus principales características son:
+
+
+<div class="content-box-blue">
+
+### <span style="color:#034a94">**Distribución Weibull**</span> 
+
+$$\begin{equation*}
+f(x)=\left\lbrace
+\begin{array}{lll}
+	\Bigg(\dfrac{\alpha}{\beta}\Bigg)\Bigg(\dfrac{x}{\beta}\Bigg)^{\alpha-1}\exp{\Bigg\{-\Big(\dfrac{x}{\beta}\Big)^{\alpha}\Bigg\}}&,& x > 0\\
+	&&\\
+	0 &,& x \leq 0
+\end{array}
+\right.
+\end{equation*}$$
+
+$$E[X]=\beta \hspace{.2cm}\Gamma\Bigg(1+\frac{1}{\alpha}\Bigg)$$
+
+$$V[X]=\beta^{2} \Bigg(\Gamma\Bigg(1+\frac{2}{\alpha}\Bigg)- \Bigg[\Gamma \Bigg(1+\frac{1}{\alpha}\Bigg)\Bigg]^{2}\Bigg) $$
+
+$$F(x)=1-\exp{\Big\{-\Big(\dfrac{x}{\beta}\Big)^{\alpha}\Big\}} $$	
+
+</div> 
+
+<center>
+
+```{r, echo=FALSE, fig.height=3.5}
+# weibull
+library(ggfortify)
+p=ggdistribution(dweibull, seq(0, 5, 0.01),shape=0.8,scale=1 ,colour = "#FF7F00")
+p=ggdistribution(dweibull, seq(0, 5, 0.01),shape=2,scale=1 ,colour = "#034A94", p=p)
+ggdistribution(dweibull, seq(0, 5, 0.01),shape=2,scale=2,colour = "#686868", p=p)
+```
+<br/>
+**Figura 2.30** Función de densidad Weibull - <span style="color:#FF7F00">$X \sim Weibull(0.8, 1)$</span>, <br/> <span style="color:#034A94"> $X \sim Weibul(2,1)$</span> y <span style="color:#686868"> $X \sim Weibull(2,2)$</span>
+
+</center>
+<br/><br/>
+
+
+
+La siguiente gráfica corresponde a varias conformaciones de los parámetros de esta distribución.
+
+Distribuciones exponenciales \textcolor{col4}{Weibull(0.8,1)}, \textcolor{col5}{Weibull(2,1)} y \textcolor{col3}{Weibull(2,2)}
+fig_weibulls.pdf
+
+
+
+### <span style="color:#034a94">**Función de riesgo**</span> 
+
+Se llama así a la tasa de fallas por unidad de tiempo, expresada como la proporción de elementos que no han fallado
+
+$$h(t)=\dfrac{f(t)}{1-F(t)} $$
+
+
+<br/><br/>

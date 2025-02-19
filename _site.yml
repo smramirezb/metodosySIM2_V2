@@ -1,0 +1,76 @@
+name: " "
+output_dir: "docs"
+navbar:
+  title: " "
+  left:
+    - text: " "
+      icon: fa-home
+      href: index.html
+    - text: "Probabilidad"
+      menu:
+        - text: "Probabilidad"
+          href: recurso101.html
+        - text: "Conceptos básicos"
+          href: recurso102.html  
+        - text: "Enfoque"
+          href: recurso103.html
+        - text: "Axiomas"
+          href: recurso103b.html  
+        - text: "Tipos de probabilidad"
+          href: recurso104.html  
+    - text: "Variable"
+      menu:
+        - text: "Variable aleatoria"
+          href: recurso201.html
+        - text: "Valos esperado y varianza"
+          href: recurso202.html            
+        - text: "Variables conjuntas"
+          href: recurso203.html            
+        - text: "Modelos discretos"
+          href: recurso204.html 
+        - text: "Modelos continuos"
+          href: recurso205.html  
+    - text: "Inferencia"
+      menu:
+        - text: "Conceptos básicos"
+          href: recurso301.html
+        - text: "Estimación puntual"
+          href: recurso302.html             
+        - text: "Propiedades"
+          href: recurso303.html  
+        - text: "Métodos de estimación"
+          href: recurso304.html
+        - text: "Teorema del Límite Central"
+          href: recurso305.html        
+    - text: "Intervalos"
+      menu:
+        - text: "Intervalos una población"
+          href: recurso401.html
+        - text: "Intervalos dos poblaciones"
+          href: recurso402.html
+        - text: "Estimación no paramétrica"
+          href: recurso403.html
+    - text: "Hipótesis"
+      menu:
+        - text: "Pruebas de hipótesis"
+          href: recurso501.html
+        - text: "Conceptos básicos"
+          href: recurso502.html
+        - text: "Pruebas paramétricas"
+          href: recurso503.html
+        - text: "Pruebas no paramétricas"
+          href: recurso504.html          
+    - text: "Software R"
+      menu:
+        - text: "Probabilidad"
+          href: recurso601.html
+        - text: "Variable aleatória"
+          href: recurso602.html
+        - text: "Modelos de probabilidad"
+          href: recurso607.html          
+        - text: "Estimación"
+          href: recurso603.html  
+        - text: "Intervalos de confianza"
+          href: recurso604.html
+        - text: "Pruebas paramétricas"
+  
