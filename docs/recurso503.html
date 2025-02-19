@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Pruebas de hipótesis para dos poblaciones</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"> </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Variable aleatoria</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valos esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Intervalos una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Intervalos dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Pruebas de hipótesis</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Software R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso601.html">Probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso602.html">Variable aleatória</a>
+    </li>
+    <li>
+      <a href="recurso607.html">Modelos de probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso603.html">Estimación</a>
+    </li>
+    <li>
+      <a href="recurso604.html">Intervalos de confianza</a>
+    </li>
+    <li class="dropdown-header">Pruebas paramétricas</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#034a94">
+<strong>Pruebas de hipótesis para dos poblaciones</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+<p><br/><br/></p>
+<div id="comparación-de-dos-medias" class="section level1">
+<h1><span style="color:#034a94"><strong>Comparación de dos
+medias</strong></span></h1>
+<p><br/></p>
+<div id="caso-para-grupos-pareados" class="section level2">
+<h2><span style="color:#034a94"><strong>Caso para grupos
+pareados</strong></span></h2>
+<p><br/></p>
+<div id="ejemplo" class="section level3">
+<h3><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></h3>
+<p>El director de un gimnasio requiere determinar si contrata o no a un
+instructor para su campaña de reducción de peso. Para tomar la decisión
+decide tomar un grupo de 16 personas que acuden normalmente para darle
+una oportunidad a un aspirante al cargo. Los siguientes datos
+corresponden a los resultados obtenidos para los pesos antes (pant) y
+pesos después (pdes) de un mes de participación en el programa. Utilice
+un nivel de significancia <span class="math inline">\(\alpha=
+0.10\)</span>, para determinar si contrata o no al aspirante.</p>
+<table>
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">pant</td>
+<td align="right">104.5</td>
+<td align="right">89</td>
+<td align="right">84.5</td>
+<td align="right">106</td>
+<td align="right">90</td>
+<td align="right">96</td>
+<td align="right">79</td>
+<td align="right">90</td>
+<td align="right">85</td>
+<td align="right">76.5</td>
+<td align="right">91.5</td>
+<td align="right">82.5</td>
+<td align="right">100.5</td>
+<td align="right">89.5</td>
+<td align="right">121.5</td>
+<td align="right">72</td>
+</tr>
+<tr class="even">
+<td align="left">pdes</td>
+<td align="right">98</td>
+<td align="right">85.5</td>
+<td align="right">85</td>
+<td align="right">103.5</td>
+<td align="right">88.5</td>
+<td align="right">95</td>
+<td align="right">79.5</td>
+<td align="right">90</td>
+<td align="right">82</td>
+<td align="right">76</td>
+<td align="right">89.5</td>
+<td align="right">81</td>
+<td align="right">99.5</td>
+<td align="right">86.5</td>
+<td align="right">115.5</td>
+<td align="right">70</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(Ho: \mu_{ant} \geq \mu_{des}\)</span>
+<br/> <span class="math inline">\(Ha: \mu_{ant} &lt; \mu_{des}\)</span>
+<br/></p>
+<pre class="r"><code>pant=c(104.5,89,84.5,106,90,96,79,90,85,76.5,91.5,82.5,100.5,89.5,121.5,72)
+pdes=c(98,85.5,85,103.5,88.5,95,79.5,90,82,76,89.5,81,99.5,86.5,15.5,70)
+
+t.test(pant, pdes,
+alternative = &quot;less&quot;,
+mu = 0, 
+paired = TRUE, 
+conf.level = 0.95)</code></pre>
+<pre><code>
+    Paired t-test
+
+data:  pant and pdes
+t = 1.2736, df = 15, p-value = 0.8889
+alternative hypothesis: true mean difference is less than 0
+95 percent confidence interval:
+     -Inf 19.75467
+sample estimates:
+mean difference 
+         8.3125 </code></pre>
+<p><br/></p>
+</div>
+<div id="conclusión" class="section level3">
+<h3><span style="color:#686868"><strong>Conclusión</strong></h3>
+<p>Como el valor-p ( 0.8889) es mayor que nuestro nivel de significancia
+(<span class="math inline">\(\alpha= 0.10\)</span>), no se rechaza la
+hipótesis nula, no existe suficiente evidencia en la muestra que permita
+rechazarla. Se asume que Ho es verdad. Es decir que no hay evidencia que
+el programa reduzca el peso.</p>
+<p><br/><br/></p>
+<p><br/><br/><br/></p>
+</div>
+<div
+id="caso-par-grupos-independientes-variables-normales-varianzas-iguales"
+class="section level3">
+<h3><span style="color:#034a94"><strong>Caso par grupos independientes,
+variables normales, varianzas iguales</strong></span></h3>
+<p><br/></p>
+</div>
+<div id="ejemplo-1" class="section level3">
+<h3><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></h3>
+<p>Una empresa desarrolla un curso de entrenamiento para sus empleados,
+formando dos grupos y aplicando dos metodologías diferentes de
+entrenamiento con el fin de poder evaluar que método produce los mejores
+resultados. El primer grupo (g1) esta conformado por 36 empleados y el
+segundo grupo (g2) por 40 empleados . Se puede afirmar que el método
+aplicado al segundo grupo produce mejores resultados que el aplicado al
+primer grupo ? ¿Que supuestos debe tener en cuenta?</p>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="93%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">Grupo 1</td>
+<td align="left">6.8, 6.1, 5.8, 5.9, 5.8, 6.4, 5.7, 6.0, 5.9, 6.4, 6.0,
+5.7, 6.5, 6.5, 6.0, 5.9, 5.7, 5.8, 5.9, 5.8, 6.0, 6.0, 5.8, 5.7, 6.1,
+5.9, 5.2, 6.3, 5.4, 6.5, 5.5, 5.9, 7.0, 6.4, 5.1, 6.3</td>
+</tr>
+<tr class="even">
+<td align="left">Grupo 2</td>
+<td align="left">8.8, 8.5, 8.4, 8.5, 7.6, 8.7, 8.0, 7.9, 8.2, 8.0, 7.8,
+8.6, 8.5, 7.9, 8.5, 8.3, 8.4, 8.2, 8.3, 7.9, 8.2, 7.7, 7.8, 7.7, 8.1,
+8.0, 8.3, 8.2, 8.1, 8.3, 8.1, 8.8, 7.7, 9.1, 7.6, 8.4, 8.2, 8.3, 8.1,
+8.7</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>grupo1=c(6.8, 6.1, 5.8, 5.9, 5.8, 6.4, 5.7, 6.0, 5.9, 6.4, 6.0, 5.7, 6.5, 6.5, 6.0, 5.9, 5.7, 5.8, 5.9, 5.8, 6.0, 6.0, 5.8, 5.7, 6.1, 5.9, 5.2, 6.3, 5.4, 6.5, 5.5, 5.9, 7.0, 6.4, 5.1, 6.3)
+grupo2=c(8.8, 8.5, 8.4, 8.5, 7.6, 8.7, 8.0, 7.9, 8.2, 8.0, 7.8, 8.6, 8.5, 7.9, 8.5, 8.3, 8.4, 8.2, 8.3, 7.9, 8.2, 7.7, 7.8, 7.7, 8.1, 8.0, 8.3, 8.2, 8.1, 8.3, 8.1, 8.8, 7.7, 9.1, 7.6, 8.4, 8.2, 8.3, 8.1, 8.7)
+
+par(mfrow = c(1, 2))
+boxplot(grupo1, las=1, col=c2, ylim=c(5,10))
+boxplot(grupo2, las=1, col=c3, ylim=c(5,10))</code></pre>
+<img src="recurso503_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<center>
+<strong>Figura 2.45</strong> Comparación de resultados evaluaciones
+Grupo 1 y Grupo 2
+</center>
+<p><br/></p>
+<p>Iniciaremos con una prueba de hipótesis para la comparación de
+varianzas:</p>
+<p><span class="math inline">\(H_o: \sigma^{2}_{1} =
+\sigma^{2}_{2}\)</span><br/></p>
+<p><span class="math inline">\(H_a: \sigma^{2}_{1} \neq
+\sigma^{2}_{2}\)</span><br/></p>
+<pre class="r"><code>var.test(grupo1,grupo2)</code></pre>
+<pre><code>
+    F test to compare two variances
+
+data:  grupo1 and grupo2
+F = 1.2975, num df = 35, denom df = 39, p-value = 0.4282
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+ 0.6776032 2.5137013
+sample estimates:
+ratio of variances 
+          1.297479 </code></pre>
+<p><br/><br/></p>
+</div>
+<div id="conclusión-1" class="section level3">
+<h3><span style="color:#686868"><strong>Conclusión</strong></span></h3>
+<p>Como el valor-p (0.4282) es mayor al nivel de significancia (<span
+class="math inline">\(\alpha=0.05\)</span>), no rechazamos la hipótesis
+nula, no existe suficiente evidencia en la muestra que permita
+rechazarla, asumimos que las varianza son iguales.</p>
+<p><br/><br/></p>
+<p><span class="math inline">\(H_o: \mu_{1} \geq \mu_{2}\)</span> <br/>
+<span class="math inline">\(H_a: \mu_{1} &lt; \mu_{2}\)</span> <br/></p>
+<p><br/></p>
+<pre class="r"><code>t.test(grupo1, grupo2,
+alternative =&quot;less&quot;,
+mu = 0, 
+paired = FALSE, 
+var.equal = TRUE,
+conf.level = 0.95)</code></pre>
+<pre><code>
+    Two Sample t-test
+
+data:  grupo1 and grupo2
+t = -25.413, df = 74, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means is less than 0
+95 percent confidence interval:
+      -Inf -2.072933
+sample estimates:
+mean of x mean of y 
+ 5.991667  8.210000 </code></pre>
+<p><br/><br/></p>
+</div>
+<div id="conclusión-2" class="section level3">
+<h3><span style="color:#686868"><strong>Conclusión</strong></span></h3>
+<p>Como el valor-p (2.2e-16) es menor que el nivel de significancia,
+rechazamos la hipótesis nula, aceptamos como verdadera la hipótesis
+alterna. La media el primer grupo es significativamente menor que la
+media obtenida por el segundo grupo. Esto indica que el método aplicado
+al segundo grupo produce mejores resultados.</p>
+<p><br/><br/><br/></p>
+</div>
+<div
+id="caso-para-grupos-independientes-variables-normales-varianzas-diferentes"
+class="section level3">
+<h3><span style="color:#034a94"><strong>Caso para grupos independientes,
+variables normales, varianzas diferentes</strong></span></h3>
+<p><br/></p>
+</div>
+<div id="ejemplo-2" class="section level3">
+<h3><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></h3>
+<p>Supongamos que la empresa del ejemplo 5, desea comparar los
+resultados obtenidos por el grupo 2 con un tercer grupo externo con el
+fin de realizar una valoración adicional que le permita una visión más
+general de los métodos empleados</p>
+<p><br/></p>
+<pre class="r"><code>grupo3=c(8.4, 7.5, 6.9, 6.6, 7.0, 5.5, 5.5, 7.9, 6.9, 7.3, 4.7, 5.5, 6.7, 8.3, 6.0, 6.3, 5.5, 8.4, 7.1, 5.3, 6.9, 5.5, 7.2, 6.5, 6.1, 7.8, 7.4, 6.6, 6.8, 6.0, 6.9, 7.4, 4.9, 6.2, 7.3, 6.2)
+grupo2=c(8.8, 8.5, 8.4, 8.5, 7.6, 8.7, 8.0, 7.9, 8.2, 8.0, 7.8, 8.6, 8.5, 7.9, 8.5, 8.3, 8.4, 8.2, 8.3, 7.9, 8.2, 7.7, 7.8, 7.7, 8.1, 8.0, 8.3, 8.2, 8.1, 8.3, 8.1, 8.8, 7.7, 9.1, 7.6, 8.4, 8.2, 8.3, 8.1, 8.7)
+par(mfrow = c(1, 2))
+boxplot(grupo3, las=1, col=c2, ylim=c(5,10))
+boxplot(grupo2, las=1, col=c3, ylim=c(5,10))</code></pre>
+<img src="recurso503_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<center>
+<strong>Figura 2.46</strong> Comparación de resultados evaluaciones
+Grupo 2y Grupo 3
+</center>
+<p><br/></p>
+<pre class="r"><code>var.test(grupo3,grupo2)</code></pre>
+<pre><code>
+    F test to compare two variances
+
+data:  grupo3 and grupo2
+F = 7.2974, num df = 35, denom df = 39, p-value = 1.334e-08
+alternative hypothesis: true ratio of variances is not equal to 1
+95 percent confidence interval:
+  3.811031 14.137763
+sample estimates:
+ratio of variances 
+          7.297388 </code></pre>
+<pre class="r"><code>t.test(grupo3, grupo2,
+alternative =&quot;less&quot;,
+mu = 0, 
+paired = FALSE, 
+var.equal = FALSE,
+conf.level = 0.95)</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  grupo3 and grupo2
+t = -9.2548, df = 43.571, p-value = 3.781e-12
+alternative hypothesis: true difference in means is less than 0
+95 percent confidence interval:
+      -Inf -1.285811
+sample estimates:
+mean of x mean of y 
+ 6.638889  8.210000 </code></pre>
+<p><br/></p>
+<p>En este caso tenemos una comparación de medias para grupos
+independientes con varianzas diferentes (como se muestra en el resultado
+de var.test).</p>
+<p><br/></p>
+</div>
+<div id="conclusión-3" class="section level3">
+<h3><span style="color:#686868"><strong>Conclusión</strong></span></h3>
+<p>Analizando el resultado de la prueba t-Student, el valor-p resultante
+(3.781e-12) indica que se rechaza la hipótesis nula, se acepta la
+hipótesis alterna como verdadera. Podemos afirmar que existen
+diferencias significativas entre las dos medias.</p>
+<p><br/><br/><br/></p>
+</div>
+</div>
+<div id="diferencia-de-proporciones" class="section level2">
+<h2><span style="color:#034a94"><strong>Diferencia de
+proporciones</strong></span></h2>
+<p><br/></p>
+<div id="ejemplo-3" class="section level3">
+<h3><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></h3>
+<p>Una encuesta realizada a 100 usuarios de una tarjeta de crédito
+seleccionados aleatoriamente, 57 dijeron que sabían que empleando su
+tarjeta podían ganar millas de viajero. Después de una campaña
+publicitaria para difundir este beneficio, se realizo una encuesta
+independiente entre 150 usuarios de la tarjeta de crédito y 87
+informaron que conocían el beneficio. ¿Se puede concluir que el
+conocimiento de este beneficio aumento después de la campaña
+publicitaria?</p>
+<p><br/><br/></p>
+<p><span class="math inline">\(Ho: p_{1} \geq p_{2}\)</span> <br/> <span
+class="math inline">\(Ha: p_{1} &lt; p_{2}\)</span> <br/></p>
+<p><br/></p>
+<pre class="r"><code>prop.test(c(57,87),c(100,150),
+p = NULL,
+alternative = &quot;less&quot;,
+conf.level = 0.95)</code></pre>
+<pre><code>
+    2-sample test for equality of proportions with continuity correction
+
+data:  c(57, 87) out of c(100, 150)
+X-squared = 0.00068243, df = 1, p-value = 0.4896
+alternative hypothesis: less
+95 percent confidence interval:
+ -1.0000000  0.1033338
+sample estimates:
+prop 1 prop 2 
+  0.57   0.58 </code></pre>
+<p><br/><br/></p>
+</div>
+<div id="conclusión-4" class="section level3">
+<h3><span style="color:#686868"><strong>Conclusión</strong></span></h3>
+<p>Como el valor-p ( 0.4896) es mayor al nivel de significancia, no se
+rechaza la hipótesis nula, no existe suficiente evidencia en la muestra
+que permita rechazarla, asumimos que Ho es verdad. Por tal motivo no se
+perciben mejoras el conocimiento de los beneficios que trae el uso de la
+tarjeta de crédito. Se recomienda revisar la forma en que se realiza la
+campaña publicitaria.</p>
+<p><br/><br/></p>
+<p><br/></p>
+</div>
+</div>
+<div id="resumen" class="section level2">
+<h2><span style="color:#686868"><strong>Resumen</strong></span></h2>
+<center>
+<strong>Tabla 2.9</strong> Pruebas de hipótesis para dos poblaciones
+</center>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="27%" />
+<col width="26%" />
+<col width="26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">parámetro</th>
+<th align="left">prueba de dos colas</th>
+<th align="left">prueba de cola inferior</th>
+<th align="left">prueba de cola superior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span
+class="math inline">\(\mu_{1}-\mu_{2}\)</span></td>
+<td align="left"><span class="math inline">\(H_o:
+\mu_{1}-\mu_{2}=\Delta_{o}\)</span></td>
+<td align="left"><span class="math inline">\(H_o: \mu_{1}-\mu_{2}
+\geq=\Delta_{o}\)</span></td>
+<td align="left"><span class="math inline">\(H_o:
+\mu_{1}-\mu_{2}\leq\Delta_{o}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><span class="math inline">\(H_a: \mu_{1}-\mu_{2} \neq
+\Delta_{o}\)</span></td>
+<td align="left"><span class="math inline">\(H_a: \mu_{1}-\mu_{2}
+&lt;\Delta_{o}\)</span></td>
+<td align="left"><span class="math inline">\(H_a: \mu_{1}-\mu_{2} &gt;
+\Delta_{o}\)</span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="27%" />
+<col width="26%" />
+<col width="26%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(p_{1}-p_{2}\)</span></td>
+<td align="left"><span class="math inline">\(H_o: p_{1}-p_{2} =
+\Delta_{o}\)</span></td>
+<td align="left"><span class="math inline">\(H_o: p_{1}-p_{2}
+\geq\Delta_{o}\)</span></td>
+<td align="left"><span class="math inline">\(H_o: p_{1}-p_{2} \leq
+\Delta_{o}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><span class="math inline">\(H_a: p_{1}-p_{2} \neq
+\Delta_{o}\)</span></td>
+<td align="left"><span class="math inline">\(H_a: p_{1}-p_{2} &lt;
+\Delta_{o}\)</span></td>
+<td align="left"><span class="math inline">\(H_a: p_{1}-p_{2} &gt;
+\Delta_{o}\)</span></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="18%" />
+<col width="27%" />
+<col width="26%" />
+<col width="26%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><span
+class="math inline">\(\sigma_{1}^{2}/\sigma_{2}^{2}\)</span></td>
+<td align="left"><span class="math inline">\(H_o: \sigma_{1}^{2} =
+\sigma^{2}_{2}\)</span></td>
+<td align="left"><span class="math inline">\(H_o: \sigma_{1}^{2} \geq
+\sigma_{2}^{2}\)</span></td>
+<td align="left"><span class="math inline">\(H_o: \sigma_{1}^{2} \leq
+\sigma_{2}^{2}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><span class="math inline">\(H_a: \sigma_{1}^{2} \neq
+\sigma^{2}_{2}\)</span></td>
+<td align="left"><span class="math inline">\(H_a: \sigma_{1}^{2} &lt;
+\sigma_{2}^{2}\)</span></td>
+<td align="left"><span class="math inline">\(H_a: \sigma_{1}^{2} &gt;
+\sigma_{2}^{2}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

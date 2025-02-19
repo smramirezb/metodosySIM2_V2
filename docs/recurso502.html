@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Pruebas de hipótesis para una población</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"> </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Variable aleatoria</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valos esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Intervalos una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Intervalos dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Pruebas de hipótesis</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Software R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso601.html">Probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso602.html">Variable aleatória</a>
+    </li>
+    <li>
+      <a href="recurso607.html">Modelos de probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso603.html">Estimación</a>
+    </li>
+    <li>
+      <a href="recurso604.html">Intervalos de confianza</a>
+    </li>
+    <li class="dropdown-header">Pruebas paramétricas</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#034a94">
+<strong>Pruebas de hipótesis para una población</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+<p><br/><br/></p>
+<p>Se llaman pruebas paramétricas las que están soportadas en supuestos
+que por lo general corresponden a la distribución de la variable que
+trabajamos</p>
+<p><br/><br/></p>
+<div id="sobre-una-media" class="section level2">
+<h2><span style="color:#034a94"><strong>Sobre una
+media</strong></span></h2>
+<p>Dependiendo de las condiciones podemos optar por tres diferentes EdeP
+para la realización de la prueba para una media, aunque tenemos una
+cuarta posibilidad en el caso de realizarla mediante un método no
+paramétrico:</p>
+<p><br/><br/></p>
+<p>Parámetro <span class="math inline">\(\mu\)</span></p>
+<p><strong>Hipótesis</strong></p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="33%" />
+<col width="36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">dos colas</th>
+<th align="center">cola inferior</th>
+<th align="center">cola superior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(H_o : \mu =
+\mu_{o}\)</span></td>
+<td align="center"><span class="math inline">\(H_o : \mu \geq
+\mu_{o}\)</span></td>
+<td align="center"><span class="math inline">\(H_o : \mu \leq
+\mu_{o}\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(H_a : \mu \neq
+\mu_{o}\)</span></td>
+<td align="center"><span class="math inline">\(H_a : \mu
+&lt;  \mu_{o}\)</span></td>
+<td align="center"><span class="math inline">\(H_a : \mu &gt;
+\mu_{o}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Estadísticos de prueba</strong></p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="33%" />
+<col width="36%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(Z_{o} =
+\dfrac{\bar{x}-\mu_{o}}{\sigma / \sqrt{n}} \sim N(0,1\)</span></td>
+<td align="center"><span class="math inline">\(T_{o} =
+\dfrac{\bar{x}-\mu_{o}}{s / \sqrt{n}} \sim t_{v: n-1}\)</span></td>
+<td align="center"><span class="math inline">\(Z_{o} =
+\dfrac{\bar{x}-\mu_{o}}{s / \sqrt{n}} \sim N(0,1)\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">Supuestos:</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(X\)</span> es normal y la
+varianza es conocida</td>
+<td align="center"><span class="math inline">\(X\)</span> es normal y la
+varianza es desconocida</td>
+<td align="center"><span class="math inline">\(n &gt;&gt;\)</span> el
+tamaño de muestra es grande y por el TLC <span
+class="math inline">\(\bar{X}\)</span> se aproxima a una distribución
+normal</td>
+</tr>
+</tbody>
+</table>
+<p><br/><br/><br/></p>
+<div id="ejemplo" class="section level3">
+<h3><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></h3>
+<p>Para una muestra de <span class="math inline">\(n=50\)</span> de la
+edad de los participantes de la Carrera La Luz inicialmente se verifica
+si su distribución es normal con el fin de determinar que prueba
+utilizar. Cumplido este supuesto y al no tener conocimiento del valor de
+la varianza utilizaremos una <strong>prueba t</strong> para una
+media</p>
+<pre class="r"><code># x=sample(CarreraLuz22_c2$edad, 50)  # Muestra de tamaño n=50
+x=c(37, 36, 36, 27, 21, 24, 31, 29, 29, 29, 31, 26, 34, 39, 33, 27, 30, 29, 28, 34, 39, 36, 34, 27, 38, 32, 27, 27, 32, 38, 27, 31, 38, 36, 33, 18, 25, 26, 33, 34, 35, 35, 33, 34, 30, 39, 27, 35, 31, 36)
+shapiro.test(x)  # prueba de normalidad</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  x
+W = 0.96305, p-value = 0.1194</code></pre>
+<pre class="r"><code>t.test(x,                         #  
+alternative = &quot;two.sided&quot;, # tipo de prueba
+mu = 31,                  # valor a contrastar
+conf.level = 0.90)         # nivel de confianza</code></pre>
+<pre><code>
+    One Sample t-test
+
+data:  x
+t = 0.76215, df = 49, p-value = 0.4496
+alternative hypothesis: true mean is not equal to 31
+90 percent confidence interval:
+ 30.37613 32.66387
+sample estimates:
+mean of x 
+    31.52 </code></pre>
+<p><br/></p>
+<p>Para tomar una decisión sobre las hipótesis de acuerdo con los
+resultados podemos utilizar tres reglas:</p>
+<p><br/><br/></p>
+</div>
+<div id="regla-1" class="section level3 content-box-gray">
+<h3><span style="color:#034A94"> <strong>Regla 1</strong></span></h3>
+<p>Si el <strong>Estadístico de Prueba</strong> cae en la <strong>Región
+de Rechazo</strong>, entonce se rechaza la <span
+class="math inline">\(H_{o}\)</span> y se <strong>acepta</strong> <span
+class="math inline">\(H_{a}\)</span> como verdadera. Si por el contrario
+el <strong>Estadístico de Prueba</strong> NO cae en la <strong>Región de
+Rechazo</strong>, entonces NO se rechaza <span
+class="math inline">\(H_{o}\)</span>, no existe suficiente evidencia
+para rechazarla, <strong>asumimos</strong> que <span
+class="math inline">\(H_{o}\)</span> es verdad.</p>
+</div>
+<p>En este caso es necesario determinar la Región de Rechazo (<span
+class="math inline">\(RdeR\)</span>) de acuerdo al tipo de hipótesis y a
+la distribución del estadístico de prueba. En esta caso estamos
+realizando una prueba de dos colas, para un estadístico de prueba con
+distribución t-Student con 99 grados de libertad.</p>
+<p><br/><br/></p>
+<p><strong>Región de Rechazo</strong></p>
+<p>Para determinar la <strong>Región de Rechazo</strong>, a a prtir del
+nivel de significancia asumido, se buscan los percentiles <span
+class="math inline">\(t_{0.025; v=59}\)</span> y <span
+class="math inline">\(t_{0.975;v=59}\)</span> para la distribución
+t-Student.</p>
+<pre class="r"><code># t = 0.76215, df = 49, p-value = 0.4496    # resultado 
+qt(c(0.025,0.975),99)</code></pre>
+<pre><code>[1] -1.984217  1.984217</code></pre>
+<p><br/></p>
+<pre class="r"><code># remotes::install_github(&quot;iamamutt/ggdistribute&quot;)
+library(ggdistribute)
+p=ggdistribution(dt, seq(-3, +3, 0.1), df = 99, colour = &quot;blue&quot;)
+p=ggdistribution(dt, seq(-3, qt(0.025,99), 0.1), df = 99, colour = &#39;blue&#39;, fill=&quot;red&quot;, p=p)   
+p=ggdistribution(dt, seq(qt(0.975,99),+3, 0.1), df = 99, colour = &#39;blue&#39;, fill=&quot;red&quot;, p=p)+ 
+ggtitle(&quot;Región de rechazo : (-Inf, -1.984217)  (1.984217, +Inf)&quot;)
+p</code></pre>
+<p><br/></p>
+<div id="conclusión" class="section level3">
+<h3><span style="color:#686868"><strong>Conclusión</strong></span></h3>
+<p>Como el <strong>Estadístico de Prueba</strong>
+(<code>t = 0.76215</code>) NO cae en la <strong>Región de
+Rechazo</strong>, entonces NO rechazamos <span
+class="math inline">\(Ho\)</span>, asumimos <span
+class="math inline">\(Ho\)</span> es verdadera, es decir ASUMIMOS que
+<span class="math inline">\(\mu\)</span> de las edades es igual a 31
+años.</p>
+<p><br/><br/></p>
+</div>
+<div id="regla-2" class="section level3 content-box-gray">
+<h3><span style="color:#034A94"> <strong>Regla 2</strong></span></h3>
+<p>Si <span class="math inline">\(\alpha &gt; \text{valor-p}\)</span>
+entonces rechazamos <span class="math inline">\(H_{o}\)</span>, se
+<strong>acepta</strong> <span class="math inline">\(H_{a}\)</span> como
+verdadera. Si por el contrario <span class="math inline">\(\alpha
+&lt;  \text{valor-p}\)</span>, no rechazamos <span
+class="math inline">\(H_{o}\)</span>, <strong>asumimos</strong> que
+<span class="math inline">\(H_{o}\)</span> es verdad.</p>
+</div>
+<p><br/><br/><br/></p>
+<div id="valor-p" class="section level3">
+<h3><span style="color:#034a94"><strong>Valor-p</strong></span></h3>
+<p>El <strong>valor-p</strong> corresponde al área delimitada por el
+<span class="math inline">\(EdeP\)</span> en el sentido que indica la
+<span class="math inline">\(RdeR\)</span> de la prueba a contrastar. Es
+decir que corresponde a la probilidad máxima de cometer error tipo
+I.</p>
+<p><a href="https://www.redalyc.org/pdf/806/80634308.pdf">Gil, Jacky F.;
+Castañeda, Javier A (2005)</a> lo definen como :</p>
+<blockquote>
+<p>El resultado de la prueba de hipótesis se basa principalmente en el
+cálculo, en términos de probabilidad, de la fuerza de los hallazgos a
+favor de la hipótesis nula. Esta probabilidad recibe el nombre de
+valor-p, y se define como la probabilidad de cometer un falso positivo
+por efecto del azar, cuando la hipótesis nula es verdadera.</p>
+</blockquote>
+<p><br/></p>
+</div>
+<div id="conclusión-1" class="section level3">
+<h3><span style="color:#686868"><strong>Conclusión</strong></span></h3>
+<p>Como el valor de <span class="math inline">\(\alpha &gt;
+valor-p\)</span> (<span class="math inline">\(0.05 &gt; p-value =
+0.4496\)</span> ) entonces No se rechaza <span
+class="math inline">\(H_o\)</span>, se <strong>asume</strong> que <span
+class="math inline">\(Ho\)</span> es verdad. ASUMIMOS que <span
+class="math inline">\(\mu\)</span> de las edades es igual a 31 años.</p>
+<p><br/><br/></p>
+</div>
+<div id="regla-3" class="section level3 content-box-gray">
+<h3><span style="color:#034A94"> <strong>Regla 3</strong></span></h3>
+<p>El valor-p se interpreta como el error que puedo cometer al rechazar
+<span class="math inline">\(Ho\)</span>, siendo esta verdadera (cometer
+<em>error tipo I</em>). Si este valor es considerado como pequeño,
+rechazo <span class="math inline">\(Ho\)</span>, se
+<strong>acepta</strong> <span class="math inline">\(H_a\)</span>. Si por
+el contrario se considera este valor grande, entonce no rechazo <span
+class="math inline">\(Ho\)</span>, asumo que <span
+class="math inline">\(Ho\)</span> es verdad.</p>
+</div>
+<p><br/></p>
+<div id="conclusión-2" class="section level3">
+<h3><span style="color:#686868"><strong>Conclusión</strong></span></h3>
+<p>En este caso valoramos si el <strong>valor-p</strong> (p-value =
+0.4496) si es grande o pequeño. En esta caso se puede considerar que su
+valor es muy grande y por lo tanto no nos atrevemos a rechazar <span
+class="math inline">\(H_o\)</span>, asumimos que <span
+class="math inline">\(H_o\)</span> es verdadera, ASUMIMOS que <span
+class="math inline">\(\mu\)</span> de las edades es igual a 31 años.</p>
+</div>
+<div id="nota" class="section level3 content-box-gray">
+<h3><span style="color:#686868"> <strong>NOTA</strong></span></h3>
+<p>Al aplicar las últimas dos reglas (2 y 3) no se requiere la
+construcción de una <span class="math inline">\(RdeR\)</span> para tomar
+la decisión. Solo con revisar el valor-p entregado por la prueba y
+aplicar la regla se toma la decisión. En adelante utilizaremos las
+reglas 2 y 3 dado que al ejecutar las funciones en R nos suministra
+información sobre valor-p.</p>
+</div>
+<p><br/><br/></p>
+</div>
+<div id="sobre-una-proporción" class="section level2">
+<h2><span style="color:#034a94"><strong>Sobre una
+proporción</strong></span></h2>
+<p>Ho: <span class="math inline">\(p = p_{o}\)</span> <br/><br />
+Ha :<span class="math inline">\(p \leq p_{o}\)</span></p>
+<p><br/></p>
+<p>Estadístico de prueba</p>
+<p><span class="math display">\[Z =
+\dfrac{\dfrac{x}{n}-p_{o}}{\sqrt{\dfrac{p_{o}(1-p_{o})}{n}}} \sim N(0,1)
+\]</span></p>
+<p>En este caso debemos tener en cuenta que la muestra sea mayor a 30
+con el fin de tener estimaciones mas robustas para estimar la proporción
+poblacional.</p>
+<p><br/><br/></p>
+<div id="ejemplo-1" class="section level3">
+<h3><span style="color:#FF7F00"><strong>Ejemplo</strong></span></h3>
+<p>Una empresa al seleccionar su personal, lo somete a un curso de
+entrenamiento. Por su experiencia se conoce que el 76% de los aspirantes
+aprueban el curso. Durante el último proceso, los encargados efectúan
+cambios al programa de entrenamiento, con el fin de realizar una
+selección más exigente. Para esta versión se inscriben 40 aspirantes de
+los cuales lo aprueban el proceso 24. ¿Podría afirmarse que los cambios
+realizados en el programa de entrenamiento reducen la selección?</p>
+<p>Debemos realizar una prueba de cola inferior debido al sentido que
+tienen la afirmación que queremos verificar <em>los cambios realizados
+en el programa de entrenamiento reducen la selección</em>.</p>
+<p><span class="math inline">\(H_o: p \geq 0.76\)</span> <br/><br />
+<span class="math inline">\(H_a: p &lt; 0.76\)</span> <br/></p>
+<p><br/><br/></p>
+<pre class="r"><code>prop.test(24, 40, p = 0.76,
+alternative = &quot;less&quot;,
+conf.level = 0.95)</code></pre>
+<pre><code>
+    1-sample proportions test with continuity correction
+
+data:  24 out of 40, null probability 0.76
+X-squared = 4.7711, df = 1, p-value = 0.01447
+alternative hypothesis: true p is less than 0.76
+95 percent confidence interval:
+ 0.0000000 0.7282033
+sample estimates:
+  p 
+0.6 </code></pre>
+<p><br/><br/></p>
+</div>
+<div id="conclusión-3" class="section level3">
+<h3><span style="color:#686868"><strong>Conclusión</strong></span></h3>
+<p>Como el valor-p (p-value = 0.01447) es menor que el nivel de
+significancia (<span class="math inline">\(\alpha=0.05\)</span>),
+rechazamos la hipótesis nula, aceptamos la hipótesis alterna. Podemos
+afirmar que <span class="math inline">\(p&lt;0.76\)</span> . Tienen
+razón al afirmar que los cambios realizados en el proceso de selección
+provocaron una disminución significativa en la proporción de
+aprobación.</p>
+<p><br/><br/></p>
+</div>
+</div>
+<div id="sobre-una-varianza" class="section level2">
+<h2><span style="color:#034a94"><strong>Sobre una
+varianza</strong></span></h2>
+<p><br/></p>
+<p><span class="math inline">\(H_o: \sigma^{2} =
+\sigma^{2}_{o}\)</span></p>
+<p><span class="math inline">\(H_a: \sigma^{2} \neq
+\sigma^{2}_{o}\)</span></p>
+<p><br/><br/></p>
+<p>Estadístico de prueba</p>
+<p><span class="math display">\[X^{2} =\dfrac{(n-1)
+s^{2}}{\sigma^{2}_{o}} \sim \chi^{2}_{v: n-1}\]</span></p>
+<div id="ejemplo-2" class="section level3">
+<h3><span style="color:#FF7F00"> <strong>Ejemplo</strong></span></h3>
+<p>Un fabricante de baterías para celulares afirma que el tiempo de
+duración de sus baterías se distribuyen aproximadamente normal con una
+desviación estándar de 9 horas. Un comprador antes de realizar un pedido
+de este producto solicita al fabricante una muestra de 10 baterías para
+verificar la información que le esta dando. Con este propósito son
+enviadas al laboratorio y se obtienen los siguientes datos Es cierta la
+información suministrada por el fabricante? (información: 11.1, 15.6,
+11.1, 7.5, 7.9, 14.7, 6.3, 8.5, 8.0 , 7.6)</p>
+<p><br/></p>
+<pre class="r"><code>library(ggdistribute)
+pRdeR=qchisq(c(0.025,0.975),9)
+p=ggdistribution(dchisq, seq(0, 30, 0.1), df = 9, colour = &#39;blue&#39;)
+p=ggdistribution(dchisq, seq(0, pRdeR[1], 0.1), df = 9, colour = &#39;blue&#39;, fill=&quot;blue&quot;, p=p)
+p=ggdistribution(dchisq, seq(pRdeR[2], 30, 0.1), df = 9, colour = &#39;blue&#39;, fill=&quot;blue&quot;, p=p)+
+ggtitle(&quot;Región de rechazo:  (0; 2.70) (19.0, Inf) &quot;)
+p
+pRdeR</code></pre>
+<pre class="r"><code>t=c(11.1, 15.6, 11.1, 7.5, 7.9, 14.7, 6.3, 8.5, 8.0 , 7.6)
+varx=var(t)
+EdeP=(length(t)-1)*varx/81
+EdeP</code></pre>
+<pre><code>[1] 1.135074</code></pre>
+<p><br/><br/></p>
+</div>
+<div id="conclusión-4" class="section level3">
+<h3><span style="color:#686868"><strong>Conclusión</strong></span></h3>
+<p>Como el <strong>Estadístico de Prueba</strong> (1.135074) caen en la
+<strong>Región de Rechazo</strong>, entonces rechazamos la hipótesis
+nula, aceptamos la hipótesis alterna como verdadera.</p>
+<p>Podemos entonce concluir que <span class="math inline">\(\sigma^{2}
+\neq 81\)</span></p>
+<p><br/><br/><br/></p>
+</div>
+</div>
+<div id="resumen" class="section level2">
+<h2><span style="color:#686868"><strong>Resumen</strong></span></h2>
+<div class="content-box-gray">
+<p><br/><br/></p>
+<div id="estadístico-de-prueba" class="section level3">
+<h3><span style="color:#686868"><strong>Estadístico de
+prueba</strong></span></h3>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="20%" />
+<col width="75%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="center"></td>
+<td align="left">Una población</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="center">(1)</td>
+<td align="left"></td>
+<td align="left"><span class="math inline">\(Z_{o}
+=\dfrac{\bar{X}-\mu_{o}}{\sigma/\sqrt{n}}\sim N(0,1)\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center">(2)</td>
+<td align="left"></td>
+<td align="left"><span class="math inline">\(Z_{o}
+=\dfrac{\bar{X}-\mu_{o}}{s/\sqrt{n}} \sim N(0,1)\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">(3)</td>
+<td align="left"></td>
+<td align="left"><span class="math inline">\(T_{o} =
+\dfrac{\bar{X}-\mu_{o}}{s/\sqrt{n}} \sim t_{v=n-1}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center">(4)</td>
+<td align="left"></td>
+<td align="left"><span class="math inline">\(X^{2}_{o} =
+\dfrac{(n-1)S^{2}}{\sigma_{o}^{2}} \sim \chi^{2}_{v=n-1}\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">(5)</td>
+<td align="left"></td>
+<td align="left"><span class="math inline">\(Z_{o} =  \dfrac{X-n
+\hspace{.1cm} p_{o}}{\sqrt{n \hspace{.1cm }p_{o}}} \sim
+N(0,1)\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="left"></td>
+<td align="left"><span class="math inline">\(Z_{o} =
+\dfrac{\widehat{p}-p_{0}}{\sqrt{p_{o}(1-p_{o})/n}} \sim
+N(0,1)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><br/></p>
+<div id="reglas-de-decisión" class="section level3 content-box-gray">
+<h3><span style="color:#686868"><strong>Reglas de
+decisión</strong></span></h3>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="79%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">Regla1:</td>
+<td align="left">Si el <strong>Estadístico de Prueba</strong> cae en la
+<strong>Región de Rechazo</strong>, entonce se rechaza la <span
+class="math inline">\(H_{o}\)</span> y se <strong>acepta</strong> <span
+class="math inline">\(H_{a}\)</span> como verdadera. Si por el contrario
+el <strong>Estadístico de Prueba</strong> NO cae en la <strong>Región de
+Rechazo</strong>, entonces NO se rechaza <span
+class="math inline">\(H_{o}\)</span>, no existe suficiente evidencia
+para rechazarla, <strong>asumimos</strong> que <span
+class="math inline">\(H_{o}\)</span> es verdad.</td>
+</tr>
+<tr class="even">
+<td align="left">Regla2:</td>
+<td align="left">Si <span class="math inline">\(\alpha &gt;\)</span>
+<strong>valor-p</strong> entonces rechazamos <span
+class="math inline">\(H_{o}\)</span>, se <strong>acepta</strong> <span
+class="math inline">\(H_{a}\)</span>. Si por el contrario <span
+class="math inline">\(\alpha&lt;\)</span> <code>valor-p</code>, no
+rechazamos <span class="math inline">\(H_{o}\)</span>,
+<strong>asumimos</strong> que <span class="math inline">\(H_{o}\)</span>
+es verdad.</td>
+</tr>
+<tr class="odd">
+<td align="left">Regla3:</td>
+<td align="left">El <strong>valor-p</strong> se interpreta como el error
+que puedo cometer al rechazar <span
+class="math inline">\(H_{o}\)</span>, siendo esta verdadera (cometer
+error tipo I). Si este valor es considerado como pequeño, rechazo <span
+class="math inline">\(H_{o}\)</span>, se <strong>acepta</strong> <span
+class="math inline">\(H_{a}\)</span>. Si por el contrario se considera
+este valor grande, entonce no rechazo <span
+class="math inline">\(H_{o}\)</span>, asumo que <span
+class="math inline">\(H_{o}\)</span> es verdad.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p></br></p>
+<div id="tipos-de-pruebas" class="section level3 content-box-gray">
+<h3><span style="color:#686868"><strong>Tipos de
+pruebas</strong></span></h3>
+<table>
+<colgroup>
+<col width="22%" />
+<col width="77%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">Dos colas</td>
+<td align="left"><span class="math inline">\(H_{o}: \theta =
+\theta_{o}\)</span> vs <span class="math inline">\(H_{o}: \theta \neq
+\theta_{o}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Cola superior</td>
+<td align="left"><span class="math inline">\(H_{o}: \theta \leq
+\theta_{o}\)</span> vs <span class="math inline">\(H_{o}: \theta &gt;
+\theta_{o}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left">Cola inferior</td>
+<td align="left"><span class="math inline">\(H_{o}: \theta \geq
+\theta_{o}\)</span> vs <span class="math inline">\(H_{o}: \theta &lt;
+\theta_{o}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

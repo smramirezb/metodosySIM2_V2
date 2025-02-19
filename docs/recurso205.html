@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Modelos continuos</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"> </a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+     
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Variable aleatoria</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valos esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Intervalos una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Intervalos dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Pruebas de hipótesis</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Software R
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso601.html">Probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso602.html">Variable aleatória</a>
+    </li>
+    <li>
+      <a href="recurso607.html">Modelos de probabilidad</a>
+    </li>
+    <li>
+      <a href="recurso603.html">Estimación</a>
+    </li>
+    <li>
+      <a href="recurso604.html">Intervalos de confianza</a>
+    </li>
+    <li class="dropdown-header">Pruebas paramétricas</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#034a94">
+<strong>Modelos continuos</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+<p><br/><br/></p>
+<div id="algunos-modelos-continuos" class="section level2">
+<h2><span style="color:#034a94"><strong>Algunos modelos
+continuos</strong></span></h2>
+<p>Las variables continuas proceden en su mayoría de la medición y se
+clasifican así debido a que su rango esta formado por un conjunto
+infinito no numerable. A continuación se presentan los principales
+modelos continuos.</p>
+<p><br/></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="center">Uniforme</td>
+<td align="center">Normal</td>
+<td align="center">Exponencial</td>
+<td align="center">Gamma</td>
+<td align="center">Weibull</td>
+<td align="center">Cauchy</td>
+</tr>
+<tr class="even">
+<td align="center">Lognormal</td>
+<td align="center">Beta</td>
+<td align="center">Erlang</td>
+<td align="center">Gumbel</td>
+<td align="center">Kernel</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p><br/><br/></p>
+<div id="uniforme" class="section level3">
+<h3><span style="color:#034a94"><strong>uniforme</strong></span></h3>
+<p><br/></p>
+</div>
+<div id="distribución-uniforme" class="section level3 content-box-blue">
+<h3><span style="color:#034a94"><strong>Distribución
+uniforme</strong></span></h3>
+<p>La distribución <strong>uniforme</strong> Se caracteriza porque su
+función de densidad es constante en su recorrido o dominio de definición
+(intervalo [a,b])</p>
+<p><span class="math display">\[\begin{equation*}
+    f(x)=\left\lbrace
+    \begin{array}{lll}
+        \dfrac{1}{b-a}   &amp;,&amp; a \leq x \leq b   \\
+        &amp;&amp;\\
+        0 &amp;,&amp; \mbox{en otro caso}
+    \end{array}
+    \right.
+\end{equation*}\]</span></p>
+</div>
+<p><br/><br/></p>
+<center>
+<p><img src="recurso205_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<strong>Figura 2.23</strong> Función de densidad uniforme - <span
+class="math inline">\(X \sim unif(x, a=0 , b=1)\)</span>
+</center>
+<p><br/><br/></p>
+<div id="normal" class="section level3">
+<h3><span style="color:#034a94"><strong>normal</strong></span></h3>
+<p>La distribución <strong>normal</strong> es uno de los modelos más
+utilizados en las aplicaciones de la Estadística. Estas aplicaciones
+están relacionadas con:</p>
+<p>Usos de la distribución normal</p>
+<ul>
+<li><p>La mayoría de variables en la naturaleza, se distribuyen
+aproximadamente de manera normal</p></li>
+<li><p>A partir de la distribución normal se originan las distribuciones
+<span class="math inline">\(t-student\)</span>, <span
+class="math inline">\(\chi^{2}\)</span> y <span
+class="math inline">\(F\)</span>-Fisher, utilizadas en inferencia
+estadística</p></li>
+<li><p>En general la media muestral de variables que no tienen
+distribución normal, tiende a aproximarse a una distribución normal, a
+medida que el tamaño de muestra aumenta. (Teorema del Límite
+Central)</p></li>
+<li><p>La regla empírica establece que:</p></li>
+<li><p>Aproximadamente el 68% de la población se encuentra en el
+intervalo centrado <span class="math display">\[(\mu - \sigma ; \mu +
+\sigma)\]</span></p></li>
+<li><p>Aproximadamente el 95% de la población se encuentra en el
+intervalo centrado <span class="math display">\[(\mu - 2\sigma ; \mu +
+2\sigma)\]</span></p></li>
+<li><p>Aproximadamente el 99.7% de la población se encuentra en el
+intervalo centrado <span class="math display">\[(\mu - 3\sigma ; \mu +
+3\sigma)\]</span></p></li>
+</ul>
+<p>Su distribución fue planteada por el matemático francés del siglo 18,
+Abraham de Moivre, quien a partir de la distribución Binomial, con <span
+class="math inline">\(n=2\)</span> empezó a aumentar su tamaño hasta
+observar que se formaba una distribución en forma de campana. Este mismo
+comportamiento fue detectado por Galileo en el siglo 17, al observar los
+errores producto de sus mediciones en astronomía. El modelo como se
+conoce actualmente fue propuesto de manera simultánea por los
+científicos Robert Adrain y Carl Friedrich Gauss, quien finalmente le
+dio el nombre.</p>
+<p>Su función de densidad esta dada por:</p>
+<p><br/></p>
+<div class="content-box-blue">
+<p><span class="math display">\[f(x)= \dfrac{1}{\sqrt{2\pi \sigma^{2}}}
+\hspace{.1cm}
+e^{-\big(\frac{1}{2\sigma^{2}}(x-\mu)^{2}\big)}  \hspace{.5cm}  -\infty
+\leq  x \leq \infty \]</span></p>
+<p><span class="math display">\[E[X]=\mu\]</span> <span
+class="math display">\[V[X]=\sigma^{2}\]</span></p>
+</div>
+<p><br/><br/></p>
+<p>En la siguiente gráfica se muestra el efecto en la curva normal,
+producto de cambios en la media o en la varianza. A mayor valor de la
+media la curva se desplaza a la derecha, mientras que a menor varianza
+la curva se vuelve mas angosta o puntiaguda</p>
+<center>
+<p><img src="recurso205_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><strong>Figura 2.24</strong> Función de densidad normal : <span
+style="color:#034A94"><span class="math inline">\(X \sim
+N(0,1)\)</span></span>, <span style="color:#FF7F00"> <span
+class="math inline">\(X \sim N(0,1.5)\)</span></span> y <span
+style="color:#686868"> <span class="math inline">\(X \sim
+N(2,1.5)\)</span></span></p>
+</center>
+<p><br/></p>
+<p>Dentro del sin número de posibles curvas que se pueden obtener con
+los parámetros <span class="math inline">\(\mu\)</span> y <span
+class="math inline">\(\sigma^{2}\)</span>, existe una muy especial.
+Normal estándar (<span class="math inline">\(N(0,1)\)</span>) con <span
+class="math inline">\(\mu=0\)</span> y <span
+class="math inline">\(\sigma^{2}=1\)</span>. La gran mayoría de libros
+de Estadística poseen tablas de la función de distribución acumulada de
+la normal estándar.\</p>
+</div>
+<div id="distribución-normal-estándar-n01"
+class="section level3 content-box-blue">
+<h3><span style="color:#034a94"><strong>Distribución normal estándar
+N(0,1)</strong></span></h3>
+<p>Su función de distribución esta dada por :</p>
+<p><span class="math display">\[f(x)= \dfrac{1}{\sqrt{2\pi}}
+\hspace{.1cm}
+e^{-\big(\frac{1}{2}(x-\mu)^{2}\big)}   \hspace{.5cm}  -\infty \leq  x
+\leq \infty \]</span></p>
+<p>Si <span class="math inline">\(X \sim N(\mu, \sigma^{2})\)</span>,
+entonces <span class="math inline">\(Z= \dfrac{X-\mu}{\sigma} \sim
+N(0,1)\)</span></p>
+<p>a este proceso se le llama comúnmente estandarizar.</p>
+</div>
+<center>
+<p><img src="recurso205_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<strong>Figura 2.25</strong> Función de densidad normal estandar <span
+class="math inline">\(Z \sim N(0,1)\)</span>
+</center>
+<p><br/><br/></p>
+<div id="propiedad-empírica-de-la-distribución-normal-estándar"
+class="section level3">
+<h3><span style="color:#034a94"><strong>Propiedad empírica de la
+distribución normal estándar</strong></span></h3>
+<p>La propiedad empírica de la distribución normal es de gran ayuda
+cuando una variable de interés se puede aproximar al modelo normal. Ella
+establece un intervalo formado por la media mas o menos una desviación
+estándar contiene el 68% de los datos. Si el intervalo tiene un ancho de
+4 desviaciones estándar contendrá el 95% de los datos y si este
+intervalo corresponde a los valores de la media mas o menos 3
+desviaciones estándar contendrá el 99% de los datos que se representa en
+la siguiente gráfica.</p>
+<center>
+<p><img src="img/norm01.png" width="70%" style="display: block; margin: auto;" />
+<strong>Figura 2.26</strong> Propiedades empiricas de la distribución
+normal estándar</p>
+<p><br/><br/></p>
+</div>
+<div id="exponencial" class="section level3">
+<h3><span style="color:#034a94"><strong>exponencial</strong></span></h3>
+<p>El modelo <strong>exponencial</strong> fue planteado por el
+matemático estadístico e ingeniero Agner Kraru Erlang, experto en el
+trafico de las comunicaciones y la teoría de colas. Distribución
+utilizada para modelar el tiempo entre dos eventos consecutivos.</p>
+<p><br/></p>
+</div>
+<div id="distribución-exponencial"
+class="section level3 content-box-blue">
+<h3><span style="color:#034a94"><strong>Distribución
+exponencial</strong></span></h3>
+<p><span class="math display">\[\begin{equation*}
+    f(x)=\left\lbrace
+    \begin{array}{lll}
+        \lambda e^{-\lambda x}  &amp;,&amp; x &gt; 0   \\
+        &amp;&amp;\\
+        0 &amp;,&amp; x \leq 0
+    \end{array}
+    \right.
+\end{equation*}\]</span></p>
+<p><span class="math display">\[E[X]=\dfrac{1}{\lambda}\]</span></p>
+<p><span class="math display">\[V[X]=\dfrac{1}{\lambda^{2}}\]</span></p>
+<p>Observación: algunos autores utilizan <span
+class="math inline">\(\frac{1}{\beta}\)</span> en lugar de <span
+class="math inline">\(\lambda\)</span></p>
+<p><span class="math display">\[F(x)=P(X \leq x)=1-e^{-\lambda x}
+\hspace{1cm} x &gt; 0\]</span></p>
+</div>
+<p><br/><br/></p>
+<center>
+<img src="recurso205_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<br/> <strong>Figura 2.27</strong> Función de densidad exponencial <br/>
+<span style="color:#FF7F00"> <span class="math inline">\(X\sim
+exp(x,\lambda=1)\)</span></span>, <span style="color:#034A94"> <span
+class="math inline">\(X\sim exp(x,\lambda=2)\)</span></span> y <span
+style="color:#686868"> <span class="math inline">\(X\sim
+exp(x,\lambda=5)\)</span></span>
+</center>
+<p><br/><br/></p>
+<center>
+<p><img src="recurso205_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<strong>Figura 2.28</strong> Distribución exponencial acumulada
+</center>
+<p><br/><br/></p>
+<div id="gamma" class="section level3">
+<h3><span style="color:#034a94"><strong>gamma</strong></span></h3>
+<p>Para tratar las distribuciones Gamma y Weibull, es necesario definir
+la función Gamma como:</p>
+<p><span class="math display">\[\Gamma(r)= \int_{0}^{\infty} t^{r-1}
+e^{t} \,dt \]</span></p>
+<p>Con las siguientes propiedades:</p>
+<ul>
+<li><p>Si <span class="math inline">\(r\)</span> es un entero, <span
+class="math inline">\(\Gamma(r)=(r-1)!\)</span></p></li>
+<li><p>para cualquier valor de <span class="math inline">\(r\)</span>,
+<span class="math inline">\(\Gamma(r+1)=r \Gamma(r)\)</span></p></li>
+<li><p><span
+class="math inline">\(\Gamma(1/2)=\sqrt{\pi}\)</span></p></li>
+<li><p><span class="math inline">\(\Gamma(1)=1,\hspace{.1cm}
+\Gamma(2)=1, \hspace{.1cm} \Gamma(3)=2,
+\hspace{.1cm}\Gamma(n+1)=n!\)</span></p></li>
+</ul>
+<p><br/><br/></p>
+<p>Esta distribución tiene su origen en la familia de curvas sesgadas
+propuestas por Karl Pearson. Esta distribución es otra alternativa para
+modelar los tiempos de espera de ocurrencia de sucesos o eventos. En
+ocasiones puede relacionarse con la suma de los tiempos de variables
+exponenciales sucesivas con igual media.</p>
+<p><br/><br/></p>
+<div class="content-box-blue">
+<p>La distribución <strong>gamma</strong> se obtiene al sumar <span
+class="math inline">\(r\)</span> variables con distribución exponencial
+con parámetro <span class="math inline">\(\lambda\)</span>.</p>
+<p>Distribución</p>
+<p>Si <span class="math inline">\(Y=X_{1}+X_{2}+....+X_{r}\)</span>,
+<span class="math inline">\(X_{i} \sim Exp(\lambda)\)</span>, entonces
+<span class="math inline">\(Y \sim \Gamma(r,\lambda)\)</span>.</p>
+<p><span class="math display">\[\begin{equation*}
+    f(x)=\left\lbrace
+    \begin{array}{lll}
+        \dfrac{\lambda^{r}x^{r-1} e^{-\lambda
+x}}{\Gamma(r)}  &amp;,&amp; x &gt; 0   \\
+        &amp;&amp;\\
+        0 &amp;,&amp;   x \leq 0
+    \end{array}
+    \right.
+\end{equation*}\]</span></p>
+<p>Distribuciones exponenciales gamma(3,1)}, gamma(2,1) y gamma(5,1)
+fig_gammas.pdf</p>
+<p>Algunos autores utilizan <span
+class="math inline">\(\frac{1}{\beta}\)</span> en lugar de <span
+class="math inline">\(\lambda\)</span> y <span
+class="math inline">\(\alpha\)</span> en lugar de <span
+class="math inline">\(r\)</span></p>
+<p><span class="math display">\[E[X]=\dfrac{r}{\lambda}\]</span> <span
+class="math display">\[V[X]= \dfrac{r}{\lambda^{2}}\]</span></p>
+</div>
+<p><br/><br/></p>
+<center>
+<p><img src="recurso205_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<br/> <strong>Figura 2.29</strong> Función de densidad gamma <span
+style="color:#FF7F00"><span class="math inline">\(X\sim gamma(x,
+\alpha=3,\beta=1)\)</span></span>, <br/> <span
+style="color:#034A94"><span class="math inline">\(X\sim gamma(x,
+\alpha=2,\beta=1)\)</span></span> y <span style="color:#686868"><span
+class="math inline">\(X\sim gamma(x,
+\alpha=5,\beta=1)\)</span></span></p>
+</center>
+<pre class="r"><code>pgamma(10,3,0.5, lower.tail = FALSE)</code></pre>
+<pre><code>[1] 0.124652</code></pre>
+<p><br/><br/></p>
+</div>
+<div id="weibull" class="section level3">
+<h3><span style="color:#034a94"><strong>Weibull</strong></span></h3>
+<p>Esta distribución fue descubierta Maurice Frechet matemático francés
+y luego trabajada por Rosin y Rammler quienes en 1933 estudiaron el
+tamaño de una partícula y posteriormente recibe su nombre del ingeniero
+y matemático Waloddi Weibull . Esta distribución se utiliza para modelar
+el tiempo de vida de algunos componentes. La Weibull tiene dos
+parámetros <span class="math inline">\(\alpha\)</span> y <span
+class="math inline">\(\beta\)</span>. Su función de distribución y sus
+principales características son:</p>
+</div>
+<div id="distribución-weibull" class="section level3 content-box-blue">
+<h3><span style="color:#034a94"><strong>Distribución
+Weibull</strong></span></h3>
+<p><span class="math display">\[\begin{equation*}
+f(x)=\left\lbrace
+\begin{array}{lll}
+    \Bigg(\dfrac{\alpha}{\beta}\Bigg)\Bigg(\dfrac{x}{\beta}\Bigg)^{\alpha-1}\exp{\Bigg\{-\Big(\dfrac{x}{\beta}\Big)^{\alpha}\Bigg\}}&amp;,&amp;
+x &gt; 0\\
+    &amp;&amp;\\
+    0 &amp;,&amp; x \leq 0
+\end{array}
+\right.
+\end{equation*}\]</span></p>
+<p><span class="math display">\[E[X]=\beta
+\hspace{.2cm}\Gamma\Bigg(1+\frac{1}{\alpha}\Bigg)\]</span></p>
+<p><span class="math display">\[V[X]=\beta^{2}
+\Bigg(\Gamma\Bigg(1+\frac{2}{\alpha}\Bigg)- \Bigg[\Gamma
+\Bigg(1+\frac{1}{\alpha}\Bigg)\Bigg]^{2}\Bigg) \]</span></p>
+<p><span
+class="math display">\[F(x)=1-\exp{\Big\{-\Big(\dfrac{x}{\beta}\Big)^{\alpha}\Big\}}
+\]</span></p>
+</div>
+<center>
+<p><img src="recurso205_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<br/> <strong>Figura 2.30</strong> Función de densidad Weibull - <span
+style="color:#FF7F00"><span class="math inline">\(X \sim Weibull(0.8,
+1)\)</span></span>, <br/> <span style="color:#034A94"> <span
+class="math inline">\(X \sim Weibul(2,1)\)</span></span> y <span
+style="color:#686868"> <span class="math inline">\(X \sim
+Weibull(2,2)\)</span></span></p>
+</center>
+<p><br/><br/></p>
+<p>La siguiente gráfica corresponde a varias conformaciones de los
+parámetros de esta distribución.</p>
+<p>Distribuciones exponenciales , y fig_weibulls.pdf</p>
+<div id="función-de-riesgo" class="section level3">
+<h3><span style="color:#034a94"><strong>Función de
+riesgo</strong></span></h3>
+<p>Se llama así a la tasa de fallas por unidad de tiempo, expresada como
+la proporción de elementos que no han fallado</p>
+<p><span class="math display">\[h(t)=\dfrac{f(t)}{1-F(t)} \]</span></p>
+<p><br/><br/></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
