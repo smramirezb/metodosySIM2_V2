@@ -1,0 +1,2448 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Estimación no paramétrica</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Estimación no paramétrica</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>En estadística, los <strong>intervalos de confianza no
+paramétricos</strong> son herramientas fundamentales cuando se trabaja
+con datos que no siguen una distribución normal o cuya distribución es
+desconocida. A diferencia de los métodos paramétricos, que asumen una
+forma específica de la distribución (como la normalidad), los métodos no
+paramétricos no requieren suposiciones fuertes sobre la población de la
+cual se extrae la muestra.</p>
+<p>Los métodos no paramétricos son útiles en diversas situaciones, tales
+como:</p>
+<ul>
+<li><strong>Poblaciones con distribución desconocida</strong>: Se
+aplican cuando no se puede asumir una distribución específica para los
+datos.</li>
+<li><strong>Muestras pequeñas</strong>: En situaciones donde el tamaño
+de la muestra no permite aplicar el Teorema del Límite Central de manera
+confiable.</li>
+<li><strong>Datos con valores extremos o atípicos</strong>: Son más
+robustos que los métodos paramétricos ante la presencia de
+outliers.</li>
+<li><strong>Distribuciones sesgadas</strong>: Se aplican cuando los
+datos muestran asimetría o colas largas.</li>
+</ul>
+<p>Cuando se extrae una muestra de una población que no es normal y se
+requiere estimar un intervalo de confianza, se pueden utilizar métodos
+de <strong>estimación bootstrap</strong>.</p>
+</br></br>
+<h2>
+Intervalos Bootstrap
+</h2>
+</br></br>
+<h3>
+Muestra bootstrap
+</h3>
+<p>Las <strong>muestras bootstrap</strong> son subconjuntos de datos
+generados a partir de una muestra original mediante <strong>remuestreo
+con reemplazo</strong>. Es un método no paramétrico que permite estimar
+la distribución de una estadística sin asumir una forma específica de la
+distribución poblacional.</p>
+<p><strong>Procedimiento:</strong></p>
+<p>El procedimiento para generar muestras bootstrap es:</p>
+<ol style="list-style-type: decimal">
+<li>Se tiene una muestra original de tamaño <span
+class="math inline">\(n\)</span>: <span class="math inline">\(X_1, X_2,
+..., X_n\)</span>.</li>
+<li>Se generan <strong><span class="math inline">\(B\)</span></strong>
+muestras bootstrap seleccionando <strong><span
+class="math inline">\(n\)</span></strong> observaciones con
+<strong>reemplazo</strong> de la muestra original.</li>
+</ol>
+<p>Posteriormente para cada muestra bootstrap, se calcula la estadística
+de interés (por ejemplo, la media o la mediana). Luego, se obtiene la
+distribución empírica de la estadística a partir de las muestras
+bootstrap, lo que permite construir intervalos de confianza.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Las <strong>muestras bootstrap</strong> se generan a partir de una
+muestra original mediante <strong>remuestreo con reemplazo</strong>. A
+continuación, se muestra un ejemplo con 20 datos.</p>
+<p><strong>Datos Originales</strong></p>
+<p><span class="math display">\[
+X = \{3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40,
+42, 45, 50\}
+\]</span></p>
+<p>Se puede generar varias muestras bootstrap seleccionando <strong>con
+reemplazo</strong> 20 valores de la muestra original. Algunas posibles
+muestras bootstrap son:</p>
+<p><strong>Ejemplos de Muestras Bootstrap</strong></p>
+<p><span class="math display">\[
+X_1^* = \{10, 25, 5, 10, 20, 35, 50, 12, 3, 7, 9, 33, 45, 42, 15, 5, 37,
+28, 40, 30\}
+\]</span></p>
+<p><span class="math display">\[
+X_2^* = \{15, 15, 20, 5, 10, 22, 28, 40, 45, 37, 30, 25, 50, 3, 12, 9,
+18, 35, 33, 7\}
+\]</span></p>
+<p><span class="math display">\[
+X_3^* = \{42, 33, 40, 12, 18, 9, 5, 7, 15, 22, 50, 28, 25, 3, 35, 30,
+10, 37, 45, 20\}
+\]</span></p>
+<p>Cada una de estas muestras bootstrap tiene <strong>el mismo
+tamaño</strong> que la muestra original (20 datos), pero debido al
+remuestreo con reemplazo, algunos valores pueden repetirse mientras que
+otros pueden no aparecer en una muestra dada.</p>
+<p>Si se desea generar estas muestras en <strong>R</strong>, puedes
+utilizar el siguiente código:</p>
+<pre>
+set.seed(123)  # Para reproducibilidad
+
+# Datos originales
+X <- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Generar tres muestras bootstrap de tamaño 20
+X1_star <- sample(X, size = 20, replace = TRUE)
+X2_star <- sample(X, size = 20, replace = TRUE)
+X3_star <- sample(X, size = 20, replace = TRUE)
+
+# Mostrar las muestras
+list(X1_star, X2_star, X3_star)
+</pre>
+<pre class="r"><code>set.seed(123)  # Para reproducibilidad
+
+# Datos originales
+X &lt;- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Generar tres muestras bootstrap de tamaño 20
+X1_star &lt;- sample(X, size = 20, replace = TRUE)
+X2_star &lt;- sample(X, size = 20, replace = TRUE)
+X3_star &lt;- sample(X, size = 20, replace = TRUE)
+
+# Mostrar las muestras
+list(X1_star, X2_star, X3_star)</code></pre>
+<pre><code>[[1]]
+ [1] 35 45 33  7 22 42 25 10 50 33 10 45 20  7 18 15 22 20 45  9
+
+[[2]]
+ [1] 33 40 25 15 28 35 22 30 15 20 20 22 15 12  5 10 18 28 30 42
+
+[[3]]
+ [1]  3 12 35 20 35 37 50 12 25 18 15 37 40 42 40  5  9 30 10 45</code></pre>
+</p>
+</div>
+</br></br>
+<h3>
+Intervalos de confianza Bootstrap
+</h3>
+<p>Existen varios métodos para calcular intervalos de confianza usando
+bootstrap. Los más comunes son:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Intervalo Percentil Bootstrap</strong></li>
+<li><strong>Intervalo Normal Bootstrap</strong></li>
+<li><strong>Intervalo de Sesgo-Acelerado (BCa)</strong></li>
+<li><strong>Intervalo de Studentizado (t-bootstrap)</strong></li>
+</ol>
+<p>La <strong>Tabla 2.12</strong> presenta un resumen de los ventajes y
+desventajas de los métodos de intervalos Bootstrap.</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.12</strong> Resumen de los Métodos Bootstrap.
+</center>
+<table>
+<colgroup>
+<col width="55%" />
+<col width="20%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Método de Intervalo Bootstrap</strong></th>
+<th><strong>Ventajas</strong></th>
+<th><strong>Desventajas</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Percentil Bootstrap</strong></td>
+<td>Simple y fácil de implementar.</td>
+<td>Puede ser sesgado si la distribución no es simétrica.</td>
+</tr>
+<tr class="even">
+<td><strong>Normal Bootstrap</strong></td>
+<td>Fácil de calcular con media y desviación estándar.</td>
+<td>Supone normalidad, lo que puede ser incorrecto.</td>
+</tr>
+<tr class="odd">
+<td><strong>BCa (Sesgo-Acelerado)</strong></td>
+<td>Corrige sesgo y asimetría, más preciso.</td>
+<td>Más costoso computacionalmente.</td>
+</tr>
+<tr class="even">
+<td><strong>Studentizado (t-bootstrap)</strong></td>
+<td>Mejor cuando hay heterogeneidad en la varianza.</td>
+<td>Necesita estimar errores estándar adicionales.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</br></br></br>
+<h4>
+Intervalo Percentil Bootstrap
+</h4>
+<p>Este método es el más simple y se basa en los percentiles de la
+distribución empírica obtenida por bootstrap.</p>
+<p><strong>Procedimiento:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Generar <span class="math inline">\(B\)</span> muestras bootstrap
+y calcular la estadística de interés <span
+class="math inline">\(\hat{\theta}^*_b\)</span> en cada una.</p></li>
+<li><p>Ordenar los valores de <span
+class="math inline">\(\hat{\theta}^*_b\)</span> de menor a
+mayor.</p></li>
+<li><p>Tomar los percentiles <span
+class="math inline">\(\alpha/2\)</span> y <span class="math inline">\(1
+- \alpha/2\)</span> para obtener el intervalo de confianza al
+<strong><span class="math inline">\(100(1-\alpha)
+\%\)</span></strong>:</p>
+<p><span class="math display">\[
+\left[ \hat{\theta}^*_{\lfloor B \cdot \alpha/2 \rfloor},
+\hat{\theta}^*_{\lfloor B \cdot (1-\alpha/2) \rfloor} \right]
+\]</span></p></li>
+</ol>
+<hr />
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En este ejemplo, se determina un intervalo de confianza para la media
+ilustrando el método <strong>Intervalo Percentil Bootstrap</strong> con
+<span class="math inline">\(B=10\)</span>, con el objetivo de facilitar
+la comprensión del método. Posteriormente, con un objetivo inferencial
+se realiza el cálculo para <span
+class="math inline">\(B=1000\)</span>.</p>
+<hr />
+<ol style="list-style-type: decimal">
+<li><strong>Generación de Muestras Bootstrap</strong></li>
+</ol>
+<p>El <strong>método bootstrap</strong> consiste en generar múltiples
+muestras a partir de los datos originales mediante <strong>remuestreo
+con reemplazo</strong>. En este caso, se tiene un conjunto de datos con
+<span class="math inline">\(n = 20\)</span> observaciones:</p>
+<p><span class="math display">\[
+X = \{3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40,
+42, 45, 50\}
+\]</span></p>
+<p>Para obtener una estimación más robusta de la media o cualquier otra
+estadística, se genera <span class="math inline">\(B = 1000\)</span>
+muestras bootstrap, sin embargo para facilitar la comprensión se usa
+<span class="math inline">\(B = 10\)</span> seleccionando con reemplazo
+<strong>20 valores</strong> de la muestra original.</p>
+<p>Algunas posibles muestras bootstrap generadas son:</p>
+<p><span class="math display">\[
+X_1^* = \{10, 25, 5, 10, 20, 35, 50, 12, 3, 7, 9, 33, 45, 42, 15, 5, 37,
+28, 40, 30\}
+\]</span></p>
+<p><span class="math display">\[
+X_2^* = \{15, 15, 20, 5, 10, 22, 28, 40, 45, 37, 30, 25, 50, 3, 12, 9,
+18, 35, 33, 7\}
+\]</span></p>
+<p><span class="math display">\[
+X_3^* = \{42, 33, 40, 12, 18, 9, 5, 7, 15, 22, 50, 28, 25, 3, 35, 30,
+10, 37, 45, 20\}
+\]</span></p>
+<p>Cada muestra tiene el mismo tamaño (<span class="math inline">\(n =
+20\)</span>), pero debido al <strong>remuestreo con reemplazo</strong>,
+algunos valores pueden aparecer más de una vez mientras que otros pueden
+no aparecer en una muestra específica.</p>
+<p>Para generar estas muestras en <strong>R</strong>, se utiliza el
+siguiente código:</p>
+<pre>
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Datos originales
+X <- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Número de muestras bootstrap
+B <- 10  
+
+# Generar B muestras bootstrap
+bootstrap_samples <- replicate(B, sample(X, size = length(X), replace = TRUE))
+
+# Mostrar las primeras diez muestras generadas
+#bootstrap_samples[, 1:10]
+</pre>
+<pre class="r"><code># Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Datos originales
+X &lt;- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Número de muestras bootstrap
+B &lt;- 10  
+
+# Generar B muestras bootstrap
+bootstrap_samples &lt;- replicate(B, sample(X, size = length(X), replace = TRUE))
+
+# Mostrar las primeras diez muestras generadas
+#bootstrap_samples[, 1:10]</code></pre>
+<p>Con estas muestras bootstrap, una por cada columna, se puede calcular
+las estimaciones de interés, como la media y la mediana, y
+posteriormente construir intervalos de confianza.</p>
+<pre>
+> bootstrap_samples[, 1:10]
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+ [1,]   35   33    3   50   22   12   50   33   45    50
+ [2,]   45   40   12   33   28   37   37   12   22    12
+ [3,]   33   25   35    7   50   25   25   18   30    42
+ [4,]    7   15   20   18   33    9   37   28   25    40
+ [5,]   22   28   35   37   40   28   50    9   25    10
+ [6,]   42   35   37   28   33   33   18   30   50    50
+ [7,]   25   22   50   33    7   45    7   33   15     7
+ [8,]   10   30   12    7   18   15    9   37   50    33
+ [9,]   50   15   25   33   33   20   50    3   20     3
+[10,]   33   20   18   15   45   15   28   18   20     5
+[11,]   10   20   15    7   35    5   40   18   10     9
+[12,]   45   22   37   35   40   37   22   22   33    22
+[13,]   20   15   40   10   25   30   50   18   33     3
+[14,]    7   12   42   18   15   45   25   42   12    10
+[15,]   18    5   40   45   35   50   18   20    3    18
+[16,]   15   10    5   22   12   35   33   15   22    30
+[17,]   22   18    9   42   33   15   30   15   40    42
+[18,]   20   28   30   22   15    9    5   22   40    22
+[19,]   45   30   10   28   22    3   25   25   15    12
+[20,]    9   42   45    5   10   18   30    3   20    15
+</pre>
+<hr />
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Cálculo de la Estadística de Interés</strong></li>
+</ol>
+<p>Una vez generadas las muestras bootstrap, el siguiente paso es
+calcular la <strong>estadística de interés</strong> en cada muestra. En
+este caso, se utiliza la <strong>media muestral</strong> <span
+class="math inline">\(\hat{\theta}_b^*\)</span> como nuestra estadística
+de interés.</p>
+<p>Para cada muestra bootstrap <span
+class="math inline">\(X_b^*\)</span>, la media se calcula como:</p>
+<p><span class="math display">\[
+\hat{\theta}_b^* = \frac{1}{n} \sum_{i=1}^{n} X_{bi}^*
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(X_{bi}^*\)</span> representa los valores
+en la muestra bootstrap <span class="math inline">\(b\)</span>.</li>
+<li><span class="math inline">\(n = 20\)</span> es el tamaño de cada
+muestra bootstrap.</li>
+<li><span class="math inline">\(B = 10\)</span> es el número total de
+muestras bootstrap generadas.</li>
+</ul>
+<p>A continuación, se presentan las medias calculadas para algunas de
+las muestras bootstrap generadas:</p>
+<table>
+<thead>
+<tr class="header">
+<th><strong>Muestra Bootstrap</strong></th>
+<th><strong>Media Bootstrap <span
+class="math inline">\(\hat{\theta}^*\)</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(X_1^*\)</span></td>
+<td><span class="math inline">\(\bar{X}_1^* = 25.6\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X_2^*\)</span></td>
+<td><span class="math inline">\(\bar{X}_2^* = 23.8\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(X_3^*\)</span></td>
+<td><span class="math inline">\(\bar{X}_3^* = 26.1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X_4^*\)</span></td>
+<td><span class="math inline">\(\bar{X}_4^* = 24.7\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(X_5^*\)</span></td>
+<td><span class="math inline">\(\bar{X}_5^* = 22.9\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Para calcular las medias de las muestras bootstrap en
+<strong>R</strong>, se utilizan el siguiente código:</p>
+<pre>
+# Calcular la media de cada muestra bootstrap
+bootstrap_means <- colMeans(bootstrap_samples)
+
+# Mostrar las primeras diez medias calculadas
+bootstrap_means[1:10]
+</pre>
+<pre class="r"><code># Calcular la media de cada muestra bootstrap
+bootstrap_means &lt;- colMeans(bootstrap_samples)
+
+# Mostrar las primeras diez medias calculadas
+#bootstrap_means[1:10]</code></pre>
+<pre>
+> bootstrap_means[1:10]
+ [1] 25.65 23.25 26.00 24.75 27.55 24.30 29.45 21.05 26.50 21.75
+</pre>
+<p>Estos valores proporcionan una distribución empírica de la media
+muestral, la cual se utiliza en el siguiente paso para calcular
+intervalos de confianza bootstrap</p>
+<hr />
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Ordenar las Estimaciones Bootstrap</strong></li>
+</ol>
+<p>Después de calcular la estadística de interés para cada muestra
+bootstrap, el siguiente paso es <strong>ordenar</strong> estas
+estimaciones para facilitar el cálculo de los intervalos de
+confianza.</p>
+<p>En este caso, se calcula las <strong>medias bootstrap</strong> <span
+class="math inline">\(\hat{\theta}_b^*\)</span> y ahora se ordenan en
+orden ascendente:</p>
+<p><span class="math display">\[
+\hat{\theta}^*_{(1)} \leq \hat{\theta}^*_{(2)} \leq \dots \leq
+\hat{\theta}^*_{(B)}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(\hat{\theta}^*_{(b)}\)</span> representa
+la media de la muestra bootstrap ordenada en la posición <span
+class="math inline">\(b\)</span>.</li>
+<li><span class="math inline">\(B = 10\)</span> es el número total de
+muestras bootstrap generadas.</li>
+</ul>
+<p>Las medias calculadas de las 10 muestras bootstrap son:</p>
+<p><span class="math display">\[
+\hat{\theta}^* = \{ 25.65, 23.25, 26.00, 24.75, 27.55, 24.30, 29.45,
+21.05, 26.50, 21.75 \}
+\]</span></p>
+<p>Ordenando los valores de menor a mayor:</p>
+<p><span class="math display">\[
+\hat{\theta}^*_{\text{ordenado}} = \{ 21.05, 21.75, 23.25, 24.30, 24.75,
+25.65, 26.00, 26.50, 27.55, 29.45 \}
+\]</span></p>
+<table>
+<colgroup>
+<col width="35%" />
+<col width="64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Índice <span class="math inline">\(b\)</span></strong></th>
+<th><strong>Media Bootstrap Ordenada <span
+class="math inline">\(\hat{\theta}^*_{(b)}\)</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>21.05</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>21.75</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>23.25</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>24.30</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>24.75</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>25.65</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>26.00</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>26.50</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>27.55</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>29.45</td>
+</tr>
+</tbody>
+</table>
+<p>El <strong>código en R para Ordenar las Estimaciones</strong></p>
+<p>Para realizar esta ordenación en <strong>R</strong>, se utiliza el
+siguiente código:</p>
+<pre>
+# Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted <- sort(bootstrap_means)
+
+# Mostrar las medias ordenadas
+bootstrap_means_sorted
+</pre>
+<pre class="r"><code># Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted &lt;- sort(bootstrap_means)
+
+# Mostrar las medias ordenadas
+bootstrap_means_sorted</code></pre>
+<pre><code> [1] 21.05 21.75 23.25 24.30 24.75 25.65 26.00 26.50 27.55 29.45</code></pre>
+<pre>
+> bootstrap_means_sorted
+ [1] 21.05 21.75 23.25 24.30 24.75 25.65 26.00 26.50 27.55 29.45
+</pre>
+<hr />
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Determinar los Percentiles para el Intervalo de
+Confianza</strong></li>
+</ol>
+<p>El <strong>intervalo de confianza percentil bootstrap</strong> se
+obtiene a partir de los percentiles <span
+class="math inline">\(\alpha/2\)</span> y <span class="math inline">\(1
+- \alpha/2\)</span> de la distribución empírica de la estadística
+obtenida con el bootstrap. Dado que se trabaja con un nivel de confianza
+del <strong>95%</strong>, se establece:</p>
+<p><span class="math display">\[
+\alpha = 0.05, \quad \alpha/2 = 0.025
+\]</span></p>
+<p>Para <strong><span class="math inline">\(B = 10\)</span></strong>,
+los índices de los percentiles correspondientes al <strong>2.5%</strong>
+y <strong>97.5%</strong> se calculan como:</p>
+<p><span class="math display">\[
+\lfloor B \cdot \alpha/2 \rfloor + 1 = \lfloor 10 \times 0.025 \rfloor +
+1 = 1
+\]</span></p>
+<p><span class="math display">\[
+\lfloor B \cdot (1 - \alpha/2) \rfloor = \lfloor 10 \times 0.975 \rfloor
+= 10
+\]</span></p>
+<p>Esto significa que el intervalo de confianza al <strong>95%</strong>
+se encuentra entre:</p>
+<p><span class="math display">\[
+\left[ \hat{\theta}^*_{(1)}, \hat{\theta}^*_{(10)} \right]
+\]</span></p>
+<p>Usando los valores ordenados previamente, el intervalo de confianza
+para la media poblacional es:</p>
+<p><span class="math display">\[
+\left[ 21.05, 29.45 \right]
+\]</span></p>
+<p>Para calcular estos percentiles en <strong>R</strong>, se
+utiliza:</p>
+<pre>
+# Determinar los percentiles para el intervalo de confianza al 95%
+alpha <- 0.05
+lower_index <- floor(B * alpha / 2) + 1  # Índice para el percentil 2.5%
+upper_index <- floor(B * (1 - alpha / 2))  # Índice para el percentil 97.5%
+
+# Obtener los valores correspondientes
+IC_lower <- bootstrap_means_sorted[lower_index]
+IC_upper <- bootstrap_means_sorted[upper_index]
+
+# Mostrar el intervalo de confianza
+IC <- c(IC_lower, IC_upper)
+IC
+</pre>
+<pre class="r"><code># Determinar los percentiles para el intervalo de confianza al 95%
+alpha &lt;- 0.05
+lower_index &lt;- floor(B * alpha / 2) + 1  # Índice para el percentil 2.5%
+upper_index &lt;- floor(B * (1 - alpha / 2))  # Índice para el percentil 97.5%
+
+# Obtener los valores correspondientes
+IC_lower &lt;- bootstrap_means_sorted[lower_index]
+IC_upper &lt;- bootstrap_means_sorted[upper_index]
+
+# Mostrar el intervalo de confianza
+IC &lt;- c(IC_lower, IC_upper)
+IC</code></pre>
+<pre><code>[1] 21.05 27.55</code></pre>
+<p>Un <strong>intervalo de confianza Percentil Bootstrap</strong> de la
+media obtenido para <span class="math inline">\(B=10\)</span> es: <span
+class="math display">\[
+\left[ 21.05, 29.45 \right]
+\]</span></p>
+<pre>
+> IC
+[1] 21.05 27.55
+</pre>
+<hr />
+<p></br></br> Finalmente, para efectos inferenciales, se repite el
+proceso usando <span class="math inline">\(B=1000\)</span> usando los
+siguientes códigos:</p>
+<pre>
+set.seed(123)  # Para asegurar reproducibilidad
+
+# Datos originales
+X <- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Número de muestras bootstrap
+B <- 1000  
+
+# Generar B muestras bootstrap
+bootstrap_samples <- replicate(B, sample(X, size = length(X), replace = TRUE))
+
+# Mostrar las primeras diez muestras generadas
+bootstrap_samples[, 1:10]
+
+# Calcular la media de cada muestra bootstrap
+bootstrap_means <- colMeans(bootstrap_samples)
+
+# Mostrar las primeras diez medias calculadas
+bootstrap_means[1:10]
+
+# Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted <- sort(bootstrap_means)
+
+# Mostrar las medias ordenadas
+bootstrap_means_sorted
+
+# Determinar los percentiles para el intervalo de confianza al 95%
+alpha <- 0.05
+lower_index <- floor(B * alpha / 2) + 1  # Índice para el percentil 2.5%
+upper_index <- floor(B * (1 - alpha / 2))  # Índice para el percentil 97.5%
+
+# Obtener los valores correspondientes
+IC_lower <- bootstrap_means_sorted[lower_index]
+IC_upper <- bootstrap_means_sorted[upper_index]
+
+# Mostrar el intervalo de confianza
+IC <- c(IC_lower, IC_upper)
+IC
+</pre>
+<pre class="r"><code>set.seed(123)  # Para asegurar reproducibilidad
+
+# Datos originales
+X &lt;- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Número de muestras bootstrap
+B &lt;- 1000  
+
+# Generar B muestras bootstrap
+bootstrap_samples &lt;- replicate(B, sample(X, size = length(X), replace = TRUE))
+
+# Mostrar las primeras diez muestras generadas
+#bootstrap_samples[, 1:10]
+
+# Calcular la media de cada muestra bootstrap
+bootstrap_means &lt;- colMeans(bootstrap_samples)
+
+# Mostrar las primeras diez medias calculadas
+bootstrap_means[1:10]</code></pre>
+<pre><code> [1] 25.65 23.25 26.00 24.75 27.55 24.30 29.45 21.05 26.50 21.75</code></pre>
+<pre class="r"><code># Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted &lt;- sort(bootstrap_means)
+
+# Mostrar las medias ordenadas
+#bootstrap_means_sorted
+
+# Determinar los percentiles para el intervalo de confianza al 95%
+alpha &lt;- 0.05
+lower_index &lt;- floor(B * alpha / 2) + 1  # Índice para el percentil 2.5%
+upper_index &lt;- floor(B * (1 - alpha / 2))  # Índice para el percentil 97.5%
+
+# Obtener los valores correspondientes
+IC_lower &lt;- bootstrap_means_sorted[lower_index]
+IC_upper &lt;- bootstrap_means_sorted[upper_index]
+
+# Mostrar el intervalo de confianza
+#IC &lt;- c(IC_lower, IC_upper)
+#IC</code></pre>
+<p>Un <strong>intervalo de confianza Percentil Bootstrap</strong> de la
+media para <span class="math inline">\(B=1000\)</span> es:</p>
+<p><span class="math display">\[
+\left[ 18.3, 30.2 \right]
+\]</span></p>
+</p>
+</div>
+<hr />
+</br></br></br>
+<h4>
+Intervalo Normal Bootstrap
+</h4>
+<p>Este método asume que la estadística estimada sigue una distribución
+normal, lo cual se justifica por el teorema central del límite cuando el
+número de muestras bootstrap es suficientemente grande. Para calcular el
+intervalo de confianza, se utiliza la <strong>media</strong> de las
+estimaciones bootstrap y la <strong>desviación estándar</strong> de esas
+estimaciones.</p>
+<p>La fórmula del <strong>intervalo de confianza normal
+bootstrap</strong> es:</p>
+<p><span class="math display">\[
+\left[ \hat{\theta}^*_b - z_{\alpha/2} \cdot s_{\hat{\theta}^*_b},
+\hat{\theta}^*_b + z_{\alpha/2} \cdot s_{\hat{\theta}^*_b} \right]
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\hat{\theta}_b^*\)</span> es la
+<strong>media de las estimaciones bootstrap</strong>, que es el valor de
+la estadística de interés calculada a partir de las muestras
+bootstrap.</li>
+<li><span class="math inline">\(s_{\hat{\theta}^*_b}\)</span> es la
+<strong>desviación estándar de las estimaciones bootstrap</strong>, que
+mide la dispersión de las estimaciones bootstrap alrededor de la media
+<span class="math inline">\(\hat{\theta}^*_b\)</span>.</li>
+<li><span class="math inline">\(z_{\alpha/2}\)</span> es el
+<strong>valor crítico</strong> de la distribución normal estándar
+correspondiente al nivel de confianza deseado. Para un intervalo de
+confianza del 95%, <span class="math inline">\(z_{\alpha/2} =
+1.96\)</span>, pues se determina el cuantil que tiene a la derecha un
+área de 0.025 bajo la curva normal.</li>
+</ul>
+<p>Este método es adecuado cuando las estimaciones bootstrap tienen una
+distribución aproximadamente normal. El valor <span
+class="math inline">\(z_{\alpha/2}\)</span> se obtiene de la
+distribución normal estándar y corresponde al cuantil que tiene de área
+a la derecha <span class="math inline">\(\alpha/2\)</span>.</p>
+<hr />
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En este ejemplo, se determina un intervalo de confianza para la media
+ilustrando el método <strong>Intervalo Normal Bootstrap</strong> con
+<span class="math inline">\(B=10\)</span>, con el objetivo de facilitar
+la comprensión del método. Posteriormente, se realiza el cálculo para
+<span class="math inline">\(B=1000\)</span>.</p>
+<hr />
+<ol style="list-style-type: decimal">
+<li><strong>Generación de Muestras Bootstrap</strong></li>
+</ol>
+<p>En este ejemplo, utilizamos un conjunto de datos original con <span
+class="math inline">\(n = 20\)</span> observaciones. El conjunto de
+datos es el siguiente:</p>
+<p><span class="math display">\[
+X = \{3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40,
+42, 45, 50\}
+\]</span></p>
+<p>El <strong>método bootstrap</strong> consiste en generar múltiples
+muestras a partir de los datos originales mediante <strong>remuestreo
+con reemplazo</strong>. En este caso, generaremos <span
+class="math inline">\(B = 10\)</span> muestras bootstrap (aunque en un
+caso real <span class="math inline">\(B = 1000\)</span> es más
+adecuado).</p>
+<p>Algunas de las muestras bootstrap generadas son las siguientes:</p>
+<p><span class="math display">\[
+X_1^* = \{10, 25, 5, 10, 20, 35, 50, 12, 3, 7, 9, 33, 45, 42, 15, 5, 37,
+28, 40, 30\}
+\]</span></p>
+<p><span class="math display">\[
+X_2^* = \{15, 15, 20, 5, 10, 22, 28, 40, 45, 37, 30, 25, 50, 3, 12, 9,
+18, 35, 33, 7\}
+\]</span></p>
+<p><span class="math display">\[
+X_3^* = \{42, 33, 40, 12, 18, 9, 5, 7, 15, 22, 50, 28, 25, 3, 35, 30,
+10, 37, 45, 20\}
+\]</span></p>
+<p>En <strong>R</strong>, el código para generar estas muestras
+bootstrap es el siguiente:</p>
+<pre>
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Datos originales
+X <- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Número de muestras bootstrap
+B <- 10  
+
+# Generar B muestras bootstrap
+bootstrap_samples <- replicate(B, sample(X, size = length(X), replace = TRUE))
+
+# Mostrar las primeras diez muestras generadas
+bootstrap_samples[, 1:10]
+</pre>
+<pre class="r"><code># Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Datos originales
+X &lt;- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Número de muestras bootstrap
+B &lt;- 10  
+
+# Generar B muestras bootstrap
+bootstrap_samples &lt;- replicate(B, sample(X, size = length(X), replace = TRUE))
+
+# Mostrar las primeras diez muestras generadas
+# bootstrap_samples[, 1:10]</code></pre>
+<p>Se obtiene una muestra de <span class="math inline">\(n=20\)</span>
+por cada columna.</p>
+<pre>
+> bootstrap_samples[, 1:10]
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+ [1,]   35   33    3   50   22   12   50   33   45    50
+ [2,]   45   40   12   33   28   37   37   12   22    12
+ [3,]   33   25   35    7   50   25   25   18   30    42
+ [4,]    7   15   20   18   33    9   37   28   25    40
+ [5,]   22   28   35   37   40   28   50    9   25    10
+ [6,]   42   35   37   28   33   33   18   30   50    50
+ [7,]   25   22   50   33    7   45    7   33   15     7
+ [8,]   10   30   12    7   18   15    9   37   50    33
+ [9,]   50   15   25   33   33   20   50    3   20     3
+[10,]   33   20   18   15   45   15   28   18   20     5
+[11,]   10   20   15    7   35    5   40   18   10     9
+[12,]   45   22   37   35   40   37   22   22   33    22
+[13,]   20   15   40   10   25   30   50   18   33     3
+[14,]    7   12   42   18   15   45   25   42   12    10
+[15,]   18    5   40   45   35   50   18   20    3    18
+[16,]   15   10    5   22   12   35   33   15   22    30
+[17,]   22   18    9   42   33   15   30   15   40    42
+[18,]   20   28   30   22   15    9    5   22   40    22
+[19,]   45   30   10   28   22    3   25   25   15    12
+[20,]    9   42   45    5   10   18   30    3   20    15
+</pre>
+<hr />
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Cálculo de la Estadística de Interés</strong></li>
+</ol>
+<p>Una vez que se han generado las muestras bootstrap, el siguiente paso
+es calcular la <strong>estadística de interés</strong> en cada muestra.
+En este caso, se utiliza <strong>la media muestral</strong> <span
+class="math inline">\(\hat{\theta}_b^*\)</span> como nuestra estadística
+de interés.</p>
+<p>Para cada muestra bootstrap <span
+class="math inline">\(X_b^*\)</span>, la media se calcula como:</p>
+<p><span class="math display">\[
+\hat{\theta}_b^* = \frac{1}{n} \sum_{i=1}^{n} X_{bi}^*
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(X_{bi}^*\)</span> representa los valores
+de la muestra bootstrap <span class="math inline">\(b\)</span>.</li>
+<li><span class="math inline">\(n = 20\)</span> es el tamaño de cada
+muestra bootstrap.</li>
+<li><span class="math inline">\(B = 10\)</span> es el número total de
+muestras bootstrap generadas.</li>
+</ul>
+<p>En <strong>R</strong>, se puede calcular la media de cada muestra
+bootstrap usando la función <code>colMeans()</code>. Aquí está el código
+correspondiente:</p>
+<pre>
+# Calcular la media de cada muestra bootstrap
+bootstrap_means <- colMeans(bootstrap_samples)
+
+# Mostrar las primeras diez medias calculadas
+bootstrap_means[1:10]
+</pre>
+<pre class="r"><code># Calcular la media de cada muestra bootstrap
+bootstrap_means &lt;- colMeans(bootstrap_samples)
+
+# Mostrar las primeras diez medias calculadas
+bootstrap_means[1:10]</code></pre>
+<pre><code> [1] 25.65 23.25 26.00 24.75 27.55 24.30 29.45 21.05 26.50 21.75</code></pre>
+<p>Las medias muestrales, una por cada muestra bootstrap son las
+siguientes:</p>
+<pre>
+> bootstrap_means[1:10]
+ [1] 25.65 23.25 26.00 24.75 27.55 24.30 29.45 21.05 26.50 21.75
+ 
+</pre>
+<p>Estas medias son las estimaciones de la estadística de interés (en
+este caso, la media muestral) para cada muestra bootstrap y formarán la
+base para la construcción del intervalo de confianza en los pasos
+posteriores.</p>
+<hr />
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Ordenar las Estimaciones Bootstrap</strong></li>
+</ol>
+<p>Después de calcular la estadística de interés (en este caso, las
+medias bootstrap) en cada muestra, el siguiente paso es
+<strong>ordenar</strong> estas estimaciones. El ordenamiento facilita el
+cálculo de los intervalos de confianza al identificar los percentiles
+correspondientes.</p>
+<p>En este caso, se ordenan las <strong>medias bootstrap</strong> <span
+class="math inline">\(\hat{\theta}_b^*\)</span> en orden ascendente. La
+ordenación se realiza de la siguiente manera:</p>
+<p><span class="math display">\[
+\hat{\theta}^*_{(1)} \leq \hat{\theta}^*_{(2)} \leq \dots \leq
+\hat{\theta}^*_{(B)}
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\hat{\theta}^*_{(b)}\)</span> representa
+la media de la muestra bootstrap ordenada en la posición <span
+class="math inline">\(b\)</span>.</li>
+<li><span class="math inline">\(B = 10\)</span> es el número total de
+muestras bootstrap generadas.</li>
+</ul>
+<p>El siguiente código en <strong>R</strong> ordena las medias bootstrap
+en orden ascendente:</p>
+<pre>
+# Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted <- sort(bootstrap_means)
+
+# Mostrar las medias ordenadas
+bootstrap_means_sorted <- choose(50, 5)
+bin_coeff
+</pre>
+<pre class="r"><code># Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted &lt;- sort(bootstrap_means)
+
+# Mostrar las medias ordenadas
+# bootstrap_means_sorted</code></pre>
+<p>Las medias ordenadas son las siguientes:</p>
+<pre>
+> bootstrap_means_sorted
+ [1] 21.05 21.75 23.25 24.30 24.75 25.65 26.00 26.50 27.55 29.45
+ 
+</pre>
+<hr />
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Determinar el Intervalo de Confianza Normal
+Bootstrap</strong></li>
+</ol>
+<p>El <strong>intervalo de confianza normal bootstrap</strong> se
+determina utilizando la <strong>media</strong> y la <strong>desviación
+estándar</strong> de las estimaciones bootstrap, junto con el valor
+crítico de la distribución normal estándar <span
+class="math inline">\(z_{\alpha/2}\)</span>.</p>
+<p>La fórmula para el <strong>intervalo de confianza normal
+bootstrap</strong> es:</p>
+<p><span class="math display">\[
+\hat{\theta}^*_b \pm z_{\alpha/2} \cdot s_{\hat{\theta}^*_b}
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\hat{\theta}^*_b\)</span> es la
+<strong>media de las estimaciones bootstrap</strong>, que es el valor de
+la estadística de interés calculada a partir de las muestras
+bootstrap.</li>
+<li><span class="math inline">\(s_{\hat{\theta}^*_b}\)</span> es la
+<strong>desviación estándar de las estimaciones bootstrap</strong>, que
+mide la dispersión de las estimaciones bootstrap alrededor de la media
+<span class="math inline">\(\hat{\theta}^*_b\)</span>.</li>
+<li><span class="math inline">\(z_{\alpha/2} = 1.96\)</span> es el
+<strong>valor crítico</strong> de la distribución normal estándar para
+un nivel de confianza del 95%.</li>
+</ul>
+<p><strong>Cálculo de la Media y Desviación Estándar de las Medias
+Bootstrap</strong></p>
+<p>Primero, se calcula la <strong>media</strong> y la <strong>desviación
+estándar</strong> de las medias bootstrap generadas:</p>
+<pre>
+# Calcular la media y la desviación estándar de las medias bootstrap
+mean_bootstrap <- mean(bootstrap_means)
+sd_bootstrap <- sd(bootstrap_means)
+
+# Mostrar resultados
+mean_bootstrap
+sd_bootstrap
+</pre>
+<pre class="r"><code># Calcular la media y la desviación estándar de las medias bootstrap
+mean_bootstrap &lt;- mean(bootstrap_means)
+sd_bootstrap &lt;- sd(bootstrap_means)
+
+# Mostrar resultados
+#mean_bootstrap
+#sd_bootstrap</code></pre>
+<p>Los resultados de <span
+class="math inline">\(\hat{\theta}_b^*\)</span> y <span
+class="math inline">\(s_{\hat{\theta}^*_b}\)</span> son:</p>
+<pre>
+
+> mean_bootstrap
+[1] 25.025
+> sd_bootstrap
+[1] 2.576631
+
+</pre>
+<p>Luego, se utiliza el valor crítico <span
+class="math inline">\(z_{\alpha/2} = 1.96\)</span> para un nivel de
+confianza del 95% y la fórmula para calcular el intervalo de
+confianza:</p>
+<pre>
+
+# Valor crítico z para un 95% de confianza
+z_alpha <- qnorm(1 - alpha / 2)
+
+# Calcular el intervalo de confianza
+CI_lower <- mean_bootstrap - z_alpha * sd_bootstrap
+CI_upper <- mean_bootstrap + z_alpha * sd_bootstrap
+
+# Mostrar el intervalo de confianza
+CI <- c(CI_lower, CI_upper)
+CI
+
+</pre>
+<pre class="r"><code># Valor crítico z para un 95% de confianza
+z_alpha &lt;- qnorm(1 - alpha / 2)
+
+# Calcular el intervalo de confianza
+CI_lower &lt;- mean_bootstrap - z_alpha * sd_bootstrap
+CI_upper &lt;- mean_bootstrap + z_alpha * sd_bootstrap
+
+# Mostrar el intervalo de confianza
+CI &lt;- c(CI_lower, CI_upper)
+#CI</code></pre>
+<p>Un <strong>intervalo de confianza normal bootstrap</strong> que
+proporciona una estimación de la media poblacional utilizando la
+aproximación normal usando <span class="math inline">\(B\)</span>=10
+está determinado por los valores:</p>
+<pre>
+> CI
+[1] 19.9749 30.0751
+
+</pre>
+<hr />
+<p>A continuación y pensando en efectos inferenciales se determina un
+<strong>intervalo de confianza normal bootstrap</strong> de la media
+poblacional</p>
+<p>usando <span class="math inline">\(B\)</span>=1000. Los códigos se
+ajustan a continuación al nuevo valor de <span
+class="math inline">\(B\)</span>.</p>
+<pre>
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Datos originales
+X <- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Número de muestras bootstrap
+B <- 1000  
+
+# Generar B muestras bootstrap
+bootstrap_samples <- replicate(B, sample(X, size = length(X), replace = TRUE))
+
+# Mostrar las primeras diez muestras generadas
+bootstrap_samples[, 1:10]
+
+# Calcular la media de cada muestra bootstrap
+bootstrap_means <- colMeans(bootstrap_samples)
+
+# Mostrar las primeras diez medias calculadas
+bootstrap_means[1:10]
+
+# Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted <- sort(bootstrap_means)
+
+# Mostrar las medias ordenadas
+# bootstrap_means_sorted
+
+# Calcular la media y la desviación estándar de las medias bootstrap
+mean_bootstrap <- mean(bootstrap_means)
+sd_bootstrap <- sd(bootstrap_means)
+
+# Mostrar resultados
+mean_bootstrap
+sd_bootstrap
+
+# Valor crítico z para un 95% de confianza
+z_alpha <- qnorm(1 - alpha / 2)
+
+# Calcular el intervalo de confianza
+CI_lower <- mean_bootstrap - z_alpha * sd_bootstrap
+CI_upper <- mean_bootstrap + z_alpha * sd_bootstrap
+
+# Mostrar el intervalo de confianza
+CI <- c(CI_lower, CI_upper)
+CI
+</pre>
+<pre class="r"><code># Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Datos originales
+X &lt;- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Número de muestras bootstrap
+B &lt;- 1000  
+
+# Generar B muestras bootstrap
+bootstrap_samples &lt;- replicate(B, sample(X, size = length(X), replace = TRUE))
+
+# Mostrar las primeras diez muestras generadas
+bootstrap_samples[, 1:10]</code></pre>
+<pre><code>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+ [1,]   35   33    3   50   22   12   50   33   45    50
+ [2,]   45   40   12   33   28   37   37   12   22    12
+ [3,]   33   25   35    7   50   25   25   18   30    42
+ [4,]    7   15   20   18   33    9   37   28   25    40
+ [5,]   22   28   35   37   40   28   50    9   25    10
+ [6,]   42   35   37   28   33   33   18   30   50    50
+ [7,]   25   22   50   33    7   45    7   33   15     7
+ [8,]   10   30   12    7   18   15    9   37   50    33
+ [9,]   50   15   25   33   33   20   50    3   20     3
+[10,]   33   20   18   15   45   15   28   18   20     5
+[11,]   10   20   15    7   35    5   40   18   10     9
+[12,]   45   22   37   35   40   37   22   22   33    22
+[13,]   20   15   40   10   25   30   50   18   33     3
+[14,]    7   12   42   18   15   45   25   42   12    10
+[15,]   18    5   40   45   35   50   18   20    3    18
+[16,]   15   10    5   22   12   35   33   15   22    30
+[17,]   22   18    9   42   33   15   30   15   40    42
+[18,]   20   28   30   22   15    9    5   22   40    22
+[19,]   45   30   10   28   22    3   25   25   15    12
+[20,]    9   42   45    5   10   18   30    3   20    15</code></pre>
+<pre class="r"><code># Calcular la media de cada muestra bootstrap
+bootstrap_means &lt;- colMeans(bootstrap_samples)
+
+# Mostrar las primeras diez medias calculadas
+bootstrap_means[1:10]</code></pre>
+<pre><code> [1] 25.65 23.25 26.00 24.75 27.55 24.30 29.45 21.05 26.50 21.75</code></pre>
+<pre class="r"><code># Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted &lt;- sort(bootstrap_means)
+
+# Mostrar las medias ordenadas
+# bootstrap_means_sorted
+
+# Calcular la media y la desviación estándar de las medias bootstrap
+mean_bootstrap &lt;- mean(bootstrap_means)
+sd_bootstrap &lt;- sd(bootstrap_means)
+
+# Mostrar resultados
+mean_bootstrap</code></pre>
+<pre><code>[1] 24.3166</code></pre>
+<pre class="r"><code>sd_bootstrap</code></pre>
+<pre><code>[1] 3.097395</code></pre>
+<pre class="r"><code># Valor crítico z para un 95% de confianza
+z_alpha &lt;- qnorm(1 - alpha / 2)
+
+# Calcular el intervalo de confianza
+CI_lower &lt;- mean_bootstrap - z_alpha * sd_bootstrap
+CI_upper &lt;- mean_bootstrap + z_alpha * sd_bootstrap
+
+# Mostrar el intervalo de confianza
+#CI &lt;- c(CI_lower, CI_upper)
+#CI</code></pre>
+<p>Un <strong>IC Normal Bootstrap</strong> para la media usando <span
+class="math inline">\(B\)</span>=1000 está determinado por los
+valores:</p>
+<pre>
+
+> CI
+[1] 18.24582 30.38738
+
+</pre>
+</p>
+</div>
+<hr />
+<p></br></br></br> Previo a la explicación del método <strong>Intervalo
+Sesgo-Acelerado (BCa)</strong> es necesario entender el <strong>Método
+Jackknife</strong>, pues requiere de su aplicación para determinar el
+parámetro de aceleración <span class="math inline">\(a\)</span> que
+requiere el método BCa.</p>
+</br></br>
+<h4>
+Método Jackknife
+</h4>
+<p>El <strong>método Jackknife</strong> es una técnica de remuestreo
+utilizada en estadística para estimar la precisión de una estimación,
+como su sesgo o su varianza. En lugar de generar múltiples muestras
+bootstrap con reemplazo, el Jackknife genera múltiples muestras dejando
+fuera una única observación en cada iteración.</p>
+<p>El Jackknife es especialmente útil cuando se tiene un conjunto de
+datos pequeño o mediano y se quiere estimar la estabilidad de una
+estadística de interés, como la media, la varianza, la pendiente de una
+regresión, etc.</p>
+<p><strong>¿Cómo funciona el Jackknife?</strong></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Definición del Conjunto de Datos</strong>: Si se supone
+que se tiene se tiene un conjunto de datos con <span
+class="math inline">\(n\)</span> observaciones: <span
+class="math inline">\(X = \{X_1, X_2, \dots, X_n\}\)</span>.</p></li>
+<li><p><strong>Generación de Muestras Jackknife</strong>: Para cada
+muestra Jackknife, se excluye una de las observaciones del conjunto de
+datos original y se calcula la estadística de interés (por ejemplo, la
+media) para el conjunto de datos restante. Este proceso se repite para
+cada observación en el conjunto de datos. Es decir, se crean <span
+class="math inline">\(n\)</span> muestras Jackknife, donde cada muestra
+deja fuera una observación distinta.</p>
+<ul>
+<li>Para la primera muestra Jackknife, se excluye <span
+class="math inline">\(X_1\)</span> y se calcula la estadística de
+interés usando el conjunto de datos <span class="math inline">\(X&#39; =
+\{X_2, X_3, \dots, X_n\}\)</span>.</li>
+<li>Para la segunda muestra Jackknife, se excluye <span
+class="math inline">\(X_2\)</span> y se calcula la estadística de
+interés usando el conjunto <span class="math inline">\(X&#39; = \{X_1,
+X_3, \dots, X_n\}\)</span>.</li>
+<li>Se continua este proceso hasta que se hayan excluido todas las
+observaciones una por una.</li>
+</ul></li>
+<li><p><strong>Cálculo de la Estadística Jackknife</strong>: Una vez
+obtenidas las estadísticas de interés de todas las muestras Jackknife,
+se calcula la <strong>media</strong> de las estimaciones obtenidas.</p>
+<ul>
+<li>La media de las estimaciones Jackknife es la estimación que se usa
+para representar la “media” del proceso de remuestreo.</li>
+</ul></li>
+<li><p><strong>Estimación de la Precisión</strong>: A partir de las
+estadísticas Jackknife, se puden calcular <strong>medidas de
+precisión</strong> como la <strong>varianza Jackknife</strong>, que
+ofrece una estimación de cuán dispersas están las estimaciones
+obtenidas.</p></li>
+</ol>
+<p><strong>Fórmula del Jackknife</strong></p>
+<p>Se denota como <span class="math inline">\(\hat{\theta}\)</span> a la
+estadística de interés calculada con el conjunto de datos completo.
+Luego, para cada muestra Jackknife se calcula la estadística Jackknife
+<span class="math inline">\(\hat{\theta}_{(i)}\)</span>, donde <span
+class="math inline">\(i\)</span> es la observación que se excluye:</p>
+<p><span class="math display">\[
+\hat{\theta}_{(i)} = f(X_{-i})
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\hat{\theta}_{(i)}\)</span>=<span
+class="math inline">\(f(X_{-i})\)</span> es la estadística calculada
+excluyendo la observación <span class="math inline">\(X_i\)</span>.</li>
+<li><span class="math inline">\(\hat{\theta}\)</span> es la estadística
+calculada con todos los datos de la muestra original.</li>
+</ul>
+<p>La <strong>media Jackknife</strong> es:</p>
+<p><span class="math display">\[
+\bar{\theta}_{\cdot}=\bar{\hat{\theta}}_{\text{Jackknife}} = \frac{1}{n}
+\sum_{i=1}^{n} \hat{\theta}_{(i)}
+\]</span></p>
+<p>Y la <strong>varianza Jackknife</strong> se estima como:</p>
+<p><span class="math display">\[
+\text{Var}_{\text{Jackknife}} = \frac{n-1}{n} \sum_{i=1}^{n}
+(\hat{\theta}_{(i)} - \bar{\hat{\theta}}_{\text{Jackknife}})^2
+\]</span></p>
+<hr />
+</br></br></br>
+<h4>
+Intervalo Sesgo-Acelerado (BCa)
+</h4>
+<p>El <strong>Intervalo Sesgo-Acelerado (BCa)</strong> es un método de
+intervalo de confianza bootstrap avanzado que ajusta la estimación del
+intervalo de confianza para corregir tanto el sesgo como la aceleración
+de la estadística de interés. Este método es más robusto que el
+<strong>Intervalo Percentil Bootstrap</strong> y el <strong>Intervalo
+Normal Bootstrap</strong>, especialmente cuando la distribución de las
+estimaciones bootstrap no es simétrica o cuando las estimaciones son
+sesgadas.</p>
+<p>El Intervalo BCa utiliza dos componentes clave para calcular el
+intervalo de confianza:</p>
+<ul>
+<li><p>El <strong>sesgo</strong> (Bias), que mide la diferencia entre la
+media de las estimaciones bootstrap y la estadística calculada a partir
+de los datos originales.</p></li>
+<li><p><strong>La aceleración</strong> (Acceleration), que mide cómo
+cambia la varianza de las estimaciones bootstrap con respecto al valor
+de la estadística de interés.</p></li>
+</ul>
+<p>El proceso se realiza en los siguientes pasos:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Generar las muestras bootstrap</strong>: Al igual que en
+otros métodos bootstrap, primero se generan <span
+class="math inline">\(B\)</span> muestras bootstrap y se calcula la
+estadística de interés <span
+class="math inline">\(\hat{\theta}^{*}_b\)</span> para cada
+muestra.</p></li>
+<li><p><strong>Cálculo del Sesgo</strong>: El <strong>sesgo</strong> en
+el método BCa se corrige para ajustar las estimaciones bootstrap y
+hacerlas más precisas. Este ajuste se realiza calculando el sesgo <span
+class="math inline">\(z_0\)</span>, que mide la diferencia entre la
+media de las estimaciones bootstrap y la estadística calculada a partir
+de los datos originales.</p></li>
+</ol>
+<p>El sesgo <span class="math inline">\(z_0\)</span> se calcula
+utilizando la siguiente fórmula:</p>
+<p><span class="math display">\[
+z_0 = \Phi^{-1} \left( \frac{\# \{ \hat{\theta}^{*}_b &lt; \hat{\theta}
+\}}{B} \right)
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\hat{\theta}^{*}_b\)</span> es la
+estadística de interés calculada para la muestra bootstrap <span
+class="math inline">\(b\)</span>.</li>
+<li><span class="math inline">\(\hat{\theta}\)</span> es la estadística
+de interés calculada a partir de los datos originales.</li>
+<li><span class="math inline">\(B\)</span> es el número total de
+muestras bootstrap generadas.</li>
+<li><span class="math inline">\(\Phi^{-1}\)</span> es la función inversa
+de la distribución acumulada de la normal estándar.</li>
+</ul>
+<p>Este valor de <span class="math inline">\(z_0\)</span> representa el
+ajuste necesario para corregir el sesgo en las estimaciones bootstrap,
+permitiendo que el intervalo de confianza sea más preciso y ajustado a
+la distribución real de los datos.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Cálculo del Parámetro de Aceleración <span
+class="math inline">\(a\)</span></strong>: El <strong>parámetro de
+aceleración</strong> <span class="math inline">\(a\)</span> ajusta el
+intervalo de confianza para tener en cuenta cómo varía la dispersión de
+las estimaciones bootstrap con respecto al valor de la estadística. Este
+ajuste se calcula utilizando el método <strong>Jackknife</strong>, que
+estimará cómo cambia la varianza de las estimaciones bootstrap al
+excluir una observación de los datos originales.</li>
+</ol>
+<p>La fórmula para calcular el parámetro de aceleración <span
+class="math inline">\(a\)</span> es:</p>
+<p><span class="math display">\[
+a = \frac{ \sum_{i=1}^{n} (\hat{\theta}_{(i)} - \bar{\theta}_{\cdot})^3
+}{6 \left[ \sum_{i=1}^{n} (\hat{\theta}_{(i)} - \bar{\theta}_{\cdot})^2
+\right]^{3/2} }
+\]</span></p>
+<p>Donde</p>
+<ul>
+<li><span class="math inline">\(\hat{\theta}_{(i)}\)</span> es la
+estadística de interés calculada al excluir la observación <span
+class="math inline">\(i\)</span> del conjunto de datos original.</li>
+<li><span class="math inline">\(\bar{\theta}_{\cdot}\)</span> es la
+media de las estadísticas <span
+class="math inline">\(\hat{\theta}_{(i)}\)</span> calculadas a partir de
+las muestras “Jackknife”.</li>
+</ul>
+<p>El parámetro de aceleración <span class="math inline">\(a\)</span>
+describe cómo la varianza de las estimaciones bootstrap cambia en
+función de la estadística de interés. Es un valor clave para ajustar el
+intervalo BCa, ya que permite tener en cuenta las fluctuaciones en la
+dispersión de las estimaciones.</p>
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Cálculo de los Percentiles Ajustados</strong></li>
+</ol>
+<p>Una vez calculados el <strong>sesgo</strong> <span
+class="math inline">\(z_0\)</span> y el <strong>parámetro de
+aceleración</strong> <span class="math inline">\(a\)</span>, podemos
+proceder a calcular los percentiles ajustados para determinar el
+intervalo de confianza <strong>BCa</strong>.</p>
+<p>Los percentiles ajustados se calculan utilizando las siguientes
+fórmulas:</p>
+<p><span class="math display">\[
+\alpha_1 = \Phi\left(z_0 + \frac{z_0 + z_{\alpha/2}}{1 - a(z_0 +
+z_{\alpha/2})}\right)
+\]</span></p>
+<p><span class="math display">\[
+\alpha_2 = \Phi\left(z_0 + \frac{z_0 + z_{1-\alpha/2}}{1 - a(z_0 +
+z_{1-\alpha/2})}\right)
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\Phi\)</span> es la <strong>función de
+distribución acumulada</strong> de la normal estándar.</li>
+<li><span class="math inline">\(z_{\alpha/2}\)</span> y <span
+class="math inline">\(z_{1-\alpha/2}\)</span> son los valores críticos
+de la normal estándar para los percentiles inferiores y superiores,
+respectivamente, del intervalo de confianza deseado (por ejemplo, para
+un intervalo del 95%, <span class="math inline">\(\alpha =
+0.05\)</span>).</li>
+<li><span class="math inline">\(z_0\)</span> es el
+<strong>sesgo</strong> calculado previamente.</li>
+<li><span class="math inline">\(a\)</span> es el <strong>parámetro de
+aceleración</strong> calculado previamente</li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En este ejemplo, se usa la misma muestra original que en los ejemplos
+anteriores y se determina un intervalo de confianza para la media
+ilustrando el método <strong>Intervalo Normal Bootstrap</strong> con
+<span class="math inline">\(B=10\)</span>, con el objetivo de facilitar
+la comprensión del método. Posteriormente, se realiza el cálculo para
+<span class="math inline">\(B=1000\)</span>.</p>
+<hr />
+<ol style="list-style-type: decimal">
+<li><strong>Cálculo del Sesgo <span
+class="math inline">\(z_0\)</span></strong>: El sesgo <span
+class="math inline">\(z_0\)</span> se calcula utilizando la siguiente
+fórmula:</li>
+</ol>
+<p><span class="math display">\[
+z_0 = \Phi^{-1} \left( \frac{\# \{ \hat{\theta}^{*}_b &lt; \hat{\theta}
+\}}{B} \right)
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\hat{\theta}^{*}_b\)</span> es la
+estadística de interés calculada para la muestra bootstrap <span
+class="math inline">\(b\)</span>.</li>
+<li><span class="math inline">\(\hat{\theta}\)</span> es la estadística
+de interés calculada a partir de los datos originales.</li>
+<li><span class="math inline">\(B\)</span> es el número total de
+muestras bootstrap generadas.</li>
+<li><span class="math inline">\(\Phi^{-1}\)</span> es la función inversa
+de la distribución acumulada de la normal estándar.</li>
+</ul>
+<p>Este valor de <span class="math inline">\(z_0\)</span> representa el
+ajuste necesario para corregir el sesgo en las estimaciones bootstrap,
+permitiendo que el intervalo de confianza sea más preciso y ajustado a
+la distribución real de los datos.</p>
+<p><strong>Cálculo del Sesgo en R</strong></p>
+<p>En <strong>R</strong>, el sesgo <span
+class="math inline">\(z_0\)</span> se puede calcular utilizando el
+paquete <code>boot</code>, que permite generar muestras bootstrap y
+calcular sus medias con <code>boot(X, stat_function, R = B)</code>, en
+este caso la función <code>stat_function</code> calcula las medias.</p>
+<p>Seguidamente se comparan las medias bootstrap con la media de la
+muestra original mediante
+<code>bootstrap_results$t &lt; original_stat</code> y se cuentan el
+número de resultados que son menores que la media original usando el
+código <code>sum(bootstrap_results$t &lt; original_stat)</code>. Este
+resultado se divide entre el valor de <span
+class="math inline">\(B\)</span> correspondiente a
+<code>length(bootstrap_results$t)</code>.</p>
+<p>Para las muestras bootstrap generadas con la semilla
+<code>set.seed(123)</code>, se obtuvo con el código
+<code>sum(bootstrap_results$t &lt; original_stat) / length(bootstrap_results$t)</code>
+el valor de 0.4. Luego se determina el cuantil de la normal estándar que
+tiene acumulado de área a la izquierda el valor de 0.4 y se encontró el
+valor de <code>z_0</code> -0.2533471.</p>
+<p>Los códigos aplicados son los siguientes:</p>
+<pre>
+# Instalar y cargar el paquete 'boot' si es necesario
+# install.packages("boot")
+library(boot)
+
+# Definir los datos originales
+X <- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Definir la función de estadística de interés (en este caso, la media)
+stat_function <- function(X, indices) {
+  return(mean(X[indices]))
+}
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Número de muestras bootstrap
+B <- 10 
+
+# Realizar el bootstrap
+bootstrap_results <- boot(X, stat_function, R = B)
+
+# Calcular el sesgo z_0
+
+# media bootstrap
+bootstrap_mean <- mean(bootstrap_results$t)
+
+# Estadística original calculada con los datos
+original_stat <- mean(X)
+
+# Calcular la proporción de estimaciones bootstrap menores que la estadística original
+prop_less_than_original <- sum(bootstrap_results$t < original_stat) / length(bootstrap_results$t)
+
+# Calcular el sesgo z_0 usando la función inversa de la normal estándar
+z_0 <- qnorm(prop_less_than_original)
+
+# Mostrar el valor de z_0
+z_0
+</pre>
+<pre class="r"><code># Instalar y cargar el paquete &#39;boot&#39; si es necesario
+# install.packages(&quot;boot&quot;)
+library(boot)
+
+# Definir los datos originales
+X &lt;- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Definir la función de estadística de interés (en este caso, la media)
+stat_function &lt;- function(X, indices) {
+  return(mean(X[indices]))
+}
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Número de muestras bootstrap
+B &lt;- 10 
+
+# Realizar el bootstrap
+bootstrap_results &lt;- boot(X, stat_function, R = B)
+
+# Calcular el sesgo z_0
+
+# media bootstrap
+bootstrap_mean &lt;- mean(bootstrap_results$t)
+
+# Estadística original calculada con los datos
+original_stat &lt;- mean(X)
+
+# Calcular la proporción de estimaciones bootstrap menores que la estadística original
+prop_less_than_original &lt;- sum(bootstrap_results$t &lt; original_stat) / length(bootstrap_results$t)
+
+# Calcular el sesgo z_0 usando la función inversa de la normal estándar
+z_0 &lt;- qnorm(prop_less_than_original)
+
+# Mostrar el valor de z_0
+#z_0</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Cálculo del Parámetro de Aceleración <span
+class="math inline">\(a\)</span></strong></li>
+</ol>
+<p>El <strong>parámetro de aceleración</strong> <span
+class="math inline">\(a\)</span> ajusta el intervalo de confianza para
+tener en cuenta cómo varía la dispersión de las estimaciones bootstrap
+con respecto al valor de la estadística. Este ajuste se calcula
+utilizando el método <strong>Jackknife</strong>, que estimará cómo
+cambia la varianza de las estimaciones bootstrap al excluir una
+observación de los datos originales.</p>
+<p>La fórmula para calcular el parámetro de aceleración <span
+class="math inline">\(a\)</span> es:</p>
+<p><span class="math display">\[
+a = \frac{ \sum_{i=1}^{n} (\hat{\theta}_{(i)} - \bar{\theta}_{\cdot})^3
+}{6 \left[ \sum_{i=1}^{n} (\hat{\theta}_{(i)} - \bar{\theta}_{\cdot})^2
+\right]^{3/2} }
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\hat{\theta}_{(i)}\)</span> es la
+estadística de interés calculada al excluir la observación <span
+class="math inline">\(i\)</span> del conjunto de datos original.</li>
+<li><span class="math inline">\(\bar{\theta}_{\cdot}\)</span> es la
+media de las estadísticas <span
+class="math inline">\(\hat{\theta}_{(i)}\)</span> calculadas a partir de
+las muestras “Jackknife”.</li>
+</ul>
+<p>El parámetro de aceleración <span class="math inline">\(a\)</span>
+describe cómo la varianza de las estimaciones bootstrap cambia en
+función de la estadística de interés. Es un valor clave para ajustar el
+intervalo BCa, ya que permite tener en cuenta las fluctuaciones en la
+dispersión de las estimaciones.</p>
+<p><strong>Cálculo del Parámetro de Aceleración en R</strong></p>
+<p>En <strong>R</strong>, podemos calcular el parámetro de aceleración
+<span class="math inline">\(a\)</span> usando el siguiente código.
+Primero, calculamos las estadísticas de Jackknife y luego aplicamos la
+fórmula para <span class="math inline">\(a\)</span>.</p>
+<p>El cálculo del parámetro de aceleración <span
+class="math inline">\(a\)</span> se realiza mediante la función
+<code>jackknife_function</code>, que genera las muestras jackknife
+eliminando, de manera secuencial, una observación de la muestra
+original. Para cada una de estas muestras, se calcula la estadística de
+interés, que en este caso es la media. Luego, se obtiene la media de
+todas las medias jackknife, la cual se utiliza para calcular el
+numerador y el denominador de la fórmula del parámetro de aceleración.
+Finalmente, al dividir estos valores, se determina el coeficiente de
+aceleración <span class="math inline">\(a\)</span>.</p>
+<p>Los códigos en detalle son los siguientes:</p>
+<pre>
+# Definir la función Jackknife para calcular la aceleración
+jackknife_function <- function(data, stat_function) {
+  n <- length(data)
+  jackknife_values <- numeric(n)
+  
+  # Calcular las estadísticas Jackknife al excluir cada observación
+  for (i in 1:n) {
+    jackknife_values[i] <- stat_function(data[-i])
+  }
+  
+  # Calcular la media Jackknife
+  jackknife_mean <- mean(jackknife_values)
+  
+  # Calcular el parámetro de aceleración a
+  numerador <- sum((jackknife_values - jackknife_mean)^3)
+  denominador <- 6*sum((jackknife_values - jackknife_mean)^2)^(3/2)
+  
+  a <- numerador / denominador
+  
+  return(list(a,jackknife_values,jackknife_mean,numerador,denominador))
+}
+
+# Usar los datos originales para calcular la aceleración
+resultados <- jackknife_function(X, mean)  # Aquí X es la muestra original
+
+# Mostrar el valor de a
+a_value<-resultados[[1]]
+</pre>
+<pre class="r"><code># Definir la función Jackknife para calcular la aceleración
+jackknife_function &lt;- function(data, stat_function) {
+  n &lt;- length(data)
+  jackknife_values &lt;- numeric(n)
+  
+  # Calcular las estadísticas Jackknife al excluir cada observación
+  for (i in 1:n) {
+    jackknife_values[i] &lt;- stat_function(data[-i])
+  }
+  
+  # Calcular la media Jackknife
+  jackknife_mean &lt;- mean(jackknife_values)
+  
+  # Calcular el parámetro de aceleración a
+  numerador &lt;- sum((jackknife_values - jackknife_mean)^3)
+  denominador &lt;- 6*sum((jackknife_values - jackknife_mean)^2)^(3/2)
+  
+  a &lt;- numerador / denominador
+  
+  return(list(a,jackknife_values,jackknife_mean,numerador,denominador))
+}
+
+# Usar los datos originales para calcular la aceleración
+resultados &lt;- jackknife_function(X, mean)  # Aquí X es la muestra original
+
+# Mostrar el valor de a
+a_value&lt;-resultados[[1]]</code></pre>
+<p>Las medias muestrales por cada una de las 20 muestras Jackknife son
+las siguientes:</p>
+<pre>
+> resultados
+[[2]]
+ [1] 25.42105 25.31579 25.21053 25.10526 25.05263 24.94737 24.78947 24.63158 24.52632 24.42105 24.26316 24.10526 24.00000 23.84211 23.73684
+[16] 23.63158 23.47368 23.36842 23.21053 22.94737
+
+</pre>
+<p>El promedio de los promedios de las muestras Jackknife es el
+valor:</p>
+<pre>
+
+[[3]]
+[1] 24.3
+
+</pre>
+<p>El valor de <span class="math inline">\(a\)</span> y los valores
+calculados como numerador y denominador son:</p>
+<pre>
+[[1]]
+[1] -0.005370197
+
+[[4]]
+[1] -1.149509
+
+[[5]]
+[1] 214.0533
+</pre>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Cálculo de los Percentiles Ajustados</strong></li>
+</ol>
+<p>Una vez calculados el <strong>sesgo</strong> <span
+class="math inline">\(z_0\)</span> y el <strong>parámetro de
+aceleración</strong> <span class="math inline">\(a\)</span>, el
+siguiente paso es calcular los <strong>percentiles ajustados</strong>
+<span class="math inline">\(\alpha_1\)</span> y <span
+class="math inline">\(\alpha_2\)</span> que se utilizan para determinar
+el intervalo de confianza <strong>BCa</strong>.</p>
+<p>Los percentiles ajustados se calculan utilizando las siguientes
+fórmulas:</p>
+<p><span class="math display">\[
+\alpha_1 = \Phi\left(z_0 + \frac{z_0 + z_{\alpha/2}}{1 - a(z_0 +
+z_{\alpha/2})}\right)
+\]</span></p>
+<p><span class="math display">\[
+\alpha_2 = \Phi\left(z_0 + \frac{z_0 + z_{1-\alpha/2}}{1 - a(z_0 +
+z_{1-\alpha/2})}\right)
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\Phi\)</span> es la <strong>función de
+distribución acumulada</strong> de la normal estándar.</li>
+<li><span class="math inline">\(z_{\alpha/2}\)</span> y <span
+class="math inline">\(z_{1-\alpha/2}\)</span> son los valores críticos
+de la distribución normal estándar para los percentiles inferior y
+superior del intervalo de confianza deseado (por ejemplo, para un
+intervalo del 95%, <span class="math inline">\(\alpha =
+0.05\)</span>).</li>
+<li><span class="math inline">\(z_0\)</span> es el
+<strong>sesgo</strong> calculado previamente.</li>
+<li><span class="math inline">\(a\)</span> es el <strong>parámetro de
+aceleración</strong> calculado previamente.</li>
+</ul>
+<p>Los percentiles ajustados <span
+class="math inline">\(\alpha_1\)</span> y <span
+class="math inline">\(\alpha_2\)</span> determinan los límites inferior
+y superior del intervalo de confianza ajustado.</p>
+<p><strong>Cálculo de los Percentiles Ajustados en R</strong></p>
+<p>En <strong>R</strong>, los percentiles ajustados se pueden calcular
+utilizando las fórmulas anteriores. A continuación se muestra el código
+que realiza este cálculo:</p>
+<pre>
+# Definir el nivel de significancia
+alpha <- 0.05  # Nivel de significancia para el intervalo de confianza del 95%
+
+# Calcular los percentiles ajustados alpha_1 y alpha_2
+alpha_1 <- pnorm(z_0 + (z_0 + qnorm(alpha / 2)) / (1 - a_value * (z_0 + qnorm(alpha / 2))))
+alpha_2 <- pnorm(z_0 + (z_0 + qnorm(1 - alpha / 2)) / (1 - a_value * (z_0 + qnorm(1 - alpha / 2))))
+
+# Mostrar los percentiles ajustados
+alpha_1
+alpha_2
+</pre>
+<pre class="r"><code># Definir el nivel de significancia
+alpha &lt;- 0.05  # Nivel de significancia para el intervalo de confianza del 95%
+
+# Calcular los percentiles ajustados alpha_1 y alpha_2
+alpha_1 &lt;- pnorm(z_0 + (z_0 + qnorm(alpha / 2)) / (1 - a_value * (z_0 + qnorm(alpha / 2))))
+alpha_2 &lt;- pnorm(z_0 + (z_0 + qnorm(1 - alpha / 2)) / (1 - a_value * (z_0 + qnorm(1 - alpha / 2))))
+
+# Mostrar los percentiles ajustados
+alpha_1</code></pre>
+<pre><code>[1] 0.006328416</code></pre>
+<pre class="r"><code>alpha_2</code></pre>
+<pre><code>[1] 0.9247505</code></pre>
+<p>Los valores resultantes son:</p>
+<pre>
+
+> # Mostrar los percentiles ajustados
+> alpha_1
+[1] 0.006328416
+> alpha_2
+[1] 0.9247505
+
+</pre>
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Generación del Intervalo BCa</strong></li>
+</ol>
+<p>Una vez que hemos calculado los <strong>percentiles
+ajustados</strong> <span class="math inline">\(\alpha_1\)</span> y <span
+class="math inline">\(\alpha_2\)</span>, el siguiente paso es obtener el
+<strong>intervalo de confianza BCa</strong> para la estadística de
+interés (en este caso, la <strong>media</strong>).</p>
+<p>El intervalo de confianza BCa se calcula utilizando los percentiles
+ajustados <span class="math inline">\(\alpha_1\)</span> y <span
+class="math inline">\(\alpha_2\)</span> en la distribución de las
+estadísticas bootstrap ordenadas.</p>
+<p>La fórmula para el intervalo de confianza BCa es:</p>
+<p><span class="math display">\[
+\left[ \hat{\theta}^*_b \left( \alpha_1 \right), \hat{\theta}^*_b \left(
+\alpha_2 \right) \right]
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\hat{\theta}^*_b\)</span> es la
+<strong>media</strong> por cada muestra bootstrap generada.</li>
+<li><span class="math inline">\(\alpha_1\)</span> y <span
+class="math inline">\(\alpha_2\)</span> son los <strong>percentiles
+ajustados</strong> calculados previamente.</li>
+</ul>
+<p><strong>Cálculo del Intervalo BCa en R</strong></p>
+<p>Una vez que tenemos los percentiles ajustados, podemos usar estos
+valores para determinar los límites inferior y superior del intervalo de
+confianza BCa. A continuación se muestra el código en <strong>R</strong>
+para calcular el intervalo BCa:</p>
+<pre>
+# Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted <- sort(bootstrap_means)
+
+# Obtener los valores correspondientes de los percentiles ajustados
+IC_lower <- bootstrap_means_sorted[floor(B * alpha_1) + 1]
+IC_upper <- bootstrap_means_sorted[floor(B * alpha_2)]
+
+# Mostrar el intervalo BCa
+IC <- c(IC_lower, IC_upper)
+IC
+</pre>
+<pre class="r"><code># Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted &lt;- sort(bootstrap_means)
+
+# Obtener los valores correspondientes de los percentiles ajustados
+IC_lower &lt;- bootstrap_means_sorted[floor(B * alpha_1) + 1]
+IC_upper &lt;- bootstrap_means_sorted[floor(B * alpha_2)]
+
+# Mostrar el intervalo BCa
+IC &lt;- c(IC_lower, IC_upper)
+IC</code></pre>
+<pre><code>[1] 13.45 17.15</code></pre>
+<p>Un <strong>intervalo BCa</strong> para la media usando <span
+class="math inline">\(B\)</span>= 10 está determinado por los
+valores:</p>
+<pre>
+
+> IC
+[1] 21.05 26.50
+
+</pre>
+<hr />
+<p>Ahora usando <span class="math inline">\(B\)</span>=1000 para fectos
+inferenciales se tiene los códigos siguientes:</p>
+<pre>
+
+#---Paso 1
+
+#---Paso 1
+
+# Instalar y cargar el paquete 'boot' si es necesario
+# install.packages("boot")
+library(boot)
+
+# Definir los datos originales
+X <- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Definir la función de estadística de interés (en este caso, la media)
+stat_function <- function(X, indices) {
+  return(mean(X[indices]))
+}
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Número de muestras bootstrap
+B <- 1000 
+
+# Realizar el bootstrap
+bootstrap_results <- boot(X, stat_function, R = B)
+
+# Calcular el sesgo z_0
+
+# media bootstrap
+bootstrap_mean <- mean(bootstrap_results$t)
+
+# Estadística original calculada con los datos
+original_stat <- mean(X)
+
+# Calcular la proporción de estimaciones bootstrap menores que la estadística original
+prop_less_than_original <- sum(bootstrap_results$t < original_stat) / length(bootstrap_results$t)
+
+# Calcular el sesgo z_0 usando la función inversa de la normal estándar
+z_0 <- qnorm(prop_less_than_original)
+
+# Mostrar el valor de z_0
+z_0
+
+
+#---Paso 2
+
+# Definir la función Jackknife para calcular la aceleración
+jackknife_function <- function(data, stat_function) {
+  n <- length(data)
+  jackknife_values <- numeric(n)
+  
+  # Calcular las estadísticas Jackknife al excluir cada observación
+  for (i in 1:n) {
+    jackknife_values[i] <- stat_function(data[-i])
+  }
+  
+  # Calcular la media Jackknife
+  jackknife_mean <- mean(jackknife_values)
+  
+  # Calcular el parámetro de aceleración a
+  numerador <- sum((jackknife_values - jackknife_mean)^3)
+  denominador <- 6*sum((jackknife_values - jackknife_mean)^2)^(3/2)
+  
+  a <- numerador / denominador
+  
+  return(list(a,jackknife_values,jackknife_mean,numerador,denominador))
+}
+
+# Usar los datos originales para calcular la aceleración
+resultados <- jackknife_function(X, mean)  # Aquí X es la muestra original
+
+# Mostrar el valor de a
+a_value<-resultados[[1]]
+
+
+#---Paso 3
+
+# Definir el nivel de significancia
+alpha <- 0.05  # Nivel de significancia para el intervalo de confianza del 95%
+
+# Calcular los percentiles ajustados alpha_1 y alpha_2
+alpha_1 <- pnorm(z_0 + (z_0 + qnorm(alpha / 2)) / (1 - a_value * (z_0 + qnorm(alpha / 2))))
+alpha_2 <- pnorm(z_0 + (z_0 + qnorm(1 - alpha / 2)) / (1 - a_value * (z_0 + qnorm(1 - alpha / 2))))
+
+# Mostrar los percentiles ajustados
+alpha_1
+alpha_2
+
+#---Paso 4
+
+# Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted <- sort(bootstrap_means)
+
+# Obtener los valores correspondientes de los percentiles ajustados
+IC_lower <- bootstrap_means_sorted[floor(B * alpha_1) + 1]
+IC_upper <- bootstrap_means_sorted[floor(B * alpha_2)]
+
+# Mostrar el intervalo BCa
+IC <- c(IC_lower, IC_upper)
+IC
+
+</pre>
+<pre class="r"><code>#---Paso 1
+
+# Instalar y cargar el paquete &#39;boot&#39; si es necesario
+# install.packages(&quot;boot&quot;)
+library(boot)
+
+# Definir los datos originales
+X &lt;- c(3, 5, 7, 9, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 35, 37, 40, 42, 45, 50)
+
+# Definir la función de estadística de interés (en este caso, la media)
+stat_function &lt;- function(X, indices) {
+  return(mean(X[indices]))
+}
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Número de muestras bootstrap
+B &lt;- 1000 
+
+# Realizar el bootstrap
+bootstrap_results &lt;- boot(X, stat_function, R = B)
+
+# Calcular el sesgo z_0
+
+# media bootstrap
+bootstrap_mean &lt;- mean(bootstrap_results$t)
+
+# Estadística original calculada con los datos
+original_stat &lt;- mean(X)
+
+# Calcular la proporción de estimaciones bootstrap menores que la estadística original
+prop_less_than_original &lt;- sum(bootstrap_results$t &lt; original_stat) / length(bootstrap_results$t)
+
+# Calcular el sesgo z_0 usando la función inversa de la normal estándar
+z_0 &lt;- qnorm(prop_less_than_original)
+
+# Mostrar el valor de z_0
+z_0</code></pre>
+<pre><code>[1] 0.06270678</code></pre>
+<pre class="r"><code>#---Paso 2
+
+# Definir la función Jackknife para calcular la aceleración
+jackknife_function &lt;- function(data, stat_function) {
+  n &lt;- length(data)
+  jackknife_values &lt;- numeric(n)
+  
+  # Calcular las estadísticas Jackknife al excluir cada observación
+  for (i in 1:n) {
+    jackknife_values[i] &lt;- stat_function(data[-i])
+  }
+  
+  # Calcular la media Jackknife
+  jackknife_mean &lt;- mean(jackknife_values)
+  
+  # Calcular el parámetro de aceleración a
+  numerador &lt;- sum((jackknife_values - jackknife_mean)^3)
+  denominador &lt;- 6*sum((jackknife_values - jackknife_mean)^2)^(3/2)
+  
+  a &lt;- numerador / denominador
+  
+  return(list(a,jackknife_values,jackknife_mean,numerador,denominador))
+}
+
+# Usar los datos originales para calcular la aceleración
+resultados &lt;- jackknife_function(X, mean)  # Aquí X es la muestra original
+
+# Mostrar el valor de a
+a_value&lt;-resultados[[1]]
+
+
+#---Paso 3
+
+# Definir el nivel de significancia
+alpha &lt;- 0.05  # Nivel de significancia para el intervalo de confianza del 95%
+
+# Calcular los percentiles ajustados alpha_1 y alpha_2
+alpha_1 &lt;- pnorm(z_0 + (z_0 + qnorm(alpha / 2)) / (1 - a_value * (z_0 + qnorm(alpha / 2))))
+alpha_2 &lt;- pnorm(z_0 + (z_0 + qnorm(1 - alpha / 2)) / (1 - a_value * (z_0 + qnorm(1 - alpha / 2))))
+
+# Mostrar los percentiles ajustados
+alpha_1</code></pre>
+<pre><code>[1] 0.03186387</code></pre>
+<pre class="r"><code>alpha_2</code></pre>
+<pre><code>[1] 0.9804742</code></pre>
+<pre class="r"><code>#---Paso 4
+
+# Ordenar las medias bootstrap en orden ascendente
+bootstrap_means_sorted &lt;- sort(bootstrap_means)
+
+# Obtener los valores correspondientes de los percentiles ajustados
+IC_lower &lt;- bootstrap_means_sorted[floor(B * alpha_1) + 1]
+IC_upper &lt;- bootstrap_means_sorted[floor(B * alpha_2)]
+
+# Mostrar el intervalo BCa
+IC &lt;- c(IC_lower, IC_upper)
+IC</code></pre>
+<pre><code>[1] 18.50 30.45</code></pre>
+<p>Un <strong>intervalo BCa para la media</strong> usando <span
+class="math inline">\(B\)</span>= 1000 está determinado por los
+valores:</p>
+<pre>
+
+> IC
+[1] 18.50 30.45
+
+</pre>
+</p>
+</div>
+<hr />
+</br></br></br>
+<h4>
+Intervalo de Studentizado (t-bootstrap)
+</h4>
+<p>Este método se basa en la distribución t de Student en lugar de la
+normal.</p>
+<p><span class="math display">\[
+t_b = \frac{\hat{\theta}^*_b - \hat{\theta}}{s_b}
+\]</span></p>
+<p>y el intervalo se construye con los percentiles de la distribución de
+<span class="math inline">\(t_b\)</span>.</p>
+<div class="caja-actividad">
+<h3>
+Actividad:
+</h3>
+<blockquote>
+<p>
+<ul>
+<li>Consulta cómo aplicar el método Intervalo de Studentizado
+(t-bootstrap) y aplica el método para determinar un intervalo Bootstrap
+para la media usando la misma muestra original de los ejemplos de esta
+sección.</li>
+</ul>
+</p>
+</blockquote>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

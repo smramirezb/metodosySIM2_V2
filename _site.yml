@@ -1,0 +1,71 @@
+output_dir: "docs"
+navbar:
+  title: "Métodos y Simulación"
+  left:
+    - text: "Inicio"
+      icon: fa-home
+      href: index.html
+    - text: "Probabilidad"
+      menu:
+        - text: "Introducción"
+          href: recurso101.html
+        - text: "Conceptos básicos"
+          href: recurso102.html  
+        - text: "Enfoque"
+          href: recurso103.html
+        - text: "Axiomas"
+          href: recurso103b.html  
+        - text: "Tipos de probabilidad"
+          href: recurso104.html  
+    - text: "Variable Aleatoria"
+      menu:
+        - text: "Definición"
+          href: recurso201.html
+        - text: "Valor esperado y varianza"
+          href: recurso202.html            
+        - text: "Variables conjuntas"
+          href: recurso203.html            
+        - text: "Modelos discretos"
+          href: recurso204.html 
+        - text: "Modelos continuos"
+          href: recurso205.html  
+    - text: "Inferencia Estadística"
+      menu:
+        - text: "Conceptos básicos"
+          href: recurso301.html
+        - text: "Estimación puntual"
+          href: recurso302.html  
+        - text: "Teorema del Límite Central"
+          href: recurso305.html              
+        - text: "Propiedades de los estimadores"
+          href: recurso303.html  
+        - text: "Métodos de estimación"
+          href: recurso304.html     
+    - text: "Intervalos de Confianza"
+      menu:
+        - text: "Para una población"
+          href: recurso401.html
+        - text: "Para dos poblaciones"
+          href: recurso402.html
+        - text: "Estimación no paramétrica"
+          href: recurso403.html
+    - text: "Pruebas de Hipótesis"
+      menu:
+        - text: "Introducción"
+          href: recurso501.html
+        - text: "Pruebas sobre una muestra"
+          href: recurso502.html
+        - text: "Pruebas sobre dos muestras"
+          href: recurso503.html
+        - text: "Pruebas no paramétricas"
+          href: recurso504.html
+    - text: "Casos de Estudio"
+      menu:
+        - text: "Caso 1"
+          href: recurso404.html
+        - text: "Caso 2"
+          href: recurso405.html
+    - text: "Referencias"
+      menu:
+        - text: "Referencias"
+          href: recurso1000.html

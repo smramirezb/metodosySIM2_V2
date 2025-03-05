@@ -1,0 +1,835 @@
+---
+title: <span style="color:#686868"> **Estimación por intervalos de confianza**</span>
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = NA)
+# library(paqueteMETODOS)
+
+```
+
+<br/><br/>
+
+<!-- ```{r, echo=FALSE, out.width="100%", fig.align = "center"} -->
+<!-- knitr::include_graphics("img/manos2.png") -->
+<!-- ``` -->
+<!-- Tomada de : pixabay.com -->
+
+<br/>
+
+</br></br>
+<h2>Introducción</h2>
+
+Los **intervalos de confianza** son una herramienta fundamental en estadística inferencial que permite estimar un parámetro poblacional a partir de una muestra. En lugar de proporcionar un valor único como estimación, un intervalo de confianza define un rango de valores posibles del parámetro desconocido con un cierto nivel de confianza, generalmente expresado en porcentaje (como el 95% o el 99%).  
+
+Matemáticamente, un intervalo de confianza para un parámetro $\theta$ se expresa como:  
+
+$$
+(IC) = (L_I, L_S)
+$$  
+
+donde $L_I$ y $L_S$ representan los límites inferior y superior del intervalo, respectivamente. La amplitud del intervalo depende del nivel de confianza deseado y de la variabilidad de los datos.  
+
+Los intervalos de confianza son ampliamente utilizados en diferentes áreas, entre ellas:  
+
+- **Inferencia estadística:** Permiten realizar estimaciones más precisas de parámetros poblacionales como la media, la proporción o la desviación estándar.  
+- **Toma de decisiones:** Se usan en estudios científicos y análisis de datos para respaldar conclusiones sin necesidad de conocer toda la población.  
+- **Control de calidad:** En procesos industriales, ayudan a evaluar si un producto cumple con ciertos estándares de calidad dentro de un margen aceptable.  
+- **Estudios clínicos y epidemiología:** Se utilizan para evaluar la efectividad de tratamientos y medicamentos, proporcionando rangos en los que se espera encontrar el efecto real en la población.  
+- **Predicción y modelado:** Son clave en modelos predictivos y de pronóstico, ayudando a cuantificar la incertidumbre en las estimaciones.  
+
+Debido a su capacidad para representar la incertidumbre de una estimación, los intervalos de confianza son una de las herramientas más utilizadas en el análisis de datos y la toma de decisiones basada en la evidencia.
+
+
+
+</br></br>
+<h2>Nivel de Confianza</h2>
+
+La **Figura 2.48** muestra los resultados de la simulación de 100 muestras aleatorias provenientes de una población con media 10. Para cada muestra, se calcularon los **intervalos de confianza** de la media, donde cada punto representa una estimación puntual y las barras verticales corresponden a sus respectivos intervalos de confianza. La línea negra horizontal indica el valor real del parámetro, es decir, la media igual a 10.  
+
+En el gráfico, algunos intervalos de confianza están resaltados en **color naranja**, lo que indica que **no incluyen** la línea negra de referencia y, por lo tanto, no contienen el valor real del parámetro. En contraste, los 98 intervalos restantes, representados en **color azul**, sí incluyen el valor real de la media.  
+
+En este caso, de los 100 intervalos de confianza construidos para la media poblacional, el **98% contienen el valor real del parámetro**, lo que refleja que estos intervalos fueron generados con un **nivel de confianza del 98%**. Esto ejemplifica la interpretación probabilística de los intervalos de confianza: en repetidas muestras, un número muy grande, un porcentaje cercano al nivel de confianza incluirá el valor real del parámetro, mientras que el resto no lo hará.
+
+
+<br/><br/>
+<center>
+```{r, echo=FALSE, out.width="100%", fig.align = "center"}
+knitr::include_graphics("img/RplotConfianza.png")
+```
+**Figura 2.48** Ilustración del nivel de confianza.
+</center>
+<br/><br/>
+
+
+
+
+
+</br></br>
+<h2>Intervalos de confianza para una población</h2>
+
+
+
+
+</br></br>
+<h3>Intervalo de Confianza para la Media con Varianza Conocida</h3>
+
+Para estimar la media poblacional cuando la varianza es conocida, partimos de la relación que establece que el parámetro $\theta$ se encuentra dentro de un intervalo:  
+
+$$
+L_{I} \leq \theta \leq L_{S}
+$$  
+
+Bajo el supuesto de que la variable estandarizada $Z$ sigue una distribución normal estándar:  
+
+$$
+Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0,1)
+$$  
+
+se puede construir el siguiente intervalo de probabilidad:  
+
+$$
+P(L_{IC} \leq Z \leq L_{SC}) = 1 - \alpha
+$$  
+
+donde $(1 - \alpha)$ representa el **nivel de confianza**. Es importante destacar que este concepto difiere del de probabilidad, ya que la confianza se interpreta como la proporción de intervalos construidos a partir de muestras aleatorias que contendrán el parámetro real. Esto significa que si se construyen 100 intervalos a partir de diferentes muestras, aproximadamente $(1 - \alpha)\times 100$% de ellos incluirán el verdadero valor del parámetro $\mu$.  
+
+A partir de la definición de la normal estándar, se obtiene:  
+
+$$
+ P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1 - \alpha
+$$  
+
+Reemplazando la expresión de $Z$:  
+
+$$
+ P\Bigg(-z_{\alpha/2} \leq \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \leq z_{\alpha/2}\Bigg) = 1 - \alpha
+$$  
+
+Despejando $\mu$, obtenemos el intervalo de confianza para la media poblacional:  
+
+$$
+ P\Bigg(\bar{X} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \leq \mu \leq \bar{X} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}}\Bigg) = 1 - \alpha
+$$  
+
+Por lo tanto, el **intervalo de confianza para la media poblacional** cuando la varianza es conocida se expresa como:  
+
+
+
+$$
+IC_{\mu}: \bar{x} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+$$  
+
+
+**Supuestos:**  
+
+- $X \sim N(\mu, \sigma^{2})$, $\sigma^2$ conocida 
+
+
+<br/><br/>
+El término $z_{\alpha/2}$ representa el **valor crítico** de la **distribución normal estándar** $N(0,1)$ asociado a un nivel de confianza
+$1 - \alpha$.  
+
+En el contexto de los **intervalos de confianza**, $z_{\alpha/2}$ es el valor en la tabla de la distribución normal estándar que deja un área de $\alpha/2$ en cada una de las colas de la distribución. Esto se debe a que el **nivel de confianza** $1 - \alpha$ se distribuye simétricamente alrededor de la media.  
+
+**Explicación Gráfica** 
+
+- La distribución normal estándar es simétrica con media $0$ y desviación estándar $1$.  
+- Un nivel de confianza $1 - \alpha$ indica que la probabilidad acumulada en el centro de la distribución es $1- \alpha$.  
+- Como la distribución es simétrica, la probabilidad restante $\alpha$ se divide en partes iguales entre las dos colas, por lo que cada cola contiene una probabilidad de $\alpha/2$.  
+- El valor crítico $z_{\alpha/2}$ es el **percentil** de la normal estándar donde la cola derecha tiene un área de $\alpha/2$, es decir, **la probabilidad de que una observación de la normal estándar sea mayor que $z_{\alpha/2}$ es exactamente $\alpha/2$**.  
+
+
+**Valores Comunes de $z_{\alpha/2}$**  
+
+Los valores críticos más utilizados en estadística para distintos niveles de confianza son:  
+
+| Nivel de Confianza ($1 - \alpha$) | $\alpha$ | $z_{\alpha/2}$ |
+|----------------------|--------|------------|
+| 90% | 0.10  | 1.645 |
+| 95% | 0.05  | 1.960 |
+| 99% | 0.01  | 2.576 |
+
+Estos valores se obtienen a partir de la **tabla de la normal estándar** y son fundamentales para la construcción de intervalos de confianza y pruebas de hipótesis.  
+
+En **R**, los valores críticos se pueden determinar usando los siguientes códigos:
+
+
+<pre>
+# Definir niveles de confianza
+niveles_confianza <- c(0.90, 0.95, 0.99)
+
+# Calcular los valores críticos z_alpha/2
+valores_criticos <- qnorm(1 - (1 - niveles_confianza) / 2)
+valores_criticos <- qnorm((1 - niveles_confianza) / 2,lower.tail=FALSE)
+
+# Mostrar los resultados
+data.frame(Nivel_de_Confianza = niveles_confianza, 
+           Alpha = 1 - niveles_confianza, 
+           Z_critico = valores_criticos)
+</pre>
+
+
+
+```{r, echo=TRUE, fig.height=3.5}
+# Definir niveles de confianza
+niveles_confianza <- c(0.90, 0.95, 0.99)
+
+# Calcular los valores críticos z_alpha/2
+valores_criticos <- qnorm(1 - (1 - niveles_confianza) / 2)
+valores_criticos <- qnorm((1 - niveles_confianza) / 2,lower.tail=FALSE)
+
+# Mostrar los resultados
+data.frame(Nivel_de_Confianza = niveles_confianza, 
+           Alpha = 1 - niveles_confianza, 
+           Z_critico = valores_criticos)
+```
+
+
+
+
+
+
+
+
+</br></br>
+<h3>Intervalo de Confianza para la Proporción</h3>
+
+El procedimiento para construir un **intervalo de confianza para una proporción** es similar al de la media, bajo el supuesto de que el tamaño muestral es lo suficientemente grande para que la distribución de la proporción muestral pueda aproximarse a una **distribución normal**. Este criterio se cumple si:  
+
+$$ n\geq 30 \quad np\geq 5 \quad \text{y} \quad n(1-p)\geq 5 $$  
+Bajo estas condiciones, la proporción muestral $\widehat{p}$ sigue aproximadamente una distribución normal:  
+
+$$
+\widehat{p} \sim N\Bigg(p, \frac{p(1 - p)}{n}\Bigg)
+$$  
+
+Por lo tanto, el intervalo de confianza para la proporción poblacional se expresa como:  
+
+$$
+\Bigg[\widehat{p} - z_{\alpha/2}\sqrt{\frac{\widehat{p}(1 - \widehat{p})}{n}}, \quad \widehat{p} + z_{\alpha/2}\sqrt{\frac{\widehat{p}(1 - \widehat{p})}{n}} \Bigg]
+$$  
+
+
+
+$$
+IC_{p}: \widehat{p} \pm z_{\alpha/2} \sqrt{\frac{\widehat{p}(1 - \widehat{p})}{n}}
+$$  
+
+ 
+
+**Supuestos:**  
+
+- El tamaño muestral debe ser suficientemente grande para garantizar la aproximación normal:  
+  $$ n\geq 30 \quad np\geq 5 \quad \text{y} \quad n(1-p)\geq 5 $$ 
+
+
+<br/><br/>
+Este intervalo permite estimar la proporción poblacional con un nivel de confianza dado, asegurando que la estimación tenga una precisión adecuada.
+
+
+
+
+
+
+
+
+
+
+
+</br></br>
+<h3>Intervalo de Confianza para la Varianza</h3>
+
+Para construir un **intervalo de confianza para la varianza poblacional** $\sigma^2$, se parte de la premisa de que la variable aleatoria:
+
+$$
+ \frac{(n-1)S^{2}}{\sigma^{2}} \sim \chi^{2}_{v=n-1}
+$$
+
+sigue una **distribución chi-cuadrado** con $(n-1)$ grados de libertad. A partir de esta propiedad, se puede construir la siguiente probabilidad:
+
+$$
+ P\Bigg(\chi^{2}_{1-\alpha/2} \leq \frac{(n-1)S^{2}}{\sigma^{2}} \leq \chi^{2}_{\alpha/2} \Bigg) = 1 - \alpha
+$$
+
+Invirtiendo las desigualdades, se obtiene:
+
+$$
+ P\Bigg(\frac{1}{\chi^{2}_{1-\alpha/2}} \geq \frac{\sigma^{2}}{(n-1)S^{2}} \geq \frac{1}{\chi^{2}_{\alpha/2}} \Bigg) = 1 - \alpha
+$$
+
+Finalmente, despejando $\sigma^2$ se obtiene la expresión del intervalo de confianza:
+
+$$
+ P\Bigg( \frac{(n-1)S^{2}}{\chi^{2}_{\alpha/2}} \leq \sigma^{2} \leq \frac{(n-1)S^{2}}{\chi^{2}_{1-\alpha/2}} \Bigg) = 1 - \alpha
+$$
+
+<div class="content-box-blue">  
+
+$$
+ IC_{\sigma^{2}}: \Bigg( \frac{(n-1)S^{2}}{\chi^{2}_{1-\alpha/2 ; v=n-1}} , \frac{(n-1)S^{2}}{\chi^{2}_{\alpha/2; v=n-1}} \Bigg)
+$$
+
+
+
+**Supuestos:**  
+
+- La variable aleatoria sigue una distribución normal:  
+  $$ X \sim N(\mu, \sigma^{2}) $$
+
+
+<br/><br/>
+Este intervalo es útil cuando se desea estimar la **varianza poblacional** a partir de una muestra, garantizando un nivel de confianza de $1-\alpha$.
+
+
+
+
+
+
+<br/><br/>
+La  **Tabla 2.9** presenta los intervalos de confianza para distintos parámetros, junto con sus respectivos supuestos:  
+
+<br/><br/>
+<center>
+**Tabla 2.9** Intervalos de confianza para parámetros de una población.
+</center> 
+
+
+| **Parámetro** | **Estimador por IC** | **Supuestos** |
+|:------------:|:----------------------------------------------------------:|:-----------------------------------------:|
+| $\mu$ | $\bar{x} \pm z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}$ | $X \sim N(\mu, \sigma^{2})$ o $n\geq 30$,  $\sigma^2$ conocida |
+|  | $\bar{x} \pm z_{\alpha/2} \dfrac{s}{\sqrt{n}}$ | $X \sim N(\mu, \sigma^{2})$ o $n\geq 30$,  $\sigma^2$ desconocida |
+|  | $\bar{x} \pm t_{\alpha/2, \nu} \dfrac{s}{\sqrt{n}}$ | $X \sim N(\mu, \sigma^{2})$, $\sigma^2$ desconocida, $n < 30$, $\nu = n - 1$ |
+| $p$ | $\widehat{p} \pm z_{\alpha/2} \sqrt{\frac{\widehat{p}(1-\widehat{p})}{n}}$ | $n\geq 30$, $np\geq 5$, $n(1-p)\geq 5$ |
+| $\sigma^2$ | $\left( \frac{(n-1)s^2}{\chi^2_{1-\alpha/2}}, \frac{(n-1)s^2}{\chi^2_{\alpha/2}} \right)$ | $X \sim N(\mu, \sigma^{2})$ |  
+
+
+</br></br>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p>
+
+Se registró el tiempo transcurrido entre la facturación \left($X$\right) y la recepción del pago para una muestra de 100 clientes en una empresa. La media y la desviación estándar de la muestra son, respectivamente, **39.1 días** y **17.3 días**. Con el fin de evaluar la calidad del servicio, se requiere calcular un **intervalo de confianza del 95% para la media poblacional**.  
+
+---  
+
+En este caso, la distribución de la variable $X$ es desconocida. Sin embargo, dado que el tamaño de la muestra es **grande** ($n=100$), se aplica el **Teorema Central del Límite**, que establece que la distribución de la media muestral puede aproximarse a una distribución normal.  
+
+**Datos proporcionados**  
+- $\bar{x} = 39.1$ días (media muestral)  
+- $s = 17.3$ días (desviación estándar muestral, lo que indica que la varianza es desconocida)  
+- $n = 100$ (tamaño de la muestra, considerado grande)  
+- Nivel de confianza del **95%**, lo que implica un **valor crítico** $z_{\alpha/2} = \pm 1.96$  
+
+**Cálculo del Intervalo de Confianza**  
+
+La expresión general para el intervalo de confianza es:  
+
+$$
+IC_{\mu} = \bar{x} \pm z_{\alpha/2} \frac{s}{\sqrt{n}}
+$$  
+
+Sustituyendo los valores:  
+
+$$
+39.1 \pm 1.96 \frac{17.3}{\sqrt{100}}
+$$  
+
+$$
+\left( 39.1 - 1.96 \times \frac{17.3}{10} , 39.1 + 1.96 \times \frac{17.3}{10} \right)
+$$  
+
+$$
+(35.71, 42.49)
+$$  
+
+
+**Interpretación**  
+
+Con un nivel de confianza del **95%**,  el **tiempo promedio** transcurrido entre la facturación y el pago en la empresa está entre **35.7 días y 42.5 días**. Esto significa que, si se repitiera el muestreo múltiples veces, aproximadamente el **95% de los intervalos construidos incluirían la verdadera media poblacional**.  No se puede afirmar que el intervalo cálculado contenga el valor real de la media.
+
+
+**Cálculo en R**  
+
+Para calcular los percentiles y construir el intervalo de confianza en **R**, se pueden utilizar los siguientes comandos:  
+
+<pre>
+# Definir valores
+x_bar <- 39.1  # Media muestral
+s <- 17.3      # Desviación estándar muestral
+n <- 100       # Tamaño de la muestra
+alpha <- 0.05  # Nivel de significancia (1 - 0.95)
+
+# Calcular el valor crítico Z
+z_alpha_2 <- qnorm(1 - alpha/2)
+
+# Calcular el margen de error
+error <- z_alpha_2 * (s / sqrt(n))
+
+# Construir el intervalo de confianza
+IC_lower <- x_bar - error
+IC_upper <- x_bar + error
+
+# Mostrar resultados
+IC <- c(IC_lower, IC_upper)
+names(IC) <- c("Límite Inferior", "Límite Superior")
+print(IC)
+</pre>
+
+
+
+```{r, echo=TRUE}
+# Definir valores
+x_bar <- 39.1  # Media muestral
+s <- 17.3      # Desviación estándar muestral
+n <- 100       # Tamaño de la muestra
+alpha <- 0.05  # Nivel de significancia (1 - 0.95)
+
+# Calcular el valor crítico Z
+z_alpha_2 <- qnorm(1 - alpha/2)
+
+# Calcular el margen de error
+error <- z_alpha_2 * (s / sqrt(n))
+
+# Construir el intervalo de confianza
+IC_lower <- x_bar - error
+IC_upper <- x_bar + error
+
+# Mostrar resultados
+IC <- c(IC_lower, IC_upper)
+names(IC) <- c("Límite Inferior", "Límite Superior")
+print(IC)
+```
+
+</p>
+</div>
+
+
+
+
+
+
+
+</br></br>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p>
+
+Uno de los problemas más frecuentes en estadística inferencial es la **determinación del tamaño de la muestra** necesario para realizar una **estimación precisa** de la media poblacional con un **nivel de confianza del $(1-\alpha)\%$**.  
+
+A partir de la siguiente expresión se puede estimar el valor del tamaño muestral:  
+
+$$
+ P\Bigg(-z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \leq \bar{X} - \mu \leq z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\Bigg) = 1 - \alpha
+$$  
+
+
+**Error de Muestreo y Determinación del Tamaño de Muestra**
+
+Para definir el tamaño de muestra adecuado, es necesario considerar un **margen de error** tolerable, denotado como $e$:  
+
+$$
+ e = \vert \bar{x} - \mu \vert \leq z_{\alpha/2}\frac{\sigma}{\sqrt{n}}
+$$  
+
+Lo que significa que se desea,  con una **confianza del $(1-\alpha)\%$**, que el error no supere un umbral específico. A partir de esta expresión, se despeja el tamaño de la muestra $n$:  
+
+$$
+ e = z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+$$  
+
+Elevando ambos lados al cuadrado:  
+
+$$
+ e^{2} = z_{\alpha/2}^{2} \frac{\sigma^{2}}{n}
+$$  
+
+Finalmente, despejando $n$ para obtener la **fórmula del tamaño de muestra necesario**:  
+
+
+$$
+ n = \displaystyle\frac{z_{\alpha/2}^{2} \sigma^{2}}{e^{2}}
+$$  
+
+
+
+**Cálculo del Tamaño de Muestra en R**  
+
+El siguiente código en **R** permite calcular el tamaño de muestra necesario para estimar la media con un nivel de confianza dado y un error máximo permitido, encontrando 217 observaciones.  
+
+<pre>
+# Definir parámetros
+sigma <- 15      # Desviación estándar poblacional
+error <- 2       # Margen de error tolerable
+alpha <- 0.05    # Nivel de significancia (1 - nivel de confianza)
+
+# Calcular el valor crítico Z
+z_alpha_2 <- qnorm(1 - alpha/2)
+
+# Calcular tamaño de la muestra
+n <- (z_alpha_2^2 * sigma^2) / error^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra necesario es:", n_requerido, "observaciones")
+</pre>
+
+```{r, echo=TRUE}
+# Definir parámetros
+sigma <- 15      # Desviación estándar poblacional
+error <- 2       # Margen de error tolerable
+alpha <- 0.05    # Nivel de significancia (1 - nivel de confianza)
+
+# Calcular el valor crítico Z
+z_alpha_2 <- qnorm(1 - alpha/2)
+
+# Calcular tamaño de la muestra
+n <- (z_alpha_2^2 * sigma^2) / error^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra necesario es:", n_requerido, "observaciones")
+```
+
+Este procedimiento es esencial en la planificación de estudios estadísticos y permite asegurar estimaciones confiables sin exceder recursos innecesarios.
+
+
+</p>
+</div>
+
+
+
+
+
+</br></br>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p>
+Se desea estimar la media del número de personas fallecidas por COVID-19 en Colombia con un **nivel de confianza del 98%** y un **error de muestreo de 3 personas**. ¿Qué tamaño de muestra es necesario para cumplir con estas condiciones?  
+
+---  
+
+**Información disponible** 
+
+- **Nivel de confianza**: 98% ($z_{\alpha/2}$)  
+- **Error de muestreo**: 3 personas ($|\bar{x} - \mu| < e$)  
+- **Varianza**: No se dispone del valor de la varianza poblacional, por lo que se consideran **tres alternativas** para su estimación:  
+  
+  1. **Utilizar un estudio previo similar** que proporcione una estimación de la varianza.  
+  2. **Realizar una muestra piloto** con un tamaño de $n = 40$ y calcular la varianza muestral $s^2$.  
+  3. **Estimar la desviación estándar** a partir del rango de los datos consultando a un experto, mediante la fórmula:  
+  
+     $$
+     s = \frac{\max\{x\} - \min\{x\}}{4}
+     $$  
+
+**Cálculo del Tamaño de Muestra en R**  
+
+El siguiente código en **R** calcula el tamaño de muestra necesario utilizando una estimación de la varianza obtenida de estudios previos, obteniendose 212 observaciones: 
+
+<pre>
+# Definir parámetros
+s2_nota <- 352.2395  # Estimación de la varianza poblacional basada en estudios previos
+a <- 1 - 0.98  # Nivel de significancia
+e <- 3  # Error de muestreo permitido
+
+# Calcular el valor crítico Z
+z_alpha_2 <- qnorm(1 - a/2)
+
+# Calcular tamaño de la muestra
+n <- (z_alpha_2^2 * s2_nota) / e^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra necesario es:", n_requerido, "observaciones")
+</pre>
+
+
+
+```{r, echo=TRUE}
+# Definir parámetros
+s2_nota <- 352.2395  # Estimación de la varianza poblacional basada en estudios previos
+a <- 1 - 0.98  # Nivel de significancia
+e <- 3  # Error de muestreo permitido
+
+# Calcular el valor crítico Z
+z_alpha_2 <- qnorm(1 - a/2)
+
+# Calcular tamaño de la muestra
+n <- (z_alpha_2^2 * s2_nota) / e^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n) # Se redondea al entero más cercano
+
+# Mostrar resultado
+cat("El tamaño de muestra necesario es:", n_requerido, "observaciones")
+```
+
+
+</p>
+</div>
+
+
+
+
+</br></br>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p>
+En una encuesta aleatoria realizada a **500 familias** de la ciudad que poseen televisión por cable, se encontró que **340 familias** tienen una suscripción a HBO. Se desea calcular un **intervalo de confianza del 95%** para la proporción de familias con suscripción a HBO en la población.  
+
+---  
+
+Para calcular el intervalo de confianza en **R**, se puede utilizar la función `prop.test()`, encontrando valores de 0.6368473 y 0.7203411:  
+
+<pre>
+prop.test(340, 500)$conf.int
+</pre>
+
+
+```{r, echo=TRUE}
+prop.test(340, 500)$conf.int
+```
+
+El resultado obtenido indica que con un **nivel de confianza del 95%**, la proporción de familias con suscripción a HBO en la ciudad se encuentra en el rango **[63.7%, 72.0%]**. Esto significa que, si se repitiera el muestreo múltiples veces, aproximadamente el **95% de los intervalos construidos contendrían la verdadera proporción poblacional**.  
+
+
+**Tamaño de Muestra para la Estimación de una Proporción**  
+
+
+Para calcular el **tamaño de muestra necesario** en la estimación de una proporción poblacional con un nivel de confianza del **95%**, se utiliza la siguiente fórmula:  
+
+$$
+ n = \frac{z_{\alpha/2}^{2} \cdot p(1 - p)}{e^{2}}
+$$  
+
+**Parámetros de la Fórmula**
+
+- **$z_{\alpha/2}$**: Percentil de la distribución normal estándar asociado al nivel de confianza. Para un **95% de confianza**, se tiene $z_{\alpha/2} = 1.96$.  
+- **$p$**: Proporción esperada en la población. La varianza se calcula como $p(1 - p)$. Si no se dispone de una estimación previa, se puede considerar el **peor caso posible** con $p = 0.5$ (donde la varianza $pq = 0.25$ es máxima).  
+- **$e$**: Margen de error, que representa la tolerancia del investigador a la diferencia entre la proporción estimada y la real, es decir, $|\widehat{p} - p| < e$.  
+
+**Cálculo del Tamaño de Muestra en R**  
+
+El siguiente código en **R** calcula el tamaño de muestra necesario para un nivel de confianza del **95%** y un margen de error específico: 
+
+<pre>
+# Definir parámetros
+z_alpha_2 <- qnorm(1 - 0.05/2)  # Valor crítico para 95% de confianza
+p <- 0.5  # Proporción poblacional esperada (peor caso)
+e <- 0.05  # Margen de error permitido
+
+# Calcular tamaño de muestra
+n <- (z_alpha_2^2 * p * (1 - p)) / e^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra necesario es:", n_requerido, "observaciones")
+</pre>
+
+
+
+```{r, echo=TRUE}
+# Definir parámetros
+z_alpha_2 <- qnorm(1 - 0.05/2)  # Valor crítico para 95% de confianza
+p <- 0.5  # Proporción poblacional esperada (peor caso)
+e <- 0.05  # Margen de error permitido
+
+# Calcular tamaño de muestra
+n <- (z_alpha_2^2 * p * (1 - p)) / e^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra necesario es:", n_requerido, "observaciones")
+```
+
+
+Este cálculo permite determinar que 385 observaciones son necesarias para estimar la proporción poblacional con un **nivel de confianza del 95%** y un **margen de error del 5%**. Si se elige un **valor de $p$ distinto**, el tamaño de muestra puede variar. En ausencia de información previa, el peor caso ($p = 0.5$) proporciona la estimación más conservadora.
+
+
+</p>
+</div>
+
+
+
+
+
+
+</br></br>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p>
+
+Una empresa requiere realizar un estudio para determinar la **proporción de fallas diarias** en su servicio. El gerente encargado establece que el **margen de error máximo tolerable** debe ser del **5%** y el **nivel de confianza** del **99%**.  
+
+Una firma consultora presenta una **propuesta por valor de $110.2 millones** para llevar a cabo el estudio, justificando su costo de la siguiente manera:  
+
+- **Costos administrativos y logísticos**: $55.4 millones  
+- **Costo por encuestas**: $50 mil pesos por encuesta  
+- **Número de encuestas propuestas**: 1,096  
+
+El **Director de la empresa** ha solicitado revisar la información y emitir un concepto sobre la propuesta.  
+
+---  
+  
+
+Para determinar el **tamaño de muestra óptimo**, se utiliza la siguiente fórmula para la estimación de una proporción:  
+
+$$
+ n = \frac{z_{\alpha/2}^{2} \cdot p(1 - p)}{e^{2}}
+$$  
+
+Donde:  
+
+- **$z_{\alpha/2}$**: Percentil de la distribución normal estándar para un **99% de confianza** → $z_{0.995}$.  
+- **$p$**: Proporción esperada, en ausencia de información previa se usa el peor caso **$p = 0.5$**.  
+- **$e$**: Margen de error permitido (**5%** o **0.05**).  
+
+En **R**, el cálculo se realiza con el siguiente código:  
+
+<pre>
+# Cálculo del tamaño de muestra necesario
+z_alpha_2 <- qnorm(0.995)  # Valor crítico para 99% de confianza
+p <- 0.5  # Proporción máxima para obtener la mayor varianza
+e <- 0.05  # Margen de error permitido
+
+# Cálculo del tamaño de muestra
+n <- (z_alpha_2^2 * p * (1 - p)) / e^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra óptimo es:", n_requerido, "encuestas")
+</pre>
+
+```{r, echo=TRUE}
+# Cálculo del tamaño de muestra necesario
+z_alpha_2 <- qnorm(0.995)  # Valor crítico para 99% de confianza
+p <- 0.5  # Proporción máxima para obtener la mayor varianza
+e <- 0.05  # Margen de error permitido
+
+# Cálculo del tamaño de muestra
+n <- (z_alpha_2^2 * p * (1 - p)) / e^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra óptimo es:", n_requerido, "encuestas")
+```
+
+
+
+**Comparación con la Propuesta de la Consultora**  
+
+De acuerdo con este cálculo, el **tamaño de muestra óptimo** para la estimación de la proporción con las condiciones establecidas es **$n = 664$** encuestas.  
+
+La propuesta de la consultora establece **1,096 encuestas**, lo que representa **432 encuestas adicionales**, generando un **sobrecosto de $21.6 millones** (\$50 mil por encuesta adicional).  
+
+
+
+</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+</br></br>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p>
+
+Se desea calcular un **intervalo de confianza del 95%** para la **desviación estándar** de los precios de las acciones de Ecopetrol durante los últimos **22 días** (del **10 de septiembre de 2021 al 7 de octubre de 2021**), utilizando datos obtenidos de **Investing.com**.  
+
+---
+
+**Cálculo en R**  
+
+Para calcular el intervalo de confianza para la desviación estándar, se utiliza la distribución **chi-cuadrado**, aplicada a la varianza muestral. En **R**, este cálculo se realiza con el siguiente código:  
+
+
+<pre>
+# install.packages("paqueteMETODOS")
+# library(paqueteMETODOS)
+
+ecopetrol <- c(2810, 2810, 2825, 2769, 2734, 2706, 2699, 2671, 2550, 2590, 
+               2570, 2529, 2520, 2566, 2615, 2620, 2550, 2572, 2553, 2570, 2593, 2606)
+
+# Intervalo de confianza para la varianza
+IC_var <- paqueteMETODOS::intervalo.var(ecopetrol)
+
+# Intervalo de confianza para la desviación estándar
+IC_sd <- sqrt(IC_var)
+
+# Mostrar resultados
+cat("IC para la varianza: ", IC_var, "\n")
+cat("IC para la desviación estándar: ", IC_sd, "\n")
+</pre>
+
+
+
+```{r, echo=TRUE}
+# install.packages("paqueteMETODOS")
+# library(paqueteMETODOS)
+
+ecopetrol <- c(2810, 2810, 2825, 2769, 2734, 2706, 2699, 2671, 2550, 2590, 
+               2570, 2529, 2520, 2566, 2615, 2620, 2550, 2572, 2553, 2570, 2593, 2606)
+
+# Intervalo de confianza para la varianza
+IC_var <- paqueteMETODOS::intervalo.var(ecopetrol)
+
+# Intervalo de confianza para la desviación estándar
+IC_sd <- sqrt(IC_var)
+
+# Mostrar resultados
+cat("IC para la varianza: ", IC_var, "\n")
+cat("IC para la desviación estándar: ", IC_sd, "\n")
+```
+
+
+**Interpretación del Resultado**  
+
+A partir del cálculo realizado, se estima con un **nivel de confianza del 95%** que la **desviación estándar** del precio de las acciones de Ecopetrol se encuentra en el rango de **$75.7$** a **$140.0$**.  
+
+
+
+</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

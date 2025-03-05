@@ -1,0 +1,39 @@
+---
+title: <span style="color:#686868"> **Probabilidad**</span> 
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = NA)
+```
+
+</br></br>
+
+
+```{r, echo=FALSE, out.width="100%", fig.align = "center"}
+knitr::include_graphics("img/decisiones.png")
+```
+<center>
+<sub>
+Tomada de : pixabay.com
+</sub>
+</center>
+
+</br>
+
+Muchas personas asocian el concepto de probabilidad con los dados, ya que su origen y desarrollo inicial estuvieron ligados a problemas y situaciones imaginarias que, desde las matemáticas, ayudaron a moldearlo. Sin embargo, la probabilidad va mucho más allá, como exploraremos en esta unidad.
+
+El estudio formal de la probabilidad se remonta a 1654, cuando el caballero de Méré solicitó ayuda a Blaise Pascal para resolver un problema relacionado con juegos de azar. En particular, el caballero notaba que sus cálculos matemáticos no coincidían con los resultados reales del juego, lo que le llevaba a perder dinero en sus apuestas.
+
+Intrigado por el problema, Pascal compartió sus ideas con Pierre de Fermat, y a partir de su intercambio de correspondencia surgieron los principios fundamentales de lo que hoy conocemos como teoría de la probabilidad.
+
+No obstante, este concepto trasciende los juegos de azar y tiene aplicaciones clave en la toma de decisiones, ya que permite cuantificar la ocurrencia de distintos escenarios y evaluar alternativas disponibles.
+
+En esta unidad, se abordarán los conceptos fundamentales de probabilidad y variables aleatorias. Posteriormente, se explorarán los principios de inferencia estadística, incluyendo la estimación por intervalos de confianza y las pruebas de hipótesis.

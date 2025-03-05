@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Variables conjuntas</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Variables conjuntas</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+<p>Cuando se analizan dos variables simultáneamente, se forma una
+<strong>variable aleatoria bivariada</strong> <span
+class="math inline">\((X, Y)\)</span>, definida sobre un plano. La
+<strong>probabilidad conjunta</strong> de <span
+class="math inline">\((X, Y)\)</span> describe la probabilidad de que
+ambas variables tomen valores específicos simultáneamente. Esta
+probabilidad genera una <strong>superficie tridimensional</strong>, como
+se ilustra en la <strong>Figura 2.15</strong> que corresponde a una
+normal bivariada.</p>
+<br/><br/>
+<center>
+<img src="img/normal_bi.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.15</strong> Distribución normal bivariada.
+</center>
+<p><br/><br/></p>
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>En muchos experimentos, los resultados son influenciados por
+múltiples variables. Ejemplos comunes incluyen:</p>
+<ul>
+<li><strong>Precio de un producto y su volumen de ventas</strong>.</li>
+<li><strong>Tiempo de preparación para un examen y la calificación
+obtenida</strong>.</li>
+<li><strong>Cantidad de arena y cemento en una mezcla de
+concreto</strong>.</li>
+<li><strong>Cantidad de abono aplicado y la producción de una
+planta</strong>.</li>
+</ul>
+<p>En estos casos, es necesario emplear una función de densidad que
+describa la probabilidad conjunta de ambas variables. Esta función
+caracteriza cómo se comportan <strong>simultáneamente</strong> las
+variables involucradas.</p>
+<p>La <strong>distribución de probabilidad conjunta</strong> es la
+función que describe la probabilidad de ocurrencia simultánea de dos (o
+más) variables aleatorias. Esta distribución considera la relación y
+dependencia entre las variables y se puede clasificar según la
+naturaleza de estas:</p>
+<ul>
+<li><strong>Continua-continua:</strong> Ambas variables son
+continuas.</li>
+<li><strong>Discreta-discreta:</strong> Ambas variables son
+discretas.</li>
+<li><strong>Continua-discreta:</strong> Una variable es continua y la
+otra es discreta.</li>
+</ul>
+<p>Esta guía se centra en los casos más representativos:</p>
+<ul>
+<li><strong>Discreta-discreta</strong>: Ejemplificado mediante tablas de
+probabilidad conjunta y distribuciones marginales.</li>
+<li><strong>Continua-continua:</strong> Ilustrado mediante funciones de
+densidad conjunta y gráficos de superficies.</li>
+</ul>
+</br></br>
+<h2>
+Discreto-discreto
+</h2>
+</br></br>
+<h3>
+Función de distribución de probabilidad conjunta
+</h3>
+<p>Cuando <strong><span class="math inline">\(X\)</span></strong> y
+<strong><span class="math inline">\(Y\)</span></strong> son variables
+aleatorias discretas, la <strong>función de probabilidad
+conjunta</strong> se define como: <span class="math display">\[
+f_{X,Y}(x,y) = P(X = x, Y = y)
+\]</span> Esta función representa la probabilidad de que <span
+class="math inline">\(X\)</span> tome el valor <span
+class="math inline">\(x\)</span> y <span
+class="math inline">\(Y\)</span> tome el valor <span
+class="math inline">\(y\)</span> simultáneamente.</p>
+</br></br>
+<h4>
+Propiedades de la distribución conjunta:
+</h4>
+<p>Para ser válida, la distribución conjunta debe cumplir con las
+siguientes características:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Totalidad de la probabilidad:</strong> La suma de todas
+las probabilidades conjuntas es igual a 1: <span class="math display">\[
+\sum_{x=x_{(1)}}^{x_{(n)}} \sum_{y=y_{(1)}}^{y_{(n)}} f_{X,Y}(x,y) = 1
+\]</span> Esto asegura que la probabilidad total cubre todos los
+resultados posibles.</p></li>
+<li><p><strong>No negatividad:</strong> Todas las probabilidades deben
+ser no negativas: <span class="math display">\[
+f_{X,Y}(x,y) \geq 0 \quad \text{para todo } x,y
+\]</span> Esta propiedad garantiza que ninguna probabilidad sea
+negativa.</p></li>
+</ol>
+<p>Esta función describe la probabilidad de ocurrencia simultánea de dos
+eventos discretos. Se suele representar mediante una <strong>tabla de
+probabilidad conjunta</strong>, donde las filas corresponden a valores
+de <span class="math inline">\(X\)</span> y las columnas a valores de
+<span class="math inline">\(Y\)</span>.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se consideran:</p>
+<ul>
+<li><strong><span class="math inline">\(X\)</span>:</strong> Número de
+fallas de una máquina por día, con <span class="math inline">\(R_X =
+\{1,2,3\}\)</span>.</li>
+<li><strong><span class="math inline">\(Y\)</span>:</strong> Número de
+veces que el operario llama al técnico, con <span
+class="math inline">\(R_Y = \{1,2,3\}\)</span>.</li>
+</ul>
+<p>La función de probabilidad conjunta <span
+class="math inline">\(f_{X,Y}(x,y)\)</span> está dada en la
+<strong>Tabla 2.7</strong>.</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.7</strong> Distribución conjunta de <span
+class="math inline">\(X\)</span>, <span
+class="math inline">\(Y\)</span>.
+</center>
+<table>
+<thead>
+<tr class="header">
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"><span class="math inline">\(x\)</span></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><span
+class="math inline">\(f_{X,Y}(x,y)\)</span></td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(y\)</span></td>
+<td align="center">1</td>
+<td align="center">0.05</td>
+<td align="center">0.05</td>
+<td align="center">0.10</td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center">2</td>
+<td align="center">0.05</td>
+<td align="center">0.10</td>
+<td align="center">0.35</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">3</td>
+<td align="center">0</td>
+<td align="center">0.20</td>
+<td align="center">0.10</td>
+</tr>
+</tbody>
+</table>
+<p><br/><br/> Verificación de la distribución conjunta:</p>
+<p>Para tal efecto se revisa que la suma de todas las probabilidades es
+igual a 1:</p>
+<pre class="r"><code>fxy &lt;- matrix(c(0.05, 0.05, 0.00,
+                0.05, 0.10, 0.20,
+                0.10, 0.35, 0.10),
+              ncol = 3, byrow = TRUE)
+colnames(fxy) &lt;- c(&quot;X=1&quot;, &quot;X=2&quot;, &quot;X=3&quot;)
+rownames(fxy) &lt;- c(&quot;Y=1&quot;, &quot;Y=2&quot;, &quot;Y=3&quot;)
+print(fxy)</code></pre>
+<pre><code>     X=1  X=2 X=3
+Y=1 0.05 0.05 0.0
+Y=2 0.05 0.10 0.2
+Y=3 0.10 0.35 0.1</code></pre>
+<pre class="r"><code>suma_total &lt;- sum(fxy)
+print(paste(&quot;Suma total: &quot;, suma_total))  # Debería ser 1</code></pre>
+<pre><code>[1] &quot;Suma total:  1&quot;</code></pre>
+<p>La función se puede representar en un gráfico tridimensional como el
+de la <strong>Figura 2.16</strong>.</p>
+<pre>
+library(plot3D)
+
+# Valores de fxy, X y Y proporcionados
+fxy <- matrix(c(0.05, 0.05, 0.00,
+                0.05, 0.10, 0.20,
+                0.10, 0.35, 0.10),
+              ncol = 3, byrow = TRUE)
+colnames(fxy) <- c("X=1", "X=2", "X=3")
+rownames(fxy) <- c("Y=1", "Y=2", "Y=3")
+
+x <- rep(1:3, each = 3)
+y <- rep(1:3, times = 3)
+fxy_vals <- as.vector(fxy)
+
+
+
+# Gráfico 3D 
+scatter3D(x = x, 
+          y = y, 
+          z = fxy_vals,
+          colvar = NULL, col = "blue",
+          pch = 19, cex = 1.5,
+          phi = 20, theta = 45,
+          zlab = "f(x,y)", xlab = "X", ylab = "Y",
+          bty = "b2",
+          col.panel = "steelblue",
+          col.grid = "darkblue")
+
+# Añadir líneas 
+for (i in 1:length(x)) {
+  lines3D(x = rep(x[i], 2),
+          y = rep(y[i], 2),
+          z = c(0, fxy_vals[i]),
+          col = "blue",
+          lwd = 2,
+          add = TRUE)
+}
+</pre>
+<pre class="r"><code>library(plot3D)
+
+# Valores de fxy, X y Y proporcionados
+fxy &lt;- matrix(c(0.05, 0.05, 0.00,
+                0.05, 0.10, 0.20,
+                0.10, 0.35, 0.10),
+              ncol = 3, byrow = TRUE)
+colnames(fxy) &lt;- c(&quot;X=1&quot;, &quot;X=2&quot;, &quot;X=3&quot;)
+rownames(fxy) &lt;- c(&quot;Y=1&quot;, &quot;Y=2&quot;, &quot;Y=3&quot;)
+
+x &lt;- rep(1:3, each = 3)
+y &lt;- rep(1:3, times = 3)
+fxy_vals &lt;- as.vector(fxy)
+
+
+
+# Gráfico 3D 
+scatter3D(x = x, 
+          y = y, 
+          z = fxy_vals,
+          colvar = NULL, col = &quot;blue&quot;,
+          pch = 19, cex = 1.5,
+          phi = 20, theta = 45,
+          zlab = &quot;f(x,y)&quot;, xlab = &quot;X&quot;, ylab = &quot;Y&quot;,
+          bty = &quot;b2&quot;,
+          col.panel = &quot;steelblue&quot;,
+          col.grid = &quot;darkblue&quot;)
+
+# Añadir líneas 
+for (i in 1:length(x)) {
+  lines3D(x = rep(x[i], 2),
+          y = rep(y[i], 2),
+          z = c(0, fxy_vals[i]),
+          col = &quot;blue&quot;,
+          lwd = 2,
+          add = TRUE)
+}</code></pre>
+<p><img src="recurso203_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<br/><br/>
+<center>
+<img src="img/plot3Discretas.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.16</strong> Distribución conjunta discreta-discreta.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br></br>
+<h3>
+Probabilidad marginal
+</h3>
+<p>A partir de la <strong>función de distribución conjunta</strong> de
+dos variables aleatorias, se pueden derivar las <strong>distribuciones
+marginales</strong>, que describen el comportamiento individual de cada
+variable, ignorando la otra. Estas distribuciones se denotan comúnmente
+como <span class="math inline">\(g(x)\)</span> para <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(h(y)\)</span> para <span
+class="math inline">\(Y\)</span>. Si <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span> son <strong>variables aleatorias
+discretas</strong>, entonces:</p>
+</br></br>
+<h4>
+Distribución marginal de <span class="math inline">\(X\)</span>
+(probabilidad de <span class="math inline">\(X\)</span>):
+</h4>
+<p><span class="math display">\[
+g(x) = f_{X}(x) = \sum_{y=y_{(1)}}^{y_{(n)}} f_{X,Y}(x,y)
+\]</span> Esta suma acumula todas las probabilidades conjuntas para cada
+valor fijo de <span class="math inline">\(X\)</span>.</p>
+</br></br>
+<h4>
+Distribución marginal de <span class="math inline">\(Y\)</span>
+(probabilidad de <span class="math inline">\(Y\)</span>):
+</h4>
+<p><span class="math display">\[
+h(y) = f_{Y}(y) = \sum_{x=x_{(1)}}^{x_{(n)}} f_{X,Y}(x,y)
+\]</span> Esta suma acumula todas las probabilidades conjuntas para cada
+valor fijo de <span class="math inline">\(Y\)</span>.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Este ejemplo ilustra cómo obtener las <strong>funciones
+marginales</strong> <span class="math inline">\(g(x)\)</span> y <span
+class="math inline">\(h(y)\)</span> a partir de una tabla de
+distribución conjunta.</p>
+<p>La función marginal de <span class="math inline">\(X\)</span> se
+calcula <strong>sumando las probabilidades por columnas</strong>, lo que
+representa la acumulación de todas las probabilidades asociadas a <span
+class="math inline">\(Y\)</span> para cada valor de <span
+class="math inline">\(X\)</span>.</p>
+<pre class="r"><code># Crea la matriz fxy que contiene la distribución conjunta (3 filas x 3 columnas)
+fxy &lt;- matrix(c(0.05, 0.05, 0,    # Primera fila: Y=1
+                0.05, 0.10, 0.20, # Segunda fila: Y=2
+                0.10, 0.35, 0.10),# Tercera fila: Y=3
+              ncol = 3, byrow = TRUE)
+
+# Calcula la suma marginal por filas (suma sobre Y) para obtener g(x)
+gx &lt;- addmargins(fxy, 1)
+
+# Asigna nombres a las filas, incluyendo la fila de sumas g(x)
+rownames(gx) &lt;- c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;g(x)&quot;)
+
+# Tabla resultante gx
+# print(gx)</code></pre>
+<p>La siguiente salida computacional muestra los resultados obtenidos
+tras calcular la distribución marginal <span
+class="math inline">\(g(x)\)</span> sumando las probabilidades por
+columnas:</p>
+<pre>
+     [,1] [,2] [,3]
+1    0.05 0.05  0.0
+2    0.05 0.10  0.2
+3    0.10 0.35  0.1
+g(x) 0.20 0.50  0.3
+</pre>
+<p>La función marginal de <span class="math inline">\(Y\)</span> se
+obtiene <strong>sumando las probabilidades por filas</strong>, es decir,
+acumulando todas las probabilidades de <span
+class="math inline">\(X\)</span> para cada valor de <span
+class="math inline">\(Y\)</span>.</p>
+<pre class="r"><code># Crea la matriz fxy de la distribución conjunta (3 filas x 3 columnas)
+fxy &lt;- matrix(c(0.05, 0.05, 0,
+                0.05, 0.10, 0.20,
+                0.10, 0.35, 0.10),
+              ncol = 3, byrow = TRUE)
+
+# Calcula la suma marginal por columnas (suma sobre X) para obtener h(y)
+hy &lt;- addmargins(fxy, 2)
+
+# Asigna nombres a las columnas, incluyendo la columna de sumas h(y)
+colnames(hy) &lt;- c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;h(y)&quot;)
+
+# Mostra la tabla resultante hy
+# print(hy)</code></pre>
+<p>La siguiente salida computacional muestra los resultados obtenidos
+tras calcular la distribución marginal <span
+class="math inline">\(h(y)\)</span> sumando las probabilidades por
+filas:</p>
+<pre>
+        1    2   3 h(y)
+[1,] 0.05 0.05 0.0 0.10
+[2,] 0.05 0.10 0.2 0.35
+[3,] 0.10 0.35 0.1 0.55
+</pre>
+</p>
+</div>
+</br></br>
+<h3>
+Función de distribución conjunta acumulada
+</h3>
+<p>Si <span class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span> son <strong>variables aleatorias
+discretas</strong>, su función de distribución conjunta acumulada <span
+class="math inline">\(F_{X,Y}(x,y)\)</span> se expresa como:</p>
+<span class="math display">\[
+F_{X,Y}(x,y) = \sum_{t_x = -\infty}^{x} \sum_{t_y = -\infty}^{y}
+f_{X,Y}t_x,t_y)
+\]</span> </br></br>
+<h4>
+Propiedades de la función de distribución conjunta acumulada <span
+class="math inline">\(F_{X,Y}(x,y)\)</span>
+</h4>
+<p><strong>1. Límites:</strong></p>
+<ul>
+<li>En los extremos negativos, la probabilidad acumulada es cero: <span
+class="math display">\[
+F_{X,Y}(-\infty, -\infty) = 0
+\]</span></li>
+<li>En los extremos positivos, la probabilidad acumulada es uno: <span
+class="math display">\[
+F_{X,Y}(+\infty, +\infty) = 1
+\]</span></li>
+</ul>
+<p><strong>2. Monotonía:</strong></p>
+<ul>
+<li><span class="math inline">\(F_{X,Y}(x,y)\)</span> es
+<strong>monótonamente no decreciente</strong>, lo que significa que:
+<ul>
+<li>Si <span class="math inline">\(x_1 \leq x_2\)</span>, entonces <span
+class="math inline">\(F_{X,Y}(x_1,y) \leq F_{X,Y}(x_2,y)\)</span>.</li>
+<li>Si <span class="math inline">\(y_1 \leq y_2\)</span>, entonces <span
+class="math inline">\(F_{X,Y}(x,y_1) \leq F_{X,Y}(x,y_2)\)</span>.</li>
+</ul></li>
+</ul>
+<p><strong>3. Relaciones marginales:</strong></p>
+<ul>
+<li>La distribución marginal de <span class="math inline">\(X\)</span>
+se obtiene haciendo tender <span class="math inline">\(y\)</span> a
+infinito: <span class="math display">\[
+F_X(x) = \lim_{y \to +\infty} F_{X,Y}(x,y)
+\]</span></li>
+<li>La distribución marginal de <span class="math inline">\(Y\)</span>
+se obtiene haciendo tender <span class="math inline">\(x\)</span> a
+infinito: <span class="math display">\[
+F_Y(y) = \lim_{x \to +\infty} F_{X,Y}(x,y)
+\]</span></li>
+</ul>
+<p>Estas propiedades son esenciales garantizar la coherencia de la
+función de distribución acumulada.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Este ejemplo ilustra cómo se calcula la <strong>función de
+distribución acumulada conjunta (FDA conjunta)</strong>, sumando las
+probabilidades de la distribución conjunta hasta la posición <span
+class="math inline">\((2,2)\)</span>.</p>
+<p>La FDA conjunta se obtiene mediante la <strong>suma
+acumulada</strong> de las probabilidades sobre filas y columnas hasta
+los valores observados:</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{array}{rl}
+F(2,2) =  &amp; \sum_{x=1}^{2} \sum_{y=1}^{2} f_{X,Y}(x,y)  \\
+         = &amp; f(1,1) + f(1,2) + f(2,1) + f(2,2) \\
+         = &amp; 0.05 + 0.05 + 0.05 + 0.10  \\
+         = &amp; 0.25
+\end{array}
+\end{equation}
+\]</span></p>
+<!-- ```{r,echo=TRUE} -->
+<!-- # Crea la matriz de distribución conjunta (3 filas x 3 columnas) -->
+<!-- fxy <- matrix(c(0.05, 0.05, 0,   # Primera fila: Probabilidades para Y = 1 -->
+<!--                 0.05, 0.10, 0.20, # Segunda fila: Probabilidades para Y = 2 -->
+<!--                 0.10, 0.35, 0.10), # Tercera fila: Probabilidades para Y = 3 -->
+<!--               ncol = 3, byrow = TRUE) -->
+<!-- # Calcula las distribuciones marginales (sumas por filas y columnas) -->
+<!-- # addmargins(fxy, c(1,2)) añade una fila y una columna con las sumas acumuladas -->
+<!-- total_fxy <- addmargins(fxy, c(1,2)) -->
+<!-- # Asigna nombres a columnas y filas -->
+<!-- colnames(total_fxy) <- c("1", "2", "3", "h(y)")  # h(y): suma marginal sobre X -->
+<!-- rownames(total_fxy) <- c("1", "2", "3", "g(x)")  # g(x): suma marginal sobre Y -->
+<!-- # Muestra la matriz completa con distribuciones marginales -->
+<!-- # total_fxy -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # Crea la matriz de distribución acumulada conjunta (3x3) -->
+<!-- Fxy <- matrix(c(0.05, 0.10, 0.10,  # Primera columna: Acumulados para X=1 -->
+<!--                 0.10, 0.25, 0.45,  # Segunda columna: Acumulados para X=2 -->
+<!--                 0.20, 0.70, 1.00), # Tercera columna: Acumulados para X=3 -->
+<!--               ncol = 3, byrow = TRUE) -->
+<!-- # Asigna nombres a columnas y filas -->
+<!-- colnames(Fxy) <- c("1", "2", "3")  # Etiquetas de columnas (valores de Y) -->
+<!-- rownames(Fxy) <- c("1", "2", "3")  # Etiquetas de filas (valores de X) -->
+<!-- # Muestra la matriz completa -->
+<!-- # Fxy -->
+<!-- ``` -->
+</p>
+</div>
+</br></br>
+<h3>
+Función de densidad condicional
+</h3>
+<p>La <strong>función de densidad condicional</strong> describe cómo se
+distribuye la probabilidad de <span class="math inline">\(X\)</span>
+cuando se conoce que <span class="math inline">\(Y\)</span> ha tomado un
+valor específico <span class="math inline">\(y_0\)</span>.</p>
+<p><span class="math display">\[\begin{equation*}
+    f_{_{X|Y}}(x|y_{0})=\left\lbrace
+    \begin{array}{ccl}
+        \dfrac{f_{_{X,Y}}(x,y_0)}{h(y_0)}&amp;;&amp; h(y_0) &gt; 0\\
+        &amp;&amp;\\
+        0 &amp;;&amp;\mbox{en otro caso}
+    \end{array}
+    \right.
+\end{equation*}\]</span></p>
+<p><span class="math inline">\(f_{X|Y}(x|y_0)\)</span> es la
+probabilidad de que <span class="math inline">\(X\)</span> tome el valor
+<span class="math inline">\(x\)</span> <strong>dado</strong> que <span
+class="math inline">\(Y = y_0\)</span>. El denominador <span
+class="math inline">\(h(y_0)\)</span> es la <strong>distribución
+marginal de <span class="math inline">\(Y\)</span></strong>, que actúa
+como un factor de normalización. Si <span class="math inline">\(h(y_0) =
+0\)</span>, la probabilidad condicional no está definida. Para una
+variable discreta se cumple que <span class="math display">\[\sum_{x}
+f_{X|Y}(x|y_0) = 1\]</span>.</p>
+<p><br/><br/> La <strong>función de densidad condicional</strong>
+describe cómo se distribuye la probabilidad de <span
+class="math inline">\(Y\)</span> al conocer que <span
+class="math inline">\(X\)</span> ha tomado un valor específico <span
+class="math inline">\(x_0\)</span>.</p>
+<p><span class="math display">\[\begin{equation*}
+    f_{Y|X}(y|x_{0})=\left\lbrace
+    \begin{array}{ccl}
+        \dfrac{f_{_{X,Y}}(x_0,y)}{g(x_0)}\:&amp;;&amp;\:g(x_0)&gt;0\\
+        &amp;&amp;\\
+        0\:&amp;;&amp;\:\mbox{en otro caso}
+    \end{array}
+    \right.
+\end{equation*}\]</span></p>
+<p><span class="math inline">\(f_{Y|X}(y|x_0)\)</span> es la
+<strong>probabilidad condicional</strong> de que <span
+class="math inline">\(Y\)</span> tome el valor <span
+class="math inline">\(y\)</span> dado que <span class="math inline">\(X
+= x_0\)</span>. El denominador <span
+class="math inline">\(g(x_0)\)</span> es la <strong>distribución
+marginal de <span class="math inline">\(X\)</span></strong>, que
+normaliza la distribución. Si <span class="math inline">\(g(x_0) =
+0\)</span>, la probabilidad condicional no está definida. Adicional,
+para una variable discreta: <span class="math display">\[\sum_{y}
+f_{Y|X}(y|x_0) = 1\]</span></p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En este ejemplo, se muestra el proceso para obtener la función de
+densidad condicional de <span class="math inline">\(X\)</span> dado que
+<span class="math inline">\(Y=2\)</span>.</p>
+<p>La tabla muestra los valores de la distribución conjunta para
+distintos valores de <span class="math inline">\(X\)</span> y un valor
+fijo de <span class="math inline">\(Y\)</span>.</p>
+<table>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(y\)</span></th>
+<th><span class="math inline">\(f(x,y)\)</span></th>
+<th><span class="math inline">\(x=1\)</span></th>
+<th><span class="math inline">\(x=2\)</span></th>
+<th><span class="math inline">\(x=3\)</span></th>
+<th><span class="math inline">\(h(y)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td></td>
+<td>0.050</td>
+<td>0.10</td>
+<td>0.35</td>
+<td>0.50</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(h(y=2)\)</span> es la distribución
+marginal de <span class="math inline">\(Y\)</span> en <span
+class="math inline">\(y=2\)</span>, obtenida como: <span
+class="math display">\[h(y=2) = 0.050 + 0.10 + 0.35 = 0.50\]</span></p>
+<p>Para determinar la función condicional <span
+class="math inline">\(f(x|y=2)\)</span> se usa la definición: <span
+class="math display">\[f(x|y=2) = \frac{f_{X,Y}(x,y=2)}{h(y=2)}\]</span>
+La tabla siguiente muestra los resultados de <span
+class="math inline">\(f(x|y=2)\)</span> para distintos valores de <span
+class="math inline">\(X\)</span>:</p>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="33%" />
+<col width="43%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x\)</span></th>
+<th><span class="math inline">\(f(x|y=2)\)</span></th>
+<th>Cálculo</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(\frac{f(1,2)}{0.50}\)</span></td>
+<td><span class="math inline">\(\frac{0.05}{0.50}\)</span></td>
+<td>0.10</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><span class="math inline">\(\frac{f(2,2)}{0.50}\)</span></td>
+<td><span class="math inline">\(\frac{0.10}{0.50}\)</span></td>
+<td>0.20</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><span class="math inline">\(\frac{f(3,2)}{0.50}\)</span></td>
+<td><span class="math inline">\(\frac{0.35}{0.50}\)</span></td>
+<td>0.70</td>
+</tr>
+</tbody>
+</table>
+</p>
+</div>
+</br></br>
+<h2>
+Continuo-continuo
+</h2>
+</br></br>
+<h3>
+Función de densidad conjunta
+</h3>
+<p>Cuando <span class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span> son <strong>variables aleatorias
+continuas</strong>, su <strong>función de densidad conjunta</strong>
+<span class="math inline">\(f_{X,Y}(x,y)\)</span> permite determinar la
+probabilidad de que estas variables tomen valores dentro de una región
+específica <span class="math inline">\(R\)</span>.</p>
+<p>La probabilidad de que <span class="math inline">\((X, Y)\)</span> se
+encuentren dentro de la región <span class="math inline">\(R\)</span>
+está dada por: <span class="math display">\[
+P((X,Y) \in R) = \int\int_{R} f_{X,Y}(x,y) \,dx\,dy
+\]</span> Esta integral representa el <strong>volumen</strong> bajo la
+superficie <span class="math inline">\(f_{X,Y}(x,y)\)</span> sobre la
+región <span class="math inline">\(R\)</span>.</p>
+</br></br>
+<h4>
+Propiedades de la función de densidad conjunta <span
+class="math inline">\(f_{X,Y}(x,y)\)</span>
+</h4>
+<p>Para que <span class="math inline">\(f_{X,Y}(x,y)\)</span> sea válida
+como densidad de probabilidad, debe cumplir:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>No negatividad:</strong> La densidad siempre es positiva
+o nula: <span class="math display">\[f(x,y) \geq 0, \quad \forall
+(x,y)\]</span></p></li>
+<li><p><strong>Totalidad:</strong> La integral doble sobre todo el
+espacio es 1: <span class="math display">\[
+\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f_{X,Y}(x,y) \,dx\,dy =
+1
+\]</span> Es importante tener en cuenta que <span
+class="math inline">\(f_{X,Y}(x,y)\)</span> no es una probabilidad, sino
+una densidad; la probabilidad se obtiene integrando. El área bajo la
+superficie en cualquier región específica es la probabilidad de que
+<span class="math inline">\((X, Y)\)</span> esté en esa región. La
+integral total bajo toda la superficie es <strong>1</strong>,
+garantizando que cubre todo el espacio de posibilidades.</p></li>
+</ol>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se modelan la proporción de ácido <span
+class="math inline">\(X\)</span> y de ácido <span
+class="math inline">\(Y\)</span> (en litros) en una mezcla mediante la
+función de densidad conjunta <span
+class="math inline">\(f_{X,Y}(x,y)\)</span> definida como:</p>
+<p><span class="math display">\[
+f_{X,Y}(x,y) = \left\{ \begin{matrix}
+  (x+y) &amp; \text{si } 0 \leq x \leq 1 \text{ y } 0 \leq y \leq 1 \\\\
+  0 &amp; \text{en otro caso}
+\end{matrix} \right.
+\]</span></p>
+<p>Para verificar que <span class="math inline">\(f_{X,Y}(x,y)\)</span>
+es una función de densidad válida, la integral doble sobre la región
+definida debe ser igual a 1:</p>
+<p><span class="math display">\[
+\int_{0}^{1} \int_{0}^{1} (x+y) \,dx\,dy
+\]</span></p>
+<p>Integración respecto a <span class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[
+\int_{0}^{1} (x+y) \,dx = \left( \frac{x^2}{2} + yx \right)
+\Bigg|_{0}^{1} = \frac{1}{2} + y
+\]</span></p>
+<p>Integración respecto a <span class="math inline">\(y\)</span>:</p>
+<p><span class="math display">\[
+\int_{0}^{1} \left( \frac{1}{2} + y \right) \,dy = \left( \frac{1}{2}y +
+\frac{y^2}{2} \right) \Bigg|_{0}^{1}
+= \frac{1}{2} + \frac{1}{2} = 1
+\]</span> El valor de la integral doble es <strong>1</strong>,
+confirmando que <span class="math inline">\(f_{X,Y}(x,y)\)</span> es una
+<strong>función de densidad conjunta válida</strong>.</p>
+<p>Se utiliza puede usar la librería <code>cubature</code> para integrar
+numéricamente la función conjunta <span
+class="math inline">\(f_{X,Y}(x,y) = x + y\)</span> en el intervalo
+<span class="math inline">\([0,1] \times [0,1]\)</span>.</p>
+<p><br/><br/></p>
+<pre class="r"><code># Cargar la librería &#39;cubature&#39; para realizar la integración numérica
+library(cubature)
+
+# Define la función conjunta f(x,y) = x + y
+fxy &lt;- function(x) {
+  return(x[1] + x[2])  # x[1] = x, x[2] = y
+}
+
+# Realiza la integración numérica en el intervalo [0,1] para x y y
+Ifxy &lt;- adaptIntegrate(
+  fxy,
+  lowerLimit = c(0, 0),  # Límites inferiores para x e y
+  upperLimit = c(1, 1)   # Límites superiores para x e y
+)
+
+# Muestra el valor de la integral calculada
+# Ifxy$integral</code></pre>
+<p><br/><br/></p>
+<p>La función conjunta <span class="math inline">\(f_{X,Y}(x,y) = x +
+y\)</span> se puede graficar como se muestra a continuación en la
+<strong>Figura 2.17</strong>.</p>
+<br/><br/>
+<pre>
+library(plot3D)
+
+# Definir la función conjunta
+density_function <- function(x, y) {
+  ifelse(x >= 0 & x <= 1 & y >= 0 & y <= 1, x + y, 0)
+}
+
+# Crear una cuadrícula de valores
+gx <- seq(0, 1, length.out = 30)
+gy <- seq(0, 1, length.out = 30)
+g <- expand.grid(x = gx, y = gy)
+g$z <- mapply(density_function, g$x, g$y)
+
+# Crear el gráfico 3D
+persp3D(
+  x = gx, 
+  y = gy, 
+  z = matrix(g$z, nrow = 30),
+  col = "lightblue", 
+  theta = 45, 
+  phi = 30, 
+  xlab = "X", 
+  ylab = "Y", 
+  zlab = "f(X,Y)",
+  main = ""
+)
+</pre>
+<pre class="r"><code>library(plot3D)
+
+# Definir la función conjunta
+density_function &lt;- function(x, y) {
+  ifelse(x &gt;= 0 &amp; x &lt;= 1 &amp; y &gt;= 0 &amp; y &lt;= 1, x + y, 0)
+}
+
+# Crear una cuadrícula de valores
+gx &lt;- seq(0, 1, length.out = 30)
+gy &lt;- seq(0, 1, length.out = 30)
+g &lt;- expand.grid(x = gx, y = gy)
+g$z &lt;- mapply(density_function, g$x, g$y)
+
+# Crear el gráfico 3D
+persp3D(
+  x = gx, 
+  y = gy, 
+  z = matrix(g$z, nrow = 30),
+  col = &quot;lightblue&quot;, 
+  theta = 45, 
+  phi = 30, 
+  xlab = &quot;X&quot;, 
+  ylab = &quot;Y&quot;, 
+  zlab = &quot;f(X,Y)&quot;,
+  main = &quot;&quot;
+)</code></pre>
+<p><img src="recurso203_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<img src="img/Figura318.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.17</strong> Distribución conjunta <span
+class="math inline">\(f_{X,Y}(x,y) = x + y\)</span> para <span
+class="math inline">\(0 \leq x \leq 1\)</span> y <span
+class="math inline">\(0 \leq y \leq 1\)</span>
+</center>
+</p>
+</div>
+</br></br>
+<h3>
+Función de densidad marginal
+</h3>
+<p>Cuando <span class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span> son <strong>variables aleatorias
+continuas</strong>, las distribuciones marginales se obtienen
+<strong>integrando la función de densidad conjunta</strong>.</p>
+</br></br>
+<h4>
+Función de densidad marginal de <span class="math inline">\(X\)</span>:
+</h4>
+<p><span class="math display">\[
+g(x) = f_{X}(x) = \int_{-\infty}^{\infty} f_{X,Y}(x,y) \,dy
+\]</span> Esta integral acumula la probabilidad para todos los posibles
+valores de <span class="math inline">\(Y\)</span>, obteniendo así la
+distribución de <span class="math inline">\(X\)</span> por sí sola.</p>
+</br></br>
+<h4>
+Función de densidad marginal de <span class="math inline">\(Y\)</span>:
+</h4>
+<p><span class="math display">\[
+h(y) = f_{Y}(y) = \int_{-\infty}^{\infty} f_{X,Y}(x,y) \,dx
+\]</span> Esta integral acumula la probabilidad para todos los posibles
+valores de <span class="math inline">\(X\)</span>, obteniendo así la
+distribución de <span class="math inline">\(Y\)</span> por sí sola.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La función de densidad marginal de <span
+class="math inline">\(X\)</span> (<span
+class="math inline">\(g(x)\)</span>) se obtiene integrando la función de
+densidad conjunta respecto a <span class="math inline">\(y\)</span>:</p>
+<span class="math display">\[g(x) = \displaystyle\int_{0}^{1} (x + y)
+\:dy = \bigg( xy + \dfrac{y^{2}}{2} \bigg) \Bigg|_{0}^{1} = \bigg(x +
+\dfrac{1}{2}\bigg)\]</span> La expresión de la densidad marginal: <br/>
+<span class="math display">\[
+g(x) = \left\{ \begin{matrix} \\
+  x + \frac{1}{2} &amp; \text{si } 0 \leq x \leq 1 \\
+  0 &amp; \text{en otro caso}
+\end{matrix} \right.
+\]</span> La función de densidad marginal de <span
+class="math inline">\(Y\)</span> (<span
+class="math inline">\(h(y)\)</span>) se obtiene integrando la función de
+densidad conjunta respecto a <span class="math inline">\(x\)</span>:
+<span class="math display">\[
+h(y) = \int_{0}^{1} (x + y) \,dx = \left( \frac{x^2}{2} + yx \right)
+\Bigg|_{0}^{1} = \left( \frac{1}{2} + y \right)
+\]</span> La expresión de la densidad marginal: <span
+class="math display">\[
+h(y) = \left\{ \begin{matrix} \\
+  y + \frac{1}{2} &amp; \text{si } 0 \leq y \leq 1 \\
+  0 &amp; \text{en otro caso}
+\end{matrix} \right.
+\]</span>
+</p>
+</div>
+</br></br>
+<h3>
+Función de densidad de probabilidad conjunta acumulada
+</h3>
+<p>Para variables aleatorias continuas, la función de distribución
+conjunta se expresa como: <span class="math display">\[
+F_{X,Y}(x,y) = P(X \leq x, Y \leq y) = \int_{-\infty}^{x}
+\int_{-\infty}^{y} f_{X,Y}(s,t) \,ds\,dt
+\]</span></p>
+</br></br>
+<h4>
+Propiedades de la función de distribución conjunta
+</h4>
+<ul>
+<li><strong>Monotonía:</strong> <span
+class="math inline">\(F_{X,Y}(x,y)\)</span> es una función <strong>no
+decreciente</strong>.</li>
+<li><strong>Límites en extremos:</strong>
+<ul>
+<li><span class="math inline">\(F_{X,Y}(x,-\infty) = 0\)</span></li>
+<li><span class="math inline">\(F_{X,Y}(-\infty,y) = 0\)</span></li>
+<li><span class="math inline">\(F_{X,Y}(-\infty,-\infty) =
+0\)</span></li>
+</ul></li>
+<li><strong>Límite máximo:</strong> <span
+class="math inline">\(F_{X,Y}(+\infty,+\infty) = 1\)</span></li>
+<li><strong>Relaciones marginales:</strong>
+<ul>
+<li><span class="math inline">\(F_{X,Y}(+\infty,y) =
+F_Y(y)\)</span></li>
+<li><span class="math inline">\(F_{X,Y}(x,+\infty) =
+F_X(x)\)</span></li>
+</ul></li>
+</ul>
+<p>La probabilidad de que <span class="math inline">\((X,Y)\)</span>
+esté en una región rectangular es: <span class="math display">\[
+P(x_1 &lt; X \leq x_2, y_1 &lt; Y \leq y_2) = F_{X,Y}(x_2,y_2) -
+F_{X,Y}(x_1,y_2) - F_{X,Y}(x_2,y_1) + F_{X,Y}(x_1,y_1)
+\]</span></p>
+</br></br>
+<h3>
+Función de densidad condicionales
+</h3>
+<p>La función de densidad condicional de <span
+class="math inline">\(X\)</span> dado que <span
+class="math inline">\(Y=y_0\)</span> está dada por:</p>
+<p><span class="math display">\[\begin{equation*}
+    f_{_{X|Y}}(x|y_{0})=\left\lbrace
+    \begin{array}{ccl}
+        \dfrac{f_{_{X,Y}}(x,y_0)}{h(y_0)}&amp;;&amp; h(y_0) &gt; 0\\
+        &amp;&amp;\\
+        0 &amp;;&amp;\mbox{en otro caso}
+    \end{array}
+    \right.
+\end{equation*}\]</span></p>
+<p>La función de densidad condicional de <span
+class="math inline">\(Y\)</span> dado que <span
+class="math inline">\(X=x_0\)</span> está dada por:</p>
+<p><span class="math display">\[\begin{equation*}
+    f_{Y|X}(y|x_{0})=\left\lbrace
+    \begin{array}{ccl}
+        \dfrac{f_{_{X,Y}}(x_0,y)}{g(x_0)}\:&amp;;&amp;\:g(x_0)&gt;0\\
+        &amp;&amp;\\
+        0\:&amp;;&amp;\:\mbox{en otro caso}
+    \end{array}
+    \right.
+\end{equation*}\]</span></p>
+</br></br>
+<h3>
+Covarianza y correlación
+</h3>
+<p>La <strong>covarianza</strong> mide la relación lineal entre dos
+variables aleatorias <span class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span> y se expresa mediante la esperanza
+matemática.</p>
+</br></br>
+<h4>
+Definición general
+</h4>
+<span class="math display">\[
+\text{COV}[X,Y] = E[(X - E[X])(Y - E[Y])]
+\]</span> Esta expresión mide cómo varían conjuntamente <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span> alrededor de sus medias. Otra forma
+equivalente de expresar la covarianza es: <span class="math display">\[
+\text{COV}[X,Y] = E[XY] - E[X]E[Y]
+\]</span> </br></br>
+<h4>
+Cálculo de la Esperanza <span class="math inline">\(E[XY]\)</span>
+</h4>
+<p>Caso discreto-discreto: Para variables discretas <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span>, la esperanza conjunta se obtiene
+mediante la suma doble: <span class="math display">\[
+E[XY] = \sum_{x \in R_X} \sum_{y \in R_Y} xyf_{_{X,Y}}(x,y)
+\]</span></p>
+<p>Caso continuo-continuo: Para variables continuas <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span>, la esperanza conjunta se obtiene
+mediante la integral doble: <span class="math display">\[
+E[XY] = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty}
+xyf_{_{X,Y}}(x,y) \,dx\,dy
+\]</span></p>
+</br></br>
+<h4>
+Interpretación:
+</h4>
+<ul>
+<li><strong><span class="math inline">\(\text{COV}[X,Y] &gt;
+0\)</span>:</strong> <span class="math inline">\(X\)</span> e <span
+class="math inline">\(Y\)</span> tienden a aumentar linealmente juntas
+(relación positiva).</li>
+<li><strong><span class="math inline">\(\text{COV}[X,Y] &lt;
+0\)</span>:</strong> Cuando <span class="math inline">\(X\)</span>
+aumenta, <span class="math inline">\(Y\)</span> tiende a disminuir
+linealmente (relación negativa).</li>
+<li><strong><span class="math inline">\(\text{COV}[X,Y] =
+0\)</span>:</strong> No hay relación lineal entre <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span>.</li>
+</ul>
+</br></br>
+<h3>
+Correlación entre las variables X,Y
+</h3>
+<p>El <strong>coeficiente de correlación de Pearson (<span
+class="math inline">\(\rho\)</span>)</strong> mide la fuerza y dirección
+de la asociación lineal entre dos variables aleatorias <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span>.</p>
+</br></br>
+<h4>
+Definición general
+</h4>
+<p><span class="math display">\[
+\rho = \frac{\text{COV}[X,Y]}{\sqrt{\text{Var}(X) \cdot \text{Var}(Y)}}
+\]</span></p>
+</br></br>
+<h4>
+Interpretación:
+</h4>
+<ul>
+<li>El coeficiente varía en el rango: <span class="math display">\[-1
+\leq \rho \leq 1\]</span></li>
+<li><strong><span class="math inline">\(\rho = 1\)</span>:</strong>
+Relación <strong>lineal positiva perfecta</strong>.</li>
+<li><strong><span class="math inline">\(\rho = -1\)</span>:</strong>
+Relación <strong>lineal negativa perfecta</strong>.</li>
+<li><strong><span class="math inline">\(\rho = 0\)</span>:</strong> No
+existe relación lineal (puede haber relación no lineal).</li>
+<li><strong>Valores intermedios:</strong> Indican la fuerza de la
+relación lineal.</li>
+</ul>
+<br/><br/>
+<center>
+<strong>Tabla 2.8</strong> Grados de asociación lineal según <span
+class="math inline">\(\rho\)</span>.
+</center>
+<table>
+<colgroup>
+<col width="54%" />
+<col width="45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Rango de <span
+class="math inline">\(\rho\)</span></strong></th>
+<th><strong>Grado de asociación lineal</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(-1.00 \leq \rho &lt; -0.90\)</span></td>
+<td>Negativa muy fuerte</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(-0.90 \leq \rho &lt; -0.75\)</span></td>
+<td>Negativa considerable</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(-0.75 \leq \rho &lt; -0.50\)</span></td>
+<td>Negativa media</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(-0.50 \leq \rho &lt; -0.25\)</span></td>
+<td>Negativa débil</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(-0.25 \leq \rho &lt; -0.10\)</span></td>
+<td>Negativa muy débil</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(-0.10 \leq \rho &lt; 0.10\)</span></td>
+<td>No existe correlación</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(0.10  \leq  \rho &lt; 0.25\)</span></td>
+<td>Positiva muy débil</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(0.25  \leq  \rho &lt; 0.50\)</span></td>
+<td>Positiva débil</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(0.50  \leq  \rho &lt; 0.75\)</span></td>
+<td>Positiva media</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(0.75  \leq  \rho &lt; 0.90\)</span></td>
+<td>Positiva considerable</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(0.90  \leq  \rho \leq 1.00\)</span></td>
+<td>Positiva muy fuerte</td>
+</tr>
+</tbody>
+</table>
+</br></br>
+<h4>
+Propiedades:
+</h4>
+<ul>
+<li><strong>Simetría:</strong> <span class="math inline">\(\rho(X,Y) =
+\rho(Y,X)\)</span>.</li>
+<li><strong>Invarianza ante traslaciones:</strong> La correlación es
+independiente de cambios en la escala o desplazamientos.</li>
+<li><strong>Normalización:</strong> Está acotado entre -1 y 1.
+<br/><br/></li>
+</ul>
+<p>Los gráficos de la <strong>Figura 2. 18</strong> muestran la relación
+entre dos variables para diferentes valores del coeficiente de
+correlación de Pearson (<span class="math inline">\(\rho\)</span>),
+destacando cómo varía la asociación lineal negativa:</p>
+<ul>
+<li><strong>(a) <span class="math inline">\(\rho = -1.0\)</span>
+(Negativa perfecta):</strong> Relación lineal negativa exacta; todos los
+puntos se alinean sobre una recta descendente.</li>
+<li><strong>(b) <span class="math inline">\(\rho = -0.90\)</span>
+(Negativa muy fuerte):</strong> Relación negativa lineal casi perfecta,
+con una ligera dispersión alrededor de una línea descendente.</li>
+<li><strong>(c) <span class="math inline">\(\rho = -0.75\)</span>
+(Negativa considerable):</strong> Patrón descendente lineal claro,
+aunque con más dispersión que en <span class="math inline">\(\rho =
+-0.90\)</span>.</li>
+<li><strong>(d) <span class="math inline">\(\rho = -0.50\)</span>
+(Negativa media):</strong> Relación lineal negativa moderada, con una
+nube de puntos más dispersa pero con tendencia descendente.</li>
+<li><strong>(e) <span class="math inline">\(\rho = -0.25\)</span>
+(Negativa débil):</strong> Relación lineal negativa leve; la tendencia
+descendente es poco perceptible.</li>
+<li><strong>(f) <span class="math inline">\(\rho = 0.0\)</span> (Sin
+correlación):</strong> No se observa un patrón lineal; la distribución
+de puntos es aleatoria.</li>
+</ul>
+<p>A medida que <span class="math inline">\(\rho\)</span> se acerca a
+-1, la relación negativa lineal es más fuerte y los puntos están más
+alineados. Cuando <span class="math inline">\(\rho\)</span> se aproxima
+a 0, la relación lineal desaparece, y la dispersión es aleatoria.</p>
+<center>
+<img src="img/Rho1.png" width="100%" style="display: block; margin: auto;" />
+<strong>Figura 2. 18</strong> Correlaciones negativas (a) <span
+class="math inline">\(\rho = -1.0\)</span>. <span
+class="math inline">\(\hspace{.5cm}\)</span> (b) <span
+class="math inline">\(\rho = -0.90\)</span>. <br/> (c) <span
+class="math inline">\(\rho = -0.75\)</span>. <span
+class="math inline">\(\hspace{.5cm}\)</span>(d) <span
+class="math inline">\(\rho = -0.50\)</span>. <span
+class="math inline">\(\hspace{.5cm}\)</span> (e) <span
+class="math inline">\(\rho = -0.25\)</span>. <span
+class="math inline">\(\hspace{.5cm}\)</span> (f) <span
+class="math inline">\(\rho = 0.0\)</span>.
+</center>
+<p><br/><br/> Los gráficos de la <strong>Figura 2. 19</strong> muestran
+la relación entre dos variables para diferentes valores del coeficiente
+de correlación de Pearson (<span class="math inline">\(\rho\)</span>),
+destacando cómo varía la asociación lineal positiva.</p>
+<ul>
+<li><strong>(a) <span class="math inline">\(\rho = 0.10\)</span>
+(Positiva muy débil):</strong> Relación positiva lineal apenas
+perceptible; los puntos están dispersos.</li>
+<li><strong>(b) <span class="math inline">\(\rho = 0.25\)</span>
+(Positiva débil):</strong> Tendencia ligeramente lineal ascendente, pero
+con considerable dispersión.</li>
+<li><strong>(c) <span class="math inline">\(\rho = 0.50\)</span>
+(Positiva media):</strong> Relación positiva lineal más clara; los
+puntos tienden a alinearse en una dirección ascendente.</li>
+<li><strong>(d) <span class="math inline">\(\rho = 0.75\)</span>
+(Positiva considerable):</strong> Tendencia ascendente lineal marcada;
+los puntos están más próximos a una línea.</li>
+<li><strong>(e) <span class="math inline">\(\rho = 0.90\)</span>
+(Positiva muy fuerte):</strong> Relación casi lineal; los puntos forman
+una franja muy estrecha en dirección ascendente.</li>
+<li><strong>(f) <span class="math inline">\(\rho = 1.0\)</span>
+(Positiva perfecta):</strong> Relación lineal perfecta; todos los puntos
+están alineados sobre una recta ascendente.</li>
+</ul>
+<p>A medida que <span class="math inline">\(\rho\)</span> se acerca a 1,
+la relación positiva lineal es más fuerte y los puntos están más
+alineados. Cuando <span class="math inline">\(\rho\)</span> es bajo, la
+tendencia lineal positiva es leve, y la dispersión es mayor.</p>
+<center>
+<img src="img/Rho2.png" width="100%" style="display: block; margin: auto;" />
+<strong>Figura 2. 19</strong> Correlaciones positivas (a) <span
+class="math inline">\(\rho = 0.10\)</span>.<span
+class="math inline">\(\hspace{.5cm}\)</span> (b) <span
+class="math inline">\(\rho = 0.25\)</span>. <br/> (c) <span
+class="math inline">\(\rho = 0.50\)</span>.<span
+class="math inline">\(\hspace{.5cm}\)</span> (d) <span
+class="math inline">\(\rho = 0.75\)</span>. <span
+class="math inline">\(\hspace{.5cm}\)</span> (e) <span
+class="math inline">\(\rho = 0.90\)</span>. <span
+class="math inline">\(\hspace{.5cm}\)</span> (f) <span
+class="math inline">\(\rho = 1.0\)</span>.
+</center>
+</br></br>
+<h2>
+Independencia
+</h2>
+<p>Sea <span class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span> dos <strong>variables
+aleatorias</strong>, ya sean discretas o continuas, con:</p>
+<ul>
+<li><strong>Función de probabilidad conjunta:</strong> <span
+class="math inline">\(f_{X,Y}(x,y)\)</span></li>
+<li><strong>Funciones de probabilidad marginal:</strong> <span
+class="math inline">\(g(x)\)</span> para <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(h(y)\)</span> para <span
+class="math inline">\(Y\)</span></li>
+</ul>
+</br></br>
+<h3>
+Definición de independencia
+</h3>
+<p>Se dice que las variables <span class="math inline">\(X\)</span> y
+<span class="math inline">\(Y\)</span> son <strong>estadísticamente
+independientes</strong> si y solo si para todo <span
+class="math inline">\(x\)</span> y <span
+class="math inline">\(y\)</span>: <span class="math display">\[
+f_{X,Y}(x,y) = g(x) \cdot h(y)
+\]</span> Esto significa que la <strong>probabilidad conjunta</strong>
+es igual al <strong>producto de las probabilidades marginales</strong>,
+indicando que el comportamiento de una variable no afecta al de la
+otra.</p>
+</br></br>
+<h4>
+Interpretación
+</h4>
+<ul>
+<li>Si las variables son independientes, conocer el valor de <span
+class="math inline">\(X\)</span> <strong>no proporciona
+información</strong> sobre el valor de <span
+class="math inline">\(Y\)</span>, y viceversa.</li>
+<li>Esta propiedad se cumple <strong>para todas las regiones</strong>
+del espacio muestral.</li>
+</ul>
+</br></br>
+<h4>
+Propiedades clave:
+</h4>
+<ul>
+<li><strong>Relación con la esperanza:</strong> <span
+class="math inline">\(E[XY] = E[X]E[Y]\)</span> si <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span> son independientes.</li>
+<li><strong>Relación con la covarianza:</strong> <span
+class="math inline">\(\text{COV}(X,Y) = 0\)</span> en caso de
+independencia (aunque la covarianza nula no siempre implica
+independencia).</li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p><strong>Definición de las funciones:</strong></p>
+<ul>
+<li><strong>Función conjunta:</strong></li>
+</ul>
+<p><span class="math display">\[
+f_{X,Y}(x,y) = \left\{ \begin{matrix}
+  (x+y) &amp; \text{si } 0 \leq x \leq 1 \text{ y } 0 \leq y \leq 1 \\
+  0 &amp; \text{en otro caso}
+\end{matrix} \right.
+\]</span></p>
+<ul>
+<li><strong>Función marginal de <span
+class="math inline">\(X\)</span>:</strong></li>
+</ul>
+<p><span class="math display">\[
+g(x) = \left\{ \begin{matrix}
+  x + \frac{1}{2} &amp; \text{si } 0 \leq x \leq 1 \\
+  0 &amp; \text{en otro caso}
+\end{matrix} \right.
+\]</span></p>
+<ul>
+<li><strong>Función marginal de <span
+class="math inline">\(Y\)</span>:</strong></li>
+</ul>
+<p><span class="math display">\[h(y) = \left\{ \begin{matrix}
+  y + \frac{1}{2} &amp; \text{si } 0 \leq y \leq 1 \\
+  0 &amp; \text{en otro caso}
+\end{matrix} \right.
+\]</span></p>
+<p><strong>Verificación de independencia:</strong></p>
+<p>Para que <span class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span> sean independientes, se debe cumplir:
+<span class="math display">\[
+f_{X,Y}(x,y) = g(x) \cdot h(y)
+\]</span> Calculando el producto de las marginales:</p>
+<p><span class="math display">\[
+(x + \frac{1}{2})(\frac{1}{2} + y) = xy + \frac{x}{2} + \frac{y}{2} +
+\frac{1}{4}
+\]</span> Comparando con la función conjunta: <span
+class="math display">\[
+(x + y) \neq xy + \frac{x}{2} + \frac{y}{2} + \frac{1}{4}
+\]</span></p>
+<p><strong>Conclusión:</strong></p>
+<ul>
+<li>Dado que <span class="math display">\[f_{X,Y}(x,y) \neq g(x) \cdot
+h(y),\]</span> <strong>las variables <span
+class="math inline">\(X\)</span> y <span
+class="math inline">\(Y\)</span> no son independientes</strong>.</li>
+<li>Esto demuestra que el comportamiento conjunto <strong>no se
+descompone en el producto de sus distribuciones marginales</strong>,
+evidenciando <strong>dependencia estadística</strong>.</li>
+</ul>
+</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

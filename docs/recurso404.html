@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Caso 1</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Pruebas sobre una muestra</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas sobre dos muestras</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de Estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Referencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso1000.html">Referencias</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868"> <strong>Caso
+1</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Caso 1:
+</h3>
+<p>
+<p>El artículo <em>“In-use Emissions from Heavy Duty Diesel Vehicles”
+(J. Yanowitz, 2001)</em> presenta mediciones de <strong>eficiencia de
+combustible</strong> en millas por galón para una muestra de siete
+camiones. Los datos registrados corresponden a una muestra de tamaño
+<span class="math inline">\(n = 7\)</span>:</p>
+<p><span class="math display">\[
+7.69, \quad 4.97, \quad 4.56, \quad 6.49, \quad 4.34, \quad 6.24, \quad
+4.45
+\]</span></p>
+<p>Se asume que esta muestra es aleatoria y representativa de la
+población de camiones en estudio. El objetivo es construir un
+<strong>intervalo de confianza del 95%</strong> para la <strong>varianza
+poblacional</strong> de la eficiencia de combustible. Sin embargo, dado
+que <strong>se desconoce la distribución subyacente de los
+datos</strong> y la muestra es pequeña, no es apropiado aplicar métodos
+paramétricos tradicionales, que requieren asumir una distribución
+normal. En este caso, se recurre a técnicas <strong>no
+paramétricas</strong> para estimar el intervalo de confianza, como el
+método <strong>bootstrap</strong>, el cual no depende de supuestos sobre
+la distribución de los datos.</p>
+<hr />
+<p>A continuación se presentan los códigos para determinar los 3 tipos
+de intervalos de confianza Bootstrap: Percentil, Normal y BCa. La
+<strong>Figura 2.76</strong> muestra la distribución de las varianzas
+bootstrap. Las lineas verticales representan los limites de los
+intervalos de confianza bootstrap de la varianza: Percentil, Normal y
+BCa.</p>
+<pre>
+# Cargar librerías necesarias
+library(boot)
+library(ggplot2)
+
+set.seed(123)  # Para asegurar reproducibilidad
+
+# Datos originales
+X <- c(7.69, 4.97, 4.56, 6.49, 4.34, 6.24, 4.45)
+
+# Función para calcular la estadística de interés (varianza)
+boot_function <- function(data, indices) {
+  return(var(data[indices]))
+}
+
+# Número de muestras bootstrap
+B <- 1000  
+
+# Generar muestras bootstrap usando la librería boot
+boot_results <- boot(data = X, statistic = boot_function, R = B)
+
+# Obtener la distribución de varianzas bootstrap
+bootstrap_var <- boot_results$t
+
+# Calcular la media y desviación estándar de las varianzas bootstrap
+mean_bootstrap <- mean(bootstrap_var)
+sd_bootstrap <- sd(bootstrap_var)
+
+#----------------- Intervalos de Confianza -----------------
+
+alpha <- 0.05
+
+# Intervalo de Confianza Percentil
+IC.p <- boot.ci(boot_results, type = "perc")$percent[4:5]
+
+# Intervalo de Confianza Normal
+IC.N <- boot.ci(boot_results, type = "norm")$normal[2:3]
+
+# Intervalo de Confianza BCa
+IC.BCa <- boot.ci(boot_results, type = "bca")$bca[4:5]
+
+# Crear un dataframe para ggplot
+df <- data.frame(bootstrap_var)
+
+# Crear datos para la curva normal ajustada
+x_vals <- seq(min(bootstrap_var), max(bootstrap_var), length.out = 100)
+normal_curve <- data.frame(
+  x = x_vals,
+  y = dnorm(x_vals, mean = mean_bootstrap, sd = sd_bootstrap) # Corrección: Basado en varianza
+)
+
+#----------------- Graficar con ggplot2 -----------------
+
+plot.boot.c<-ggplot(df, aes(x = bootstrap_var)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 30, fill = "lightblue", color = "black", alpha = 0.6) + # Corrección en el eje x
+  geom_line(data = normal_curve, aes(x = x, y = y), color = "darkorange", linewidth = 1.5) + # Corrección: Curva normal basada en varianza
+  geom_vline(xintercept = IC.p, color = "red", linetype = "dashed", linewidth = 1.2) + # IC Percentil
+  geom_vline(xintercept = IC.N, color = "blue", linetype = "dotted", linewidth = 1.2) + # IC Normal
+  geom_vline(xintercept = IC.BCa, color = "black", linetype = "dotdash", linewidth = 1.2) + # IC BCa (cambiado a negro)
+  labs(title = "Histograma de la Varianza Bootstrap con Ajuste Normal",
+       x = "Varianza Bootstrap", y = "Densidad") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 14)) +
+  annotate("text", x = mean(IC.p), y = 0.9, label = "IC Percentil", color = "red", angle = 90, vjust = -1) +
+  annotate("text", x = mean(IC.N), y = 0.9, label = "IC Normal", color = "blue", angle = 90, vjust = -0.5) +
+  annotate("text", x = mean(IC.BCa), y = 0.9, label = "IC BCa", color = "black", angle = 90, vjust = -1) # Cambiado a negro
+
+print(plot.boot.c)
+IC.p 
+IC.N
+IC.BCa
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(boot)
+library(ggplot2)
+
+set.seed(123)  # Para asegurar reproducibilidad
+
+# Datos originales
+X &lt;- c(7.69, 4.97, 4.56, 6.49, 4.34, 6.24, 4.45)
+
+# Función para calcular la estadística de interés (varianza)
+boot_function &lt;- function(data, indices) {
+  return(var(data[indices]))
+}
+
+# Número de muestras bootstrap
+B &lt;- 1000  
+
+# Generar muestras bootstrap usando la librería boot
+boot_results &lt;- boot(data = X, statistic = boot_function, R = B)
+
+# Obtener la distribución de varianzas bootstrap
+bootstrap_var &lt;- boot_results$t
+
+# Calcular la media y desviación estándar de las varianzas bootstrap
+mean_bootstrap &lt;- mean(bootstrap_var)
+sd_bootstrap &lt;- sd(bootstrap_var)
+
+#----------------- Intervalos de Confianza -----------------
+
+alpha &lt;- 0.05
+
+# Intervalo de Confianza Percentil
+IC.p &lt;- boot.ci(boot_results, type = &quot;perc&quot;)$percent[4:5]
+
+# Intervalo de Confianza Normal
+IC.N &lt;- boot.ci(boot_results, type = &quot;norm&quot;)$normal[2:3]
+
+# Intervalo de Confianza BCa
+IC.BCa &lt;- boot.ci(boot_results, type = &quot;bca&quot;)$bca[4:5]
+
+# Crear un dataframe para ggplot
+df &lt;- data.frame(bootstrap_var)
+
+# Crear datos para la curva normal ajustada
+x_vals &lt;- seq(min(bootstrap_var), max(bootstrap_var), length.out = 100)
+normal_curve &lt;- data.frame(
+  x = x_vals,
+  y = dnorm(x_vals, mean = mean_bootstrap, sd = sd_bootstrap) # Corrección: Basado en varianza
+)
+
+#----------------- Graficar con ggplot2 -----------------
+
+plot.boot.c&lt;-ggplot(df, aes(x = bootstrap_var)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 30, fill = &quot;lightblue&quot;, color = &quot;black&quot;, alpha = 0.6) + # Corrección en el eje x
+  geom_line(data = normal_curve, aes(x = x, y = y), color = &quot;darkorange&quot;, linewidth = 1.5) + # Corrección: Curva normal basada en varianza
+  geom_vline(xintercept = IC.p, color = &quot;red&quot;, linetype = &quot;dashed&quot;, linewidth = 1.2) + # IC Percentil
+  geom_vline(xintercept = IC.N, color = &quot;blue&quot;, linetype = &quot;dotted&quot;, linewidth = 1.2) + # IC Normal
+  geom_vline(xintercept = IC.BCa, color = &quot;black&quot;, linetype = &quot;dotdash&quot;, linewidth = 1.2) + # IC BCa (cambiado a negro)
+  labs(title = &quot;Histograma de la Varianza Bootstrap con Ajuste Normal&quot;,
+       x = &quot;Varianza Bootstrap&quot;, y = &quot;Densidad&quot;) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 14)) +
+  annotate(&quot;text&quot;, x = mean(IC.p), y = 0.9, label = &quot;IC Percentil&quot;, color = &quot;red&quot;, angle = 90, vjust = -1) +
+  annotate(&quot;text&quot;, x = mean(IC.N), y = 0.9, label = &quot;IC Normal&quot;, color = &quot;blue&quot;, angle = 90, vjust = -0.5) +
+  annotate(&quot;text&quot;, x = mean(IC.BCa), y = 0.9, label = &quot;IC BCa&quot;, color = &quot;black&quot;, angle = 90, vjust = -1) # Cambiado a negro
+
+#print(plot.boot.c)
+#IC.p 
+#IC.N
+#IC.BCa</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig_sd_boot.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.76</strong> Distribución de las varianzas bootstrap.
+Las lineas representan los limites de los intervalos de confianza
+bootstrap de la varianza: Percentil, Normal y BCa.
+</center>
+<p><br/><br/></p>
+<hr />
+<p>A partir de la simulación bootstrap, se obtuvieron los siguientes
+<strong>intervalos de confianza al 95%</strong> para la varianza de la
+población:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\textbf{IC Percentil} &amp;= [0.3902849, 2.5560492] \\
+\textbf{IC Normal} &amp;= [0.6845046, 3.1068192] \\
+\textbf{IC BCa} &amp;= [0.7547304, 2.9371905]
+\end{aligned}
+\]</span></p>
+<p>Si la distribución de las varianzas bootstrap es simétrica y similar
+a una normal, el IC Normal es una opción adecuada, ya que la
+aproximación normal resulta válida en este caso. Si la distribución
+presenta una ligera asimetría, el IC Percentil es una mejor alternativa,
+pues se basa en los percentiles de la distribución empírica y no asume
+normalidad. En cambio, si la distribución es marcadamente asimétrica o
+presenta sesgo, el IC BCa es la mejor elección, ya que corrige tanto el
+sesgo como la aceleración, proporcionando un intervalo más preciso
+cuando la distribución no es simétrica.</p>
+<p>La mejor manera de elegir entre estos tres intervalos es aplicar un
+test de normalidad y analizar la asimetría y curtosis de la distribución
+de las varianzas bootstrap. Los tests de normalidad se abordarán en la
+siguiente sección. No obstante, en este apartado se utilizan algunos
+conceptos sin profundizar en su formulación.</p>
+<hr />
+<p>Para verificar si la distribución de las varianzas bootstrap sigue
+una distribución normal, se pueden calcular estadísticas de asimetría y
+curtosis, así como aplicar los tests de normalidad. Sin embargo, no
+todos los tests son adecuados para <span
+class="math inline">\(B=1000\)</span>, por lo que se recomienda
+seleccionar aquellos que funcionan mejor con muestras grandes.</p>
+<p><strong>Para <span class="math inline">\(B = 1000\)</span>, los tests
+y estadísticas más recomendados son:</strong></p>
+<ol style="list-style-type: decimal">
+<li><strong>Anderson-Darling (<code>ad.test()</code>)</strong> – Detecta
+mejor desviaciones en las colas.</li>
+<li><strong>D’Agostino-Pearson (skewness y kurtosis en
+<code>moments</code>)</strong> – Evalúa la forma de la
+distribución.</li>
+<li><strong>Cramer-von Mises (<code>cvm.test()</code>)</strong> – Más
+robusto en muestras grandes.</li>
+<li><strong>Lilliefors (<code>lillie.test()</code>)</strong> –
+Alternativa mejorada del test Kolmogorov-Smirnov.</li>
+</ol>
+<p>Si el test no rechaza la normalidad (<span
+class="math inline">\(p-valor &gt; 0.05\)</span>), se recomienda usar el
+IC Normal. Si el test rechaza la normalidad (<span
+class="math inline">\(p-valor &lt; 0.05\)</span>), es mejor usar IC BCa
+o Percentil.</p>
+<p>Los valores con los que se compara el p-valor, así como el nivel de
+significancia, se discuten en la unidad de prueba de hipótesis. Por el
+momento, para <span class="math inline">\(B=1000\)</span>, se emplea un
+nivel de significancia de 0.05.</p>
+<hr />
+<p>Los códigos para implementar los tests de normalidad se presentan a
+continuación:</p>
+<pre>
+# options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+# Instalar y cargar paquetes necesarios
+install.packages("nortest")
+install.packages("moments")
+library(nortest)
+library(moments)
+library(boot)
+
+set.seed(123)  # Para asegurar reproducibilidad
+
+# Datos originales
+X <- c(7.69, 4.97, 4.56, 6.49, 4.34, 6.24, 4.45)
+
+# Función para calcular la estadística de interés (en este caso, la media)
+boot_function <- function(data, indices) {
+  return(var(data[indices]))
+}
+
+# Número de muestras bootstrap
+B <- 1000  
+
+# Generar muestras bootstrap usando la librería boot
+boot_results <- boot(data = X, statistic = boot_function, R = B)
+
+# Obtener la distribución de medias bootstrap
+bootstrap_var <- boot_results$t
+
+# Test de Anderson-Darling
+ad_test <- ad.test(bootstrap_var)
+
+# Test de Cramer-von Mises
+cvm_test <- cvm.test(bootstrap_var)
+
+# Test de Lilliefors (Kolmogorov-Smirnov modificado)
+lillie_test <- lillie.test(bootstrap_var)
+
+# Test de D'Agostino-Pearson (manual: usa asimetría y curtosis)
+skewness_value <- skewness(bootstrap_var)
+kurtosis_value <- kurtosis(bootstrap_var)
+
+# Mostrar resultados
+list(
+  Anderson_Darling_p_value = ad_test$p.value,
+  Cramer_von_Mises_p_value = cvm_test$p.value,
+  Lilliefors_p_value = lillie_test$p.value,
+  DAgostino_Pearson_Skewness = skewness_value,
+  DAgostino_Pearson_Kurtosis = kurtosis_value
+)
+</pre>
+<pre class="r"><code>#options(repos = c(CRAN = &quot;https://cloud.r-project.org&quot;))
+# Instalar y cargar paquetes necesarios (solo si no están instalados)
+#if (!require(nortest)) install.packages(&quot;nortest&quot;, dependencies = TRUE)
+#if (!require(moments)) install.packages(&quot;moments&quot;, dependencies = TRUE)
+#if (!require(boot)) install.packages(&quot;boot&quot;, dependencies = TRUE)
+
+# Cargar las librerías
+library(nortest)
+library(moments)
+library(boot)
+
+set.seed(123)  # Para asegurar reproducibilidad
+
+# Datos originales
+X &lt;- c(7.69, 4.97, 4.56, 6.49, 4.34, 6.24, 4.45)
+
+# Función para calcular la estadística de interés (en este caso, la varianza)
+boot_function &lt;- function(data, indices) {
+  return(var(data[indices]))  # Calcula la varianza en cada muestra bootstrap
+}
+
+# Número de muestras bootstrap
+B &lt;- 1000  
+
+# Generar muestras bootstrap usando la librería boot
+boot_results &lt;- boot(data = X, statistic = boot_function, R = B)
+
+# Obtener la distribución de varianzas bootstrap
+bootstrap_var &lt;- boot_results$t
+
+# Test de Anderson-Darling
+ad_test &lt;- ad.test(bootstrap_var)
+
+# Test de Cramer-von Mises
+cvm_test &lt;- cvm.test(bootstrap_var)
+
+# Test de Lilliefors (Kolmogorov-Smirnov modificado)
+lillie_test &lt;- lillie.test(bootstrap_var)
+
+# Test de D&#39;Agostino-Pearson (manual: usa asimetría y curtosis)
+skewness_value &lt;- skewness(bootstrap_var)
+kurtosis_value &lt;- kurtosis(bootstrap_var)
+
+# Mostrar resultados correctamente
+results &lt;- list(
+  Anderson_Darling_p_value = ad_test$p.value,
+  Cramer_von_Mises_p_value = cvm_test$p.value,
+  Lilliefors_p_value = lillie_test$p.value,
+  DAgostino_Pearson_Skewness = skewness_value,
+  DAgostino_Pearson_Kurtosis = kurtosis_value
+)
+
+# Imprimir resultados
+#print(results)</code></pre>
+<hr />
+<p>La <strong>Tabla 2.22</strong> presenta los resultados obtenidos para
+evaluar si la distribución de las varianzas bootstrap sigue una
+distribución normal.</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.22</strong> Resultados de algunos tests de normalidad y
+estadísticas para revisar simetría.
+</center>
+<table>
+<colgroup>
+<col width="49%" />
+<col width="23%" />
+<col width="27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Test</strong></th>
+<th><strong>Resultado</strong></th>
+<th><strong>Interpretación</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Anderson-Darling <span
+class="math inline">\(p\)</span>-valor</strong></td>
+<td><span class="math inline">\(1.177393e-14\)</span></td>
+<td>Se rechaza la normalidad, pues <span class="math inline">\(p &lt;
+0.05\)</span>.</td>
+</tr>
+<tr class="even">
+<td><strong>Cramer-von Mises <span
+class="math inline">\(p\)</span>-valor</strong></td>
+<td><span class="math inline">\(7.37e-10\)</span></td>
+<td>Se rechaza la normalidad, ya que <span class="math inline">\(p &lt;
+0.05\)</span>.</td>
+</tr>
+<tr class="odd">
+<td><strong>Lilliefors <span
+class="math inline">\(p\)</span>-valor</strong></td>
+<td><span class="math inline">\(8.314219e-14\)</span></td>
+<td>Se rechaza la normalidad, pues <span class="math inline">\(p &lt;
+0.05\)</span>.</td>
+</tr>
+<tr class="even">
+<td><strong>D’Agostino-Pearson Skewness</strong></td>
+<td><span class="math inline">\(-0.0007530777\)</span></td>
+<td>Indica que la distribución es casi simétrica, lo que podría sugerir
+una forma cercana a la normal.</td>
+</tr>
+<tr class="odd">
+<td><strong>D’Agostino-Pearson Kurtosis</strong></td>
+<td><span class="math inline">\(2.354766\)</span></td>
+<td>Es cercano a 3, lo que sugiere colas similares a la normal, aunque
+no confirma normalidad.</td>
+</tr>
+</tbody>
+</table>
+<p>Los tres tests de normalidad (Anderson-Darling, Cramer-von Mises y
+Lilliefors) tienen <strong><span
+class="math inline">\(p\)</span>-valores menores a 0.05</strong>, lo que
+significa que <strong>se rechaza</strong> la hipótesis nula de
+<strong>normalidad</strong>. Esto indica que la distribución de las
+varianzas bootstrap <strong>no es normal</strong>.</p>
+<p><strong>Los valores de asimetría y curtosis están dentro del rango
+esperado para una distribución normal</strong>, sugieren que la
+distribución de las varianzas bootstrap es aproximadamente normal.</p>
+<p>Dado que los tests de normalidad han rechazado la normalidad en la
+distribución de las varianzas bootstrap, no se recomienda utilizar el IC
+Normal. En su lugar, la mejor opción es el IC BCa, ya que ajusta el
+sesgo y la aceleración. Si se prefiere un método más simple sin
+corrección de sesgo, el IC Percentil también es una alternativa
+aceptable, aunque menos precisa.</p>
+</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

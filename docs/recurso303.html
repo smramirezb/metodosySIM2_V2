@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Propiedades de los estimadores</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Propiedades de los estimadores</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>En estadística inferencial, un <strong>estimador</strong> es una
+función de la muestra utilizada para aproximar un <strong>parámetro
+poblacional desconocido</strong>. La calidad de un estimador se evalúa a
+través de ciertas propiedades que garantizan su eficiencia y
+confiabilidad en la estimación. <br/></p>
+<center>
+<img src="img/estimador.png" width="90%" style="display: block; margin: auto;" />
+<strong>Figura 2.45</strong> Caracteristicas de los estimadores (a) baja
+varianza con sesgo (b) alta varianza con sesgo <br/> (c) baja varianza
+sin sesgo (d) alta varianza sin sesgo.
+</center>
+<p></br></br> En el estudio de los <strong>estimadores
+estadísticos</strong>, es fundamental analizar sus propiedades de
+<strong>sesgo</strong> y <strong>varianza</strong>, ya que estas
+determinan su calidad y confiabilidad. Para ilustrar estos conceptos,
+podemos hacer una analogía con un <strong>tiro al blanco</strong> (ver
+<strong>Figura 2.45</strong>), donde:</p>
+<ul>
+<li>El <strong>punto central</strong> representa el <strong>valor real
+del parámetro desconocido</strong> que intentamos estimar.</li>
+<li>Cada <strong>disparo</strong> representa una <strong>estimación
+basada en una muestra</strong>.</li>
+<li>La <strong>dispersión de los disparos</strong> representa la
+<strong>varianza del estimador</strong>.</li>
+<li>La <strong>desviación sistemática del centro</strong> representa el
+<strong>sesgo del estimador</strong>.</li>
+</ul>
+<p>La siguiente figura representa diferentes combinaciones de
+<strong>sesgo y varianza</strong> en los estimadores:</p>
+<ul>
+<li><p><strong>Figura (a): Estimador con sesgo pero baja
+varianza</strong><br />
+En este caso, el estimador presenta <strong>alta precisión</strong> (los
+valores estimados están agrupados) pero <strong>es sesgado</strong> (se
+aleja sistemáticamente del valor verdadero). Esto ocurre cuando el
+estimador está <strong>mal calibrado</strong>, lo que puede deberse a
+una fórmula incorrecta o un mal modelo subyacente.</p></li>
+<li><p><strong>Figura (b): Estimador con sesgo y alta
+varianza</strong><br />
+Aquí, además de ser <strong>sesgado</strong>, el estimador tiene
+<strong>alta varianza</strong>, lo que significa que las estimaciones
+son <strong>altamente dispersas</strong> y también están desplazadas
+respecto al valor real del parámetro. Este tipo de estimador es poco
+confiable, ya que no solo se aleja sistemáticamente del objetivo, sino
+que además tiene <strong>gran incertidumbre</strong> en sus
+estimaciones.</p></li>
+<li><p><strong>Figura (c): Estimador ideal (insesgado y con baja
+varianza)</strong><br />
+En este caso, el estimador <strong>no tiene sesgo</strong> (los valores
+estimados están centrados en el verdadero valor del parámetro) y tiene
+<strong>baja varianza</strong> (las estimaciones están muy agrupadas).
+Este es el mejor tipo de estimador, ya que es <strong>preciso y
+exacto</strong>.</p></li>
+<li><p><strong>Figura (d): Estimador insesgado pero con alta
+varianza</strong><br />
+Aquí, aunque el estimador <strong>en promedio es correcto</strong> (los
+disparos están alrededor del valor real), tiene <strong>alta
+varianza</strong>, lo que indica que las estimaciones individuales
+pueden estar lejos del valor real en cada muestra. Este tipo de
+estimador puede ser útil si se dispone de un gran número de
+observaciones, ya que el promedio de muchas estimaciones tendería al
+valor verdadero.</p></li>
+</ul>
+<p>Para obtener buenos estimadores en la práctica, se busca minimizar
+tanto el <strong>sesgo</strong> como la <strong>varianza</strong>. Sin
+embargo, existe un <strong>compromiso entre sesgo y varianza</strong>
+(bias-variance tradeoff), especialmente en problemas de aprendizaje
+automático y modelado estadístico.</p>
+<p>El objetivo en la inferencia estadística es encontrar estimadores
+<strong>insesgados y con la menor varianza posible</strong>, asegurando
+estimaciones confiables y precisas.</p>
+</br></br>
+<h2>
+Propiedades de los estimadores
+</h2>
+<!-- En el centro se ubica el parámetro desconocido (punto blanco) y que tratamos de estimar utilizando para ello el estimador apropiado (figurativamente el arma que utilizamos).  En la figura ($a$) tenemos el resultado de un arma (estimador 1) que aunque tiene una alta precisión  ( poca varianza), presenta un desvío del centro  (sesgo). En la figura ($b$) se presenta el resultado de otra arma (estimador 2) que al igual que la primera que presenta un desvío del centro (sesgo), presenta una mayor varianza. La figura ($c$) representa el arma ideal (no tiene sesgo y poca varianza) y por último la figura ($d$)  que en promedio diríamos que está centrada (no sesgo), presenta una variación alta. -->
+</br></br>
+<h3>
+Insesgadez
+</h3>
+<p>Un estimador <span class="math inline">\(\hat{\theta}\)</span> es
+insesgado si su <strong>valor esperado</strong> es igual al parámetro
+poblacional que estima, es decir: <span class="math display">\[
+  E[\hat{\theta}] = \theta.
+  \]</span> Esto significa que, en promedio, el estimador no sobrestima
+ni subestima el valor verdadero del parámetro.</p>
+</br></br>
+<h3>
+Consistencia
+</h3>
+<p>Un estimador es consistente si, a medida que el <strong>tamaño de la
+muestra</strong> aumenta, el estimador se acerca al verdadero valor del
+parámetro. Formalmente: <span class="math display">\[
+  \hat{\theta}_n \xrightarrow{P} \theta \quad \text{cuando } n \to
+\infty.
+  \]</span></p>
+<p>Para evaluar la <strong>consistencia</strong> de un estimador, es
+necesario verificar que, a medida que el tamaño de la muestra (<span
+class="math inline">\(n\)</span>) aumenta, el estimador converge en
+probabilidad al verdadero valor del parámetro que se desea estimar. Esto
+se expresa formalmente como:</p>
+<p><span class="math display">\[
+\lim_{n \to \infty} P(|\hat{\theta}_n - \theta| &gt; \epsilon) = 0
+\]</span></p>
+<p>donde <span class="math inline">\(\hat{\theta}_n\)</span> es el
+estimador basado en una muestra de tamaño <span
+class="math inline">\(n\)</span>, <span
+class="math inline">\(\theta\)</span> es el parámetro verdadero y <span
+class="math inline">\(\epsilon\)</span> es cualquier número positivo
+pequeño.</p>
+<p>Para demostrar la consistencia de un estimador, generalmente se
+siguen estos pasos:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Insesgadez o sesgo asintótico nulo</strong>: Verificar
+que el estimador es insesgado, es decir, <span
+class="math inline">\(E[\hat{\theta}_n] = \theta\)</span>, o que el
+sesgo disminuye a medida que <span class="math inline">\(n\)</span>
+aumenta.</p></li>
+<li><p><strong>Varianza que disminuye con <span
+class="math inline">\(n\)</span></strong>: Comprobar que la varianza del
+estimador, <span
+class="math inline">\(\text{Var}(\hat{\theta}_n)\)</span>, tiende a cero
+cuando <span class="math inline">\(n\)</span> tiende a
+infinito.</p></li>
+</ol>
+<p>Si ambas condiciones se cumplen, el estimador <span
+class="math inline">\(\hat{\theta}_n\)</span> es consistente para el
+parámetro <span class="math inline">\(\theta\)</span>.</p>
+</br></br>
+<h3>
+Eficiencia
+</h3>
+<p>Se dice que un estimador es eficiente si tiene la <strong>menor
+varianza posible</strong> dentro de la clase de estimadores insesgados.
+Es decir, dado dos estimadores <span
+class="math inline">\(\hat{\theta}_1\)</span> y <span
+class="math inline">\(\hat{\theta}_2\)</span>, se prefiere aquel con
+menor varianza: <span class="math display">\[
+  \text{Var}(\hat{\theta}_1) &lt; \text{Var}(\hat{\theta}_2).
+  \]</span></p>
+</br></br>
+<h3>
+Suficiencia
+</h3>
+<p>Un estimador es suficiente si contiene <strong>toda la información
+disponible</strong> en la muestra acerca del parámetro que se desea
+estimar. Esto implica que no hay otro estimador basado en la misma
+muestra que proporcione <strong>mejor información</strong> sobre el
+parámetro.</p>
+</br></br>
+<h3>
+Robustez
+</h3>
+<p>Un estimador es robusto si su desempeño <strong>no se ve afectado
+significativamente</strong> por la presencia de valores atípicos o
+pequeñas desviaciones en los supuestos del modelo.</p>
+</br></br>
+<h2>
+Importancia de los estimadores
+</h2>
+<p>El estudio de las propiedades de los estimadores es fundamental
+para:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Construcción de Intervalos de Confianza:</strong> Se
+requiere que los estimadores sean insesgados y eficientes para obtener
+intervalos confiables.</li>
+<li><strong>Pruebas de Hipótesis:</strong> Se utilizan estimadores
+consistentes y eficientes para tomar decisiones estadísticas
+rigurosas.</li>
+<li><strong>Modelos de Regresión y Predicción:</strong> En machine
+learning y econometría, los estimadores juegan un papel clave en la
+estimación de parámetros en modelos predictivos.</li>
+<li><strong>Análisis de Riesgos y Fiabilidad:</strong> En ingeniería y
+finanzas, se utilizan estimadores para evaluar la confiabilidad de
+sistemas y riesgos de inversión.</li>
+</ol>
+<p>Las <strong>propiedades de los estimadores</strong> garantizan la
+calidad de la inferencia estadística, permitiendo obtener conclusiones
+precisas y confiables en diversas aplicaciones del mundo real.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se tiene una población (<span class="math inline">\(X\)</span>) que
+sigue una <strong>distribución Exponencial</strong> con parámetro <span
+class="math inline">\(\lambda\)</span>, donde se cumplen las siguientes
+propiedades:</p>
+<ul>
+<li><strong>Media poblacional</strong>:<br />
+<span class="math display">\[
+E[X] = \frac{1}{\lambda}
+\]</span></li>
+<li><strong>Varianza poblacional</strong>:<br />
+<span class="math display">\[
+\text{Var}(X) = \frac{1}{\lambda^2}
+\]</span></li>
+</ul>
+<p>Dada una muestra aleatoria independiente e identicamente distribuida
+de tamaño <span class="math inline">\(n\)</span>, <span
+class="math inline">\(X_1, X_2, \dots, X_n\)</span> de la población
+<span class="math inline">\(X\)</span>, se consideran los siguientes
+estimadores para el parámetro <span
+class="math inline">\(\theta=\frac{1}{\lambda}\)</span>:</p>
+<p><span class="math display">\[
+\widehat{\theta}_{1} = \dfrac{1}{6} \sum_{i=1}^{\frac{n}{2}} X_i +
+\dfrac{1}{3} \sum_{i=\frac{n}{2}+1}^{n} X_i
+\]</span></p>
+<p><span class="math display">\[
+\widehat{\theta}_{2} = \dfrac{1}{n(n+1)} \sum_{i=1}^{n} i X_i
+\]</span></p>
+<p><span class="math display">\[
+\widehat{\theta}_{3} = \dfrac{1}{n} \sum_{i=1}^{n} X_i
+\]</span></p>
+<p></br></br> <strong>Paso 1: Verificación del insesgamiento de los
+estimadores</strong></p>
+<p>Para verificar si los estimadores son insesgados, se calcula la
+esperanza matemática de cada uno:</p>
+<p><strong>Esperanza de <span
+class="math inline">\(\widehat{\theta}_{1}\)</span></strong></p>
+<p><span class="math display">\[
+E\big[\widehat{\theta}_{1}\big] = E\Bigg[\dfrac{1}{6}
+\sum_{i=1}^{\frac{n}{2}} X_i + \dfrac{1}{3} \sum_{i=\frac{n}{2}+1}^{n}
+X_i\Bigg]
+\]</span></p>
+<p>Dado que la esperanza es lineal:</p>
+<p><span class="math display">\[
+E\big[\widehat{\theta}_{1}\big] = \dfrac{1}{6} \sum_{i=1}^{\frac{n}{2}}
+E[X_i] + \dfrac{1}{3} \sum_{i=\frac{n}{2}+1}^{n} E[X_i]
+\]</span></p>
+<p><span class="math display">\[
+= \dfrac{1}{6} \sum_{i=1}^{\frac{n}{2}} \frac{1}{\lambda} + \dfrac{1}{3}
+\sum_{i=\frac{n}{2}+1}^{n} \frac{1}{\lambda}
+\]</span></p>
+<p><span class="math display">\[
+= \dfrac{\frac{n}{2} \frac{1}{\lambda}}{6} + \dfrac{\frac{n}{2}
+\frac{1}{\lambda}}{3} = \frac{1}{\lambda}=\theta
+\]</span></p>
+<p>Concluimos que <span
+class="math inline">\(\widehat{\theta}_{1}\)</span> es
+<strong>insesgado</strong>.</p>
+<p></br> <strong>Esperanza de <span
+class="math inline">\(\widehat{\theta}_{2}\)</span></strong></p>
+<p><span class="math display">\[
+E\big[\widehat{\theta}_{2}\big] = E\Bigg[\dfrac{1}{n(n+1)}
+\sum_{i=1}^{n} i X_i\Bigg]
+\]</span></p>
+<p>Usando la linealidad de la esperanza:</p>
+<p><span class="math display">\[
+E\big[\widehat{\theta}_{2}\big] = \dfrac{1}{n(n+1)} \sum_{i=1}^{n} i
+E[X_i]
+\]</span></p>
+<p><span class="math display">\[
+= \dfrac{1}{n(n+1)} \sum_{i=1}^{n} i \frac{1}{\lambda}
+\]</span></p>
+<p>Dado que la suma de los primeros <span
+class="math inline">\(n\)</span> números naturales es:</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+\]</span></p>
+<p>Entonces:</p>
+<p><span class="math display">\[
+E\big[\widehat{\theta}_{2}\big] = \dfrac{1}{n(n+1)} \cdot
+\frac{n(n+1)}{2} \frac{1}{\lambda} = \frac{1}{\lambda}=\theta
+\]</span></p>
+<p>Concluimos que <span
+class="math inline">\(\widehat{\theta}_{2}\)</span> es
+<strong>insesgado</strong>.</p>
+<p></br> <strong>Esperanza de <span
+class="math inline">\(\widehat{\theta}_{3}\)</span></strong></p>
+<p><span class="math display">\[
+E\big[\widehat{\theta}_{3}\big] = E\Bigg[\dfrac{1}{n} \sum_{i=1}^{n}
+X_i\Bigg]
+\]</span></p>
+<p>Por la linealidad de la esperanza:</p>
+<p><span class="math display">\[
+E\big[\widehat{\theta}_{3}\big] = \dfrac{1}{n} \sum_{i=1}^{n} E[X_i]
+\]</span></p>
+<p><span class="math display">\[
+= \dfrac{1}{n} \sum_{i=1}^{n} \frac{1}{\lambda} =
+\frac{1}{\lambda}=\theta
+\]</span></p>
+<p>Concluimos que <span
+class="math inline">\(\widehat{\theta}_{3}\)</span> es
+<strong>insesgado</strong>.</p>
+<p></br></br> <strong>Paso 2: Para determinar cuál de los estimadores es
+más eficiente</strong></p>
+<p>Para determinar cuál de los estimadores es más eficiente, calculamos
+sus varianzas.</p>
+<p></br> <strong>Varianza de <span
+class="math inline">\(\widehat{\theta}_{1}\)</span></strong></p>
+<p><span class="math display">\[
+\text{Var}\big[\widehat{\theta}_{1}\big] = \text{Var}\Bigg[\dfrac{1}{6}
+\sum_{i=1}^{\frac{n}{2}} X_i + \dfrac{1}{3} \sum_{i=\frac{n}{2}+1}^{n}
+X_i\Bigg]
+\]</span></p>
+<p>Dado que la varianza de una suma de variables independientes es la
+suma de las varianzas:</p>
+<p><span class="math display">\[
+\text{Var}\big[\widehat{\theta}_{1}\big] = \dfrac{1}{36}
+\sum_{i=1}^{\frac{n}{2}} \text{Var}(X_i) + \dfrac{1}{9}
+\sum_{i=\frac{n}{2}+1}^{n} \text{Var}(X_i)
+\]</span></p>
+<p><span class="math display">\[
+= \dfrac{1}{36} \sum_{i=1}^{\frac{n}{2}} \frac{1}{\lambda^2} +
+\dfrac{1}{9} \sum_{i=\frac{n}{2}+1}^{n} \frac{1}{\lambda^2}
+\]</span></p>
+<p><span class="math display">\[
+= \dfrac{\frac{n}{2} \frac{1}{\lambda^2}}{36} + \dfrac{\frac{n}{2}
+\frac{1}{\lambda^2}}{9} = \dfrac{10}{36} \frac{1}{\lambda^2}
+\]</span></p>
+<p></br> <strong>Varianza de <span
+class="math inline">\(\widehat{\theta}_{2}\)</span></strong></p>
+<p><span class="math display">\[
+\text{Var}\big[\widehat{\theta}_{2}\big] = \dfrac{(2n+1)}{6n(n+1)}
+\frac{1}{\lambda^2}
+\]</span></p>
+<p></br> <strong>Varianza de <span
+class="math inline">\(\widehat{\theta}_{3}\)</span></strong></p>
+<p><span class="math display">\[
+\text{Var}\big[\widehat{\theta}_{3}\big] = \dfrac{1}{n}
+\frac{1}{\lambda^2}
+\]</span></p>
+<p>Para determinar cuál de los estimadores tiene menor varianza, se
+comparan las varianzas calculadas de cada uno. Para comparar estas
+varianzas, analizamos sus coeficientes:</p>
+<p></br></br> 1. <strong>Comparación entre <span
+class="math inline">\(\widehat{\theta}_{1}\)</span> y <span
+class="math inline">\(\widehat{\theta}_{3}\)</span></strong>:</p>
+<p><span class="math display">\[
+   \frac{5}{18} \quad \text{vs.} \quad \frac{1}{n}
+   \]</span></p>
+<p>Dado que <span class="math inline">\(\frac{5}{18} \approx
+0.2778\)</span>, para que <span
+class="math inline">\(\frac{1}{n}\)</span> sea menor, <span
+class="math inline">\(n\)</span> debe ser mayor que 3.6. Por lo tanto,
+para <span class="math inline">\(n \geq 4\)</span>, <span
+class="math inline">\(\widehat{\theta}_{3}\)</span> tiene menor varianza
+que <span class="math inline">\(\widehat{\theta}_{1}\)</span>.</p>
+<p></br> 2. <strong>Comparación entre <span
+class="math inline">\(\widehat{\theta}_{2}\)</span> y <span
+class="math inline">\(\widehat{\theta}_{3}\)</span></strong>:</p>
+<p><span class="math display">\[
+   \frac{2n + 1}{6n(n + 1)} \quad \text{vs.} \quad \frac{1}{n}
+   \]</span></p>
+<p>Simplificando, la relación es:</p>
+<p><span class="math display">\[
+   \frac{2n + 1}{6n(n + 1)} = \frac{2 + \frac{1}{n}}{6(n + 1)}
+   \]</span></p>
+<p>Para que esta fracción sea menor que <span
+class="math inline">\(\frac{1}{n}\)</span>, se requiere que:</p>
+<p><span class="math display">\[
+   \frac{2 + \frac{1}{n}}{6(n + 1)} &lt; \frac{1}{n}
+   \]</span></p>
+<p>Resolviendo esta desigualdad, se encuentra que para <span
+class="math inline">\(n \geq 2\)</span>, <span
+class="math inline">\(\widehat{\theta}_{3}\)</span> tiene menor varianza
+que <span class="math inline">\(\widehat{\theta}_{2}\)</span>.</p>
+<p></br></br> Por tanto, para muestras de tamaño <span
+class="math inline">\(n \geq 4\)</span>, el estimador <span
+class="math inline">\(\widehat{\theta}_{3} = \frac{1}{n} \sum_{i=1}^{n}
+X_i\)</span> es el más eficiente, ya que presenta la menor varianza
+entre los tres estimadores analizados.</p>
+<p></br></br> <strong>Paso 3: Verificación de consistencia</strong></p>
+<p>Para evaluar la <strong>consistencia</strong> del estimador <span
+class="math inline">\(\widehat{\theta}_{3} = \frac{1}{n} \sum_{i=1}^{n}
+X_i\)</span>, analizamos el comportamiento de su varianza a medida que
+el tamaño de la muestra <span class="math inline">\(n\)</span> tiende a
+infinito.</p>
+<p>Se observa que, a medida que <span class="math inline">\(n\)</span>
+aumenta, la varianza de <span
+class="math inline">\(\widehat{\theta}_{3}\)</span> disminuye.
+Específicamente:</p>
+<p><span class="math display">\[
+\lim_{n \to \infty} \text{Var}(\widehat{\theta}_{3}) = \lim_{n \to
+\infty} \frac{1}{n \lambda^2} = 0
+\]</span></p>
+<p>Esta propiedad indica que, conforme el tamaño de la muestra se
+incrementa, la dispersión del estimador alrededor del verdadero valor
+del parámetro disminuye, lo que implica que <span
+class="math inline">\(\widehat{\theta}_{3}\)</span> es un
+<strong>estimador consistente</strong> de <span
+class="math inline">\(\frac{1}{\lambda}\)</span>.</p>
+<p>Como la <strong>varianza de <span
+class="math inline">\(\widehat{\theta}_{3}\)</span></strong> es la menor
+de todas, se concluye que <strong><span
+class="math inline">\(\widehat{\theta}_{3}\)</span> es el estimador más
+eficiente</strong>, además de ser insesgado y consistente. Esto
+significa que <strong>proporciona la mejor estimación de <span
+class="math inline">\(\frac{1}{\lambda}\)</span> con menor
+dispersión</strong> en sus valores.</p>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Este ejemplo es una continuación del ejemplo anterior y consiste en
+realizar cálculo numéricos para determinar el mejor estimador entre los
+tres estimadores.</p>
+<p></br></br> <strong>Paso 1: Verificación del insesgamiento de los
+estimadores</strong></p>
+<p>Para evaluar la <strong>insesgadez</strong> de los estimadores <span
+class="math inline">\(\widehat{\theta}_{1}\)</span>, <span
+class="math inline">\(\widehat{\theta}_{2}\)</span> y <span
+class="math inline">\(\widehat{\theta}_{3}\)</span> para el parámetro
+<span class="math inline">\(\theta = \frac{1}{\lambda}\)</span> de una
+distribución exponencial, se realizó una simulación en
+<strong>R</strong>. En esta simulación, se generaron 10,000 muestras
+aleatorias de tamaño <span class="math inline">\(n = 10\)</span> de una
+distribución exponencial con <span class="math inline">\(\lambda =
+2\)</span>, lo que implica que el valor teórico de <span
+class="math inline">\(\theta\)</span> es 0.5. Para cada muestra, se
+calcularon los tres estimadores mencionados, y posteriormente se obtuvo
+la media de las estimaciones para cada estimador.</p>
+<p>Los resultados obtenidos fueron:</p>
+<ul>
+<li><strong>Valor teórico de <span
+class="math inline">\(\theta\)</span></strong>: 0.5</li>
+<li><strong>Media del Estimador 1</strong>: 1.248413</li>
+<li><strong>Media del Estimador 2</strong>: 0.2498655</li>
+<li><strong>Media del Estimador 3</strong>: 0.498731</li>
+</ul>
+<p>La interpretación de los resultados:</p>
+<ul>
+<li><p><strong>Estimador 1 (<span
+class="math inline">\(\widehat{\theta}_{1}\)</span>)</strong>: La media
+de este estimador es significativamente mayor que el valor teórico de
+<span class="math inline">\(\theta\)</span>, lo que indica que <span
+class="math inline">\(\widehat{\theta}_{1}\)</span> es un estimador
+<strong>sesgado</strong> y <strong>sobrestima</strong> el
+parámetro.</p></li>
+<li><p><strong>Estimador 2 (<span
+class="math inline">\(\widehat{\theta}_{2}\)</span>)</strong>: La media
+de este estimador es considerablemente menor que <span
+class="math inline">\(\theta\)</span>, sugiriendo que <span
+class="math inline">\(\widehat{\theta}_{2}\)</span> es también un
+estimador <strong>sesgado</strong>, pero en este caso
+<strong>subestima</strong> el parámetro.</p></li>
+<li><p><strong>Estimador 3 (<span
+class="math inline">\(\widehat{\theta}_{3}\)</span>)</strong>: La media
+de este estimador es muy cercana al valor teórico de <span
+class="math inline">\(\theta\)</span>, lo que indica que <span
+class="math inline">\(\widehat{\theta}_{3}\)</span> es un estimador
+<strong>insesgado</strong>.</p></li>
+</ul>
+<p>Estos resultados demuestran que, entre los tres estimadores
+evaluados, <span class="math inline">\(\widehat{\theta}_{3}\)</span> es
+el único que proporciona una estimación insesgada del parámetro <span
+class="math inline">\(\theta\)</span>. La <strong>Figura 2.46</strong>
+ilustra las medias muestrales con las lineas punteadas, y se puede notar
+como la linea azul se aproxima al valor teórico.</p>
+<pre>
+# Definir funciones para cada estimador
+
+estimador1 <- function(muestra) {
+  n <- length(muestra)
+  mitad <- n / 2
+  (1/6) * sum(muestra[1:mitad]) + (1/3) * sum(muestra[(mitad + 1):n])
+}
+
+estimador2 <- function(muestra) {
+  n <- length(muestra)
+  (1 / (n * (n + 1))) * sum((1:n) * muestra)
+}
+
+estimador3 <- function(muestra) {
+  mean(muestra)
+}
+
+# Establecer parámetros
+lambda <- 2  # Parámetro de la distribución exponencial
+theta <- 1 / lambda  # Valor teórico de theta
+n <- 10  # Tamaño de la muestra
+num_simulaciones <- 10000  # Número de simulaciones
+
+# Generar una matriz donde cada columna es una muestra de tamaño n
+set.seed(123)  # Para reproducibilidad
+muestras <- matrix(rexp(n * num_simulaciones, rate = lambda), nrow = n, ncol = num_simulaciones)
+
+
+# Aplicar las funciones de los estimadores a cada columna de la matriz
+estimaciones1 <- apply(muestras, 2, estimador1)
+estimaciones2 <- apply(muestras, 2, estimador2)
+estimaciones3 <- apply(muestras, 2, estimador3)
+
+# Calcular las medias de los estimadores
+media_est1 <- mean(estimaciones1)
+media_est2 <- mean(estimaciones2)
+media_est3 <- mean(estimaciones3)
+
+# Mostrar resultados
+cat("Valor teórico de theta:", theta, "\n")
+cat("Media del Estimador 1:", media_est1, "\n")
+cat("Media del Estimador 2:", media_est2, "\n")
+cat("Media del Estimador 3:", media_est3, "\n")
+</pre>
+<pre class="r"><code># Definir funciones para cada estimador
+
+estimador1 &lt;- function(muestra) {
+  n &lt;- length(muestra)
+  mitad &lt;- n / 2
+  (1/6) * sum(muestra[1:mitad]) + (1/3) * sum(muestra[(mitad + 1):n])
+}
+
+estimador2 &lt;- function(muestra) {
+  n &lt;- length(muestra)
+  (1 / (n * (n + 1))) * sum((1:n) * muestra)
+}
+
+estimador3 &lt;- function(muestra) {
+  mean(muestra)
+}
+
+# Establecer parámetros
+lambda &lt;- 2  # Parámetro de la distribución exponencial
+theta &lt;- 1 / lambda  # Valor teórico de theta
+n &lt;- 10  # Tamaño de la muestra
+num_simulaciones &lt;- 10000  # Número de simulaciones
+
+# Generar una matriz donde cada columna es una muestra de tamaño n
+set.seed(123)  # Para reproducibilidad
+muestras &lt;- matrix(rexp(n * num_simulaciones, rate = lambda), nrow = n, ncol = num_simulaciones)
+
+
+# Aplicar las funciones de los estimadores a cada columna de la matriz
+estimaciones1 &lt;- apply(muestras, 2, estimador1)
+estimaciones2 &lt;- apply(muestras, 2, estimador2)
+estimaciones3 &lt;- apply(muestras, 2, estimador3)
+
+# Calcular las medias de los estimadores
+media_est1 &lt;- mean(estimaciones1)
+media_est2 &lt;- mean(estimaciones2)
+media_est3 &lt;- mean(estimaciones3)
+
+# Mostrar resultados
+#cat(&quot;Valor teórico de theta:&quot;, theta, &quot;\n&quot;)
+#cat(&quot;Media del Estimador 1:&quot;, media_est1, &quot;\n&quot;)
+#cat(&quot;Media del Estimador 2:&quot;, media_est2, &quot;\n&quot;)
+#cat(&quot;Media del Estimador 3:&quot;, media_est3, &quot;\n&quot;)</code></pre>
+<pre>
+Valor teórico de theta: 0.5 
+Media del Estimador 1: 1.248413 
+Media del Estimador 2: 0.2498655 
+Media del Estimador 3: 0.498731 
+</pre>
+<p></br></br> <strong>Paso 2: Para determinar cuál de los estimadores es
+más eficiente</strong></p>
+<p>Para evaluar la <strong>eficiencia</strong> de los estimadores <span
+class="math inline">\(\widehat{\theta}_{1}\)</span>, <span
+class="math inline">\(\widehat{\theta}_{2}\)</span> y <span
+class="math inline">\(\widehat{\theta}_{3}\)</span> para el parámetro
+<span class="math inline">\(\theta = \frac{1}{\lambda}\)</span>, se
+realizó una simulación en <strong>R</strong>. En esta simulación, se
+generaron <strong>10,000 muestras aleatorias</strong> de tamaño <span
+class="math inline">\(n = 10\)</span> de una distribución exponencial
+con <span class="math inline">\(\lambda = 2\)</span>, lo que implica que
+el valor teórico de <span class="math inline">\(\theta\)</span> es
+<strong>0.5</strong>.</p>
+<p>Para cada muestra, se calcularon los tres estimadores mencionados y
+posteriormente se obtuvieron la <strong>varianza</strong> y el
+<strong>coeficiente de variación (CV)</strong> de las estimaciones para
+cada estimador. Además, se construyó un <strong>gráfico de
+cajas</strong> para visualizar la dispersión y la variabilidad de los
+estimadores.</p>
+<p>Los resultados obtenidos son los siguientes:</p>
+<ul>
+<li><p><strong>Varianza de los Estimadores:</strong></p>
+<ul>
+<li><span class="math inline">\(\text{Var}(\widehat{\theta}_{1}) =
+0.1703\)</span></li>
+<li><span class="math inline">\(\text{Var}(\widehat{\theta}_{2}) =
+0.0079\)</span></li>
+<li><span class="math inline">\(\text{Var}(\widehat{\theta}_{3}) =
+0.0243\)</span></li>
+</ul></li>
+<li><p><strong>Coeficiente de Variación (CV):</strong></p>
+<ul>
+<li><span class="math inline">\(CV(\widehat{\theta}_{1}) =
+0.3306\)</span></li>
+<li><span class="math inline">\(CV(\widehat{\theta}_{2}) =
+0.3547\)</span></li>
+<li><span class="math inline">\(CV(\widehat{\theta}_{3}) =
+0.3128\)</span></li>
+</ul></li>
+</ul>
+<hr />
+<p>La interpretación de los resultados:</p>
+<ul>
+<li><p><strong>Varianza y Coeficiente de Variación (CV):</strong> La
+<strong>varianza</strong> es un indicador clave de
+<strong>eficiencia</strong>, ya que un estimador más eficiente debe
+tener menor varianza. Se observa que <span
+class="math inline">\(\widehat{\theta}_{2}\)</span> tiene la
+<strong>menor varianza</strong>, y <span
+class="math inline">\(\widehat{\theta}_{1}\)</span> presenta la
+<strong>mayor varianza</strong>. Además, <span
+class="math inline">\(\widehat{\theta}_{3}\)</span> presenta el menor
+<strong>coeficiente de variación</strong>, lo que indica que tiene la
+mejor estabilidad relativa entre las estimaciones. Aunque <span
+class="math inline">\(\widehat{\theta}_{2}\)</span> tiene la menor
+varianza, su <strong>CV es el más alto</strong>. Adicionalmente, <span
+class="math inline">\(\widehat{\theta}_{1}\)</span> muestra
+consistentemente alta variabilidad y poca eficiencia.</p></li>
+<li><p><strong>Gráfico de cajas</strong> (ver <strong>Figura
+2.46</strong>): Se observa que el <strong>Estimador 2</strong> tiene la
+menor dispersión, lo que respalda su baja varianza, pero su distribución
+muestra estar <strong>sesgada</strong>. El <strong>Estimador 3</strong>
+muestra un <strong>buen equilibrio entre baja varianza y centramiento en
+el valor verdadero</strong>, lo que lo hace más confiable en general. El
+<strong>Estimador 1</strong> tiene <strong>alta dispersión</strong>, con
+valores extremos y una distribución más asimétrica.</p></li>
+</ul>
+<pre>
+# Cargar las librerías necesarias
+library(ggplot2)
+
+# Definir funciones para cada estimador
+estimador1 <- function(muestra) {
+  n <- length(muestra)
+  mitad <- n / 2
+  (1/6) * sum(muestra[1:mitad]) + (1/3) * sum(muestra[(mitad + 1):n])
+}
+
+estimador2 <- function(muestra) {
+  n <- length(muestra)
+  (1 / (n * (n + 1))) * sum((1:n) * muestra)
+}
+
+estimador3 <- function(muestra) {
+  mean(muestra)
+}
+
+# Establecer parámetros
+lambda <- 2  # Parámetro de la distribución exponencial
+theta <- 1 / lambda  # Valor teórico de theta
+n <- 10  # Tamaño de la muestra
+num_simulaciones <- 10000  # Número de simulaciones
+
+# Generar una matriz donde cada columna es una muestra de tamaño n
+set.seed(123)  # Para reproducibilidad
+muestras <- matrix(rexp(n * num_simulaciones, rate = lambda), nrow = n, ncol = num_simulaciones)
+
+# Aplicar las funciones de los estimadores a cada columna de la matriz
+estimaciones1 <- apply(muestras, 2, estimador1)
+estimaciones2 <- apply(muestras, 2, estimador2)
+estimaciones3 <- apply(muestras, 2, estimador3)
+
+# Calcular las varianzas de los estimadores
+var_est1 <- var(estimaciones1)
+var_est2 <- var(estimaciones2)
+var_est3 <- var(estimaciones3)
+
+# Calcular los coeficientes de variación de los estimadores
+cv_est1 <- sd(estimaciones1) / mean(estimaciones1)
+cv_est2 <- sd(estimaciones2) / mean(estimaciones2)
+cv_est3 <- sd(estimaciones3) / mean(estimaciones3)
+
+# Mostrar resultados
+cat("Varianza del Estimador 1:", var_est1, "\n")
+cat("Varianza del Estimador 2:", var_est2, "\n")
+cat("Varianza del Estimador 3:", var_est3, "\n")
+cat("Coeficiente de Variación del Estimador 1:", cv_est1, "\n")
+cat("Coeficiente de Variación del Estimador 2:", cv_est2, "\n")
+cat("Coeficiente de Variación del Estimador 3:", cv_est3, "\n")
+
+# Crear un data frame para los boxplots
+datos <- data.frame(
+  Estimaciones = c(estimaciones1, estimaciones2, estimaciones3),
+  Estimador = factor(rep(c("Estimador 1", "Estimador 2", "Estimador 3"), each = num_simulaciones))
+)
+
+# Calcular las medias de los estimadores para añadir líneas horizontales
+medias_estimadores <- aggregate(Estimaciones ~ Estimador, datos, mean)
+
+# Generar el gráfico de cajas comparativo con líneas en las medias
+plot.ins.efi<-ggplot(datos, aes(x = Estimador, y = Estimaciones, fill = Estimador)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_hline(data = medias_estimadores, aes(yintercept = Estimaciones, color = Estimador),
+             linetype = "dashed", size = 1) +
+  labs(title = "Comparación de Estimadores para θ = 0.5",
+       y = "Estimaciones",
+       x = "Estimador") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+
+print(plot.ins.efi)
+</pre>
+<pre class="r"><code># Cargar las librerías necesarias
+library(ggplot2)
+
+# Definir funciones para cada estimador
+estimador1 &lt;- function(muestra) {
+  n &lt;- length(muestra)
+  mitad &lt;- n / 2
+  (1/6) * sum(muestra[1:mitad]) + (1/3) * sum(muestra[(mitad + 1):n])
+}
+
+estimador2 &lt;- function(muestra) {
+  n &lt;- length(muestra)
+  (1 / (n * (n + 1))) * sum((1:n) * muestra)
+}
+
+estimador3 &lt;- function(muestra) {
+  mean(muestra)
+}
+
+# Establecer parámetros
+lambda &lt;- 2  # Parámetro de la distribución exponencial
+theta &lt;- 1 / lambda  # Valor teórico de theta
+n &lt;- 10  # Tamaño de la muestra
+num_simulaciones &lt;- 10000  # Número de simulaciones
+
+# Generar una matriz donde cada columna es una muestra de tamaño n
+set.seed(123)  # Para reproducibilidad
+muestras &lt;- matrix(rexp(n * num_simulaciones, rate = lambda), nrow = n, ncol = num_simulaciones)
+
+# Aplicar las funciones de los estimadores a cada columna de la matriz
+estimaciones1 &lt;- apply(muestras, 2, estimador1)
+estimaciones2 &lt;- apply(muestras, 2, estimador2)
+estimaciones3 &lt;- apply(muestras, 2, estimador3)
+
+# Calcular las varianzas de los estimadores
+var_est1 &lt;- var(estimaciones1)
+var_est2 &lt;- var(estimaciones2)
+var_est3 &lt;- var(estimaciones3)
+
+# Calcular los coeficientes de variación de los estimadores
+cv_est1 &lt;- sd(estimaciones1) / mean(estimaciones1)
+cv_est2 &lt;- sd(estimaciones2) / mean(estimaciones2)
+cv_est3 &lt;- sd(estimaciones3) / mean(estimaciones3)
+
+# Mostrar resultados
+#cat(&quot;Varianza del Estimador 1:&quot;, var_est1, &quot;\n&quot;)
+#cat(&quot;Varianza del Estimador 2:&quot;, var_est2, &quot;\n&quot;)
+#cat(&quot;Varianza del Estimador 3:&quot;, var_est3, &quot;\n&quot;)
+#cat(&quot;Coeficiente de Variación del Estimador 1:&quot;, cv_est1, &quot;\n&quot;)
+#cat(&quot;Coeficiente de Variación del Estimador 2:&quot;, cv_est2, &quot;\n&quot;)
+#cat(&quot;Coeficiente de Variación del Estimador 3:&quot;, cv_est3, &quot;\n&quot;)
+
+# Crear un data frame para los boxplots
+datos &lt;- data.frame(
+  Estimaciones = c(estimaciones1, estimaciones2, estimaciones3),
+  Estimador = factor(rep(c(&quot;Estimador 1&quot;, &quot;Estimador 2&quot;, &quot;Estimador 3&quot;), each = num_simulaciones))
+)
+
+# Calcular las medias de los estimadores para añadir líneas horizontales
+medias_estimadores &lt;- aggregate(Estimaciones ~ Estimador, datos, mean)
+
+# Generar el gráfico de cajas comparativo con líneas en las medias
+plot.ins.efi&lt;-ggplot(datos, aes(x = Estimador, y = Estimaciones, fill = Estimador)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_hline(data = medias_estimadores, aes(yintercept = Estimaciones, color = Estimador),
+             linetype = &quot;dashed&quot;, size = 1) +
+  labs(title = &quot;Comparación de Estimadores para θ = 0.5&quot;,
+       y = &quot;Estimaciones&quot;,
+       x = &quot;Estimador&quot;) +
+  theme_minimal() +
+  theme(legend.position = &quot;none&quot;)
+
+
+#print(plot.ins.efi)</code></pre>
+<pre>
+Varianza del Estimador 1: 0.1703439 
+Varianza del Estimador 2: 0.007856289 
+Varianza del Estimador 3: 0.0243361 
+Coeficiente de Variación del Estimador 1: 0.3306018
+Coeficiente de Variación del Estimador 2: 0.3547337 
+Coeficiente de Variación del Estimador 3: 0.3127945 
+</pre>
+<center>
+<img src="img/fig246.png" width="90%" style="display: block; margin: auto;" />
+<strong>Figura 2.46</strong> Comparación de estimaciones de los tres
+estimadores de <span class="math inline">\(\theta\)</span>.
+</center>
+<p></br></br> <strong>Paso 3: Verificación de consistencia</strong></p>
+<p>Para evaluar la <strong>consistencia</strong> de los estimadores
+<span class="math inline">\(\widehat{\theta}_{1}\)</span>, <span
+class="math inline">\(\widehat{\theta}_{2}\)</span> y <span
+class="math inline">\(\widehat{\theta}_{3}\)</span> para el parámetro
+<span class="math inline">\(\theta = \frac{1}{\lambda}\)</span>, se
+realizó una simulación en <strong>R</strong>. En esta simulación, se
+generaron <strong>10,000 muestras aleatorias</strong> de distintos
+tamaños <span class="math inline">\(n = 10, 20, 30, 50, 100, 500,
+1000\)</span> de una distribución exponencial con parámetro <span
+class="math inline">\(\lambda = 2\)</span>, lo que implica que el valor
+teórico de <span class="math inline">\(\theta\)</span> es
+<strong>0.5</strong>.</p>
+<p>Para cada muestra, se calcularon los tres estimadores mencionados y
+posteriormente se obtuvieron la <strong>varianza</strong> y el
+<strong>coeficiente de variación (CV)</strong> de las estimaciones para
+cada estimador. Además, se construyó un <strong>gráfico de
+dispersión</strong> del coeficiente de variación frente al tamaño de la
+muestra (ver <strong>Figura 2.47</strong>) para evaluar si la
+variabilidad disminuye al aumentar <span
+class="math inline">\(n\)</span>.</p>
+<p>En la <strong>Figura 2.47</strong> se observa que el
+<strong>CV</strong> disminuye conforme aumenta el tamaño muestral, lo
+cual indica que los estimadores son consistentes. A medida que <span
+class="math inline">\(n\)</span> crece, la dispersión en las
+estimaciones se reduce, tendiendo a cero. Los tres estimadores
+analizados cumplen con la propiedad de consistencia, ya que conforme el
+tamaño de la muestra aumenta, la variabilidad de sus estimaciones
+disminuye.</p>
+<pre>
+# Cargar las librerías necesarias
+library(ggplot2)
+
+# Definir funciones para cada estimador
+estimador1 <- function(muestra) {
+  n <- length(muestra)
+  mitad <- n / 2
+  (1/6) * sum(muestra[1:mitad]) + (1/3) * sum(muestra[(mitad + 1):n])
+}
+
+estimador2 <- function(muestra) {
+  n <- length(muestra)
+  (1 / (n * (n + 1))) * sum((1:n) * muestra)
+}
+
+estimador3 <- function(muestra) {
+  mean(muestra)
+}
+
+# Establecer parámetros
+lambda <- 2  # Parámetro de la distribución exponencial
+theta <- 1 / lambda  # Valor teórico de theta
+num_simulaciones <- 10000  # Número de simulaciones
+tamaños_muestra <- c(10, 20, 30, 50, 100, 500, 1000)  # Diferentes tamaños de muestra
+
+# Inicializar lista para almacenar los coeficientes de variación
+coef_variacion <- data.frame()
+
+# Bucle para analizar cada tamaño de muestra
+set.seed(123)  # Para reproducibilidad
+for (n in tamaños_muestra) {
+  # Generar una matriz donde cada columna es una muestra de tamaño n
+  muestras <- matrix(rexp(n * num_simulaciones, rate = lambda), nrow = n, ncol = num_simulaciones)
+  
+  # Aplicar las funciones de los estimadores a cada columna de la matriz
+  estimaciones1 <- apply(muestras, 2, estimador1)
+  estimaciones2 <- apply(muestras, 2, estimador2)
+  estimaciones3 <- apply(muestras, 2, estimador3)
+  
+  # Calcular los coeficientes de variación de los estimadores
+  cv_est1 <- sd(estimaciones1) / mean(estimaciones1)
+  cv_est2 <- sd(estimaciones2) / mean(estimaciones2)
+  cv_est3 <- sd(estimaciones3) / mean(estimaciones3)
+  
+  # Almacenar los resultados en un data frame
+  coef_variacion <- rbind(coef_variacion, data.frame(n = n, Estimador = "Estimador 1", CV = cv_est1))
+  coef_variacion <- rbind(coef_variacion, data.frame(n = n, Estimador = "Estimador 2", CV = cv_est2))
+  coef_variacion <- rbind(coef_variacion, data.frame(n = n, Estimador = "Estimador 3", CV = cv_est3))
+}
+
+# Graficar el coeficiente de variación en función del tamaño de la muestra
+plot_cv <- ggplot(coef_variacion, aes(x = n, y = CV, color = Estimador)) +
+  geom_point(size = 3) +
+  geom_line() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "black") +
+  scale_x_log10() +  # Escala logarítmica para mayor claridad
+  labs(title = "Evaluacion de Consistencia: Coeficiente de Variacion",
+       x = "Tamaño de Muestra (n)", 
+       y = "Coeficiente de Variacion") +
+  theme_minimal()
+
+print(plot_cv)
+
+print(coef_variacion)
+</pre>
+<pre class="r"><code># Cargar las librerías necesarias
+library(ggplot2)
+
+# Definir funciones para cada estimador
+estimador1 &lt;- function(muestra) {
+  n &lt;- length(muestra)
+  mitad &lt;- n / 2
+  (1/6) * sum(muestra[1:mitad]) + (1/3) * sum(muestra[(mitad + 1):n])
+}
+
+estimador2 &lt;- function(muestra) {
+  n &lt;- length(muestra)
+  (1 / (n * (n + 1))) * sum((1:n) * muestra)
+}
+
+estimador3 &lt;- function(muestra) {
+  mean(muestra)
+}
+
+# Establecer parámetros
+lambda &lt;- 2  # Parámetro de la distribución exponencial
+theta &lt;- 1 / lambda  # Valor teórico de theta
+num_simulaciones &lt;- 10000  # Número de simulaciones
+tamaños_muestra &lt;- c(10, 20, 30, 50, 100, 500, 1000)  # Diferentes tamaños de muestra
+
+# Inicializar lista para almacenar los coeficientes de variación
+coef_variacion &lt;- data.frame()
+
+# Bucle para analizar cada tamaño de muestra
+set.seed(123)  # Para reproducibilidad
+for (n in tamaños_muestra) {
+  # Generar una matriz donde cada columna es una muestra de tamaño n
+  muestras &lt;- matrix(rexp(n * num_simulaciones, rate = lambda), nrow = n, ncol = num_simulaciones)
+  
+  # Aplicar las funciones de los estimadores a cada columna de la matriz
+  estimaciones1 &lt;- apply(muestras, 2, estimador1)
+  estimaciones2 &lt;- apply(muestras, 2, estimador2)
+  estimaciones3 &lt;- apply(muestras, 2, estimador3)
+  
+  # Calcular los coeficientes de variación de los estimadores
+  cv_est1 &lt;- sd(estimaciones1) / mean(estimaciones1)
+  cv_est2 &lt;- sd(estimaciones2) / mean(estimaciones2)
+  cv_est3 &lt;- sd(estimaciones3) / mean(estimaciones3)
+  
+  # Almacenar los resultados en un data frame
+  coef_variacion &lt;- rbind(coef_variacion, data.frame(n = n, Estimador = &quot;Estimador 1&quot;, CV = cv_est1))
+  coef_variacion &lt;- rbind(coef_variacion, data.frame(n = n, Estimador = &quot;Estimador 2&quot;, CV = cv_est2))
+  coef_variacion &lt;- rbind(coef_variacion, data.frame(n = n, Estimador = &quot;Estimador 3&quot;, CV = cv_est3))
+}
+
+# Graficar el coeficiente de variación en función del tamaño de la muestra
+plot_cv &lt;- ggplot(coef_variacion, aes(x = n, y = CV, color = Estimador)) +
+  geom_point(size = 3) +
+  geom_line() +
+  geom_hline(yintercept = 0, linetype = &quot;dashed&quot;, color = &quot;black&quot;) +
+  scale_x_log10() +  # Escala logarítmica para mayor claridad
+  labs(title = &quot;Evaluacion de Consistencia: Coeficiente de Variacion&quot;,
+       x = &quot;Tamaño de Muestra (n)&quot;, 
+       y = &quot;Coeficiente de Variacion&quot;) +
+  theme_minimal()
+
+#print(plot_cv)
+#print(coef_variacion)</code></pre>
+<pre>
+> print(coef_variacion)
+      n   Estimador         CV
+1    10 Estimador 1 0.33060175
+2    10 Estimador 2 0.35473370
+3    10 Estimador 3 0.31279452
+4    20 Estimador 1 0.23689125
+5    20 Estimador 2 0.25632951
+6    20 Estimador 3 0.22459629
+7    30 Estimador 1 0.19179189
+8    30 Estimador 2 0.20714191
+9    30 Estimador 3 0.18114533
+10   50 Estimador 1 0.15014740
+11   50 Estimador 2 0.16372327
+12   50 Estimador 3 0.14211278
+13  100 Estimador 1 0.10373008
+14  100 Estimador 2 0.11350184
+15  100 Estimador 3 0.09845090
+16  500 Estimador 1 0.04722745
+17  500 Estimador 2 0.05151957
+18  500 Estimador 3 0.04499032
+19 1000 Estimador 1 0.03296889
+20 1000 Estimador 2 0.03622084
+21 1000 Estimador 3 0.03128261
+</pre>
+<center>
+<img src="img/fig247.png" width="90%" style="display: block; margin: auto;" />
+<strong>Figura 2.47</strong> Comparación de los CV de los tres
+estimadores de <span class="math inline">\(\theta\)</span> conforme el
+tamaño de muestra crece.
+</center>
+</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

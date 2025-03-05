@@ -1,0 +1,2469 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Modelos continuos</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Modelos continuos</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+<p>Los <strong>modelos probabilísticos continuos</strong>, como la
+distribución <strong>normal</strong> y la <strong>exponencial</strong>,
+permiten describir fenómenos en los que las variables aleatorias pueden
+tomar cualquier valor dentro de un intervalo continuo. A diferencia de
+los modelos discretos, que asignan probabilidades a valores específicos,
+los modelos continuos se representan mediante funciones de densidad de
+probabilidad, las cuales describen la distribución relativa de los datos
+en un dominio continuo. Por ejemplo, la distribución
+<strong>normal</strong> es fundamental en el análisis estadístico, ya
+que modela fenómenos naturales y procesos con múltiples influencias
+aleatorias, mientras que la distribución <strong>exponencial</strong> es
+ampliamente utilizada para modelar tiempos de espera entre eventos en
+procesos aleatorios. Estos modelos son esenciales en áreas como la
+ingeniería, las ciencias de la salud y la economía, proporcionando
+herramientas clave para la inferencia estadística, la simulación y la
+toma de decisiones bajo incertidumbre.</p>
+</br></br>
+<h2>
+Introducción
+</h2>
+<p><br/></p>
+<p>A continuación, se presentan los modelos de probabilidad continua más
+comunes junto con sus principales características:</p>
+<table>
+<colgroup>
+<col width="55%" />
+<col width="44%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Modelo</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Uniforme</strong></td>
+<td>Asigna la misma probabilidad a todos los valores dentro de un
+intervalo.</td>
+</tr>
+<tr class="even">
+<td><strong>Normal</strong></td>
+<td>Modelo fundamental en estadística que describe fenómenos con
+múltiples influencias aleatorias; simétrica y con forma de campana.</td>
+</tr>
+<tr class="odd">
+<td><strong>Exponencial</strong></td>
+<td>Modela el tiempo entre eventos en un proceso de Poisson; usada en
+análisis de fiabilidad y tiempos de espera.</td>
+</tr>
+<tr class="even">
+<td><strong>Gamma</strong></td>
+<td>Generaliza la exponencial, utilizada para modelar tiempos de espera
+acumulados.</td>
+</tr>
+<tr class="odd">
+<td><strong>Weibull</strong></td>
+<td>Común en análisis de fiabilidad, modela el tiempo hasta la falla de
+un sistema.</td>
+</tr>
+<tr class="even">
+<td><strong>Cauchy</strong></td>
+<td>Distribución con colas pesadas, utilizada en procesos con datos
+extremos y mediciones inestables.</td>
+</tr>
+<tr class="odd">
+<td><strong>Lognormal</strong></td>
+<td>Modela variables cuyo logaritmo sigue una distribución normal; útil
+en economía y biología.</td>
+</tr>
+<tr class="even">
+<td><strong>Beta</strong></td>
+<td>Definida en un intervalo finito, usada para modelar proporciones y
+probabilidades.</td>
+</tr>
+<tr class="odd">
+<td><strong>Erlang</strong></td>
+<td>Caso especial de la gamma, aplicada en teoría de colas y modelado de
+tiempos de servicio.</td>
+</tr>
+<tr class="even">
+<td><strong>Gumbel</strong></td>
+<td>Modela valores extremos, como máximos y mínimos en procesos físicos
+y meteorológicos.</td>
+</tr>
+<tr class="odd">
+<td><strong>Kernel</strong></td>
+<td>No paramétrica, utilizada para estimar funciones de densidad de
+probabilidad a partir de datos observados.</td>
+</tr>
+</tbody>
+</table>
+</br></br>
+<h2>
+Uniforme
+</h2>
+<p>La distribución <strong>uniforme</strong> continua fue introducida
+formalmente en el desarrollo de la teoría de la probabilidad en el siglo
+XIX, aunque su concepto subyacente se remonta a los trabajos de
+<strong>Pierre-Simon Laplace</strong> en el siglo XVIII, quien estudió
+distribuciones de probabilidad equiprobables en distintos contextos.
+Esta distribución se caracteriza por asignar la misma probabilidad a
+todos los valores dentro de un intervalo definido <span
+class="math inline">\([a,b]\)</span>, lo que la convierte en un modelo
+fundamental en la teoría de la probabilidad y la estadística.</p>
+<p>La <strong>distribución uniforme continua</strong> se aplica en
+diversas áreas, como la <strong>simulación y generación de números
+aleatorios</strong>, donde se usa para modelar variables sin preferencia
+por ningún valor dentro de un intervalo; en el <strong>modelado de
+incertidumbre</strong>, cuando no hay información previa sobre la
+probabilidad de ocurrencia de distintos valores; en <strong>procesos
+físicos y experimentos</strong>, donde cualquier valor dentro de un
+rango es igualmente probable; y en <strong>análisis de
+confiabilidad</strong>, para representar tiempos de falla con
+probabilidad constante dentro de un período determinado. Su uso es
+esencial en modelos probabilísticos y procesos de simulación en
+estadística aplicada.</p>
+</br></br>
+<h3>
+Distribución Uniforme
+</h3>
+<p>La <strong>distribución uniforme continua</strong> se caracteriza por
+tener una función de densidad de probabilidad constante en su dominio de
+definición, es decir, en el intervalo <span class="math inline">\([a,
+b]\)</span>. Esto implica que cualquier valor dentro del intervalo es
+igualmente probable. Una variable aleatoria <span
+class="math inline">\(X\)</span> que sigue una distribución uniforme en
+el intervalo <span class="math inline">\([a, b]\)</span>, denotada como
+<span class="math inline">\(X \sim U(a, b)\)</span>, tiene la siguiente
+función de densidad de probabilidad:</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases}
+\frac{1}{b-a}, &amp; a \leq x \leq b \\
+0, &amp; \text{en otro caso}
+\end{cases}
+\]</span></p>
+<p>Algunas propiedades:</p>
+<ul>
+<li><p><strong>Valor esperado (media):</strong><br />
+<span class="math display">\[
+E[X] = \frac{a + b}{2}
+\]</span><br />
+La media representa el punto medio del intervalo, lo que refleja la
+simetría de la distribución.</p></li>
+<li><p><strong>Varianza:</strong><br />
+<span class="math display">\[
+\text{Var}(X) = \frac{(b - a)^2}{12}
+\]</span><br />
+La varianza indica la dispersión de los valores alrededor de la media y
+depende únicamente de la amplitud del intervalo.</p></li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La <strong>Figura 2.26</strong> muestra la distribución de una
+variable aleatoria que sigue una <strong>Uniforme</strong>, con
+parámetros <span class="math inline">\(X \sim U(a=0 , b=1)\)</span>.
+Esta figura permite visualizar cómo se distribuyen las probabilidades de
+los distintos valores posibles de <span
+class="math inline">\(X\)</span>.</p>
+<pre>
+# Cargar la librería ggplot2
+library(ggplot2)
+
+# Crear el gráfico usando ggplot2
+plot.unif1<-ggplot() + 
+  # Agregar la línea horizontal representando la función de densidad constante
+  annotate("segment", x = 0, xend = 1, y = 1, yend = 1, size = 1.2, color = "#FF7F00") +
+  # Agregar líneas verticales en los extremos (0 y 1) para marcar los límites
+  annotate("segment", x = 0, xend = 0, y = 0, yend = 1, linetype = "dashed", color = "black") +
+  annotate("segment", x = 1, xend = 1, y = 0, yend = 1, linetype = "dashed", color = "black") +
+  # Configurar los límites del eje Y para mejorar la visualización
+  scale_y_continuous(limits = c(0, 1.2), breaks = seq(0, 1, 0.2)) +
+  # Configurar los límites del eje X
+  scale_x_continuous(limits = c(-0.2, 1.2), breaks = c(0, 1)) +
+  # Agregar títulos y etiquetas con notación matemática
+  labs(title = "Función de Densidad de Probabilidad de la Distribución Uniforme",
+       x = "Valor de X",
+       y = expression(paste(f(X) == 1, " para ", 0 <= X, " <= 1")))+
+  # Aplicar un tema minimalista para mejorar la presentación
+  theme_minimal()
+
+print(plot.unif1)
+</pre>
+<pre class="r"><code># Cargar la librería ggplot2
+library(ggplot2)
+
+# Crear el gráfico usando ggplot2
+plot.unif1&lt;-ggplot() + 
+  # Agregar la línea horizontal representando la función de densidad constante
+  annotate(&quot;segment&quot;, x = 0, xend = 1, y = 1, yend = 1, size = 1.2, color = &quot;#FF7F00&quot;) +
+  # Agregar líneas verticales en los extremos (0 y 1) para marcar los límites
+  annotate(&quot;segment&quot;, x = 0, xend = 0, y = 0, yend = 1, linetype = &quot;dashed&quot;, color = &quot;black&quot;) +
+  annotate(&quot;segment&quot;, x = 1, xend = 1, y = 0, yend = 1, linetype = &quot;dashed&quot;, color = &quot;black&quot;) +
+  # Configurar los límites del eje Y para mejorar la visualización
+  scale_y_continuous(limits = c(0, 1.2), breaks = seq(0, 1, 0.2)) +
+  # Configurar los límites del eje X
+  scale_x_continuous(limits = c(-0.2, 1.2), breaks = c(0, 1)) +
+  # Agregar títulos y etiquetas con notación matemática
+  labs(title = &quot;Función de Densidad de Probabilidad de la Distribución Uniforme&quot;,
+       x = &quot;Valor de X&quot;,
+       y = expression(paste(f(X) == 1, &quot; para &quot;, 0 &lt;= X, &quot; &lt;= 1&quot;)))+
+  # Aplicar un tema minimalista para mejorar la presentación
+  theme_minimal()
+
+#print(plot.unif1)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig226.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.26</strong> Función de densidad uniforme de <span
+class="math inline">\(X \sim U(x, a=0 , b=1)\)</span>.
+</center>
+<p><br/><br/></p>
+<p>La media teórica de una variable aleatoria <span
+class="math inline">\(X \sim U(a, b)\)</span> se calcula con la
+siguiente fórmula:</p>
+<p><span class="math display">\[
+E[X] = \frac{a + b}{2}
+\]</span></p>
+<p>La esperanza matemática de una variable aleatoria continua se define
+como:</p>
+<p><span class="math display">\[
+E[X] = \int_{-\infty}^{\infty} x f(x) \,dx
+\]</span></p>
+<p>Para la <strong>distribución Uniforme continua</strong> en el
+intervalo <span class="math inline">\([a, b]\)</span>, la función de
+densidad de probabilidad (FDP) es:</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{b-a}, \quad \text{para } a \leq x \leq b
+\]</span></p>
+<p>Entonces, la media esperada se calcula como:</p>
+<p><span class="math display">\[
+E[X] = \int_{a}^{b} x \cdot \frac{1}{b-a} \,dx= \frac{1}{b-a}
+\int_{a}^{b} x \,dx
+\]</span></p>
+<p>La integral de <span class="math inline">\(x\)</span> es:</p>
+<p><span class="math display">\[
+\int x \,dx = \frac{x^2}{2}
+\]</span></p>
+<p>Evaluamos en los límites <span class="math inline">\(a\)</span> y
+<span class="math inline">\(b\)</span>:</p>
+<p><span class="math display">\[
+\left[ \frac{x^2}{2} \right]_{a}^{b} = \frac{b^2}{2} - \frac{a^2}{2}
+\]</span></p>
+<p>Multiplicando por <span
+class="math inline">\(\frac{1}{b-a}\)</span>:</p>
+<p><span class="math display">\[
+E[X] = \frac{1}{b-a} \left(\frac{b^2}{2} - \frac{a^2}{2}\right)
+\]</span></p>
+<p>Factorizando <span class="math inline">\(\frac{1}{2}\)</span>:</p>
+<p><span class="math display">\[
+E[X] = \frac{1}{b-a} \cdot \frac{1}{2} \left(b^2 - a^2\right)
+\]</span></p>
+<p>Utilizando la identidad de diferencia de cuadrados:</p>
+<p><span class="math display">\[
+b^2 - a^2 = (b-a)(b+a)
+\]</span></p>
+<p>Sustituyendo:</p>
+<p><span class="math display">\[
+E[X] = \frac{1}{b-a} \cdot \frac{1}{2} (b-a)(b+a)
+\]</span></p>
+<p>Cancelando <span class="math inline">\(b-a\)</span>:</p>
+<p><span class="math display">\[
+E[X] = \frac{b+a}{2}
+\]</span></p>
+<p>En <strong>R</strong> se puede calcular la media esperada para una
+distribución <span class="math inline">\(U(0,1)\)</span>:</p>
+<pre>
+# Definir los parámetros
+a <- 0
+b <- 1
+
+# Cálculo de la media teórica
+E_X <- (a + b) / 2
+
+# Mostrar el resultado
+E_X
+</pre>
+<pre class="r"><code># Definir los parámetros
+a &lt;- 0
+b &lt;- 1
+
+# Cálculo de la media teórica
+E_X &lt;- (a + b) / 2
+
+# Mostrar el resultado
+E_X</code></pre>
+<pre><code>[1] 0.5</code></pre>
+<p>La <strong>Figura 2.27</strong> muestra la distribución de 12
+muestras aleatorias de tamaño <span
+class="math inline">\(n=1000\)</span> extraídas de una distribución
+uniforme con los mismos parámetros. Se observa que las formas de las
+muestras no siempre coinciden exactamente con la distribución original,
+lo que evidencia la variabilidad natural del muestreo. Sin embargo, los
+promedios muestrales tienden a aproximarse al valor teórico de la media
+de 0.5.</p>
+<pre>
+# Sys.setlocale("LC_ALL", "en_US.UTF-8")
+
+# Cargar las librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Parámetros de la distribución Uniforme
+a <- 0   # Límite inferior
+b <- 1   # Límite superior
+n_muestra <- 1000  # Tamaño de cada muestra
+muestras <- 12    # Número de muestras a generar
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Generar 12 muestras aleatorias y calcular la media muestral
+data_list <- lapply(1:muestras, function(i) {
+  x <- runif(n_muestra, min = a, max = b)  # Generar valores aleatorios Uniforme(0,1)
+  media_muestral <- mean(x)  # Calcular la media muestral
+  
+  # Crear un data frame con la muestra, identificador y su media muestral
+  data.frame(x = x, 
+             sample = paste("Muestra", i, "\n", "x̄ =", round(media_muestral, 2)))  # Agregar media en el título
+})
+
+# Unir todas las muestras en un solo data frame
+data <- do.call(rbind, data_list)
+
+# Crear el gráfico de histogramas con medias muestrales
+plot.unif<-ggplot(data, aes(x = x)) +
+  geom_histogram(fill = "#FF7F00", color = "black", bins = 10, alpha = 0.7) +  # Histogramas de cada muestra
+  facet_wrap(~sample, nrow = 4, ncol = 3) +  # Organizar en 4x3 con títulos personalizados
+  labs(title = "Muestras Aleatorias de la Distribución Uniforme (0,1)",
+       x = "Valor de X",
+       y = "Frecuencia") +
+  theme_minimal() +
+  theme(strip.text = element_text(size = 12, face = "bold"))  
+
+print(plot.unif)
+</pre>
+<pre class="r"><code># Sys.setlocale(&quot;LC_ALL&quot;, &quot;en_US.UTF-8&quot;)
+
+# Cargar las librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Parámetros de la distribución Uniforme
+a &lt;- 0   # Límite inferior
+b &lt;- 1   # Límite superior
+n_muestra &lt;- 1000  # Tamaño de cada muestra
+muestras &lt;- 12    # Número de muestras a generar
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Generar 12 muestras aleatorias y calcular la media muestral
+data_list &lt;- lapply(1:muestras, function(i) {
+  x &lt;- runif(n_muestra, min = a, max = b)  # Generar valores aleatorios Uniforme(0,1)
+  media_muestral &lt;- mean(x)  # Calcular la media muestral
+  
+  # Crear un data frame con la muestra, identificador y su media muestral
+  data.frame(x = x, 
+             sample = paste(&quot;Muestra&quot;, i, &quot;\n&quot;, &quot;x̄ =&quot;, round(media_muestral, 2)))  # Agregar media en el título
+})
+
+# Unir todas las muestras en un solo data frame
+data &lt;- do.call(rbind, data_list)
+
+# Crear el gráfico de histogramas con medias muestrales
+plot.unif&lt;-ggplot(data, aes(x = x)) +
+  geom_histogram(fill = &quot;#FF7F00&quot;, color = &quot;black&quot;, bins = 10, alpha = 0.7) +  # Histogramas de cada muestra
+  facet_wrap(~sample, nrow = 4, ncol = 3) +  # Organizar en 4x3 con títulos personalizados
+  labs(title = &quot;Muestras Aleatorias de la Distribución Uniforme (0,1)&quot;,
+       x = &quot;Valor de X&quot;,
+       y = &quot;Frecuencia&quot;) +
+  theme_minimal() +
+  theme(strip.text = element_text(size = 12, face = &quot;bold&quot;))  
+
+#print(plot.unif)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig227.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.27</strong> Distribución de 12 muestras aleatorias
+extraídas de una distribución uniforme <span class="math inline">\(X
+\sim U(x, a=0 , b=1)\)</span>.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br></br>
+<h2>
+Normal
+</h2>
+<p>La <strong>distribución normal</strong>, también conocida como
+<strong>distribución de Gauss</strong>, fue propuesta por <strong>Carl
+Friedrich Gauss</strong> en el siglo XIX (alrededor de
+<strong>1809</strong>) en el contexto de errores en mediciones
+astronómicas. Sin embargo, su desarrollo teórico se atribuye también a
+<strong>Abraham de Moivre</strong>, quien en <strong>1733</strong>
+estableció una aproximación normal para la distribución binomial.
+Posteriormente, <strong>Pierre-Simon Laplace</strong> extendió sus
+aplicaciones y la vinculó con el <strong>Teorema Central del
+Límite</strong>, lo que consolidó su importancia en la estadística.</p>
+<p>Esta distribución es fundamental en la teoría de la probabilidad y la
+estadística debido a su presencia en numerosos fenómenos naturales y
+sociales. Se caracteriza por su forma de campana simétrica alrededor de
+la media, definida por dos parámetros: la <strong>media</strong> (<span
+class="math inline">\(\mu\)</span>), que determina su centro, y la
+<strong>desviación estándar</strong> (<span
+class="math inline">\(\sigma\)</span>), que describe su dispersión.</p>
+<p>Entre sus principales aplicaciones se encuentran:</p>
+<ul>
+<li><strong>Análisis estadístico y teoría del error:</strong> Modela
+errores de medición en diversas disciplinas, como la astronomía, la
+física y la ingeniería.<br />
+</li>
+<li><strong>Inferencia estadística:</strong> Es la base de numerosos
+métodos estadísticos, como la estimación de parámetros y la construcción
+de intervalos de confianza.<br />
+</li>
+<li><strong>Finanzas y economía:</strong> Se emplea en la modelación de
+retornos de activos financieros y en la teoría del portafolio.<br />
+</li>
+<li><strong>Ciencias sociales y psicología:</strong> Se utiliza en la
+evaluación del rendimiento académico y pruebas psicométricas, como el
+coeficiente intelectual (IQ).<br />
+</li>
+<li><strong>Procesos industriales y control de calidad:</strong> Permite
+analizar variabilidad en procesos de manufactura y establecer límites de
+control.<br />
+</li>
+<li><strong>Biología y epidemiología:</strong> Modela características
+poblacionales como la altura, la presión arterial y otros atributos
+biológicos en poblaciones grandes.</li>
+</ul>
+<p>Dado su carácter universal y sus propiedades matemáticas, la
+distribución normal es una de las herramientas más importantes en la
+estadística y el modelado de datos.</p>
+</br></br>
+<h3>
+Distribución Normal
+</h3>
+<p>La <strong>distribución normal</strong>, se caracteriza por ser
+simétrica, con forma de campana, y completamente determinada por dos
+parámetros: la <strong>media</strong> (<span
+class="math inline">\(\mu\)</span>), que define su centro, y la
+<strong>desviación estándar</strong> (<span
+class="math inline">\(\sigma\)</span>), que controla su dispersión.</p>
+<p>La función de densidad de probabilidad (f.d.p.) de una variable
+aleatoria <span class="math inline">\(X\)</span> que sigue una
+distribución normal, denotada como <span class="math inline">\(X \sim
+N(\mu, \sigma^2)\)</span>, está dada por:</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sqrt{2\pi \sigma^{2}}} e^{-\left(\frac{(x - \mu)^2}{2
+\sigma^2}\right)}, \quad -\infty \leq x \leq \infty
+\]</span></p>
+<p>Entre sus propiedades se tiene:</p>
+<ul>
+<li><p><strong>Media:</strong><br />
+<span class="math display">\[
+E[X] = \mu
+\]</span><br />
+La media representa el valor central de la distribución y su punto de
+simetría.</p></li>
+<li><p><strong>Varianza:</strong><br />
+<span class="math display">\[
+\text{Var}(X) = \sigma^2
+\]</span><br />
+La varianza mide la dispersión de los valores respecto a la
+media.</p></li>
+<li><p><strong>Simetría:</strong> La distribución normal es
+perfectamente simétrica en torno a la media, es decir, <span
+class="math inline">\(P(X \leq \mu) = P(X \geq \mu) =
+0.5\)</span>.</p></li>
+<li><p><strong>Asintótica:</strong> La función de densidad nunca se
+anula completamente, sino que se extiende indefinidamente en ambos
+extremos del eje real.</p></li>
+<li><p><strong>Máxima entropía:</strong> Entre todas las distribuciones
+con una media y varianza dadas, la normal es la que tiene mayor
+entropía, lo que la hace la más dispersa posible dentro de estos
+parámetros.</p></li>
+<li><p><strong>Suma de normales:</strong> Si <span
+class="math inline">\(X_1 \sim N(\mu_1, \sigma_1^2)\)</span> y <span
+class="math inline">\(X_2 \sim N(\mu_2, \sigma_2^2)\)</span> son
+independientes, entonces <span class="math inline">\(X_1 + X_2\)</span>
+sigue una distribución normal con parámetros:<br />
+<span class="math display">\[
+X_1 + X_2 \sim N(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2)
+\]</span></p></li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La <strong>Figura 2.28</strong> muestra la distribución normal con
+<strong>media fija en 200</strong> y <strong>diferentes valores de
+varianza</strong>. La disminución de la varianza reduce la dispersión de
+la distribución, lo que se observa como un aumento en la altura y una
+reducción en la anchura de la curva. Todas las distribuciones tienen la
+misma media (200), lo que implica que el punto central de todas las
+curvas permanece fijo.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir parámetros
+media <- 200  # Media fija
+varianzas <- c(10, 20, 30, 40, 50, 60, 70)  # Diferentes varianzas
+desviaciones <- sqrt(varianzas)  # Obtener desviaciones estándar
+
+# Crear un rango de valores para X
+x_vals <- seq(150, 250, length.out = 300)
+
+# Generar datos para cada varianza
+data <- expand.grid(x = x_vals, varianza = varianzas) %>%
+  mutate(densidad = dnorm(x, mean = media, sd = sqrt(varianza)))
+
+# Crear la gráfica
+fig_normal<- ggplot(data, aes(x = x, y = densidad, color = as.factor(varianza))) +
+  geom_line(size = 1) +
+  labs(title = "Distribución Normal con Media = 200 y Diferentes Varianzas",
+       x = "Valor de X",
+       y = "Densidad",
+       color = "Varianza") +
+  theme_minimal()
+
+print(fig_normal)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir parámetros
+media &lt;- 200  # Media fija
+varianzas &lt;- c(10, 20, 30, 40, 50, 60, 70)  # Diferentes varianzas
+desviaciones &lt;- sqrt(varianzas)  # Obtener desviaciones estándar
+
+# Crear un rango de valores para X
+x_vals &lt;- seq(150, 250, length.out = 300)
+
+# Generar datos para cada varianza
+data &lt;- expand.grid(x = x_vals, varianza = varianzas) %&gt;%
+  mutate(densidad = dnorm(x, mean = media, sd = sqrt(varianza)))
+
+# Crear la gráfica
+fig_normal&lt;- ggplot(data, aes(x = x, y = densidad, color = as.factor(varianza))) +
+  geom_line(size = 1) +
+  labs(title = &quot;Distribución Normal con Media = 200 y Diferentes Varianzas&quot;,
+       x = &quot;Valor de X&quot;,
+       y = &quot;Densidad&quot;,
+       color = &quot;Varianza&quot;) +
+  theme_minimal()
+
+# print(fig_normal)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig228.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.28</strong> Función de densidad de la Normal con media
+200 variando la varianza: 10, 20, 30, 40, 50, 60, 70.
+</center>
+<p><br/><br/></p>
+<p>La <strong>Figura 2.29</strong> presentan varias distribuciones
+normales con <strong>varianza fija en 50</strong> (lo que implica una
+desviación estándar de 7.07), pero con <strong>diferentes valores de la
+media</strong>: 200, 300, 400 y 500. Como la varianza es fija, todas las
+curvas tienen la misma forma y dispersión, pero su centro cambia de
+acuerdo con la media. Cada distribución se traslada horizontalmente a la
+derecha conforme la media aumenta (200, 300, 400, 500).</p>
+<p>A pesar de que la media cambia, todas las distribuciones mantienen la
+misma dispersión, ya que la varianza es constante. Esto significa que la
+altura y el ancho de las curvas son iguales en todas las distribuciones,
+solo que se encuentran en diferentes posiciones a lo largo del eje <span
+class="math inline">\(X\)</span>.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir parámetros
+varianza_fija <- 50  # Varianza fija
+desviacion_fija <- sqrt(varianza_fija)  # Desviación estándar
+medias <- c(200, 300, 400, 500)  # Diferentes medias
+
+# Crear un rango de valores para X considerando todas las medias
+x_vals <- seq(100, 600, length.out = 300)
+
+# Generar datos para cada media con la varianza fija
+data <- expand.grid(x = x_vals, media = medias) %>%
+  mutate(densidad = dnorm(x, mean = media, sd = desviacion_fija))
+
+# Crear la gráfica con la corrección
+plot_normal2 <- ggplot(data, aes(x = x, y = densidad, color = as.factor(media))) +
+  geom_line(linewidth = 1) +  # Cambio de size a linewidth
+  labs(title = "Distribución Normal con Varianza = 50 y Diferentes Medias",
+       x = "Valor de X",
+       y = "Densidad",
+       color = "Media") +
+  theme_minimal()
+
+# Mostrar el gráfico
+print(plot_normal2)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir parámetros
+varianza_fija &lt;- 50  # Varianza fija
+desviacion_fija &lt;- sqrt(varianza_fija)  # Desviación estándar
+medias &lt;- c(200, 300, 400, 500)  # Diferentes medias
+
+# Crear un rango de valores para X considerando todas las medias
+x_vals &lt;- seq(100, 600, length.out = 300)
+
+# Generar datos para cada media con la varianza fija
+data &lt;- expand.grid(x = x_vals, media = medias) %&gt;%
+  mutate(densidad = dnorm(x, mean = media, sd = desviacion_fija))
+
+# Crear la gráfica con la corrección
+plot_normal2 &lt;- ggplot(data, aes(x = x, y = densidad, color = as.factor(media))) +
+  geom_line(linewidth = 1) +  # Cambio de size a linewidth
+  labs(title = &quot;Distribución Normal con Varianza = 50 y Diferentes Medias&quot;,
+       x = &quot;Valor de X&quot;,
+       y = &quot;Densidad&quot;,
+       color = &quot;Media&quot;) +
+  theme_minimal()
+
+# Mostrar el gráfico
+#print(plot_normal2)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig229.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.29</strong> Función de densidad de la Normal con
+varianza de 50 y medias de 200, 300, 400 y 500.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La <strong>Figura 2.30</strong> presenta graficos de los datos de 12
+muestras aleatorias de tamaño 1000 extraídas de una distribución
+<strong>Normal</strong> con <strong>media 200</strong> y
+<strong>varianza 50</strong>. Cada subgráfico contiene: Un histograma de
+los valores de la muestra, representando su distribución empírica. La
+curva de densidad ajustada (línea azul) de una distribución
+<strong>Normal</strong> con <strong>media 200</strong> y
+<strong>varianza 50</strong>. La media muestral indicada en cada
+gráfico, representada por una línea punteada roja.</p>
+<p>En cada muestra, la media muestral está muy cercana a la media
+poblacional de 200. A pesar de la variabilidad en los datos, todas las
+medias muestrales oscilan en un rango muy estrecho alrededor de 200.</p>
+<p>Cada muestra es diferente, por lo que los histogramas presentan
+ligeras variaciones en su forma. Sin embargo, todas siguen
+aproximadamente distribución <strong>Normal</strong> con <strong>media
+200</strong> y <strong>varianza 50</strong>, lo que indica que la
+muestra refleja correctamente la distribución de la población.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# Parámetros de la distribución Normal
+media_teorica <- 200  # Media fija
+varianza_teorica <- 50  # Varianza fija
+desviacion_teorica <- sqrt(varianza_teorica)  # Desviación estándar
+n_muestra <- 1000  # Tamaño de cada muestra
+num_muestras <- 12  # Número de muestras
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Generar 12 muestras aleatorias y calcular la media muestral
+muestras <- replicate(num_muestras, rnorm(n_muestra, mean = media_teorica, sd = desviacion_teorica))
+
+# Convertir las muestras en un data frame
+data <- as.data.frame(muestras)
+colnames(data) <- paste0("Muestra ", 1:num_muestras)  # Nombrar las columnas
+
+# Calcular la media muestral de cada muestra
+medias_muestrales <- colMeans(data)
+
+# Modificar los nombres de las muestras para incluir la media en el título
+nombres_muestras <- paste0("Muestra ", 1:num_muestras, "\n x̄ = ", round(medias_muestrales, 2))
+
+# Transformar a formato largo para ggplot
+data_long <- pivot_longer(data, cols = everything(), names_to = "Muestra", values_to = "x")
+data_long$Muestra <- factor(data_long$Muestra, levels = colnames(data), labels = nombres_muestras)
+
+# Calcular la curva normal teórica para cada muestra
+densidad_teorica <- data.frame()
+x_vals <- seq(min(data_long$x), max(data_long$x), length.out = 100)
+
+for (i in 1:num_muestras) {
+  df_temp <- data.frame(
+    x = x_vals,
+    densidad = dnorm(x_vals, mean = media_teorica, sd = desviacion_teorica),
+    Muestra = nombres_muestras[i]
+  )
+  densidad_teorica <- rbind(densidad_teorica, df_temp)
+}
+
+# Crear el gráfico de histogramas con medias muestrales y la curva teórica
+fig.hist.muestra <- ggplot(data_long, aes(x = x)) +
+  geom_histogram(aes(y = after_stat(density)), fill = "#FF7F00", color = "black", bins = 10, alpha = 0.7) +  
+  facet_wrap(~Muestra, nrow = 3, ncol = 4) +  
+  geom_line(data = densidad_teorica, aes(x = x, y = densidad), color = "blue", linewidth = 1) +  # Reemplazado size por linewidth
+  geom_vline(data = data.frame(Muestra = nombres_muestras, media = medias_muestrales), 
+             aes(xintercept = media), color = "red", linetype = "dashed") +  # Línea en la media muestral
+  labs(title = "Histogramas de 12 Muestras Aleatorias de una Distribución Normal (200,50)",
+       x = "Valor de X",
+       y = "Densidad") +
+  theme_minimal() +
+  theme(strip.text = element_text(size = 12, face = "bold"))  # Ajusta el tamaño de los títulos en cada faceta
+
+print(fig.hist.muestra)
+
+
+# Mostrar la matriz de muestras
+print(data)
+
+# Calcular los promedios por columna y mostrar
+promedios_columnas <- colMeans(data)
+print(promedios_columnas)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# Parámetros de la distribución Normal
+media_teorica &lt;- 200  # Media fija
+varianza_teorica &lt;- 50  # Varianza fija
+desviacion_teorica &lt;- sqrt(varianza_teorica)  # Desviación estándar
+n_muestra &lt;- 1000  # Tamaño de cada muestra
+num_muestras &lt;- 12  # Número de muestras
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Generar 12 muestras aleatorias y calcular la media muestral
+muestras &lt;- replicate(num_muestras, rnorm(n_muestra, mean = media_teorica, sd = desviacion_teorica))
+
+# Convertir las muestras en un data frame
+data &lt;- as.data.frame(muestras)
+colnames(data) &lt;- paste0(&quot;Muestra &quot;, 1:num_muestras)  # Nombrar las columnas
+
+# Calcular la media muestral de cada muestra
+medias_muestrales &lt;- colMeans(data)
+
+# Modificar los nombres de las muestras para incluir la media en el título
+nombres_muestras &lt;- paste0(&quot;Muestra &quot;, 1:num_muestras, &quot;\n x̄ = &quot;, round(medias_muestrales, 2))
+
+# Transformar a formato largo para ggplot
+data_long &lt;- pivot_longer(data, cols = everything(), names_to = &quot;Muestra&quot;, values_to = &quot;x&quot;)
+data_long$Muestra &lt;- factor(data_long$Muestra, levels = colnames(data), labels = nombres_muestras)
+
+# Calcular la curva normal teórica para cada muestra
+densidad_teorica &lt;- data.frame()
+x_vals &lt;- seq(min(data_long$x), max(data_long$x), length.out = 100)
+
+for (i in 1:num_muestras) {
+  df_temp &lt;- data.frame(
+    x = x_vals,
+    densidad = dnorm(x_vals, mean = media_teorica, sd = desviacion_teorica),
+    Muestra = nombres_muestras[i]
+  )
+  densidad_teorica &lt;- rbind(densidad_teorica, df_temp)
+}
+
+# Crear el gráfico de histogramas con medias muestrales y la curva teórica
+fig.hist.muestra &lt;- ggplot(data_long, aes(x = x)) +
+  geom_histogram(aes(y = after_stat(density)), fill = &quot;#FF7F00&quot;, color = &quot;black&quot;, bins = 10, alpha = 0.7) +  
+  facet_wrap(~Muestra, nrow = 3, ncol = 4) +  
+  geom_line(data = densidad_teorica, aes(x = x, y = densidad), color = &quot;blue&quot;, linewidth = 1) +  # Reemplazado size por linewidth
+  geom_vline(data = data.frame(Muestra = nombres_muestras, media = medias_muestrales), 
+             aes(xintercept = media), color = &quot;red&quot;, linetype = &quot;dashed&quot;) +  # Línea en la media muestral
+  labs(title = &quot;Histogramas de 12 Muestras Aleatorias de una Distribución Normal (200,50)&quot;,
+       x = &quot;Valor de X&quot;,
+       y = &quot;Densidad&quot;) +
+  theme_minimal() +
+  theme(strip.text = element_text(size = 12, face = &quot;bold&quot;))  # Ajusta el tamaño de los títulos en cada faceta
+
+#print(fig.hist.muestra)
+
+
+# Mostrar la matriz de muestras
+#print(data)
+
+# Calcular los promedios por columna y mostrar
+#promedios_columnas &lt;- colMeans(data)
+#print(promedios_columnas)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig230.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.30</strong> Distribución de 12 muestras aleatorias
+(tamaño 1000) de una población <strong>Normal</strong> con media 200 y
+varianza 50..
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br></br>
+<h3>
+Distribución Normal Estándar N(0,1)
+</h3>
+<p>La <strong>distribución Normal Estándar</strong> es una versión
+particular de la distribución normal en la que la media es 0 y la
+desviación estándar es 1. Se obtiene mediante la transformación:</p>
+<p><span class="math display">\[
+Z = \frac{X - \mu}{\sigma}
+\]</span></p>
+<p>Donde <span class="math inline">\(Z\)</span> sigue una distribución
+normal estándar <span class="math inline">\(Z \sim N(0,1)\)</span>. Su
+función de densidad de probabilidad está dada por:</p>
+<p><span class="math display">\[
+f(z) = \frac{1}{\sqrt{2\pi}} e^{-\frac{z^2}{2}}, \quad -\infty \leq z
+\leq \infty
+\]</span></p>
+<p>La distribución normal estándar es fundamental en estadística porque
+permite <strong>comparar cualquier distribución normal sin importar sus
+parámetros originales</strong>. Algunas de sus aplicaciones
+incluyen:</p>
+<ul>
+<li><strong>Uso en tablas de probabilidad:</strong> Dado que cada
+distribución normal tiene diferentes valores de <span
+class="math inline">\(\mu\)</span> y <span
+class="math inline">\(\sigma\)</span>, se convierte cualquier normal en
+la normal estándar para utilizar las tablas de probabilidades
+acumuladas.<br />
+</li>
+<li><strong>Pruebas de hipótesis:</strong> Es utilizada en la prueba
+<span class="math inline">\(Z\)</span> y en intervalos de confianza para
+poblaciones con varianza conocida.<br />
+</li>
+<li><strong>Aproximación de otras distribuciones:</strong> Muchas
+distribuciones pueden aproximarse a la normal estándar a través del
+Teorema Central del Límite, lo que facilita el análisis de datos.</li>
+</ul>
+<p>Dado su amplio uso, la <strong>Normal Estándar</strong> es una
+herramienta clave para la inferencia estadística y el análisis de
+datos.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Una fábrica produce <strong>barras metálicas</strong> cuyo
+<strong>peso (en gramos)</strong> sigue una <strong>distribución
+normal</strong> con:</p>
+<ul>
+<li><strong>Media:</strong> <span class="math inline">\(\mu =
+200\)</span> g<br />
+</li>
+<li><strong>Desviación estándar:</strong> <span
+class="math inline">\(\sigma = 30\)</span> g</li>
+</ul>
+<p>Debido a variaciones en el proceso de fabricación, algunas barras
+pueden pesar menos de lo esperado. La empresa quiere conocer la
+<strong>probabilidad de que una barra metálica pese más de 150
+g</strong>, ya que las barras por debajo de este peso podrían no cumplir
+con los estándares de calidad y resistencia.</p>
+<p>Matemáticamente, se busca:</p>
+<p><span class="math display">\[
+P(X &gt; 150), \quad \text{donde } X \sim N(200, 30^2)
+\]</span></p>
+<p>La probabilidad de que una barra pese más de <strong>150 g</strong>
+se obtiene integrando la <strong>función de densidad de la
+normal</strong> desde 150 hasta infinito:</p>
+<p><span class="math display">\[
+P(X &gt; 150) = \int_{150}^{\infty} f(x) \,dx
+\]</span></p>
+<p>Donde la función de densidad de la normal es:</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+\]</span></p>
+<p>Sustituyendo <span class="math inline">\(\mu = 200\)</span> y <span
+class="math inline">\(\sigma = 30\)</span>:</p>
+<p><span class="math display">\[
+P(X &gt; 150) = \int_{150}^{\infty} \frac{1}{30 \sqrt{2\pi}}
+e^{-\frac{(x - 200)^2}{2(30^2)}} \,dx
+\]</span></p>
+<p>Podemos calcular esta integral en <strong>R</strong> usando la
+función <code>integrate()</code>:</p>
+<pre>
+# Definir función
+f_normal <- function(x) {
+  mu <- 200
+  sigma <- 30
+  (1 / (sigma * sqrt(2 * pi))) * exp(-((x - mu)^2) / (2 * sigma^2))
+}
+
+# Calcular la integral desde 150 hasta infinito
+probabilidad_integral <- integrate(f_normal, lower = 150, upper = Inf)$value
+
+# Mostrar el resultado
+probabilidad_integral
+</pre>
+<pre class="r"><code># Definir función
+
+f_normal &lt;- function(x) {
+  mu &lt;- 200
+  sigma &lt;- 30
+  (1 / (sigma * sqrt(2 * pi))) * exp(-((x - mu)^2) / (2 * sigma^2))
+}
+
+# Calcular la integral desde 150 hasta infinito
+probabilidad_integral &lt;- integrate(f_normal, lower = 150, upper = Inf)$value
+
+# Mostrar el resultado
+probabilidad_integral</code></pre>
+<pre><code>[1] 0.9522096</code></pre>
+<p>También podemos verificar el resultado usando la función
+<code>pnorm()</code> en <strong>R</strong>:</p>
+<pre>
+# Parámetros de la distribución normal
+media <- 200
+desviacion <- 30
+limite <- 150
+
+# Calcular la probabilidad usando pnorm
+probabilidad_pnorm <- pnorm(limite, mean = media, sd = desviacion, lower.tail = FALSE)
+
+# Mostrar el resultado
+probabilidad_pnorm
+</pre>
+<pre class="r"><code># Parámetros de la distribución normal
+media &lt;- 200
+desviacion &lt;- 30
+limite &lt;- 150
+
+# Calcular la probabilidad usando pnorm
+probabilidad_pnorm &lt;- pnorm(limite, mean = media, sd = desviacion, lower.tail = FALSE)
+
+# Otra opción es 
+1- pnorm(limite, mean = media, sd = desviacion, lower.tail = TRUE)</code></pre>
+<pre><code>[1] 0.9522096</code></pre>
+<pre class="r"><code># Mostrar el resultado
+probabilidad_pnorm</code></pre>
+<pre><code>[1] 0.9522096</code></pre>
+<p>En todos los casos presentados, la probabilidad obtenida es
+<strong>0.9522</strong>. Además, la <strong>Figura 2.31</strong> ilustra
+el área bajo la curva que representa la probabilidad <span
+class="math inline">\(P(X &gt; 150)\)</span>, cuyo valor es
+<strong>0.9522</strong>.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(ggfortify)
+
+# Parámetros de la distribución normal
+mu <- 200  # Media
+sigma <- 30  # Desviación estándar
+x_vals <- seq(100, 300, length.out = 300)  # Rango de valores de X
+
+# Crear el gráfico de la distribución normal
+fig_area<-ggplot(data.frame(x = x_vals), aes(x = x)) +
+  stat_function(fun = dnorm, args = list(mean = mu, sd = sigma), 
+                linewidth = 1, color = "blue") +  
+  # Sombrear el área de interés (P(X > 150))
+  stat_function(fun = dnorm, args = list(mean = mu, sd = sigma), 
+                geom = "area", xlim = c(150, 300), fill = "#FF7F00", alpha = 0.5) +  
+  labs(title = "Área bajo la curva para P(X > 150)",
+       x = "Valor de X",
+       y = "Densidad") +
+  theme_minimal()
+
+print(fig_area)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(ggfortify)
+
+# Parámetros de la distribución normal
+mu &lt;- 200  # Media
+sigma &lt;- 30  # Desviación estándar
+x_vals &lt;- seq(100, 300, length.out = 300)  # Rango de valores de X
+
+# Crear el gráfico de la distribución normal
+fig_area&lt;-ggplot(data.frame(x = x_vals), aes(x = x)) +
+  stat_function(fun = dnorm, args = list(mean = mu, sd = sigma), 
+                linewidth = 1, color = &quot;blue&quot;) +  
+  # Sombrear el área de interés (P(X &gt; 150))
+  stat_function(fun = dnorm, args = list(mean = mu, sd = sigma), 
+                geom = &quot;area&quot;, xlim = c(150, 300), fill = &quot;#FF7F00&quot;, alpha = 0.5) +  
+  labs(title = &quot;Área bajo la curva para P(X &gt; 150)&quot;,
+       x = &quot;Valor de X&quot;,
+       y = &quot;Densidad&quot;) +
+  theme_minimal()
+
+#print(fig_area)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig231.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.31</strong> Representación de <span
+class="math inline">\(P(X &gt; 150)\)</span> como el área bajo la curva
+de densidad de la Normal <span class="math inline">\(X \sim N(\mu,
+\sigma^2)\)</span>.
+</center>
+<p><br/><br/></p>
+<p>Para calcular esta probabilidad, también es posible hacerlo usando la
+<strong>estandarización de la variable <span
+class="math inline">\(X\)</span> a una variable normal estándar <span
+class="math inline">\(Z\)</span></strong> con la transformación:</p>
+<p><span class="math display">\[
+Z = \frac{X - \mu}{\sigma}
+\]</span></p>
+<p>Sustituyendo los valores:</p>
+<p><span class="math display">\[
+Z = \frac{150 - 200}{30} = -\frac{50}{30} = -1.67
+\]</span></p>
+<p>Luego, se utiliza <strong>R</strong> para resolver la integral:</p>
+<p><span class="math display">\[
+P(Z \leq -1.67) \approx 0.0475
+\]</span></p>
+<p>o</p>
+<p><span class="math display">\[
+P(Z &gt; -1.67) \approx 0.9522
+\]</span></p>
+<p>Con los códigos siguientes se calcula: <span
+class="math inline">\(1-P(Z \leq -1.67)\)</span> y <span
+class="math inline">\(P(Z &gt; -1.67)\)</span></p>
+<pre>
+# Parámetros de la distribución normal
+media <- 0
+desviacion <- 1
+limite <- -1.67
+
+# Calcular la probabilidad usando pnorm
+probabilidad_pnorm <- pnorm(limite, mean = media, sd = desviacion, lower.tail = FALSE)
+
+# Otra opción es 
+1- pnorm(limite, mean = media, sd = desviacion, lower.tail = TRUE)
+
+# Mostrar el resultado
+probabilidad_pnorm
+</pre>
+<pre class="r"><code># Parámetros de la distribución normal
+media &lt;- 0
+desviacion &lt;- 1
+limite &lt;- -1.67
+
+# Calcular la probabilidad usando pnorm
+probabilidad_pnorm &lt;- pnorm(limite, mean = media, sd = desviacion, lower.tail = FALSE)
+
+# Otra opción es 
+1- pnorm(limite, mean = media, sd = desviacion, lower.tail = TRUE)</code></pre>
+<pre><code>[1] 0.9525403</code></pre>
+<pre class="r"><code># Mostrar el resultado
+probabilidad_pnorm</code></pre>
+<pre><code>[1] 0.9525403</code></pre>
+<p>Por lo tanto:</p>
+<p><span class="math display">\[
+P(X &gt; 150) = 1 - P(Z \leq -1.67) = 1 - 0.0475 = 0.9525
+\]</span></p>
+<p>La <strong>Figura 2.32</strong> ilustra el área bajo la curva que
+representa la probabilidad <span class="math inline">\(P(Z &gt;
+-1.67)\)</span>, cuyo valor es <strong>0.9522</strong>.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(ggfortify)
+
+# Parámetros de la distribución normal estándar
+mu <- 0   # Media de la normal estándar
+sigma <- 1  # Desviación estándar de la normal estándar
+x_vals <- seq(-4, 4, length.out = 300)  # Rango de valores de Z
+
+# Crear el gráfico de la distribución normal estándar
+fig_area_Z <- ggplot(data.frame(x = x_vals), aes(x = x)) +
+  stat_function(fun = dnorm, args = list(mean = mu, sd = sigma), 
+                linewidth = 1, color = "blue") +  
+  # Sombrear el área de interés (P(Z > -1.67))
+  stat_function(fun = dnorm, args = list(mean = mu, sd = sigma), 
+                geom = "area", xlim = c(-1.67, 4), fill = "#FF7F00", alpha = 0.5) +  
+  labs(title = "Área bajo la curva para P(Z > -1.67)",
+       x = "Valor de Z",
+       y = "Densidad") +
+  theme_minimal()
+
+# Mostrar la figura
+print(fig_area_Z)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(ggfortify)
+
+# Parámetros de la distribución normal estándar
+mu &lt;- 0   # Media de la normal estándar
+sigma &lt;- 1  # Desviación estándar de la normal estándar
+x_vals &lt;- seq(-4, 4, length.out = 300)  # Rango de valores de Z
+
+# Crear el gráfico de la distribución normal estándar
+fig_area_Z &lt;- ggplot(data.frame(x = x_vals), aes(x = x)) +
+  stat_function(fun = dnorm, args = list(mean = mu, sd = sigma), 
+                linewidth = 1, color = &quot;blue&quot;) +  
+  # Sombrear el área de interés (P(Z &gt; -1.67))
+  stat_function(fun = dnorm, args = list(mean = mu, sd = sigma), 
+                geom = &quot;area&quot;, xlim = c(-1.67, 4), fill = &quot;#FF7F00&quot;, alpha = 0.5) +  
+  labs(title = &quot;Área bajo la curva para P(Z &gt; -1.67)&quot;,
+       x = &quot;Valor de Z&quot;,
+       y = &quot;Densidad&quot;) +
+  theme_minimal()
+
+# Mostrar la figura
+#print(fig_area_Z)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig232.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.32</strong> Representación de <span
+class="math inline">\(P(Z &gt; -1.67)\)</span> como el área bajo la
+curva de densidad de la Normal Estándar.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br></br>
+<h3>
+Regla Empírica (68-95-99.7) en la Distribución Normal
+</h3>
+<p>La <strong>regla empírica</strong>, también conocida como la
+<strong>regla 68-95-99.7</strong>, describe cómo se distribuyen los
+valores en una <strong>distribución Normal</strong> en función de la
+desviación estándar (<span class="math inline">\(\sigma\)</span>)
+respecto a la media (<span class="math inline">\(\mu\)</span>). Esta
+regla establece que:</p>
+<ul>
+<li><p><strong>Aproximadamente el 68%</strong> de los datos se
+encuentran dentro de <strong>una desviación estándar</strong> de la
+media, es decir, en el intervalo:<br />
+<span class="math display">\[
+(\mu - \sigma, \mu + \sigma)
+\]</span></p></li>
+<li><p><strong>Aproximadamente el 95%</strong> de los datos se
+encuentran dentro de <strong>dos desviaciones estándar</strong> de la
+media, cubriendo el intervalo:<br />
+<span class="math display">\[
+(\mu - 2\sigma, \mu + 2\sigma)
+\]</span></p></li>
+<li><p><strong>Aproximadamente el 99.7%</strong> de los datos se
+encuentran dentro de <strong>tres desviaciones estándar</strong> de la
+media, lo que abarca el intervalo:<br />
+<span class="math display">\[
+(\mu - 3\sigma, \mu + 3\sigma)
+\]</span></p></li>
+</ul>
+</br></br>
+<h4>
+¿Se aplica solo a la Normal Estándar?
+</h4>
+<p>No. La regla empírica es válida para <strong>cualquier distribución
+normal</strong> independientemente de sus parámetros <span
+class="math inline">\(\mu\)</span> y <span
+class="math inline">\(\sigma\)</span>.</p>
+<ul>
+<li>En una <strong>normal estándar</strong> (<span
+class="math inline">\(N(0,1)\)</span>), donde la media es <span
+class="math inline">\(0\)</span> y la desviación estándar es <span
+class="math inline">\(1\)</span>, los intervalos se simplifican a:
+<ul>
+<li><span class="math inline">\((-1, 1)\)</span> →
+<strong>68%</strong><br />
+</li>
+<li><span class="math inline">\((-2, 2)\)</span> →
+<strong>95%</strong><br />
+</li>
+<li><span class="math inline">\((-3, 3)\)</span> →
+<strong>99.7%</strong></li>
+</ul></li>
+<li>Para una <strong>normal general</strong> (<span
+class="math inline">\(N(\mu, \sigma^2)\)</span>), los intervalos deben
+calcularse considerando los valores específicos de <span
+class="math inline">\(\mu\)</span> y <span
+class="math inline">\(\sigma\)</span>, pero la proporción de datos
+dentro de cada intervalo sigue siendo la misma.</li>
+</ul>
+<p>Esta regla es útil para:</p>
+<ul>
+<li><strong>Comprender la dispersión de los datos</strong> en
+distribuciones normales.<br />
+</li>
+<li><strong>Detectar valores atípicos</strong>: Si un dato está fuera de
+<strong>tres desviaciones estándar</strong>, es altamente inusual dentro
+de una distribución normal.<br />
+</li>
+<li><strong>Realizar aproximaciones rápidas</strong> sin necesidad de
+cálculos detallados de probabilidades.</li>
+</ul>
+</br></br>
+<h2>
+Exponencial
+</h2>
+<p>La <strong>distribución exponencial</strong> es un modelo
+probabilístico que describe el tiempo entre eventos en un proceso de
+<strong>Poisson</strong> con tasa de ocurrencia constante. Fue propuesta
+en el contexto de los procesos estocásticos y utilizada ampliamente en
+estudios de <strong>teoría de colas</strong>, confiabilidad y tiempos de
+vida de sistemas. Su aplicación formal en la teoría de la probabilidad
+se atribuye a <strong>Andrey Kolmogorov</strong> y otros matemáticos que
+desarrollaron los fundamentos de los procesos de Poisson en la década de
+<strong>1930</strong>.</p>
+<p>La distribución exponencial tiene un amplio rango de aplicaciones en
+diversos campos:</p>
+<ul>
+<li><strong>Confiabilidad y análisis de fallas</strong>: Modela el
+tiempo hasta la falla de componentes electrónicos, maquinaria y sistemas
+de telecomunicaciones.</li>
+<li><strong>Modelado de tiempos de espera</strong>: Se usa en estudios
+de tráfico, teoría de colas y tiempos de atención en sistemas de
+servicio.</li>
+<li><strong>Finanzas y riesgos</strong>: Modela la duración entre
+eventos financieros como quiebras o cambios en tasas de interés.</li>
+<li><strong>Biología y epidemiología</strong>: Se emplea en la
+modelación del tiempo hasta la ocurrencia de eventos biológicos como la
+incubación de enfermedades.</li>
+</ul>
+</br></br>
+<h3>
+Distribución Exponencial
+</h3>
+<p>La función de <strong>densidad de probabilidad (PDF)</strong> de una
+variable aleatoria <span class="math inline">\(X\)</span> con
+distribución <strong>Exponencial</strong> de parámetro <span
+class="math inline">\(\lambda &gt; 0\)</span> se define como:</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases}
+\lambda e^{-\lambda x}, &amp; x &gt; 0 \\  
+0, &amp; x \leq 0  
+\end{cases}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(\lambda\)</span> es el <strong>parámetro
+de tasa</strong>, que representa la frecuencia con la que ocurren los
+eventos en un intervalo de tiempo.<br />
+</li>
+<li>La función <span class="math inline">\(e^{-\lambda x}\)</span>
+decrece exponencialmente, indicando que la probabilidad de tiempos
+largos entre eventos disminuye rápidamente.</li>
+</ul>
+<p>Algunos autores utilizan la notación alternativa <span
+class="math inline">\(\lambda = \frac{1}{\beta}\)</span>, donde <span
+class="math inline">\(\beta\)</span> se interpreta como el
+<strong>tiempo medio entre eventos</strong>.</p>
+</br></br>
+<h3>
+Función de Distribución Acumulada (CDF)
+</h3>
+<p>La función de distribución acumulada (CDF), que describe la
+probabilidad de que la variable aleatoria tome un valor menor o igual a
+<span class="math inline">\(x\)</span>, se expresa como:</p>
+<p><span class="math display">\[
+F(x) = P(X \leq x) = 1 - e^{-\lambda x}, \quad x &gt; 0
+\]</span></p>
+<p>Para valores <span class="math inline">\(x \leq 0\)</span>, la
+probabilidad acumulada es cero, dado que la función de densidad de
+probabilidad solo tiene soporte en <span class="math inline">\(x &gt;
+0\)</span>.</p>
+</br></br>
+<h3>
+Propiedades de la Distribución Exponencial
+</h3>
+<p>La distribución exponencial posee varias propiedades matemáticas
+relevantes:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Media:</strong><br />
+<span class="math display">\[
+E[X] = \frac{1}{\lambda}
+\]</span> Lo que indica que el valor promedio de la variable aleatoria
+es inversamente proporcional a la tasa de ocurrencia de
+eventos.</p></li>
+<li><p><strong>Varianza:</strong><br />
+<span class="math display">\[
+\text{Var}(X) = \frac{1}{\lambda^2}
+\]</span> Esto sugiere que cuanto mayor sea <span
+class="math inline">\(\lambda\)</span>, menor será la dispersión de los
+valores.</p></li>
+<li><p><strong>Falta de Memoria:</strong></p>
+<ul>
+<li>La distribución exponencial es la única distribución continua que
+satisface la propiedad de <strong>falta de memoria</strong>, lo que
+significa que la probabilidad de que un evento ocurra en un intervalo
+dado <strong>no depende del tiempo transcurrido</strong>.
+Matemáticamente, esto se expresa como: <span class="math display">\[
+P(X &gt; s+t \mid X &gt; s) = P(X &gt; t), \quad \forall s,t &gt; 0
+\]</span></li>
+<li>Esta propiedad hace que la distribución exponencial sea ampliamente
+utilizada en <strong>procesos de colas y modelado de tiempos de vida de
+sistemas</strong>.</li>
+</ul></li>
+<li><p><strong>Relación con la Distribución de Poisson:</strong></p>
+<ul>
+<li>Si los eventos ocurren de acuerdo con un <strong>proceso de
+Poisson</strong> con tasa <span class="math inline">\(\lambda\)</span>,
+entonces los tiempos entre eventos consecutivos siguen una distribución
+<strong>exponencial con parámetro <span
+class="math inline">\(\lambda\)</span></strong>.</li>
+</ul></li>
+</ol>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La <strong>Figura 2.34</strong> muestra que cuando el parámetro es
+pequeño (ej., 0.5, curva roja), la distribución disminuye más
+lentamente, lo que implica que los valores grandes de <span
+class="math inline">\(X\)</span> tienen mayor probabilidad. Esto indica
+intervalos de tiempo más largos entre eventos en un proceso de Poisson.
+Mientras que cuando el parámetro es grande (ej., 3, curva morada), la
+distribución decresce más rápidamente, lo que indica que valores
+pequeños de <span class="math inline">\(X\)</span> son más probables.
+Representa intervalos de tiempo más cortos entre eventos en un proceso
+de Poisson.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir valores del parámetro lambda
+lambdas <- c(0.5, 1, 2, 3)  # Cuatro valores distintos de lambda
+
+# Definir el rango de valores de X
+x_vals <- seq(0, 5, length.out = 300)
+
+# Generar datos para la función de densidad de la distribución exponencial
+data <- expand.grid(x = x_vals, lambda = lambdas) %>%
+  mutate(FDP = dexp(x, rate = lambda))
+
+# Crear la gráfica de la FDP para diferentes valores de lambda
+ggplot(data, aes(x = x, y = FDP, color = as.factor(lambda))) +
+  geom_line(linewidth = 1) +
+  labs(title = "Función de Densidad de Probabilidad de la Distribución Exponencial",
+       x = "Valor de X",
+       y = "f(X) = λ e^{-λX}",
+       color = "Lambda (λ)") +
+  theme_minimal()
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir valores del parámetro lambda
+lambdas &lt;- c(0.5, 1, 2, 3)  # Cuatro valores distintos de lambda
+
+# Definir el rango de valores de X
+x_vals &lt;- seq(0, 5, length.out = 300)
+
+# Generar datos para la función de densidad de la distribución exponencial
+data &lt;- expand.grid(x = x_vals, lambda = lambdas) %&gt;%
+  mutate(FDP = dexp(x, rate = lambda))
+
+# Crear la gráfica de la FDP para diferentes valores de lambda
+plot.exp&lt;-ggplot(data, aes(x = x, y = FDP, color = as.factor(lambda))) +
+  geom_line(linewidth = 1) +
+  labs(title = &quot;Función de Densidad de Probabilidad de la Distribución Exponencial&quot;,
+       x = &quot;Valor de X&quot;,
+       y = &quot;f(X) = λ e^{-λX}&quot;,
+       color = &quot;Lambda (λ)&quot;) +
+  theme_minimal()
+
+#print(plot.exp)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig233.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.33</strong> Función de densidad exponencial de <span
+class="math inline">\(X\sim Exp(x,\lambda=0.5)\)</span>, <span
+class="math inline">\(X\sim Exp(x,\lambda=1)\)</span>, <span
+class="math inline">\(X\sim Exp(x,\lambda=2)\)</span> y <span
+class="math inline">\(X\sim Exp(x,\lambda=3)\)</span>
+</center>
+<p><br/><br/></p>
+<p>La <strong>Figura 2.34</strong> muestra que para valores grandes del
+parámetro (ej., 3, curva morada), la función acumulada crece más
+rápidamente y alcanza valores cercanos a 1 en un intervalo más corto.
+Esto significa que hay mayor probabilidad de observar valores pequeños
+de <span class="math inline">\(X\)</span>. Mientras que para para
+valores pequeños (ej., 0.5, curva roja), la acumulada crece más
+lentamente, lo que indica que la probabilidad de observar valores
+grandes de <span class="math inline">\(X\)</span> es mayor. Esto
+significa que los eventos son menos frecuentes y los tiempos de espera
+entre eventos son más largos.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir valores del parámetro lambda
+lambdas <- c(0.5, 1, 2, 3)  # Cuatro valores distintos de lambda
+
+# Definir el rango de valores de X
+x_vals <- seq(0, 5, length.out = 300)
+
+# Generar datos para la función de distribución acumulada (FDA) de la exponencial
+data <- expand.grid(x = x_vals, lambda = lambdas) %>%
+  mutate(FDA = pexp(x, rate = lambda))
+
+# Crear la gráfica de la FDA para diferentes valores de lambda
+ggplot(data, aes(x = x, y = FDA, color = as.factor(lambda))) +
+  geom_line(linewidth = 1) +
+  labs(title = "Función de Distribución Acumulada de la Distribución Exponencial",
+       x = "Valor de X",
+       y = "F(X) = P(X ≤ x)",
+       color = "Lambda (λ)") +
+  theme_minimal()
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir valores del parámetro lambda
+lambdas &lt;- c(0.5, 1, 2, 3)  # Cuatro valores distintos de lambda
+
+# Definir el rango de valores de X
+x_vals &lt;- seq(0, 5, length.out = 300)
+
+# Generar datos para la función de distribución acumulada (FDA) de la exponencial
+data &lt;- expand.grid(x = x_vals, lambda = lambdas) %&gt;%
+  mutate(FDA = pexp(x, rate = lambda))
+
+# Crear la gráfica de la FDA para diferentes valores de lambda
+plt.fda.exp&lt;-ggplot(data, aes(x = x, y = FDA, color = as.factor(lambda))) +
+  geom_line(linewidth = 1) +
+  labs(title = &quot;Función de Distribución Acumulada de la Distribución Exponencial&quot;,
+       x = &quot;Valor de X&quot;,
+       y = &quot;F(X) = P(X ≤ x)&quot;,
+       color = &quot;Lambda (λ)&quot;) +
+  theme_minimal()
+
+
+#print(plt.fda.exp)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig234.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.34</strong> Función de Distribución Acumulada para
+<span class="math inline">\(X\sim Exp(x,\lambda=0.5)\)</span>, <span
+class="math inline">\(X\sim Exp(x,\lambda=1)\)</span>, <span
+class="math inline">\(X\sim Exp(x,\lambda=2)\)</span> y <span
+class="math inline">\(X\sim Exp(x,\lambda=3)\)</span>.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Una empresa fabrica <strong>chips electrónicos</strong>, y se sabe
+que el <strong>tiempo de vida (en años)</strong> de un chip sigue una
+distribución <strong>Exponencial con parámetro</strong> <span
+class="math inline">\(\lambda = 0.25\)</span>, lo que significa que la
+<strong>vida media del chip</strong> es:</p>
+<p><span class="math display">\[
+E[X] = \frac{1}{\lambda} = \frac{1}{0.25} = 4 \text{ años}
+\]</span></p>
+<p>Un cliente tiene un chip que ya ha funcionado por <strong>3
+años</strong> sin fallar y desea saber cuál es la probabilidad de que
+<strong>dure al menos 2 años más</strong>.</p>
+<p>Por la propiedad de <strong>falta de memoria</strong>, esta
+probabilidad se puede calcular como:</p>
+<p><span class="math display">\[
+P(X &gt; 5 \mid X &gt; 3) = P(X &gt; 2)
+\]</span></p>
+<p>Es decir, la probabilidad de que el chip dure al menos <strong>5 años
+en total</strong>, dado que ya lleva <strong>3 años
+funcionando</strong>, es la misma que la probabilidad de que un chip
+<strong>nuevo</strong> dure al menos <strong>2 años</strong>. Para
+comprender esto se realizan los siguientes cálculos.</p>
+<p>La función de distribución acumulada de una variable exponencial
+es:</p>
+<p><span class="math display">\[F(x) = P(X \leq x) = 1 - e^{-\lambda x},
+\quad x &gt; 0 \]</span></p>
+<p>Por lo tanto, <span class="math display">\[
+P(X &gt; x) = e^{-\lambda x}
+\]</span></p>
+<p>Sustituyendo los valores del problema:</p>
+<p><span class="math display">\[
+P(X &gt; 2) = e^{-0.25 \times 2}
+\]</span></p>
+<p><span class="math display">\[
+P(X &gt; 2) = e^{-0.5} \approx 0.6065
+\]</span></p>
+<p>Se pueden usar los siguientes códigos de <strong>R</strong> ´para
+calcular la probabilidad:</p>
+<pre>
+# Parámetro de la distribución exponencial
+lambda <- 0.25 
+
+# Probabilidad de que X > 2 usando la función de supervivencia
+prob <- exp(-lambda * 2)
+
+# Alternativa con la función pexp() en R
+prob_r <- 1 - pexp(2, rate = lambda)
+
+# Imprimir resultados
+cat("Probabilidad analítica:", prob, "\n")
+cat("Probabilidad en R:", prob_r, "\n")
+</pre>
+<pre class="r"><code># Parámetro de la distribución exponencial
+lambda &lt;- 0.25 
+
+# Probabilidad de que X &gt; 2 usando la función de supervivencia
+prob &lt;- exp(-lambda * 2)
+
+# Alternativa con la función pexp() en R
+prob_r &lt;- 1 - pexp(2, rate = lambda)
+
+# Imprimir resultados
+cat(&quot;Probabilidad analítica:&quot;, prob, &quot;\n&quot;)</code></pre>
+<pre><code>Probabilidad analítica: 0.6065307 </code></pre>
+<pre class="r"><code>cat(&quot;Probabilidad en R:&quot;, prob_r, &quot;\n&quot;)</code></pre>
+<pre><code>Probabilidad en R: 0.6065307 </code></pre>
+<p>Por lo tanto, la probabilidad de que el chip dure <strong>al menos 2
+años más</strong>, dado que ya ha funcionado 3 años, es
+<strong>0.6065</strong>. La propiedad de falta de memoria indica que el
+tiempo adicional de vida de un componente no depende del tiempo que ya
+ha operado. En este caso, la probabilidad de que el chip dure al menos 2
+años más después de haber funcionado 3 años es exactamente la misma que
+la probabilidad de que un chip nuevo dure al menos 2 años.</p>
+</p>
+</div>
+</br></br>
+<h2>
+Gamma
+</h2>
+<p>La <strong>distribución Gamma</strong> es una distribución de
+probabilidad continua que generaliza la distribución exponencial y es
+utilizada para modelar el tiempo hasta la ocurrencia de <span
+class="math inline">\(k\)</span> eventos en un proceso de Poisson. Fue
+introducida en la teoría de la probabilidad por <strong>Carl Friedrich
+Gauss</strong> en el siglo XIX y formalizada en su aplicación moderna
+por matemáticos como <strong>Karl Pearson</strong> en el año
+<strong>1900</strong>, dentro de su clasificación de distribuciones
+estadísticas.</p>
+<p>La distribución Gamma tiene múltiples aplicaciones en distintas
+disciplinas:</p>
+<ul>
+<li><strong>Análisis de tiempos de espera y teoría de colas</strong>:
+Modela el tiempo total hasta la ocurrencia de múltiples eventos en un
+proceso de Poisson, como la duración de llamadas telefónicas o la espera
+en sistemas de atención al cliente.<br />
+</li>
+<li><strong>Confiabilidad y análisis de fallas</strong>: Se usa para
+modelar el tiempo hasta la falla de un sistema con múltiples componentes
+redundantes.<br />
+</li>
+<li><strong>Hidrología y meteorología</strong>: Aplicada en la
+modelación de precipitaciones y caudales de ríos en estudios
+climatológicos.<br />
+</li>
+<li><strong>Economía y finanzas</strong>: Se emplea para modelar la
+distribución de ingresos o tiempos de duración de crisis
+económicas.<br />
+</li>
+<li><strong>Biología y epidemiología</strong>: Útil en la modelación de
+tiempos de supervivencia y propagación de enfermedades.</li>
+</ul>
+<p>La distribución Gamma es una herramienta poderosa en estadística
+aplicada y modelado probabilístico. Su flexibilidad y generalización de
+la distribución exponencial la hacen fundamental en el estudio de
+procesos que involucran tiempos de ocurrencia de múltiples eventos
+aleatorios.</p>
+</br></br>
+<h3>
+Distribución Gamma
+</h3>
+<p>La distribución <strong>Gamma</strong> se define mediante dos
+parámetros, uno de forma <span class="math inline">\(\alpha\)</span> y
+otro de escala <span class="math inline">\(\beta\)</span>, ambos
+positivos. La función de densidad de probabilidad de una variable
+aleatoria <span class="math inline">\(X \sim Gamma(\alpha,
+\beta)\)</span> está dada por:</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases}
+\frac{\beta^\alpha x^{\alpha - 1} e^{-\beta x}}{\Gamma(\alpha)}, &amp; x
+&gt; 0 \\[10pt]
+0, &amp; x \leq 0
+\end{cases}
+\]</span></p>
+<p>donde <span class="math inline">\(\Gamma(\alpha)\)</span> es la
+función Gamma, definida como:</p>
+<p><span class="math display">\[
+\Gamma(\alpha) = \int_0^\infty t^{\alpha - 1} e^{-t} dt
+\]</span></p>
+<p>En <strong>R</strong>, la distribución Gamma se parametriza de manera
+diferente mediante los parámetros de forma <span
+class="math inline">\(\alpha\)</span> y escala <span
+class="math inline">\(\sigma\)</span>, ambos positivos. La función de
+densidad de probabilidad de una variable aleatoria <span
+class="math inline">\(X \sim \text{Gamma}(\alpha, \sigma)\)</span> en
+esta parametrización es:</p>
+<p><span class="math display">\[
+f(x) = \frac{x^{\alpha - 1} e^{-x/\sigma}}{\sigma^\alpha
+\Gamma(\alpha)}, \quad x &gt; 0
+\]</span></p>
+<p>donde <span class="math inline">\(\Gamma(\alpha)\)</span> es la
+función Gamma, definida como:</p>
+<p><span class="math display">\[
+\Gamma(\alpha) = \int_0^\infty t^{\alpha - 1} e^{-t} dt
+\]</span></p>
+<p>Respecto a la relación con otras distribuciones:</p>
+<ul>
+<li>Cuando <span class="math inline">\(\alpha = 1\)</span>, la
+distribución Gamma se reduce a la <strong>distribución
+exponencial</strong> con parámetro <span class="math inline">\(\lambda =
+1/\sigma\)</span>.<br />
+</li>
+<li>Cuando <span class="math inline">\(\alpha\)</span> es un número
+entero, la distribución Gamma se conoce como la <strong>distribución
+Erlang</strong>, ampliamente utilizada en teoría de colas.</li>
+</ul>
+<p>Algunas propiedades:</p>
+<ul>
+<li><strong>Media:</strong><br />
+<span class="math display">\[
+E[X] = \alpha \sigma
+\]</span><br />
+</li>
+<li><strong>Varianza:</strong><br />
+<span class="math display">\[
+\text{Var}(X) = \alpha \sigma^2
+\]</span></li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La <strong>Figura 2.35</strong> muestra la función de densidad de
+probabilidad para diferentes distribuciones Gamma con <strong><span
+class="math inline">\(\sigma = 1\)</span> fijo</strong> y distintos
+valores del <strong>parámetro de forma <span
+class="math inline">\(\alpha\)</span></strong>.</p>
+<p>Cuando <strong><span class="math inline">\(\alpha = 1\)</span> (Curva
+naranja, Gamma(1,1))</strong> se reduce a una <strong>distribución
+Exponencial</strong> con parámetro <span class="math inline">\(\lambda =
+1\)</span>. Es <strong>altamente sesgada a la derecha</strong>, con una
+alta densidad en valores cercanos a 0 y una rápida caída.</p>
+<p>Cuando se fija <strong><span class="math inline">\(\sigma =
+1\)</span></strong> y se incrementa <span
+class="math inline">\(\alpha\)</span>, la distribución Gamma
+<strong>pasa de ser una exponencial a una distribución más simétrica con
+mayor concentración alrededor de su media</strong>. Este comportamiento
+hace que la distribución Gamma sea útil en modelado de tiempos de espera
+en procesos de Poisson y en teoría de colas.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir valores de parámetros de la distribución Gamma
+parametros <- data.frame(
+  alpha = c(1, 3, 2, 5),  # Valores del parámetro de forma (shape)
+  sigma = c(1,1,1,1),  # Valores del parámetro de tasa (rate)
+  color = c("#FF7F00", "#034A94", "#686868", "#76EEC6")  # Colores asociados
+)
+
+# Crear un rango de valores para X
+x_vals <- seq(0, 15, length.out = 300)
+
+# Generar datos para cada distribución Gamma
+data <- expand.grid(x = x_vals, alpha = parametros$alpha) %>%
+  left_join(parametros, by = "alpha") %>%
+  mutate(densidad = dgamma(x, shape = alpha, rate = sigma),
+         label = paste0("Gamma(", alpha, ",", sigma, ")"))  # Etiqueta para la leyenda
+
+# Crear la gráfica con leyenda
+plot.gamma<-ggplot(data, aes(x = x, y = densidad, color = label)) +
+  geom_line(linewidth = 1) +
+  labs(title = "Densidades de Diferentes Distribuciones Gamma",
+       x = "Valor de X",
+       y = "Densidad",
+       color = "Distribución Gamma") +
+  scale_color_manual(values = parametros$color) +
+  theme_minimal()
+
+print(plot.gamma)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir valores de parámetros de la distribución Gamma
+parametros &lt;- data.frame(
+  alpha = c(1, 3, 2, 5),  # Valores del parámetro de forma (shape)
+  sigma = c(1,1,1,1),  # Valores del parámetro de tasa (rate)
+  color = c(&quot;#FF7F00&quot;, &quot;#034A94&quot;, &quot;#686868&quot;, &quot;#76EEC6&quot;)  # Colores asociados
+)
+
+# Crear un rango de valores para X
+x_vals &lt;- seq(0, 15, length.out = 300)
+
+# Generar datos para cada distribución Gamma
+data &lt;- expand.grid(x = x_vals, alpha = parametros$alpha) %&gt;%
+  left_join(parametros, by = &quot;alpha&quot;) %&gt;%
+  mutate(densidad = dgamma(x, shape = alpha, rate = sigma),
+         label = paste0(&quot;Gamma(&quot;, alpha, &quot;,&quot;, sigma, &quot;)&quot;))  # Etiqueta para la leyenda
+
+# Crear la gráfica con leyenda
+plot.gamma&lt;-ggplot(data, aes(x = x, y = densidad, color = label)) +
+  geom_line(linewidth = 1) +
+  labs(title = &quot;Densidades de Diferentes Distribuciones Gamma&quot;,
+       x = &quot;Valor de X&quot;,
+       y = &quot;Densidad&quot;,
+       color = &quot;Distribución Gamma&quot;) +
+  scale_color_manual(values = parametros$color) +
+  theme_minimal()
+
+#print(plot.gamma)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig235.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.35</strong> Función de densidad Gamma con <span
+class="math inline">\(X\sim Gamma(x, \alpha=1,\sigma=1)\)</span>, <span
+class="math inline">\(X\sim Gamma(x, \alpha=2,\sigma=1)\)</span>, <span
+class="math inline">\(X\sim Gamma(x, \alpha=3,\sigma=1)\)</span></span>
+y <span class="math inline">\(X\sim Gamma(x,
+\alpha=5,\sigma=1)\)</span>.
+</center>
+<p><br/><br/></p>
+<p>La <strong>Figura 2.36</strong> muestra que conforme <span
+class="math inline">\(\sigma\)</span> disminuye las curvas se desplazan
+hacia la izquierda, concentrando la densidad en valores más
+pequeños.</p>
+<pre>
+# Cargar librerías necesarias
+# Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir valores de parámetros de la distribución Gamma
+parametros <- data.frame(
+  alpha = c(1,1,1,1),  # Valores del parámetro de forma (shape)
+  sigma = c(1,1/2,1/4,1/5),  # Valores del parámetro de tasa (rate)
+  color = c("#FF7F00", "#034A94", "#686868", "#76EEC6")  # Colores asociados
+)
+
+# Crear un rango de valores para X
+x_vals <- seq(0, 15, length.out = 300)
+
+# Generar datos para cada distribución Gamma
+data <- expand.grid(x = x_vals, alpha = parametros$alpha) %>%
+  left_join(parametros, by = "alpha") %>%
+  mutate(densidad = dgamma(x, shape = alpha, rate = sigma),
+         label = paste0("Gamma(", alpha, ",", sigma, ")"))  # Etiqueta para la leyenda
+
+# Crear la gráfica con leyenda
+plot.gamma<-ggplot(data, aes(x = x, y = densidad, color = label)) +
+  geom_line(linewidth = 1) +
+  labs(title = "Densidades de Diferentes Distribuciones Gamma",
+       x = "Valor de X",
+       y = "Densidad",
+       color = "Distribución Gamma") +
+  scale_color_manual(values = parametros$color) +
+  theme_minimal()
+
+print(plot.gamma)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir valores de parámetros de la distribución Gamma
+parametros &lt;- data.frame(
+  alpha = c(1,1,1,1),  # Valores del parámetro de forma (shape)
+  sigma = c(1,1/2,1/4,1/5),  # Valores del parámetro de tasa (rate)
+  color = c(&quot;#FF7F00&quot;, &quot;#034A94&quot;, &quot;#686868&quot;, &quot;#76EEC6&quot;)  # Colores asociados
+)
+
+# Crear un rango de valores para X
+x_vals &lt;- seq(0, 15, length.out = 300)
+
+# Generar datos para cada distribución Gamma
+data &lt;- expand.grid(x = x_vals, alpha = parametros$alpha) %&gt;%
+  left_join(parametros, by = &quot;alpha&quot;) %&gt;%
+  mutate(densidad = dgamma(x, shape = alpha, rate = sigma),
+         label = paste0(&quot;Gamma(&quot;, alpha, &quot;,&quot;, sigma, &quot;)&quot;))  # Etiqueta para la leyenda
+
+# Crear la gráfica con leyenda
+plot.gamma&lt;-ggplot(data, aes(x = x, y = densidad, color = label)) +
+  geom_line(linewidth = 1) +
+  labs(title = &quot;Densidades de Diferentes Distribuciones Gamma&quot;,
+       x = &quot;Valor de X&quot;,
+       y = &quot;Densidad&quot;,
+       color = &quot;Distribución Gamma&quot;) +
+  scale_color_manual(values = parametros$color) +
+  theme_minimal()
+
+#print(plot.gamma)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig236.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.36</strong> Función de densidad Gamma con <span
+class="math inline">\(X\sim Gamma(x, \alpha=1,\sigma=1)\)</span>, <span
+class="math inline">\(X\sim Gamma(x, \alpha=1,\sigma=1/2)\)</span>,
+<span class="math inline">\(X\sim Gamma(x,
+\alpha=1,\sigma=1/4)\)</span></span> y <span class="math inline">\(X\sim
+Gamma(x, \alpha=1,\sigma=1/5)\)</span>.
+</center>
+<p><br/><br/></p>
+<p>La función de densidad para la distribución <strong>Gamma</strong>
+está dada por:</p>
+<p><span class="math display">\[
+f(x) = \frac{x^{\alpha - 1} e^{-x/\sigma}}{\sigma^\alpha
+\Gamma(\alpha)}, \quad x &gt; 0
+\]</span></p>
+<p>Para <span class="math inline">\(\alpha = 1\)</span>, esta expresión
+se reduce a:</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sigma} e^{-x/\sigma}, \quad x &gt; 0
+\]</span></p>
+<p>que corresponde a la <strong>distribución exponencial</strong> con
+parámetro de escala <span
+class="math inline">\(\lambda=1/\sigma\)</span>.</p>
+</p>
+</div>
+</br></br>
+<h2>
+Weibull
+</h2>
+<p>La <strong>distribución Weibull</strong> es una distribución de
+probabilidad continua ampliamente utilizada en análisis de
+confiabilidad, modelado de tiempos de vida y en procesos de fatiga de
+materiales. Fue introducida por el matemático y físico sueco
+<strong>Waloddi Weibull</strong> en el año <strong>1951</strong>, cuando
+la presentó en un artículo sobre resistencia de materiales y análisis de
+vida útil de componentes mecánicos. Desde entonces, su flexibilidad y
+aplicabilidad han permitido su uso en diversas áreas de la ingeniería,
+economía y ciencias naturales.</p>
+<p>La distribución Weibull es ampliamente utilizada en diversas
+disciplinas, incluyendo:</p>
+<ul>
+<li><strong>Confiabilidad y análisis de fallas:</strong> Modela la vida
+útil de componentes y sistemas mecánicos, incluyendo piezas electrónicas
+y maquinaria industrial.<br />
+</li>
+<li><strong>Ingeniería de materiales:</strong> Se usa en estudios de
+resistencia de materiales y análisis de fatiga estructural.<br />
+</li>
+<li><strong>Gestión de riesgos:</strong> Modela tiempos de fallos en
+seguros y estudios actuariales.<br />
+</li>
+<li><strong>Meteorología:</strong> Es utilizada para describir la
+distribución de velocidades del viento en estudios de energía
+eólica.<br />
+</li>
+<li><strong>Procesos industriales y manufactura:</strong> Aplica en
+control de calidad para prever tiempos de vida de productos.</li>
+</ul>
+</br></br>
+<h3>
+Distribución Weibull
+</h3>
+<p>La distribución Weibull se define mediante los siguientes parámetros
+de forma <span class="math inline">\(a\)</span> y de escala <span
+class="math inline">\(\sigma\)</span>.</p>
+<p>La función de densidad de probabilidad de una variable aleatoria
+<span class="math inline">\(X \sim \text{Weibull}(a, \sigma)\)</span>
+está dada por:</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases}
+\frac{a}{\sigma} \left( \frac{x}{\sigma} \right)^{a - 1}
+e^{-(x/\sigma)^a}, &amp; x &gt; 0 \\[10pt]
+0, &amp; x \leq 0
+\end{cases}
+\]</span></p>
+<p>y su función de distribución acumulada es:</p>
+<p><span class="math display">\[
+F(x) = 1 - e^{-(x/\sigma)^a}, \quad x &gt; 0
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li>Cuando <span class="math inline">\(a = 1\)</span>, la distribución
+<strong>Weibull</strong> se reduce a la <strong>distribución
+Exponencial</strong> con parámetro <span
+class="math inline">\(\sigma\)</span>.<br />
+</li>
+<li>Para <span class="math inline">\(a &gt; 1\)</span>, la distribución
+tiene una <strong>forma en campana</strong>, similar a la normal en
+algunos casos.<br />
+</li>
+<li>Para <span class="math inline">\(a &lt; 1\)</span>, la distribución
+es altamente <strong>sesgada a la derecha</strong>.</li>
+</ul>
+<p>Algunas propiedades son:</p>
+<ul>
+<li><strong>Media:</strong><br />
+<span class="math display">\[
+E[X] = \sigma \Gamma(1 + 1/a)
+\]</span></li>
+<li><strong>Varianza:</strong><br />
+<span class="math display">\[
+\text{Var}(X)  = \sigma^2 \left[ \Gamma(1 + 2/a) - \Gamma^2(1 + 1/a)
+\right]
+\]</span></li>
+<li><strong>Coeficiente de variación:</strong><br />
+<span class="math display">\[
+\frac{\sigma}{E[X]} = \frac{\sqrt{V[X]}}{E[X]}
+\]</span></li>
+</ul>
+</br></br>
+<h3>
+Función de Riesgo en la Distribución Weibull
+</h3>
+<p>La <strong>función de riesgo</strong>, también llamada <strong>tasa
+de falla</strong> o <strong>hazard function</strong>, describe la
+probabilidad instantánea de falla en un momento determinado <span
+class="math inline">\(t\)</span>, dado que la falla aún no ha ocurrido
+hasta ese instante. Se define como:</p>
+<p><span class="math display">\[
+h(x) = \frac{f(x)}{1 - F(x)}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(f(x)\)</span> es la función de densidad
+de probabilidad.<br />
+</li>
+<li><span class="math inline">\(F(x)\)</span> es la función de
+distribución acumulada.</li>
+</ul>
+<p>Para una variable aleatoria <span class="math inline">\(X \sim
+\text{Weibull}(a, \sigma)\)</span>, la función de riesgo se expresa
+como:</p>
+<p><span class="math display">\[
+h(x) = \frac{a}{\sigma} \left( \frac{x}{\sigma} \right)^{a - 1}
+\]</span></p>
+<p>La función de riesgo de la distribución Weibull depende del
+<strong>parámetro de forma <span
+class="math inline">\(a\)</span></strong>:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Si <span class="math inline">\(a &lt; 1\)</span>
+(Distribución con tasa de falla decreciente)</strong>
+<ul>
+<li>La tasa de falla disminuye con el tiempo.<br />
+</li>
+<li>Representa sistemas con alta probabilidad de fallar al inicio, pero
+que mejoran su confiabilidad con el tiempo.<br />
+</li>
+<li>Ejemplo: Productos con fallas tempranas por defectos de fabricación
+(fase de mortalidad infantil en análisis de confiabilidad).</li>
+</ul></li>
+<li><strong>Si <span class="math inline">\(a = 1\)</span> (Distribución
+Exponencial, tasa de falla constante)</strong>
+<ul>
+<li>La tasa de falla es constante <span class="math inline">\(h(x) =
+1/\sigma\)</span>.<br />
+</li>
+<li>Se utiliza en modelos donde las fallas ocurren a una <strong>tasa
+constante</strong>, sin importar cuánto tiempo ha pasado.<br />
+</li>
+<li>Ejemplo: Componentes electrónicos que fallan con una probabilidad
+constante.</li>
+</ul></li>
+<li><strong>Si <span class="math inline">\(a &gt; 1\)</span>
+(Distribución con tasa de falla creciente)</strong>
+<ul>
+<li>La tasa de falla aumenta con el tiempo.<br />
+</li>
+<li>Representa sistemas sujetos a <strong>desgaste y
+envejecimiento</strong>, donde la probabilidad de falla crece a medida
+que pasa el tiempo.<br />
+</li>
+<li>Ejemplo: Motores, rodamientos y estructuras sometidas a fatiga.</li>
+</ul></li>
+</ol>
+<div class="caja-actividad">
+<h3>
+Actividad:
+</h3>
+<blockquote>
+<p>
+En esta actividad se utilizan las funciones de <strong>R</strong>
+asociadas a la distribución <strong>Weibull</strong> para explorar su
+comportamiento mediante tres enfoques clave:<br />
+- <strong>Visualización de la función de densidad</strong>: Graficaremos
+la curva de densidad de una variable aleatoria <span
+class="math inline">\(X \sim \text{Weibull}(a = 1, \sigma =
+\pi)\)</span>.<br />
+- <strong>Cálculo del área bajo la curva</strong>: Determinaremos la
+probabilidad acumulada en un intervalo específico.<br />
+- <strong>Generación de una muestra aleatoria</strong>: Obtendremos
+datos simulados a partir de la distribución Weibull y analizaremos sus
+propiedades. - Usa <code>dweibull()</code>, <code>pweibull()</code> y
+<code>rweibull()</code>
+</p>
+</blockquote>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

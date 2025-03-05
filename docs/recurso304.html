@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación estadística" />
+
+
+<title> Métodos de estimación</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Métodos de estimación</strong></span></h1>
+<h4 class="author">Métodos y Simulación estadística</h4>
+
+</div>
+
+
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>En estadística inferencial, uno de los principales objetivos es
+<strong>estimar los parámetros desconocidos</strong> de una distribución
+de probabilidad a partir de una muestra de datos observados. Existen
+varios enfoques para realizar estas estimaciones, siendo dos de los más
+utilizados el <strong>método de los momentos</strong> y el
+<strong>método de máxima verosimilitud</strong>.</p>
+<p>Los métodos de estimación permiten obtener valores aproximados de
+parámetros poblacionales desconocidos, como la <strong>media</strong>,
+la <strong>varianza</strong>, la <strong>tasa de ocurrencia de
+eventos</strong>, entre otros. Estos métodos son fundamentales en
+diversas áreas, tales como:</p>
+<ul>
+<li><strong>Econometría y Finanzas:</strong> Para estimar tasas de
+crecimiento, volatilidad o distribuciones de precios de activos.</li>
+<li><strong>Ingeniería y Fiabilidad:</strong> Para modelar la vida útil
+de componentes y sistemas.</li>
+<li><strong>Biometría y Ciencias de la Salud:</strong> Para estimar
+parámetros en modelos epidemiológicos o tasas de incidencia de
+enfermedades.</li>
+<li><strong>Machine Learning y Ciencia de Datos:</strong> En ajuste de
+modelos probabilísticos y optimización de parámetros en aprendizaje
+automático.</li>
+</ul>
+</br></br>
+<h2>
+Métodos de estimación
+</h2>
+</br></br>
+<h3>
+Método de Momentos
+</h3>
+<p><br/><br/></p>
+<hr />
+<p>El <strong>método de los momentos</strong> (MOM) es un enfoque
+intuitivo basado en la idea de que los <strong>momentos
+poblacionales</strong> pueden ser aproximados por los <strong>momentos
+muestrales</strong>. Si una variable aleatoria <span
+class="math inline">\(X\)</span> tiene una distribución con parámetros
+<span class="math inline">\(\theta_1, \theta_2, \dots,
+\theta_k\)</span>, el método de los momentos establece ecuaciones de la
+forma:</p>
+<p><span class="math display">\[
+E[X^r] = \frac{1}{n} \sum_{i=1}^{n} X_i^r
+\]</span></p>
+<p>para <span class="math inline">\(r = 1, 2, \dots, k\)</span>, donde
+los momentos muestrales se igualan a los momentos poblacionales
+teóricos, y se resuelve el sistema de ecuaciones para obtener
+estimaciones de los parámetros.</p>
+<p>Características del Método de los Momentos:</p>
+<ul>
+<li>Es <strong>fácil de calcular</strong> en muchas distribuciones.</li>
+<li>No requiere suposiciones fuertes sobre la distribución
+subyacente.</li>
+<li>En algunos casos, puede no proporcionar estimadores óptimos en
+términos de <strong>sesgo</strong> y <strong>varianza
+mínima</strong>.</li>
+</ul>
+<hr />
+</br></br>
+<h3>
+Método de Máxima Verosimilitud
+</h3>
+<p><br/><br/></p>
+<p>El <strong>método de máxima verosimilitud</strong> (MLE) es un
+enfoque más formal y ampliamente utilizado. Este método busca
+<strong>maximizar la función de verosimilitud</strong>, que mide la
+<strong>probabilidad de observar los datos</strong> en función de los
+parámetros desconocidos.</p>
+<p>Dada una muestra <span class="math inline">\(X_1, X_2, ...,
+X_n\)</span> con función de densidad <span class="math inline">\(f(x;
+\theta)\)</span>, la función de verosimilitud está dada por:</p>
+<p><span class="math display">\[
+L(\theta) = \prod_{i=1}^{n} f(X_i; \theta).
+\]</span></p>
+<p>En la práctica, se trabaja con la
+<strong>log-verosimilitud</strong>:</p>
+<p><span class="math display">\[
+\ell(\theta) = \sum_{i=1}^{n} \log f(X_i; \theta).
+\]</span></p>
+<p>Para encontrar el estimador de máxima verosimilitud <span
+class="math inline">\(\hat{\theta}\)</span>, se resuelve:</p>
+<p><span class="math display">\[
+\frac{d}{d\theta} \ell(\theta) = 0.
+\]</span></p>
+<p>Características del Método de Máxima Verosimilitud:</p>
+<ul>
+<li>Proporciona <strong>estimadores asintóticamente eficientes</strong>,
+lo que significa que convergen a los valores verdaderos con menor
+varianza posible a medida que el tamaño de la muestra aumenta.</li>
+<li>Es ampliamente utilizado en <strong>modelos paramétricos</strong>,
+incluyendo distribuciones normales, Poisson, binomial, exponencial y
+muchas más.</li>
+<li>En algunos casos, las soluciones requieren <strong>algoritmos
+numéricos</strong> debido a la complejidad de las derivadas.</li>
+</ul>
+<hr />
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En una <strong>fábrica de bombillas</strong>, se estudia la
+<strong>duración de vida útil</strong> (en horas) de las bombillas antes
+de que fallen. Se ha observado que la vida útil de una bombilla sigue
+una <strong>distribución Gamma</strong> con parámetros <span
+class="math inline">\(\alpha\)</span> (forma) y <span
+class="math inline">\(\beta\)</span> (escala).</p>
+<p>Para estimar los parámetros de esta distribución, se selecciona una
+muestra aleatoria de <strong>10 bombillas</strong> y se registran sus
+tiempos de vida útil en horas:</p>
+<pre>
+vida_util <- c(1200, 1350, 1100, 1450, 1300, 1250, 1400, 1280, 1320, 1380)
+</pre>
+<p>Se desea estimar los valores de <span
+class="math inline">\(\alpha\)</span> y <span
+class="math inline">\(\beta\)</span> utilizando el método de los
+momentos.</p>
+<hr />
+<p>Paso 1: Determinación de los Momentos Poblacionales</p>
+<p>Para una <strong>distribución Gamma</strong> con parámetros <span
+class="math inline">\(\alpha\)</span> (forma) y <span
+class="math inline">\(\beta\)</span> (escala), los primeros momentos
+poblacionales están dados por:</p>
+<ul>
+<li><p><strong>Media poblacional</strong>:</p>
+<p><span class="math display">\[
+E[X] = \alpha \beta
+\]</span></p>
+<p>Esto significa que el valor esperado de la duración de vida útil de
+una bombilla es igual al producto de los parámetros <span
+class="math inline">\(\alpha\)</span> y <span
+class="math inline">\(\beta\)</span>.</p></li>
+<li><p><strong>Varianza poblacional</strong>:</p>
+<p><span class="math display">\[
+\text{Var}(X) = \alpha \beta^2
+\]</span></p></li>
+<li><p><strong>Segundo momento poblacional</strong>:</p>
+<p>Se puede obtener utilizando la propiedad de la varianza:</p>
+<p><span class="math display">\[
+E[X^2] = \text{Var}(X) + (E[X])^2
+\]</span></p>
+<p>Sustituyendo las expresiones de la varianza y la media:</p>
+<p><span class="math display">\[
+E[X^2] = \alpha \beta^2 + (\alpha \beta)^2
+\]</span></p>
+<p>Factorizando:</p>
+<p><span class="math display">\[
+E[X^2] = \alpha \beta^2 (1 + \alpha)
+\]</span></p></li>
+</ul>
+<p>Paso 2: Determinación de los Momentos Muestrales</p>
+<p>En la práctica, los momentos poblacionales son desconocidos, por lo
+que deben ser estimados a partir de una muestra aleatoria de tamaño
+<span class="math inline">\(n\)</span>. Los <strong>momentos
+muestrales</strong> son las estimaciones empíricas de los momentos
+poblacionales y se calculan como sigue:</p>
+<ul>
+<li><p><strong>Media muestral</strong>:</p>
+<p><span class="math display">\[
+M_1 = \bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i
+\]</span></p>
+<p>La media muestral <span class="math inline">\(\bar{X}\)</span> es la
+estimación empírica del valor esperado <span
+class="math inline">\(E[X]\)</span>.</p></li>
+<li><p><strong>Varianza muestral</strong>:</p>
+<p><span class="math display">\[
+S^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2
+\]</span></p>
+<p>La varianza muestral <span class="math inline">\(S^2\)</span> estima
+la varianza poblacional <span
+class="math inline">\(\text{Var}(X)\)</span> y nos da una medida de la
+dispersión de los datos alrededor de la media.</p></li>
+<li><p><strong>Segundo momento muestral</strong>:</p>
+<p><span class="math display">\[
+M_2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2
+\]</span></p>
+<p>El segundo momento muestral <span class="math inline">\(M_2\)</span>
+es una estimación del momento poblacional <span
+class="math inline">\(E[X^2]\)</span> y se relaciona con la varianza de
+la siguiente manera:</p>
+<p><span class="math display">\[
+M_2 = S^2 + \bar{X}^2
+\]</span></p>
+<p>Estos momentos muestrales nos permitirán encontrar estimaciones para
+los parámetros <span class="math inline">\(\alpha\)</span> y <span
+class="math inline">\(\beta\)</span> en el siguiente paso, mediante la
+igualación con los momentos poblacionales.</p></li>
+</ul>
+<p>Paso 3: Aplicación del Método de los Momentos</p>
+<p>El <strong>método de los momentos</strong> consiste en igualar los
+momentos muestrales con los momentos poblacionales y resolver el sistema
+resultante para obtener estimaciones de los parámetros desconocidos.</p>
+<p>A partir de los <strong>momentos poblacionales</strong> de una
+distribución Gamma <span class="math inline">\(X \sim
+\text{Gamma}(\alpha, \beta)\)</span>:</p>
+<p><span class="math display">\[
+E[X] = \alpha \beta, \quad E[X^2] = \alpha \beta^2 + (\alpha \beta)^2
+\]</span></p>
+<p>Y los <strong>momentos muestrales</strong> determinados:</p>
+<p><span class="math display">\[
+M_1 = \bar{X}, \quad M_2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2
+\]</span></p>
+<p>Igualamos los momentos muestrales con los poblacionales:</p>
+<p><span class="math display">\[
+M_1 = E[X] \quad \Rightarrow \quad \bar{X} = \alpha \beta
+\]</span></p>
+<p><span class="math display">\[
+M_2 = E[X^2] \quad \Rightarrow \quad S^2 + \bar{X}^2 = \alpha \beta^2 +
+(\alpha \beta)^2
+\]</span></p>
+<p>Reemplazamos <span class="math inline">\(\alpha \beta =
+\bar{X}\)</span>:</p>
+<p><span class="math display">\[
+S^2 + \bar{X}^2 = \frac{\bar{X}^2}{\alpha} + \bar{X}^2
+\]</span></p>
+<p>Despejamos <span class="math inline">\(\alpha\)</span>:</p>
+<p><span class="math display">\[
+S^2 = \frac{\bar{X}^2}{\alpha} \quad \Rightarrow \quad \alpha =
+\frac{\bar{X}^2}{S^2}
+\]</span></p>
+<p>Ahora, sustituimos <span class="math inline">\(\alpha\)</span> en la
+ecuación <span class="math inline">\(\bar{X} = \alpha \beta\)</span>
+para despejar <span class="math inline">\(\beta\)</span>:</p>
+<p><span class="math display">\[
+\beta = \frac{S^2}{\bar{X}}
+\]</span></p>
+<p>Por lo tanto, los estimadores de los parámetros <span
+class="math inline">\(\alpha\)</span> y <span
+class="math inline">\(\beta\)</span> por el método de los momentos
+son:</p>
+<p><span class="math display">\[
+\hat{\alpha} = \frac{\bar{X}^2}{S^2}, \quad \hat{\beta} =
+\frac{S^2}{\bar{X}}
+\]</span></p>
+<p>Estos estimadores permiten obtener aproximaciones de los parámetros
+poblacionales basándose en una muestra aleatoria. En la siguiente
+sección, se analizará su interpretación y comparación con otros métodos
+de estimación.</p>
+<p>Paso 4: Cálculo Numérico</p>
+<p>Con los siguientes códigos el problema se resuelve numéricamente.</p>
+<pre>
+# Datos de la muestra
+vida_util <- c(1200, 1350, 1100, 1450, 1300, 1250, 1400, 1280, 1320, 1380)
+
+# Cálculo de la media muestral
+media_muestral <- mean(vida_util)
+
+# Cálculo del segundo momento muestral
+segundo_momento_muestral <- mean(vida_util^2)
+
+# Estimación de alpha
+alpha_est <- media_muestral^2 / (segundo_momento_muestral - media_muestral^2)
+
+# Estimación de beta
+beta_est <- media_muestral / alpha_est
+
+alpha_est
+beta_est
+</pre>
+<pre class="r"><code># Datos de la muestra
+vida_util &lt;- c(1200, 1350, 1100, 1450, 1300, 1250, 1400, 1280, 1320, 1380)
+
+# Cálculo de la media muestral
+media_muestral &lt;- mean(vida_util)
+
+# Cálculo del segundo momento muestral
+segundo_momento_muestral &lt;- mean(vida_util^2)
+
+# Estimación de alpha
+alpha_est &lt;- media_muestral^2 / (segundo_momento_muestral - media_muestral^2)
+
+# Estimación de beta
+beta_est &lt;- media_muestral / alpha_est
+
+alpha_est</code></pre>
+<pre><code>[1] 179.4534</code></pre>
+<pre class="r"><code>beta_est</code></pre>
+<pre><code>[1] 7.260936</code></pre>
+<p>Y los resultados de las estimaciones de los parámetros de la
+distribución Gamma son:</p>
+<pre>
+
+> alpha_est
+[1] 179.4534
+> beta_est
+[1] 7.260936
+
+</pre>
+<p>Ahora reemplazando en los estimadores determinados analíticamente
+tenemos:</p>
+<pre>
+
+# Datos de la muestra
+vida_util <- c(1200, 1350, 1100, 1450, 1300, 1250, 1400, 1280, 1320, 1380)
+
+# Cálculo de la media muestral
+media_muestral <- mean(vida_util)
+
+# Cálculo del segundo momento muestral
+segundo_momento_muestral <- mean(vida_util^2)
+
+# Estimación de alpha
+alpha_est <- media_muestral^2 / (segundo_momento_muestral - media_muestral^2)
+
+# Estimación de beta
+beta_est <- media_muestral / alpha_est
+
+alpha_est
+beta_est
+
+</pre>
+<pre class="r"><code># Datos de la muestra
+vida_util &lt;- c(1200, 1350, 1100, 1450, 1300, 1250, 1400, 1280, 1320, 1380)
+
+# Cálculo de la media muestral
+media_muestral &lt;- mean(vida_util)
+
+# Cálculo del segundo momento muestral
+segundo_momento_muestral &lt;- mean(vida_util^2)
+
+# Estimación de alpha
+alpha_est &lt;- media_muestral^2 / (segundo_momento_muestral - media_muestral^2)
+
+# Estimación de beta
+beta_est &lt;- media_muestral / alpha_est
+
+alpha_est</code></pre>
+<pre><code>[1] 179.4534</code></pre>
+<pre class="r"><code>beta_est</code></pre>
+<pre><code>[1] 7.260936</code></pre>
+</p>
+</div>
+También se obtuvieron los mismos resultados:
+<pre>
+
+> alpha_est
+[1] 179.4534
+> beta_est
+[1] 7.260936
+
+</pre>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En una <strong>fábrica de bombillas LED</strong>, es crucial modelar
+la <strong>vida útil</strong> de sus productos para optimizar el control
+de calidad y establecer garantías. Se sabe que el tiempo de
+funcionamiento continuo antes de que una bombilla falle sigue una
+<strong>distribución exponencial</strong> con parámetro <span
+class="math inline">\(\lambda\)</span>, donde la <strong>media
+poblacional</strong> está dada por:</p>
+<p><span class="math display">\[
+E[X] = \frac{1}{\lambda}
+\]</span></p>
+<p>Para estimar el parámetro <span
+class="math inline">\(\lambda\)</span>, se selecciona una muestra
+aleatoria de <strong><span class="math inline">\(n =
+10\)</span></strong> bombillas y se registran sus tiempos de vida en
+horas.</p>
+<p>Con base en estos datos determinado como:</p>
+<pre>
+# Cargar librería
+set.seed(123)  # Fijar semilla para reproducibilidad
+
+# Simular una muestra de tiempos de vida útil de bombillas (Exponencial con lambda desconocido)
+muestra <- rexp(10, rate = 1/5000)  # Vida media esperada de 5000 horas
+</pre>
+<pre class="r"><code># Cargar librería
+set.seed(123)  # Fijar semilla para reproducibilidad
+
+# Simular una muestra de tiempos de vida útil de bombillas (Exponencial con lambda desconocido)
+muestra &lt;- rexp(10, rate = 1/5000)  # Vida media esperada de 5000 horas</code></pre>
+<p>Paso 1: Planteamiento de la Función de Verosimilitud</p>
+<p>Para estimar el parámetro <span
+class="math inline">\(\lambda\)</span> de la distribución
+<strong>Exponencial</strong>, consideramos que los tiempos de vida útil
+de las bombillas <span class="math inline">\(X_1, X_2, \dots,
+X_n\)</span> son variables aleatorias <strong>independientes e
+idénticamente distribuidas (i.i.d.)</strong> con función de
+densidad:</p>
+<p><span class="math display">\[
+f(x; \lambda) = \lambda e^{-\lambda x}, \quad x &gt; 0
+\]</span></p>
+<p>Dado que la muestra está compuesta por <span
+class="math inline">\(n\)</span> observaciones <span
+class="math inline">\(X_1, X_2, \dots, X_n\)</span>, la <strong>función
+de verosimilitud</strong> se define como el producto de las densidades
+de cada observación:</p>
+<p><span class="math display">\[
+L(\lambda) = \prod_{i=1}^{n} \lambda e^{-\lambda X_i}
+\]</span></p>
+<p>Expandiendo el producto:</p>
+<p><span class="math display">\[
+L(\lambda) = \lambda^n e^{-\lambda \sum X_i}
+\]</span></p>
+<p>Esta función representa la <strong>probabilidad conjunta</strong> de
+observar la muestra dada la distribución poblacional con el parámetro
+<span class="math inline">\(\lambda\)</span>. El siguiente paso consiste
+en transformar esta función en la <strong>log-verosimilitud</strong>
+para facilitar su optimización.</p>
+<p>Paso 2: Función Log-Verosimilitud y Estimador de Máxima
+Verosimilitud</p>
+<p>Para facilitar la derivación del estimador de máxima verosimilitud,
+aplicamos el logaritmo natural a la función de verosimilitud:</p>
+<p><span class="math display">\[
+\ell(\lambda) = \log L(\lambda) = \log \left( \lambda^n e^{-\lambda \sum
+X_i} \right)
+\]</span></p>
+<p>Utilizando las propiedades del logaritmo:</p>
+<p><span class="math display">\[
+\ell(\lambda) = n \log \lambda - \lambda \sum X_i
+\]</span></p>
+<p>Para encontrar el <strong>estimador de máxima verosimilitud
+(EMV)</strong> de <span class="math inline">\(\lambda\)</span>,
+derivamos la función log-verosimilitud con respecto a <span
+class="math inline">\(\lambda\)</span>:</p>
+<p><span class="math display">\[
+\frac{d\ell(\lambda)}{d\lambda} = \frac{n}{\lambda} - \sum X_i
+\]</span></p>
+<p>Igualamos a <strong>cero</strong> para encontrar el valor óptimo de
+<span class="math inline">\(\lambda\)</span>:</p>
+<p><span class="math display">\[
+\frac{n}{\lambda} - \sum X_i = 0
+\]</span></p>
+<p>Despejamos <span class="math inline">\(\lambda\)</span>:</p>
+<p><span class="math display">\[
+\hat{\lambda} = \frac{n}{\sum X_i}
+\]</span></p>
+<p>Este es el <strong>estimador de máxima verosimilitud</strong> de
+<span class="math inline">\(\lambda\)</span>. En términos de la
+<strong>media muestral</strong> <span
+class="math inline">\(\bar{X}\)</span>, podemos reescribirlo como:</p>
+<p><span class="math display">\[
+\hat{\lambda} = \frac{1}{\bar{X}}
+\]</span></p>
+<p>Este resultado muestra que el estimador de máxima verosimilitud del
+parámetro <span class="math inline">\(\lambda\)</span> es el
+<strong>inverso de la media muestral</strong>. A continuación,
+implementaremos este estimador en <strong>R</strong> para calcularlo a
+partir de una muestra simulada.</p>
+<pre>
+# Cargar librería
+set.seed(123)  # Fijar semilla para reproducibilidad
+
+# Simular una muestra de tiempos de vida útil de bombillas (Exponencial con lambda desconocido)
+muestra <- rexp(10, rate = 1/5000)  # Vida media esperada de 5000 horas
+
+# Calcular la media muestral
+media_muestral <- mean(muestra)
+
+# Estimador de máxima verosimilitud
+lambda_estimado <- 1 / media_muestral
+
+# Mostrar resultados
+cat("Muestra de tiempos de vida útil (horas):", muestra, "\n")
+cat("Media muestral (X̄):", media_muestral, "\n")
+cat("Estimador de lambda (EMV):", lambda_estimado, "\n")
+</pre>
+<pre class="r"><code># Cargar librería
+set.seed(123)  # Fijar semilla para reproducibilidad
+
+# Simular una muestra de tiempos de vida útil de bombillas (Exponencial con lambda desconocido)
+muestra &lt;- rexp(10, rate = 1/5000)  # Vida media esperada de 5000 horas
+
+# Calcular la media muestral
+media_muestral &lt;- mean(muestra)
+
+# Estimador de máxima verosimilitud
+lambda_estimado &lt;- 1 / media_muestral
+
+# Mostrar resultados
+#cat(&quot;Muestra de tiempos de vida útil (horas):&quot;, muestra, &quot;\n&quot;)
+#cat(&quot;Media muestral (X̄):&quot;, media_muestral, &quot;\n&quot;)
+#cat(&quot;Estimador de lambda (EMV):&quot;, lambda_estimado, &quot;\n&quot;)</code></pre>
+<p>Los resultados obtenidos a partir de la muestra generada son:</p>
+<ul>
+<li><p><strong>Media muestral observada</strong>:<br />
+<span class="math display">\[
+\bar{X} = 3184.148
+\]</span></p></li>
+<li><p><strong>Estimador de <span class="math inline">\(\lambda\)</span>
+(EMV) calculado</strong>:<br />
+<span class="math display">\[
+\hat{\lambda} = \frac{1}{\bar{X}} = 0.0003141
+\]</span></p></li>
+<li><p><strong>Valor real de <span
+class="math inline">\(\lambda\)</span></strong>:<br />
+<span class="math display">\[
+0.0002
+\]</span></p></li>
+</ul>
+<p>Se observa que el valor estimado de <span
+class="math inline">\(\lambda\)</span> difiere del valor real debido a
+la <strong>variabilidad muestral</strong>. Como la muestra es
+<strong>pequeña (<span class="math inline">\(n = 10\)</span>)</strong>,
+la media muestral puede diferir considerablemente de la media
+poblacional.</p>
+</p>
+</div>
+<!-- El método de momentos fue propuesto por Karl Pearson al rededor de 1895, pensado en sus inicios en contexto descriptivo, analizando las distribuciones de probabilidad y aprisionándolas al sistema de curvas que llevan su nombre. Posteriormente este concepto fue modificado por R.A. Fisher en 1920. El método consiste en estimar un parámetro de una distribución igualando sus momentos teóricos o poblacionales, si existen, con los correspondientes momentos muestrales. -->
+<!-- Para mostrar este método es necesario definir el concepto de momento. -->
+<!-- <br/> -->
+<!-- ## <span style="color:#034a94">**Momento Poblacional**</span>  -->
+<!-- | Caso discreto                           |Caso continuo                          | -->
+<!-- |:---------------------------------------:|:-------------------------------------:| -->
+<!-- |$$\mu^{k}=E\big[X^{k}\big]=\sum_{R_X} x^{k}p(x)$$ |$$\mu^{k}=E\big[X^{k}\big]=\int_{-\infty}^{\infty}x^{k}f(x) dx $$ | -->
+<!-- ###  <span style="color:#034a94">**Momentos muestrales**</span>  -->
+<!-- En ambos casos  -->
+<!-- $$m^{k}=\frac{1}{n}\sum_{i=1}^{n} x_{i}^{k} $$  -->
+<!-- <br/> -->
+<!-- El método de momentos supone que los momentos tanto poblacionales como muestrales son conocidos, y por lo tanto también la función de probabilidad.  -->
+<!-- A continuación se relacionan algunos de estos momentos poblacionales: -->
+<!-- <br/> -->
+<!-- <center> -->
+<!-- **Tabla 2.7** Valor esperado y varianza de algunos modelos de probabilidad -->
+<!-- </center> -->
+<!-- | Distribución | $E[X]$               | $V[X]=E[X^{2}]-E[X]^{2}$        | -->
+<!-- |:-------------|:---------------------|:--------------------------------| -->
+<!-- | bernoulli    | $p$                  | $pq$                            | -->
+<!-- | geométrica   | $\displaystyle\frac{1}{p}$ | $\displaystyle\frac{q}{p^{2}}$  | -->
+<!-- | binomial     | $np$                 | $npq$                           | -->
+<!-- | Poisson      | $\lambda$            | $\lambda$                       |  -->
+<!-- | gamma        | $\alpha\beta$        | $\alpha\beta^{2}$               | -->
+<!-- | exponencial  | $\beta$              | $\beta^{2}$                     |  -->
+<!-- | uniforme     | $\displaystyle\frac{a+b}{2}$| $\displaystyle\frac{(b-a)^{2}}{12}$ | -->
+<!-- | normal       | $\mu$                |$\sigma^{2}$                     | -->
+<!-- |              |                      |                                 | -->
+<!-- <br/> -->
+<!-- Nota: Existe una relación entre las distribuciones Poisson y exponencial.Se podrían dar en función de $\lambda$, haciendo $\beta=\dfrac{1}{\lambda}$   -->
+<!-- <br/><br/> -->
+<!-- ### <span style="color:#FF7F00"> **Ejemplo**</span> -->
+<!-- <br/> -->
+<!-- Encuentre los estimadores de los parámetros de la distribución normal a través del método de momentos. -->
+<!-- Previamente sabemos que los parámetros de una variable con distribución normal son $E[X]=\mu$ y $V[X]=\sigma^{2}$ y que $V[X]=E[X^{2}]-E[X]^{2}$. Dada esta información el estimador de momentos se construye de la siguiente manera:  -->
+<!-- $$M^{1}=m^{1}$$ -->
+<!-- $$M^{2}=m^{2}$$ -->
+<!-- Aplicando el método: -->
+<!-- <br/> -->
+<!-- |                                                    | -->
+<!-- |:---------------------------------------------------| -->
+<!-- |$$M^{1}= m^{1}$$ | -->
+<!-- |$$\mu  =  \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}$$| -->
+<!-- |$$\widehat{\mu} = \displaystyle\frac{1}{n}\sum_{i=1}^{n} x_{i}=\bar{x}$$| -->
+<!-- <br/> -->
+<!-- Para estimar $\sigma^{2}$, se realiza el siguiente procedimiento, usando $\mu^{1}=m^{1}$  y $\mu^{2}=m^{2}$. -->
+<!-- $$V[X]=E[X^{2}]-E[X]^{2} = \mu^{2}-(\mu^{1})^{2}$$ -->
+<!-- entonces igualamos estos dos momentos poblacionales con sus respectivos momentos muestrales quedando la igualdad -->
+<!-- $$\begin{eqnarray*} -->
+<!--    V[X]&=& \mu^{2}-(\mu^{1})^{2}\\ -->
+<!--    &=&m^{2}-(m^{1})^{2}\\ -->
+<!--    &=&\displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2} -->
+<!-- \end{eqnarray*}$$ -->
+<!-- podemos representar la varianza por $\sigma^{2}$ y obtenemos -->
+<!-- $$\widehat{\sigma^{2}}=\displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}$$ -->
+<!-- y obtenemos el estimador de la varianza: -->
+<!-- <br/> -->
+<!-- |                       |                                                                                                   | -->
+<!-- |----------------------:|:--------------------------------------------------------------------------------------------------| -->
+<!-- |$\widehat{\sigma^{2}}$ | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}$                                   | -->
+<!-- |$\widehat{\sigma^{2}}$ | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}-\bar{x}^{2}+\bar{x}^{2}$           | -->
+<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-2\bar{x}^{2}+\bar{x}^{2}$                      | -->
+<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\displaystyle\frac{2\bar{x}\sum x_{i}}{n}+\displaystyle\frac{n \bar{x}^{2}}{n}$ | -->
+<!-- |                       | $= \displaystyle\frac{1}{n}\Big(\sum_{i=1}^{n} x_{i}^{2}-2\bar{x}\sum_{i=1}^{n} x_{i}+\bar{x}^{2}\Big)$ | -->
+<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}\Big(x_i-\bar{x}\Big)^{2}$        | -->
+<!-- <br/><br/> -->
+<!-- En resumen los estimadores de momentos para los parámetros de la distribución normal son: -->
+<!-- $$\widehat{\mu} = \displaystyle\frac{1}{n}\sum_{i=1}^{n} x_{i}=\bar{x}$$ -->
+<!-- $$\widehat{\sigma^{2}} = \displaystyle\frac{1}{n}\sum_{i=1}^{n}\Big(x-\bar{x}\Big)^{2}$$  -->
+<!-- A partir de ellos y mediante la obtención de una muestra aleatoria por ejemplo :630, 650, 710, 750, 790, 820, 860 y 910 se pueden estimar los parámetros por método de momentos con los siguientes resultados: -->
+<!-- $$\widehat{\mu}=765$$   -->
+<!-- $$\widehat{\sigma^{2}}=8550$$ -->
+<!-- ## <span style="color:#034a94">**Método de Máxima Verosimilitud**</span> -->
+<!-- Uno de los mejores métodos para obtener un estimador puntual de un parámetro es el método de **Máxima Verosimilitud** o de máxima probabilidad. Esta técnica fue desarrollada en 1920 por el estadístico británico Sir R.A. Fisher, afirmando que el estimador será el valor del parámetro que maximice la función de verosimilitud $L(\theta)$. \\ \\ -->
+<!-- La función de verosimilitud $L(\theta)$ corresponde a la función de distribución conjunta de variables aleatorias independientes con igual función de distribución. Estas variables aleatorias corresponden a las variables que conforman la muestra. -->
+<!-- % -->
+<!-- $$L(\theta)=f(x_{1},\theta).f(x_{2},\theta).f(x_{3},\theta)....f(x_{n}),\theta)$$ -->
+<!-- El objetivo del método será encontrar el valor del parámetro que maximice la probabilidad conjunta, suponiendo el conocimiento de la función de distribución de probabilidad de la variable en estudio.  -->
+<!-- </br></br> -->
+<!-- ### <span style="color:#FF7F00"> **Ejemplo**</span> -->
+<!-- Para el caso de la distribución normal cuya función de distribución de probabilidad esta dada por : -->
+<!-- $$f(x_{i})=\frac{1}{\sqrt{2\pi}\sigma^{2}} \exp{\Bigg(-\frac{1}{2\sigma^{2}}\big(x_{i}-\mu\big)^{2}\Bigg)}$$ -->
+<!-- La función de verosimulitud estará dada por: -->
+<!-- $$L(x_{1},x_{2},..,x_{n};\mu,\sigma^{2})=f(x_{1};\mu,\sigma^{2})....f(x_{n};\mu,\sigma^{2})$$ -->
+<!-- Esta función se puede escribir como : -->
+<!-- $$L(x_{1},\cdots,x_{n};\mu,\sigma^{2})=\displaystyle\prod_{i=1}^{n} \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp{\Bigg(-\frac{1}{2\sigma^{2}}\big(x_{i}-\mu\big)^{2}\Bigg)} $$ -->
+<!-- $$L=\displaystyle\Big(\frac{1}{2\pi \sigma^{2}}\Big)^{n/2} \exp \Bigg(\sum_{i=1}^{n}\frac{-1}{2\sigma^{2}}(x_{i}-\mu)^{2}\Bigg) $$ -->
+<!-- $$L=\displaystyle\Big(2\pi \sigma^{2}\Big)^{-n/2} \exp \Bigg(\frac{-1}{2\sigma^{2}}\sum_{i=1}^{n}(x_{i}-\mu)^{2}\Bigg) $$ -->
+<!-- El método consiste en encontrar el valor del parámetro que maximice esta función para lo cual procedemos a derivar $L$ parcialmente con respecto al parámetro objetivo, por ejemplo $\mu$. -->
+<!-- Este proceso presenta algunas dificultades de cálculo que son atenuadas mediante la premisa de que el *máximo de la función $L$ corresponde a los mismos máximos de la función $\ln(L)$*, la cual es más sencilla de derivar. Este procedimiento es posible debido a que la función $L$ es creciente. -->
+<!-- Convertimos $L$ en $ln(L)$ -->
+<!-- $$\ln(L)= -\displaystyle\frac{n}{2} \ln(2\pi) - \displaystyle\frac{n}{2} \ln(\sigma^{2}) -\displaystyle\frac{1}{2\sigma^{2}}\displaystyle\sum_{i=1}^{n}(x_{i}-\mu)^{2}$$ -->
+<!-- Al derivar parcialmente $\ln(L)$ con respecto a $\mu$ tenemos: -->
+<!-- $$\displaystyle\frac{\partial \ln(L)}{\partial \mu}= \displaystyle\frac{2}{2\sigma^{2}}  \displaystyle\sum_{i=1}^{n} (x_{i}-\mu) =0$$ -->
+<!-- De esta igualdad se despeja el parámetro de interés -->
+<!-- $$\sigma^{2} \hspace{.2cm} \frac{1}{\sigma^{2}}\sum_{i=1}^{n} (x_{i}-\mu) =0 \hspace{.2cm}  \sigma^{2} $$ -->
+<!-- $$\sum_{i=1}^{n} x_{i} - n \mu =0$$ -->
+<!-- $$\widehat{\mu}=\frac{1}{n}\sum_{i=1}^{n} x_{i} = \bar{x}$$ -->
+<!-- En el caso de la estimación de $\sigma^{2}$, se deriva $\ln(L)$ parcialmente con respecto a $\sigma^{2}$, se iguala a cero el resultado obtenido y por último se despeja $\sigma^{2}$. Verifique que el estimador de máxima verosimilitud para la varianza es igual a: -->
+<!-- $$\widehat{\sigma^{2}}=\frac{1}{n}\sum_{i=1}^{n} \big(x_{i}-\mu \big)^{2} $$ -->
+<!-- <br/><br/><br/> -->
+<!-- La construcción de estimadores de parámetros tiene un soporte matemático que está basado en  el valor esperado y las funciones de probabilidad revisadas anteriormente. También supone que las muestras son tomadas aleatoriamente y que valores obtenidos son independiente unos de otros.  -->
+<!-- A continuación se presentan el método de Momentos y el **método de Máxima Verosimilitud**: -->
+<!-- ### <span style="color:#034a94">**Método de momentos**</span> -->
+<!-- <br/> -->
+<!-- El **método de momentos** fue propuesto por Karl Pearson al rededor de 1895, pensado en sus inicios en contexto descriptivo, analizando las distribuciones de probabilidad y aproximándolas al sistema de curvas que llevan su nombre. Posteriormente este concepto fue modificado por R.A. Fisher en 1920. El método consiste en estimar un parámetro de una distribución igualando sus momentos teóricos o poblacionales, si existen, con los correspondientes momentos muestrales. -->
+<!-- Para mostrar este método es necesario definir el concepto de momento. -->
+<!-- <br/> -->
+<!-- <div class="content-box-blue"> -->
+<!-- ### <span style="color:#034a94">**Momento Poblacional**</span>  -->
+<!-- |  caso variable discreta                         |caso variable continua  | -->
+<!-- |:------------------------------------------------|:------------------------------------------------| -->
+<!-- |$\mu^{k}=E\big[X^{k}\big] = \displaystyle\sum_{R_X} x^{k}p(x)$ |$\mu^{k}=E\big[X^{k}\big]=\int_{-\infty}^{\infty}x^{k}f(x)\:dx$| -->
+<!-- </div> -->
+<!-- <br/> -->
+<!-- ### <span style="color:#034a94">**Momentos muestrales**</span>     -->
+<!-- En ambos casos -->
+<!-- $$m^{k}=\frac{1}{n}\sum_{i=1}^{n} x_{i}^{k} $$   -->
+<!-- El método de momentos supone que los momentos tanto poblacionales como muestrales son conocidos, y por lo tanto también la función de probabilidad.  -->
+<!-- A continuación se relacionan algunos de estos momentos poblacionales: -->
+<!-- <br -->
+<!-- <center> -->
+<!-- **Tabla 2.7**  Valor esperado y varianza de los principales modelos de probabilidad -->
+<!-- | Distribución | $E[X]$               | $V[X]=E[X^{2}]-E[X]^{2}$        | -->
+<!-- |:-------------|:---------------------|:--------------------------------| -->
+<!-- | bernoulli    | $p$                  | $pq$                            | -->
+<!-- | geométrica   | $\displaystyle\frac{1}{p}$ | $\displaystyle\frac{q}{p^{2}}$  | -->
+<!-- | binomial     | $np$                 | $npq$                           | -->
+<!-- | Poisson      | $\lambda$            | $\lambda$                       |  -->
+<!-- | gamma        | $\alpha\beta$        | $\alpha\beta^{2}$               | -->
+<!-- | exponencial  | $\beta$              | $\beta^{2}$                     |  -->
+<!-- | uniforme     | $\displaystyle\frac{a+b}{2}$| $\displaystyle\frac{(b-a)^{2}}{12}$ | -->
+<!-- | normal       | $\mu$                |$\sigma^{2}$                     | -->
+<!-- </center> -->
+<!-- <br/> -->
+<!-- <div class="content-box-gray"> -->
+<!-- ### <span style="color:#686868">**Nota**</span>  -->
+<!-- Existe una relación entre las distribuciones `Poisson` y `exponencial`. Su valores esperados son inversos y e podrían denotar en función de $\lambda$, haciendo $\beta=\dfrac{1}{\lambda}$   -->
+<!-- </div> -->
+<!-- <br/><br/> -->
+<!-- ### <span style="color:#FF7F00"> **Ejemplo**</span> -->
+<!-- <br/> -->
+<!-- Encuentre los estimadores de los parámetros de la distribución normal a través del método de momentos. -->
+<!-- Previamente sabemos que los parámetros de una variable con distribución normal son $E[X]=\mu$ y $V[X]=\sigma^{2}$ y que $V[X]=E[X^{2}]-E[X]^{2}$. Dada esta información el estimador de momentos se construye de la siguiente manera:  -->
+<!-- $$M^{1}=m^{1}$$ -->
+<!-- $$M^{2}=m^{2}$$ -->
+<!-- Aplicando el método: -->
+<!-- <br/> -->
+<!-- |                                                    | -->
+<!-- |:---------------------------------------------------| -->
+<!-- |$$M^{1}= m^{1}$$ | -->
+<!-- |$$\mu  =  \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}$$| -->
+<!-- |$$\widehat{\mu} = \displaystyle\frac{1}{n}\sum_{i=1}^{n} x_{i}=\bar{x}$$| -->
+<!-- <br/> -->
+<!-- Para estimar $\sigma^{2}$, se realiza el siguiente procedimiento, usando $\mu^{1}=m^{1}$  y $\mu^{2}=m^{2}$. -->
+<!-- $$V[X]=E[X^{2}]-E[X]^{2} = \mu^{2}-(\mu^{1})^{2}$$ -->
+<!-- entonces igualamos estos dos momentos poblacionales con sus respectivos momentos muestrales quedando la igualdad -->
+<!-- $$\begin{eqnarray*} -->
+<!--    V[X]&=& \mu^{2}-(\mu^{1})^{2}\\ -->
+<!--    &=&m^{2}-(m^{1})^{2}\\ -->
+<!--    &=&\displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2} -->
+<!-- \end{eqnarray*}$$ -->
+<!-- podemos representar la varianza por $\sigma^{2}$ y obtenemos -->
+<!-- $$\widehat{\sigma^{2}}=\displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}$$ -->
+<!-- y obtenemos el estimador de la varianza: -->
+<!-- <br/> -->
+<!-- |                       |                                                                                                   | -->
+<!-- |----------------------:|:--------------------------------------------------------------------------------------------------| -->
+<!-- |$\widehat{\sigma^{2}}$ | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}$                                   | -->
+<!-- |$\widehat{\sigma^{2}}$ | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}-\bar{x}^{2}+\bar{x}^{2}$           | -->
+<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-2\bar{x}^{2}+\bar{x}^{2}$                      | -->
+<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\displaystyle\frac{2\bar{x}\sum x_{i}}{n}+\displaystyle\frac{n \bar{x}^{2}}{n}$ | -->
+<!-- |                       | $= \displaystyle\frac{1}{n}\Big(\sum_{i=1}^{n} x_{i}^{2}-2\bar{x}\sum_{i=1}^{n} x_{i}+\bar{x}^{2}\Big)$ | -->
+<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}\Big(x_i-\bar{x}\Big)^{2}$        | -->
+<!-- <br/><br/> -->
+<!-- En resumen los estimadores de momentos para los parámetros de la distribución normal son: -->
+<!-- $$\widehat{\mu} = \displaystyle\frac{1}{n}\sum_{i=1}^{n} x_{i}=\bar{x}$$ -->
+<!-- $$\widehat{\sigma^{2}} = \displaystyle\frac{1}{n}\sum_{i=1}^{n}\Big(x-\bar{x}\Big)^{2}$$  -->
+<!-- A partir de ellos y mediante la obtención de una muestra aleatoria por ejemplo :630, 650, 710, 750, 790, 820, 860 y 910 se pueden estimar los parámetros por método de momentos con los siguientes resultados: -->
+<!-- $$\widehat{\mu}=765$$   -->
+<!-- $$\widehat{\sigma^{2}}=8550$$ -->
+<!-- <br/><br/><br/><br/> -->
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

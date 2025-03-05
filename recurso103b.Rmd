@@ -1,0 +1,72 @@
+---
+title: <span style="color:#686868">  **Axiomas**</span>
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+
+<h2>Postulados de probabilidad</h2>
+
+<br/><br/>
+<h3> $A_{1}$: Probabilidad del espacio muestral</h3>
+
+Sea $S$ un espacio muestral asociado a un experimento. Entonces, se cumple que:
+
+\[
+P(S) = 1
+\]
+
+
+<br/><br/>
+<h3> $A_{2}$:  Probabilidad de un evento</h3>
+
+Para cualquier evento $A$, se cumple que:
+
+\[
+0 \leq P(A) \leq 1
+\]
+
+
+<br/><br/>
+<h3> $A_{3}$:  Probabilidad de la unión de eventos mutuamente excluyentes</h3>
+
+Si $A$ y $B$ son dos eventos mutuamente excluyentes, entonces se cumple:
+
+\[
+P(A \cup B) = P(A) + P(B)
+\]
+
+En el caso general, para eventos no mutuamente excluyentes:
+
+\[
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+\]
+
+
+<br/><br/>
+<h3> $A_{4}$:   Probabilidad del complemento de un evento</h3>
+
+Para cualquier evento $A$, la probabilidad de que $A$ no ocurra es:
+
+\[
+P(A') = 1 - P(A)
+\]
+
+
+
+<br/><br/>
+<h3> $A_{5}$:   Probabilidad de la ocurrencia nula</h3>
+
+La probabilidad de que no ocurra nada (evento vacío) es:
+
+\[
+P(\emptyset) = 0
+\]
+
+

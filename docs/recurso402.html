@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Estimación por intervalos de confianza para dos poblaciones</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Estimación por intervalos de confianza para dos
+poblaciones</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>En muchos estudios estadísticos, es común comparar dos poblaciones
+para determinar si existen diferencias significativas entre sus
+parámetros, como la <strong>media</strong>, la
+<strong>proporción</strong> o la <strong>varianza</strong>. Para ello,
+se construyen <strong>intervalos de confianza para la diferencia entre
+dos poblaciones</strong>, lo que permite realizar inferencias sobre la
+relación entre ambos grupos con un determinado nivel de certeza.</p>
+<p>El intervalo de confianza para dos poblaciones tiene como objetivo
+<strong>estimar el rango dentro del cual se encuentra la diferencia
+entre los parámetros poblacionales</strong>, garantizando un nivel de
+confianza <span class="math inline">\((1 - \alpha) \times
+100\%\)</span>. Dependiendo del tipo de variable y de la información
+disponible, estos intervalos pueden construirse para:</p>
+<ul>
+<li><strong>Diferencia de medias poblacionales</strong> (<span
+class="math inline">\(\mu_1 - \mu_2\)</span>), considerando muestras
+<strong>independientes o pareadas</strong>.</li>
+<li><strong>Diferencia de proporciones poblacionales</strong> (<span
+class="math inline">\(p_1 - p_2\)</span>), aplicable en estudios de
+encuestas o proporciones de éxito en dos grupos.</li>
+<li><strong>Razón de varianzas</strong> (<span
+class="math inline">\(\sigma_1^2 / \sigma_2^2\)</span>), útil en el
+análisis de dispersión en dos conjuntos de datos.</li>
+</ul>
+<p>Para la construcción de estos intervalos, se requiere considerar el
+<strong>tamaño muestral</strong>, la <strong>distribución de los
+datos</strong>, y si las <strong>varianzas poblacionales</strong> son
+conocidas o desconocidas. En algunos casos, el <strong>Teorema Central
+del Límite</strong> permite aproximar la distribución de la diferencia
+muestral a una distribución normal estándar, facilitando el cálculo de
+los intervalos de confianza.</p>
+<p>Estos intervalos son ampliamente utilizados en <strong>análisis
+comparativos</strong>, como estudios clínicos, pruebas de efectividad de
+tratamientos, comparación de mercados y evaluaciones de calidad en
+producción industrial.</p>
+</br></br>
+<h2>
+Intervalos de confianza para dos poblaciones
+</h2>
+<p>La <strong>Tabla 2.10</strong> presenta los intervalos de confianza
+para la comparación entre dos poblaciones, con sus respectivos
+estimadores y supuestos.</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.10</strong> Intervalos de confianza para parámetros de
+dos poblaciones.
+</center>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="46%" />
+<col width="42%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>Parámetro</strong></th>
+<th align="center"><strong>Estimador por IC</strong></th>
+<th align="center"><strong>Supuestos</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(\mu_{d}\)</span></td>
+<td align="center"><span class="math inline">\(\bar{d} \pm t_{\alpha/2,
+n-1} \dfrac{s_{d}}{\sqrt{n}}\)</span></td>
+<td align="center"><strong>Grupos pareados</strong>, <span
+class="math inline">\(d_i = x_{1i} - x_{2i}\)</span>, la diferencia
+<span class="math inline">\(D \sim N(\mu_{d}, \sigma^{2}_{d})\)</span> o
+<span class="math inline">\(n \geq 30\)</span> (Teorema del Límite
+Central)</td>
+</tr>
+<tr class="even">
+<td align="center"><span
+class="math inline">\(\mu_{1}-\mu_{2}\)</span></td>
+<td align="center"><span class="math inline">\((\bar{x}_{1}-\bar{x}_{2})
+\pm t_{\alpha/2} s_{p}
+\sqrt{\frac{1}{n_{1}}+\frac{1}{n_{2}}}\)</span></td>
+<td align="center"><strong>Grupos independientes</strong>, <span
+class="math inline">\(X_{1} \sim N(\mu_{1}, \sigma^{2}_{1})\)</span>,
+<span class="math inline">\(X_{2} \sim N(\mu_{2},
+\sigma^{2}_{2})\)</span>, varianzas poblacionales
+<strong>iguales</strong> (<span class="math inline">\(\sigma^2_1 =
+\sigma^2_2\)</span> desconocidas)</td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center">donde <span class="math inline">\(s_{p}^{2} =
+\dfrac{(n_{1}-1)s_{1}^{2}+(n_{2}-1)s_{2}^{2}}{n_{1}+n_{2}-2}\)</span> y
+<span class="math inline">\(v = n_{1} + n_{2} - 2\)</span></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"><span
+class="math inline">\(\mu_{1}-\mu_{2}\)</span></td>
+<td align="center"><span class="math inline">\((\bar{x}_{1}-\bar{x}_{2})
+\pm t_{\alpha/2, v^{*}}
+\sqrt{\frac{s_{1}^{2}}{n_{1}}+\frac{s_{2}^{2}}{n_{2}}}\)</span></td>
+<td align="center"><strong>Grupos independientes</strong>, <span
+class="math inline">\(X_{1} \sim N(\mu_{1}, \sigma^{2}_{1})\)</span>,
+<span class="math inline">\(X_{2} \sim N(\mu_{2},
+\sigma^{2}_{2})\)</span>, varianzas poblacionales
+<strong>diferentes</strong> (<span class="math inline">\(\sigma^2_1 \neq
+\sigma^2_2\)</span> desconocidas)</td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center">donde <span class="math inline">\(v^{*} =
+\frac{(s_{1}^{2}/n_{1}+s_{2}^{2}/n_{2})^{2}}{\Big[(s_{1}^{2}/n_{1})^{2}/(n_{1}-1)\Big]
++ \Big[(s_{2}^{2}/n_{2})^{2}/(n_{2}-1)\Big]}\)</span></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(p_{1}-p_{2}\)</span></td>
+<td align="center"><span
+class="math inline">\((\widehat{p}_{1}-\widehat{p}_{2}) \pm z_{\alpha/2}
+\sqrt{\dfrac{\widehat{p}_{1}(1-\widehat{p}_{1})}{n_{1}}+\dfrac{\widehat{p}_{2}(1-\widehat{p}_{2})}{n_{2}}}\)</span></td>
+<td align="center"><span class="math inline">\(n_{1} \gg 30\)</span>,
+<span class="math inline">\(n_{2} \gg 30\)</span>, además <span
+class="math inline">\(n_{1}\widehat{p}_{1} \geq 5\)</span>, <span
+class="math inline">\(n_{1}(1-\widehat{p}_{1}) \geq 5\)</span>, <span
+class="math inline">\(n_{2}\widehat{p}_{2} \geq 5\)</span>, <span
+class="math inline">\(n_{2}(1-\widehat{p}_{2}) \geq 5\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"><span
+class="math inline">\(\dfrac{\sigma^{2}_{1}}{\sigma^{2}_{2}}\)</span></td>
+<td align="center"><span
+class="math inline">\(\Bigg(\dfrac{s^{2}_{1}}{s^{2}_{2}}
+\dfrac{1}{f_{1-\alpha/2}(v_{1},v_{2})}, \dfrac{s^{2}_{1}}{s^{2}_{2}}
+\dfrac{1}{f_{\alpha/2}(v_{1},v_{2})}\Bigg)\)</span></td>
+<td align="center"><span class="math inline">\(X_{1} \sim N(\mu_{1},
+\sigma^{2}_{1})\)</span>, <span class="math inline">\(X_{2} \sim
+N(\mu_{2}, \sigma^{2}_{2})\)</span></td>
+</tr>
+</tbody>
+</table>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se afirma que una persona podrá reducir su peso en un período de
+<strong>dos semanas</strong> en un promedio de <strong>4.5
+kilogramos</strong> con una nueva dieta. Para evaluar esta afirmación,
+se registraron los <strong>pesos iniciales y finales</strong> de
+<strong>7 mujeres</strong> que siguieron la dieta.</p>
+<p><strong>Datos Recopilados (muestra pareada: una misma unidad muestral
+con dos datos, antes y después)</strong></p>
+<ul>
+<li><strong>Peso antes de la dieta</strong>: <span
+class="math inline">\(\{58.2, 60.3, 61.3, 69.0, 64.0, 62.6,
+56.7\}\)</span><br />
+</li>
+<li><strong>Peso después de la dieta</strong>: <span
+class="math inline">\(\{60.0, 54.9, 58.1, 62.1, 58.5, 59.9,
+54.4\}\)</span></li>
+</ul>
+<p>Se desea calcular un <strong>intervalo de confianza del 95%</strong>
+para la <strong>diferencia de medias</strong>, suponiendo que las
+diferencias de los pesos siguen una <strong>distribución
+normal</strong>.</p>
+<hr />
+<p>Sea <span class="math inline">\(X_1\)</span> el peso antes de la
+dieta y <span class="math inline">\(X_2\)</span> el peso después de la
+dieta. Dado que ambos valores corresponden a la misma unidad muestral,
+se calcula la diferencia entre los pesos antes y después como:</p>
+<p><span class="math display">\[
+d_i = x_{1i} - x_{2i}
+\]</span></p>
+<p>Si la diferencia <span class="math inline">\(d_i\)</span> sigue una
+distribución normal, se puede aplicar un <strong>test
+paramétrico</strong> para evaluar el efecto de la dieta. En general, es
+recomendable realizar una <strong>prueba de normalidad</strong> sobre la
+diferencia <span class="math inline">\(d_i\)</span> antes de proceder
+con el análisis estadístico. Sin embargo, en este caso, no es necesario
+aplicarla, ya que se <strong>supone</strong> que la diferencia sigue una
+distribución normal.</p>
+<p><strong>Cálculo en R</strong></p>
+<p>El siguiente código en <strong>R</strong> permite calcular el
+intervalo de confianza para la diferencia en datos pareados:</p>
+<pre>
+# Definir los datos
+peso.ant <- c(58.2, 60.3, 61.3, 69.0, 64.0, 62.6, 56.7)
+peso.des <- c(60.0, 54.9, 58.1, 62.1, 58.5, 59.9, 54.4)
+
+# Prueba t pareada con intervalo de confianza del 95%
+resultado <- t.test(peso.ant, peso.des, paired = TRUE, conf.level = 0.95)
+
+# Mostrar intervalo de confianza
+print(resultado$conf.int)
+</pre>
+<pre class="r"><code># Definir los datos
+peso.ant &lt;- c(58.2, 60.3, 61.3, 69.0, 64.0, 62.6, 56.7)
+peso.des &lt;- c(60.0, 54.9, 58.1, 62.1, 58.5, 59.9, 54.4)
+
+# Prueba t pareada con intervalo de confianza del 95%
+resultado &lt;- t.test(peso.ant, peso.des, paired = TRUE, conf.level = 0.95)
+
+# Mostrar intervalo de confianza
+print(resultado$conf.int)</code></pre>
+<pre><code>[1] 0.8029499 6.1113358
+attr(,&quot;conf.level&quot;)
+[1] 0.95</code></pre>
+<p><strong>Interpretación del Resultado</strong></p>
+<p>El <strong>intervalo de confianza del 95%</strong> para la diferencia
+entre los promedios de peso <strong>antes y después</strong> de la dieta
+es <strong><span class="math inline">\((0.80, 6.11)\)</span></strong>
+kilogramos. Dado que <strong>ambos valores del intervalo son
+positivos</strong>, se puede concluir con una confianza del 95% que, en
+promedio, el peso después de la dieta <strong>es mayor</strong> que el
+peso antes de la dieta.</p>
+<p>Por el momento, con una confianza del 95%, se podría inferir que
+<strong>la dieta no produjo la reducción de peso esperada</strong>, ya
+que el intervalo indica un posible aumento. Sin embargo, esta afirmación
+se analizará con mayor profundidad en los siguientes temas, donde se
+realizará una <strong>prueba de hipótesis</strong> para confirmar o
+refutar esta conclusión.</p>
+</p>
+</div>
+<div class="caja-nota">
+<h3>
+Nota: IC para <span class="math inline">\(\mu_d\)</span>
+</h3>
+<blockquote>
+<p>
+<table>
+<colgroup>
+<col width="34%" />
+<col width="65%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Intervalo de Confianza (IC) para <span
+class="math inline">\(\mu_d\)</span></strong></th>
+<th><strong>Interpretación</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><span class="math inline">\((-,-)\)</span></strong></td>
+<td>Ambos límites del IC son negativos, lo que indica que <span
+class="math inline">\(\mu_d &lt; 0\)</span>, es decir, en promedio <span
+class="math inline">\(X_1 &lt; X_2\)</span>. Esto sugiere que la segunda
+medición (después del tratamiento, intervención o segundo tiempo de
+medición) <strong>es significativamente mayor</strong> que la
+primera.</td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\((-,+)\)</span></strong></td>
+<td>El límite inferior es negativo y el superior es positivo, lo que
+significa que el IC incluye el valor cero. En este caso, <strong>no hay
+evidencia suficiente</strong> para concluir que hay una diferencia
+significativa entre las dos mediciones, es decir, <span
+class="math inline">\(\mu_d = 0\)</span> es una posibilidad válida.</td>
+</tr>
+<tr class="odd">
+<td><strong><span class="math inline">\((+,+)\)</span></strong></td>
+<td>Ambos límites del IC son positivos, lo que sugiere que <span
+class="math inline">\(\mu_d &gt; 0\)</span>, es decir, en promedio <span
+class="math inline">\(X_1 &gt; X_2\)</span>. Esto indica que la primera
+medición <strong>es significativamente mayor</strong> que la
+segunda.</td>
+</tr>
+</tbody>
+</table>
+</p>
+</blockquote>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>A <strong>seis ingenieros</strong> que trabajan para el estado y
+<strong>ocho especialistas en finanzas</strong> del sector privado se
+les solicitó realizar un <strong>pronóstico de la tasa de
+inflación</strong> para el próximo año. Los pronósticos entregados
+fueron los siguientes:</p>
+<table>
+<colgroup>
+<col width="75%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Profesión</th>
+<th>Tasa (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Ingenieros</strong></td>
+<td>14.2, 15.1, 13.9, 14.9, 14.8, 15.8</td>
+</tr>
+<tr class="even">
+<td><strong>Especialistas Finanzas</strong></td>
+<td>15.7, 16.1, 15.2, 14.9, 14.6, 14.5, 15.2, 15.5</td>
+</tr>
+</tbody>
+</table>
+<p>Se desea determinar si ambos grupos están realizando
+<strong>pronósticos similares</strong>. Para ello, se construirá un
+<strong>intervalo de confianza del 95%</strong> para la
+<strong>diferencia de medias</strong> entre los pronósticos de inflación
+proporcionados por los dos grupos. Se asume que los datos de ambas
+muestras provienen de una población que sigue una <strong>distribución
+normal</strong>.</p>
+<hr />
+<p>En este ejemplo, los pronósticos de tasas en ambos grupos
+(<strong>Ingenieros</strong> y <strong>Especialistas en
+Finanzas</strong>) provienen de unidades muestrales diferentes:
+<strong>6 ingenieros</strong> y <strong>8 especialistas en
+finanzas</strong>. Dado que los grupos son independientes, es adecuado
+analizar el <strong>parámetro de diferencia de medias</strong>.</p>
+<p>Definimos:</p>
+<ul>
+<li><span class="math inline">\(X_1\)</span>: Pronóstico de tasa de los
+ingenieros.</li>
+<li><span class="math inline">\(X_2\)</span>: Pronóstico de tasa de los
+especialistas en finanzas.</li>
+<li>El parámetro de interés es la <strong>diferencia de medias
+poblacionales</strong>:<br />
+<span class="math inline">\(\mu_1 - \mu_2\)</span></li>
+</ul>
+<p>Antes de calcular un intervalo de confianza (IC) para la diferencia
+de medias <span class="math inline">\(\left( \mu_1 -
+\mu_2\right)\)</span>, se recomienda realizar una <strong>prueba de
+normalidad</strong> en cada grupo para verificar si las poblaciones de
+origen siguen una distribución normal. Sin embargo, en este caso, se
+<strong>supone</strong> que ambas poblaciones son normales, por lo que
+no es necesario aplicar estas pruebas. Bajo esta suposición, es posible
+calcular un <strong>intervalo de confianza paramétrico</strong> para la
+diferencia de medias.</p>
+<p>En este punto del problema, no conocemos las varianzas poblacionales
+<span class="math inline">\(\sigma_1^2\)</span> y <span
+class="math inline">\(\sigma_2^2\)</span>. Para determinar si estas
+varianzas pueden considerarse <strong>iguales o distintas</strong>
+(aunque desconocidas), es necesario calcular un <strong>intervalo de
+confianza para el cociente de varianzas</strong> <span
+class="math inline">\(\left( \frac{\sigma_1^2}{\sigma_2^2}
+\right)\)</span>.</p>
+<p>Este paso es crucial, ya que la decisión sobre la <strong>igualdad o
+diferencia de varianzas</strong> afectará la selección de la
+<strong>fórmula adecuada</strong> para calcular el intervalo de
+confianza de la diferencia de medias.</p>
+<p><strong>Cálculo en R</strong></p>
+<p>Dado que se trata de <strong>grupos independientes</strong>, el
+procedimiento requiere evaluar la relación entre sus <strong>varianzas
+poblacionales</strong> (iguales o diferentes) para seleccionar la
+metodología adecuada.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir los datos
+inf_ing <- c(14.2, 15.1, 13.9, 14.9, 14.8, 15.8)
+inf_fin <- c(15.7, 16.1, 15.2, 14.9, 14.6, 14.5, 15.2, 15.5)
+
+# Crear un data frame en formato largo para ggplot2
+data <- data.frame(
+  Profesion = rep(c("Ingenieros", "Especialistas Finanzas"), 
+                  times = c(length(inf_ing), length(inf_fin))),
+  Tasa = c(inf_ing, inf_fin)
+)
+
+# Crear el gráfico de boxplot comparativo
+ggplot(data, aes(x = Profesion, y = Tasa, fill = Profesion)) +
+  geom_boxplot(alpha = 0.6, outlier.color = "red", outlier.size = 3) + 
+  scale_fill_manual(values = c("lightblue", "lightgreen")) +
+  labs(title = "Comparacion de la dispersion de tasas de inflacion",
+       x = "Profesion",
+       y = "Tasa de inflacion") +
+  theme_minimal()
+
+# Prueba de igualdad de varianzas
+varianza_test <- var.test(inf_ing, inf_fin)
+
+# Prueba t para la diferencia de medias (asumiendo varianzas iguales)
+t_test <- t.test(inf_ing, inf_fin, paired = FALSE, var.equal = TRUE, conf.level = 0.95)
+
+# Mostrar los resultados de las pruebas estadísticas
+print(varianza_test$conf.int)
+print(t_test$conf.int)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir los datos
+inf_ing &lt;- c(14.2, 15.1, 13.9, 14.9, 14.8, 15.8)
+inf_fin &lt;- c(15.7, 16.1, 15.2, 14.9, 14.6, 14.5, 15.2, 15.5)
+
+# Crear un data frame en formato largo para ggplot2
+data &lt;- data.frame(
+  Profesion = rep(c(&quot;Ingenieros&quot;, &quot;Especialistas Finanzas&quot;), 
+                  times = c(length(inf_ing), length(inf_fin))),
+  Tasa = c(inf_ing, inf_fin)
+)
+
+# Crear el gráfico de boxplot comparativo
+plot.tasas&lt;- ggplot(data, aes(x = Profesion, y = Tasa, fill = Profesion)) +
+  geom_boxplot(alpha = 0.6, outlier.color = &quot;red&quot;, outlier.size = 3) + 
+  scale_fill_manual(values = c(&quot;lightblue&quot;, &quot;lightgreen&quot;)) +
+  labs(title = &quot;Comparacion de la dispersion de tasas de inflacion&quot;,
+       x = &quot;Profesion&quot;,
+       y = &quot;Tasa de inflacion&quot;) +
+  theme_minimal()
+
+# Prueba de igualdad de varianzas
+varianza_test &lt;- var.test(inf_ing, inf_fin)
+
+# Prueba t para la diferencia de medias (asumiendo varianzas iguales)
+t_test &lt;- t.test(inf_ing, inf_fin, paired = FALSE, var.equal = TRUE, conf.level = 0.95)
+
+# Mostrar los resultados de las pruebas estadísticas
+#print(varianza_test$conf.int)
+#print(t_test$conf.int)
+#print(plot.tasas)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig249.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.49</strong> Comparación de distribución de las tasas.
+</center>
+<p><br/><br/></p>
+<p><strong>Resultados e Interpretación</strong></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Evaluación de la igualdad de varianzas</strong></p>
+<ul>
+<li>Se obtiene un <strong>intervalo de confianza</strong> para la razón
+de varianzas de <strong>(0.287663, 10.419190)</strong>.<br />
+</li>
+<li>Dado que el intervalo <strong>contiene el valor 1</strong>, se
+<strong>asume igualdad de varianzas</strong> con una confianza del 95%.
+Sin embargo, este procedimiento debe confirmarse mediante una
+<strong>prueba de hipótesis</strong>, que será vista en la unidad de
+<strong>prueba de hipótesis</strong>.</li>
+</ul></li>
+<li><p><strong>Intervalo de confianza para la diferencia de
+medias</strong></p>
+<ul>
+<li>El intervalo de confianza <strong>del 95%</strong> para la
+diferencia de medias entre los pronósticos de inflación de ambos grupos
+es:<br />
+<span class="math display">\[(-1.1382065, 0.2798732)\]</span><br />
+</li>
+<li>Como este intervalo <strong>incluye el valor 0</strong>, no se puede
+concluir que haya una <strong>diferencia significativa</strong> entre
+los pronósticos de los ingenieros y los especialistas en finanzas.</li>
+</ul></li>
+</ol>
+<p>Dado que el intervalo de confianza incluye el valor
+<strong>0</strong>, se concluye con un 95% de confianza que <strong>no
+hay suficiente evidencia estadística para afirmar que los pronósticos de
+inflación de los ingenieros y los especialistas en finanzas son
+significativamente diferentes</strong>. Es decir, <strong>sus
+estimaciones promedio pueden considerarse similares</strong> dentro del
+margen de error especificado sujeto a una confianza del 95%.</p>
+</p>
+</div>
+<div class="caja-nota">
+<h3>
+Nota: IC para <span class="math inline">\(\mu_1 - \mu_2\)</span>
+</h3>
+<blockquote>
+<p>
+<table>
+<colgroup>
+<col width="29%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Intervalo de Confianza (IC)</th>
+<th>Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><span class="math inline">\((-,-)\)</span></strong></td>
+<td>Ambos límites del IC son negativos, lo que indica que <span
+class="math inline">\(\mu_1 &lt; \mu_2\)</span>. En este caso, se
+concluye que la media de la primera población es significativamente
+menor que la de la segunda.</td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\((-,+)\)</span></strong></td>
+<td>El límite inferior es negativo y el superior es positivo, lo que
+significa que el IC incluye el valor cero. En este caso, no se puede
+descartar la posibilidad de que <span class="math inline">\(\mu_1 =
+\mu_2\)</span>, es decir, no hay evidencia suficiente para afirmar una
+diferencia significativa entre las medias.</td>
+</tr>
+<tr class="odd">
+<td><strong><span class="math inline">\((+,+)\)</span></strong></td>
+<td>Ambos límites del IC son positivos, lo que sugiere que <span
+class="math inline">\(\mu_1 &gt; \mu_2\)</span>. Esto indica que la
+media de la primera población es significativamente mayor que la de la
+segunda.</td>
+</tr>
+</tbody>
+</table>
+</p>
+</blockquote>
+</div>
+<div class="caja-nota">
+<h3>
+Nota: IC para <span
+class="math inline">\(\dfrac{\sigma^{2}_{1}}{\sigma^{2}_{2}}\)</span>
+</h3>
+<blockquote>
+<p>
+<table>
+<colgroup>
+<col width="29%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Intervalo de Confianza (IC)</th>
+<th>Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><span class="math inline">\((0, a)\)</span> con <span
+class="math inline">\(a &lt; 1\)</span></strong></td>
+<td>Ambos límites del IC están por debajo de 1, lo que indica que <span
+class="math inline">\(\sigma_1^2 &lt; \sigma_2^2\)</span>. En este caso,
+la varianza de la primera población es significativamente menor que la
+de la segunda.</td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\((a, b)\)</span> con <span
+class="math inline">\(a &lt; 1\)</span> y <span class="math inline">\(b
+&gt; 1\)</span></strong></td>
+<td>El intervalo incluye el valor 1, lo que significa que no se puede
+rechazar la hipótesis de igualdad de varianzas. No hay suficiente
+evidencia para concluir que una varianza sea mayor que la otra.</td>
+</tr>
+<tr class="odd">
+<td><strong><span class="math inline">\((a, b)\)</span> con <span
+class="math inline">\(a &gt; 1\)</span> y <span class="math inline">\(b
+&gt; 1\)</span></strong></td>
+<td>Ambos límites del IC son mayores que 1, lo que indica que <span
+class="math inline">\(\sigma_1^2 &gt; \sigma_2^2\)</span>. En este caso,
+la varianza de la primera población es significativamente mayor que la
+de la segunda.</td>
+</tr>
+</tbody>
+</table>
+</p>
+</blockquote>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En este ejemplo se supone el mismo caso del ejemplo anterior, pero
+con los siguientes datos:</p>
+<table>
+<colgroup>
+<col width="75%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Profesión</th>
+<th>Tasa (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Ingenieros</strong></td>
+<td>12.2, 11.1, 13.9, 15.9, 14.5, 15.1</td>
+</tr>
+<tr class="even">
+<td><strong>Especialistas Finanzas</strong></td>
+<td>13.7, 12.1, 12.2, 13.9, 13.6, 13.5, 13.2, 13.5</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Cálculo en R</strong></p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir los datos
+inf_ing <- c(12.2, 11.1, 13.9, 15.9, 14.5, 15.1)
+inf_fin <- c(13.7, 12.1, 12.2, 13.9, 13.6, 13.5, 13.2, 13.5)
+
+# Crear un data frame en formato largo para ggplot2
+data <- data.frame(
+  Profesion = rep(c("Ingenieros", "Especialistas Finanzas"), 
+                  times = c(length(inf_ing), length(inf_fin))),
+  Tasa = c(inf_ing, inf_fin)
+)
+
+# Calcular estadísticos descriptivos por grupo
+resumen_stats <- data %>%
+  group_by(Profesion) %>%
+  summarise(
+    Media = mean(Tasa),
+    Mediana = median(Tasa),
+    Varianza = var(Tasa),
+    Cuartil_1 = quantile(Tasa, 0.25),
+    Cuartil_3 = quantile(Tasa, 0.75)
+  )
+
+# Mostrar resumen estadístico
+print(resumen_stats)
+
+# Crear el gráfico de boxplot comparativo con ggplot2
+plot.tasas2 <- ggplot(data, aes(x = Profesion, y = Tasa, fill = Profesion)) +
+  geom_boxplot(alpha = 0.6, outlier.color = "red", outlier.size = 3) + 
+  scale_fill_manual(values = c("lightblue", "lightgreen")) +
+  labs(title = "Comparación de la Dispersión de Tasas de Inflación",
+       x = "Profesión",
+       y = "Tasa de Inflación (%)") +
+  theme_minimal()
+
+# Prueba de igualdad de varianzas
+varianza_test <- var.test(inf_ing, inf_fin)
+
+# Prueba t para la diferencia de medias (sin asumir varianzas iguales)
+t_test <- t.test(inf_ing, inf_fin, paired = FALSE, var.equal = FALSE, conf.level = 0.95)
+
+# Mostrar los resultados de las pruebas estadísticas
+print(varianza_test$conf.int)
+print(t_test$conf.int)
+print(plot.tasas2)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir los datos
+inf_ing &lt;- c(12.2, 11.1, 13.9, 15.9, 14.5, 15.1)
+inf_fin &lt;- c(13.7, 12.1, 12.2, 13.9, 13.6, 13.5, 13.2, 13.5)
+
+# Crear un data frame en formato largo para ggplot2
+data &lt;- data.frame(
+  Profesion = rep(c(&quot;Ingenieros&quot;, &quot;Especialistas Finanzas&quot;), 
+                  times = c(length(inf_ing), length(inf_fin))),
+  Tasa = c(inf_ing, inf_fin)
+)
+
+# Calcular estadísticos descriptivos por grupo
+resumen_stats &lt;- data %&gt;%
+  group_by(Profesion) %&gt;%
+  summarise(
+    Media = mean(Tasa),
+    Mediana = median(Tasa),
+    Varianza = var(Tasa),
+    Cuartil_1 = quantile(Tasa, 0.25),
+    Cuartil_3 = quantile(Tasa, 0.75)
+  )
+
+# Mostrar resumen estadístico
+#print(resumen_stats)
+
+# Crear el gráfico de boxplot comparativo con ggplot2
+plot.tasas2 &lt;- ggplot(data, aes(x = Profesion, y = Tasa, fill = Profesion)) +
+  geom_boxplot(alpha = 0.6, outlier.color = &quot;red&quot;, outlier.size = 3) + 
+  scale_fill_manual(values = c(&quot;lightblue&quot;, &quot;lightgreen&quot;)) +
+  labs(title = &quot;Comparación de la Dispersión de Tasas de Inflación&quot;,
+       x = &quot;Profesión&quot;,
+       y = &quot;Tasa de Inflación (%)&quot;) +
+  theme_minimal()
+
+# Prueba de igualdad de varianzas
+varianza_test &lt;- var.test(inf_ing, inf_fin)
+
+# Prueba t para la diferencia de medias (sin asumir varianzas iguales)
+t_test &lt;- t.test(inf_ing, inf_fin, paired = FALSE, var.equal = FALSE, conf.level = 0.95)
+
+# Mostrar los resultados de las pruebas estadísticas
+# print(varianza_test$conf.int)
+# print(t_test$conf.int)
+# print(plot.tasas2)</code></pre>
+<ol style="list-style-type: decimal">
+<li><strong>Evaluación de la igualdad de varianzas</strong></li>
+</ol>
+<ul>
+<li>Se obtiene un <strong>intervalo de confianza</strong> para la razón
+de varianzas de <strong>(1.324813, 47.984900)</strong>.<br />
+</li>
+<li>Dado que el intervalo <strong>no contiene el valor 1</strong>, se
+<strong>rechaza la hipótesis de igualdad de varianzas</strong> sujeto a
+una confianza del 95%, por lo que no es válido asumir que las
+poblaciones tienen la misma variabilidad.<br />
+</li>
+<li>Debido a esto, se procede con el intervalo de diferencia de medias
+sin asumir igualdad de varianzas.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Intervalo de confianza para la diferencia de
+medias</strong></li>
+</ol>
+<ul>
+<li>El intervalo de confianza <strong>del 95%</strong> para la
+diferencia de medias entre los pronósticos de inflación de ambos grupos
+es:<br />
+<span class="math display">\[
+(-1.329604, 2.471270)
+\]</span><br />
+</li>
+<li>Como este intervalo <strong>incluye el valor 0</strong>, <strong>no
+se puede concluir que haya una diferencia significativa</strong> entre
+los pronósticos de los ingenieros y los especialistas en finanzas con
+una confianza del 95%.</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Comparación de estadísticos descriptivos</strong></li>
+</ol>
+<table>
+<colgroup>
+<col width="36%" />
+<col width="9%" />
+<col width="12%" />
+<col width="13%" />
+<col width="14%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Profesión</th>
+<th align="right">Media</th>
+<th align="right">Mediana</th>
+<th align="right">Varianza</th>
+<th align="right">Cuartil 1</th>
+<th align="right">Cuartil 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Ingenieros</strong></td>
+<td align="right">13.8</td>
+<td align="right">14.2</td>
+<td align="right">3.29</td>
+<td align="right">12.6</td>
+<td align="right">15.0</td>
+</tr>
+<tr class="even">
+<td><strong>Especialistas Finanzas</strong></td>
+<td align="right">13.2</td>
+<td align="right">13.5</td>
+<td align="right">0.470</td>
+<td align="right">13.0</td>
+<td align="right">13.6</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Se observa que los <strong>ingenieros presentan una mayor
+dispersión</strong> en sus valores de tasa de inflación en comparación
+con los <strong>especialistas en finanzas</strong>, quienes tienen una
+variabilidad menor.<br />
+</li>
+<li>La media de los ingenieros es ligeramente mayor, pero debido a la
+gran dispersión de los datos, la diferencia <strong>no es significativa
+estadísticamente</strong>.</li>
+</ul>
+<br/><br/>
+<center>
+<img src="img/fig250.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.50</strong> Comparación de distribución de las tasas.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En un estudio de mercado, se encuestaron <strong>200
+clientes</strong> para conocer su preferencia por el tamaño especial de
+pizza antes y después de una campaña publicitaria realizada en radio y
+televisión.</p>
+<p>Antes de la campaña, el <strong>20%</strong> de los clientes expresó
+preferencia por dicho producto. Tras la campaña, se seleccionó una nueva
+muestra del mismo tamaño, en la que el <strong>22%</strong> de los
+clientes manifestó preferir el tamaño especial.</p>
+<p>El objetivo es determinar, a partir de estos resultados, si la
+campaña publicitaria tuvo un impacto significativo en la preferencia de
+los clientes mediante un <strong>intervalo de confianza del 95% para la
+diferencia de proporciones</strong>.</p>
+<hr />
+<p>En este caso, se comparan dos proporciones:</p>
+<ul>
+<li><strong><span class="math inline">\(p_1\)</span></strong>:
+Proporción de clientes que prefieren el tamaño especial antes de la
+campaña.<br />
+</li>
+<li><strong><span class="math inline">\(p_2\)</span></strong>:
+Proporción de clientes que prefieren el tamaño especial después de la
+campaña.</li>
+</ul>
+<p>Para aplicar la prueba de hipótesis sobre la diferencia de
+proporciones, es necesario verificar los siguientes
+<strong>supuestos</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Tamaño de muestra suficiente:</strong> Ambas muestras deben
+ser lo suficientemente grandes para que la distribución muestral de la
+proporción se aproxime a una normal.</li>
+<li><strong>Frecuencias esperadas:</strong> Se debe cumplir que <span
+class="math inline">\(n_1 \widehat{p}_1 \geq 5\)</span>, <span
+class="math inline">\(n_1 (1 - \widehat{p}_1) \geq 5\)</span>, <span
+class="math inline">\(n_2 \widehat{p}_2 \geq 5\)</span> y <span
+class="math inline">\(n_2 (1 - \widehat{p}_2) \geq 5\)</span>.</li>
+</ol>
+<p>Los valores proporcionados son:</p>
+<p><span class="math display">\[
+\begin{aligned}
+n_1 &amp;= 200  &amp; \text{(Tamaño de la primera muestra)} \\
+\widehat{p}_1 &amp;= 0.20  &amp; \text{(Proporción muestral antes de la
+campaña)} \\
+n_2 &amp;= 200  &amp; \text{(Tamaño de la segunda muestra)} \\
+\widehat{p}_2 &amp;= 0.22  &amp; \text{(Proporción muestral después de
+la campaña)} \\
+\end{aligned}
+\]</span></p>
+<p>Verificación de los valores:</p>
+<p><span class="math display">\[
+\begin{aligned}
+n_1 \cdot \widehat{p}_1 &amp;= 200 \times 0.20 = 40, &amp; \quad n_1
+\cdot (1 - \widehat{p}_1) &amp;= 200 \times 0.80 = 160. \\
+n_2 \cdot \widehat{p}_2 &amp;= 200 \times 0.22 = 44, &amp; \quad n_2
+\cdot (1 - \widehat{p}_2) &amp;= 200 \times 0.78 = 156.
+\end{aligned}
+\]</span></p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="7%" />
+<col width="15%" />
+<col width="20%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Muestra</strong></th>
+<th align="right"><span class="math inline">\(n\)</span></th>
+<th align="right"><span class="math inline">\(\widehat{p}\)</span></th>
+<th align="right"><span class="math inline">\(n \cdot
+\widehat{p}\)</span></th>
+<th align="right"><span class="math inline">\(n \cdot (1 -
+\widehat{p})\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Antes de la campaña</strong></td>
+<td align="right">200</td>
+<td align="right">0.20</td>
+<td align="right">40</td>
+<td align="right">160</td>
+</tr>
+<tr class="even">
+<td><strong>Después de la campaña</strong></td>
+<td align="right">200</td>
+<td align="right">0.22</td>
+<td align="right">44</td>
+<td align="right">156</td>
+</tr>
+</tbody>
+</table>
+<p>Se cumplen todas las condiciones requeridas, ya que los valores <span
+class="math inline">\(n \cdot \widehat{p}\)</span> y <span
+class="math inline">\(n \cdot (1 - \widehat{p})\)</span>, por tanto se
+puede aplicar la aproximación normal para determinar el intervalo de
+confianza para la diferencia de proporciones.</p>
+<hr />
+<p><strong>Cálculo del Intervalo de Confianza</strong></p>
+<p>Dado que ambas muestras son lo suficientemente grandes y se cumplen
+los supuestos, la diferencia de proporciones se puede aproximar mediante
+una distribución normal estándar:</p>
+<p><span class="math display">\[
+(p_1 - p_2) \pm Z_{\alpha/2}
+\sqrt{\frac{\widehat{p}_1(1-\widehat{p}_1)}{n_1} +
+\frac{\widehat{p}_2(1-\widehat{p}_2)}{n_2}}
+\]</span></p>
+<p>Sustituyendo los valores:</p>
+<p><span class="math display">\[
+(0.20 - 0.22) \pm 1.96 \sqrt{\frac{0.20 \times (1-0.20)}{200} +
+\frac{0.22 \times (1-0.22)}{200}}
+\]</span></p>
+<p><span class="math display">\[
+(-0.0998, 0.0598)
+\]</span></p>
+<p>El intervalo de confianza del <strong>95%</strong> para la diferencia
+de proporciones es <strong>(-0.0998, 0.0598)</strong>. Esto indica que
+la diferencia entre la proporción de clientes que prefieren el tamaño
+especial <strong>antes y después de la campaña publicitaria</strong>
+está contenida en este rango con una confianza del 95%.</p>
+<p>Dado que el intervalo incluye el <strong>cero</strong>, <strong>no se
+puede concluir</strong> que la preferencia por el tamaño especial de
+pizza haya cambiado significativamente después de la campaña
+publicitaria. En otras palabras, <strong>no hay suficiente evidencia
+para afirmar que la campaña tuvo un impacto en la preferencia de los
+clientes</strong> con una confianza del 95%.</p>
+<hr />
+<p><strong>Validación con R</strong></p>
+<p>El cálculo puede verificarse en <strong>R</strong> y aproximarse
+utilizando la función <code>prop.test()</code>:</p>
+<pre>
+# Definir parámetros del problema
+n1 <- 200  # Tamaño de la primera muestra
+n2 <- 200  # Tamaño de la segunda muestra
+p1_hat <- 40 / n1  # Proporción muestral antes de la campaña (40 clientes prefieren el producto)
+p2_hat <- 44 / n2  # Proporción muestral después de la campaña (44 clientes prefieren el producto)
+alpha <- 0.05  # Nivel de significancia
+z_alpha <- qnorm(1 - alpha / 2)  # Percentil de la normal estándar para un IC del 95%
+
+# Cálculo del intervalo de confianza con la fórmula tradicional (Wald)
+se_wald <- sqrt((p1_hat * (1 - p1_hat) / n1) + (p2_hat * (1 - p2_hat) / n2))  # Error estándar
+ic_wald1 <- c((p1_hat - p2_hat) - z_alpha * se_wald, (p1_hat - p2_hat) + z_alpha * se_wald)
+ic_wald2 <- prop.test(c(40, 44), c(n1, n2), correct = FALSE)$conf.int  # otra forma test Wald
+
+# Cálculo del intervalo de confianza con prop.test()
+ic_prop_test <- prop.test(c(40, 44), c(n1, n2), correct = TRUE)$conf.int  # Corrección de continuidad
+
+# Mostrar resultados
+cat("Intervalo de confianza con la fórmula tradicional (Wald):", ic_wald1, "\n")
+cat("Intervalo de confianza con la fórmula tradicional (Wald):", ic_wald2, "\n")
+cat("Intervalo de confianza con prop.test() (Wilson con corrección de continuidad):", ic_prop_test, "\n")
+</pre>
+<pre class="r"><code># Definir parámetros del problema
+n1 &lt;- 200  # Tamaño de la primera muestra
+n2 &lt;- 200  # Tamaño de la segunda muestra
+p1_hat &lt;- 40 / n1  # Proporción muestral antes de la campaña (40 clientes prefieren el producto)
+p2_hat &lt;- 44 / n2  # Proporción muestral después de la campaña (44 clientes prefieren el producto)
+alpha &lt;- 0.05  # Nivel de significancia
+z_alpha &lt;- qnorm(1 - alpha / 2)  # Percentil de la normal estándar para un IC del 95%
+
+# Cálculo del intervalo de confianza con la fórmula tradicional (Wald)
+se_wald &lt;- sqrt((p1_hat * (1 - p1_hat) / n1) + (p2_hat * (1 - p2_hat) / n2))  # Error estándar
+ic_wald1 &lt;- c((p1_hat - p2_hat) - z_alpha * se_wald, (p1_hat - p2_hat) + z_alpha * se_wald)
+ic_wald2 &lt;- prop.test(c(40, 44), c(n1, n2), correct = FALSE)$conf.int  # otra forma test Wald
+
+# Cálculo del intervalo de confianza con prop.test()
+ic_prop_test &lt;- prop.test(c(40, 44), c(n1, n2), correct = TRUE)$conf.int  # Corrección de continuidad
+
+# Mostrar resultados
+#cat(&quot;Intervalo de confianza con la fórmula tradicional (Wald):&quot;, ic_wald1, &quot;\n&quot;)
+#cat(&quot;Intervalo de confianza con la fórmula tradicional (Wald):&quot;, ic_wald2, &quot;\n&quot;)
+#cat(&quot;Intervalo de confianza con prop.test() (Wilson con corrección de continuidad):&quot;, ic_prop_test, &quot;\n&quot;)</code></pre>
+<pre>
+IC:  (Wald): -0.09980688 0.05980688
+IC: (Corrección de continuidad): -0.1048069 0.06480688 
+</pre>
+<hr />
+<p><strong>Comparación de Métodos para el Cálculo del Intervalo de
+Confianza</strong></p>
+<p>Los resultados obtenidos con la función <code>prop.test()</code>
+varían dependiendo de si se usa la opción <code>correct = FALSE</code> o
+<code>correct = TRUE</code>. Esta diferencia se debe a la
+<strong>corrección de continuidad</strong> aplicada en la prueba de
+diferencia de proporciones.</p>
+<p>Cuando se usa <code>correct = FALSE</code>, se calcula el
+<strong>intervalo de confianza mediante la aproximación tradicional de
+Wald</strong>, la cual asume que la diferencia de proporciones sigue una
+distribución normal:</p>
+<p><span class="math display">\[
+(p_1 - p_2) \pm Z_{\alpha/2} \cdot \sqrt{\frac{\widehat{p}_1(1 -
+\widehat{p}_1)}{n_1} + \frac{\widehat{p}_2(1 - \widehat{p}_2)}{n_2}}
+\]</span></p>
+<p>Este método <strong>no ajusta los valores observados</strong>, lo que
+puede generar <strong>intervalos de confianza más estrechos</strong> de
+lo deseado, especialmente cuando:</p>
+<ul>
+<li>Las proporciones están cercanas a 0 o 1.</li>
+<li>El tamaño de la muestra es pequeño.</li>
+</ul>
+<p>Por otro lado, al utilizar <code>correct = TRUE</code>, la función
+implementa el <strong>intervalo de confianza de Wilson con corrección de
+continuidad de Yates</strong>, el cual <strong>ajusta los valores
+observados</strong> para reducir el sesgo en la estimación de la
+diferencia de proporciones. Esta corrección es especialmente útil
+cuando:</p>
+<ul>
+<li>Se trabaja con muestras pequeñas.</li>
+<li>Las proporciones están cerca de los límites extremos (0 o 1).</li>
+<li>Se busca evitar una sobreestimación de la precisión del
+intervalo.</li>
+</ul>
+<p>En general, la <strong>corrección de continuidad de Yates</strong>
+hace que los intervalos de confianza sean <strong>más
+conservadores</strong>, aumentando ligeramente su amplitud para
+compensar posibles errores en la aproximación normal.</p>
+</p>
+</div>
+<div class="caja-nota">
+<h3>
+Nota: IC para <span class="math inline">\(p_1 - p_2\)</span>
+</h3>
+<blockquote>
+<p>
+<table>
+<colgroup>
+<col width="29%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Intervalo de Confianza (IC)</th>
+<th>Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><span class="math inline">\((a, b)\)</span> con <span
+class="math inline">\(a &lt; 0\)</span> y <span class="math inline">\(b
+&lt; 0\)</span></strong></td>
+<td>Ambos límites del IC son negativos, lo que indica que <span
+class="math inline">\(p_1 &lt; p_2\)</span>. En este caso, la proporción
+de la primera población es significativamente menor que la de la
+segunda.</td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\((a, b)\)</span> con <span
+class="math inline">\(a &lt; 0\)</span> y <span class="math inline">\(b
+&gt; 0\)</span></strong></td>
+<td>El intervalo incluye el valor 0, lo que significa que no se puede
+rechazar la hipótesis de igualdad de proporciones. No hay suficiente
+evidencia para concluir que una proporción sea mayor que la otra.</td>
+</tr>
+<tr class="odd">
+<td><strong><span class="math inline">\((a, b)\)</span> con <span
+class="math inline">\(a &gt; 0\)</span> y <span class="math inline">\(b
+&gt; 0\)</span></strong></td>
+<td>Ambos límites del IC son positivos, lo que indica que <span
+class="math inline">\(p_1 &gt; p_2\)</span>. En este caso, la proporción
+de la primera población es significativamente mayor que la de la
+segunda.</td>
+</tr>
+</tbody>
+</table>
+</p>
+</blockquote>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Prueba de hipótesis</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Pruebas sobre una muestra</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas sobre dos muestras</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de Estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Referencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso1000.html">Referencias</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868"> <strong>Prueba
+de hipótesis</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>El propósito de la prueba de hipótesis es proporcionar fundamentos
+estadísticos para la toma de decisiones en situaciones de incertidumbre.
+Basándose en el conocimiento sobre las distribuciones muestrales, este
+procedimiento resulta esencial cuando se requiere inferir
+características de una población a partir de la información obtenida de
+una muestra aleatoria.</p>
+<p>El resultado de la prueba permite determinar si la evidencia empírica
+observada en la muestra es coherente con una hipótesis formulada sobre
+la población. Es importante señalar que nunca es posible afirmar de
+manera categórica la veracidad de una hipótesis, ya que su verificación
+absoluta escapa a los alcances del método estadístico. En su lugar, el
+análisis se centra en evaluar en qué medida los datos muestrales
+contradicen la hipótesis propuesta. En otras palabras, si la evidencia
+empírica es inconsistente con la hipótesis, esta puede ser rechazada;
+sin embargo, la ausencia de contradicción no implica su confirmación,
+sino únicamente la falta de evidencia suficiente para refutarla.</p>
+<p>Para ilustrar que este tipo de razonamiento es inherente a la vida
+cotidiana, comenzaremos con algunos ejemplos. Un paralelo útil para
+comprender la lógica de las pruebas de hipótesis es el proceso de un
+juicio penal. En este contexto, una persona acusada no puede ser
+condenada a menos que exista evidencia suficiente que justifique dicha
+decisión. La evidencia —entendida como el conjunto de pruebas en el
+ámbito judicial— rara vez es completa; por el contrario, suele estar
+fragmentada y sujeta a distintas interpretaciones.</p>
+<p>Al inicio del juicio, se asume la presunción de inocencia del
+acusado. En términos estadísticos, esta suposición inicial se denomina
+hipótesis nula, denotada como <span class="math inline">\(H_0\)</span>.
+Esta hipótesis representa un estado de referencia según el cual el
+acusado no es distinto de cualquier otra persona que no ha cometido un
+delito. Mientras no se disponga de pruebas suficientes en su contra, la
+hipótesis nula se mantiene.</p>
+<p>A lo largo del proceso judicial, la fiscalía presenta pruebas con el
+objetivo de refutar la hipótesis nula y demostrar la culpabilidad del
+acusado. Sin embargo, en la mayoría de los casos, no es posible acceder
+a toda la información necesaria para reconstruir los hechos de manera
+inequívoca. No obstante, si la evidencia recopilada es lo
+suficientemente contundente, se procederá al rechazo de la hipótesis
+nula. La decisión de condenar solo se adoptará cuando el riesgo de error
+sea mínimo, es decir, cuando la probabilidad de tomar una decisión
+incorrecta sea suficientemente baja.</p>
+<p>En este ejemplo, la población representa el conjunto completo de
+información que permitiría tomar una decisión con absoluta certeza y sin
+margen de error. En términos ideales, se trataría de un conjunto de
+datos infinitamente detallado que posibilitaría la reconstrucción exacta
+de los hechos en los que estuvo involucrada la persona acusada. Sin
+embargo, dicha información nunca está completamente disponible, lo que
+obliga a basar la decisión en un subconjunto de datos: las pruebas
+recopiladas, que constituyen la evidencia en el proceso judicial.</p>
+<p>Siguiendo la analogía con los procedimientos estadísticos, esta
+evidencia equivale a la muestra a partir de la cual se evaluará la
+hipótesis nula, decidiendo si debe aceptarse o rechazarse. La muestra
+representa, por tanto, un fragmento de la información total. No
+obstante, en el ámbito estadístico, su recolección se realiza mediante
+métodos diseñados para garantizar su representatividad, lo que permite
+que las inferencias obtenidas sean lo más precisas y generalizables
+posible.</p>
+<p>Otro ejemplo que ilustra el concepto de prueba de hipótesis en un
+contexto empresarial es el control de calidad en una línea de
+producción. Supongamos que una fábrica de botellas de agua desea
+asegurarse de que el 50% de sus tapas sean de color azul y el otro 50%
+de color rojo, conforme a su diseño de empaque. Sin embargo, surgen
+dudas sobre si el proceso de fabricación realmente mantiene esta
+proporción.</p>
+<p>Siguiendo la notación utilizada previamente, formulamos la hipótesis
+nula (<span class="math inline">\(H_0\)</span>) que establece que la
+proporción de tapas azules es <span
+class="math inline">\(P=1/2\)</span>, es decir, el 50% del total. Esta
+hipótesis implica que, en un número muy grande de botellas producidas,
+aproximadamente la mitad debería tener tapas azules y la otra mitad
+rojas.</p>
+<p>Dado que no es viable inspeccionar todas las botellas producidas, se
+selecciona una muestra aleatoria de 100 botellas para evaluar si la
+proporción de tapas azules se ajusta a la esperada. Si la hipótesis nula
+es correcta, se esperaría observar aproximadamente 50 tapas azules en la
+muestra. Sin embargo, debido a la variabilidad inherente al proceso, no
+sería inusual encontrar 51 o 52 tapas azules, ya que pequeñas
+fluctuaciones son esperadas por el azar.</p>
+<p>No obstante, si en la muestra de 100 botellas se encuentran 80 tapas
+azules, esto indicaría una desviación considerable respecto a la
+proporción esperada, lo que llevaría a rechazar la hipótesis nula y
+concluir que la proporción de tapas azules no es del 50%. De manera
+similar, si solo 25 tapas fueran azules, se llegaría a la misma
+conclusión.</p>
+<p>El procedimiento de prueba de hipótesis busca responder la pregunta
+clave: ¿cuánto debe desviarse la proporción observada de la esperada
+para que haya suficiente evidencia estadística que permita rechazar la
+hipótesis nula?</p>
+<p>La lógica subyacente en la prueba de hipótesis radica en asumir
+inicialmente que la hipótesis nula es verdadera y evaluar qué tan
+probable es obtener el resultado observado en la muestra bajo esta
+suposición. En el ejemplo del juicio, la pregunta clave es: ¿qué
+probabilidad existiría de encontrar la evidencia recopilada en contra de
+la persona acusada si realmente fuera inocente? En el caso de la
+producción de botellas, la cuestión se traduce en: ¿qué tan probable
+sería obtener la cantidad observada de tapas azules en la muestra si el
+proceso de fabricación realmente mantuviera una proporción del 50 %?</p>
+<p>De manera general, la prueba de hipótesis busca determinar la
+probabilidad de obtener el resultado muestral bajo el supuesto de que la
+hipótesis nula es correcta. Si esta probabilidad es lo suficientemente
+baja, se considera que la evidencia empírica respalda el rechazo de la
+hipótesis nula, lo que sugiere que la diferencia observada difícilmente
+podría explicarse únicamente por fluctuaciones aleatorias en el
+muestreo.</p>
+<p>Si la respuesta a estas preguntas indica que el resultado observado
+es altamente probable bajo la hipótesis nula (<span
+class="math inline">\(H_0\)</span>), la decisión será no rechazar <span
+class="math inline">\(H_0\)</span>, dado que la evidencia muestral es
+coherente con lo esperado en ese escenario. En otras palabras, si la
+diferencia entre la muestra y la proporción poblacional establecida en
+<span class="math inline">\(H_0\)</span> puede atribuirse razonablemente
+a la variabilidad aleatoria, no hay fundamentos suficientes para
+rechazar la hipótesis nula.</p>
+<p>Por el contrario, si la probabilidad de obtener el resultado muestral
+bajo <span class="math inline">\(H_0\)</span> es extremadamente baja, se
+considerará que la evidencia empírica es inconsistente con dicha
+hipótesis, lo que conducirá a su rechazo. En este caso, la diferencia
+observada en la muestra sugiere que la hipótesis nula no refleja
+adecuadamente la realidad del fenómeno estudiado, lo que indica la
+necesidad de adoptar una conclusión alternativa.</p>
+<p>En el ámbito de la investigación, la formulación de la prueba de
+hipótesis suele diseñarse de manera que el rechazo de la hipótesis nula
+(<span class="math inline">\(H_0\)</span>) implique la obtención de un
+nuevo hallazgo o evidencia que respalde un cambio significativo en el
+fenómeno estudiado. Por el contrario, no rechazar <span
+class="math inline">\(H_0\)</span> indica que los datos no proporcionan
+suficiente evidencia para afirmar que se ha producido una modificación
+respecto a la situación de referencia previamente establecida.</p>
+<p>Este enfoque refleja la naturaleza conservadora del método
+estadístico, en el que la hipótesis nula representa el estado actual del
+conocimiento o la condición preexistente, y solo se rechaza cuando la
+evidencia empírica es lo suficientemente sólida como para justificar una
+conclusión alternativa.</p>
+<p>Algunos ejemplos de hipótesis nulas en distintos contextos de
+investigación son los siguientes:</p>
+<ul>
+<li><p>Un fármaco no mejora el rendimiento cognitivo en adultos mayores
+con deterioro leve.</p></li>
+<li><p>La terapia basada en mindfulness no tiene un impacto
+significativo en la reducción del estrés en pacientes con
+ansiedad.</p></li>
+<li><p>Los métodos de enseñanza A y B en la educación primaria generan
+niveles de comprensión lectora equivalentes en los estudiantes.</p></li>
+<li><p>La intención de voto hacia un partido político no ha cambiado
+significativamente con respecto a las elecciones anteriores.</p></li>
+<li><p>La instalación de filtros de agua en comunidades rurales no
+disminuye la prevalencia de enfermedades gastrointestinales.</p></li>
+<li><p>La edad no influye en la predisposición de las personas a adoptar
+nuevas tecnologías.</p></li>
+<li><p>Un programa de educación parental no modifica la forma en que los
+cuidadores establecen normas y límites en la crianza.</p></li>
+<li><p>La reducción del tamaño de los grupos en las aulas no afecta el
+desempeño académico de los estudiantes.</p></li>
+<li><p>La incorporación de nuevas estrategias pedagógicas en matemáticas
+no mejora el desempeño de los alumnos en pruebas
+estandarizadas.</p></li>
+<li><p>Un protocolo de rehabilitación postoperatoria no acelera el
+tiempo de recuperación de los pacientes sometidos a cirugía
+ortopédica.</p></li>
+</ul>
+<p>En la mayoría de estos casos, el propósito de la investigación es
+reunir suficiente evidencia para rechazar la hipótesis nula, lo que
+implicaría la identificación de un hallazgo significativo. Rechazar
+indicaría, por ejemplo, que un fármaco sí mejora el rendimiento
+cognitivo, que una terapia específica tiene efectos positivos sobre el
+bienestar emocional, que ciertos métodos de enseñanza son más eficaces
+para la comprensión lectora, que el apoyo electoral hacia un partido ha
+cambiado, que un programa de salud pública ha reducido la incidencia de
+enfermedades, que la edad es un factor determinante en la adopción de
+nuevas tecnologías, o que una intervención educativa ha mejorado la
+calidad de la crianza.</p>
+<p>Desde esta perspectiva, el proceso de prueba de hipótesis permite no
+solo contrastar supuestos teóricos, sino también generar conocimiento
+basado en evidencia, facilitando la toma de decisiones en ámbitos como
+la salud, la educación, ingenierías y las ciencias sociales.</p>
+</br></br>
+<h3>
+Aportes de Fisher Neyman y Pearson
+</h3>
+<p>La prueba de hipótesis se basa en la comparación entre los datos
+observados y la hipótesis que se somete a evaluación. Ronald A. Fisher
+conceptualizó este enfoque como un mecanismo para cuantificar el grado
+de incompatibilidad entre un conjunto de datos y la hipótesis nula <span
+class="math inline">\(H_0\)</span>. Su método consiste en calcular la
+probabilidad de obtener resultados tan extremos como los observados, o
+incluso más, bajo la suposición de que <span
+class="math inline">\(H_0\)</span> es verdadera.</p>
+<p>Si dicha probabilidad es extremadamente baja, se presentan dos
+posibles interpretaciones: o bien la muestra seleccionada es atípica
+debido a fluctuaciones aleatorias, o bien la hipótesis nula no es una
+representación adecuada de la realidad. <strong>Fisher</strong> sostenía
+que este procedimiento proporciona un criterio objetivo para evaluar
+teorías y formular inferencias estadísticas, lo que lo convierte en una
+herramienta fundamental en diversas disciplinas del conocimiento.</p>
+<p>Posteriormente a los desarrollos de <strong>Fisher</strong>,
+<strong>Jerzy Neyman</strong> y <strong>Egon Pearson</strong> (1928)
+introdujeron dos modificaciones fundamentales en la metodología de
+prueba de hipótesis, ampliando su aplicación y formalizando su uso en la
+toma de decisiones estadísticas.</p>
+<p>El primer cambio conceptual consistió en redefinir la prueba de
+hipótesis no solo como un método para validar teorías, sino como un
+procedimiento basado en <strong>reglas de decisión</strong>. Es decir,
+más que un mecanismo para evaluar la compatibilidad de los datos con una
+hipótesis, la prueba se concibe como una herramienta que permite tomar
+decisiones en contextos donde la información disponible es limitada e
+incompleta.</p>
+<p>El segundo cambio clave fue la introducción de una <strong>hipótesis
+alternativa</strong> (<span class="math inline">\(H_1\)</span>), la cual
+se contrapone a la <strong>hipótesis nula</strong> (<span
+class="math inline">\(H_0\)</span>). En este esquema, <span
+class="math inline">\(H_1\)</span> representa la afirmación que se busca
+demostrar con la evidencia empírica. Así, cuando los datos observados
+proporcionan suficiente evidencia en contra de <span
+class="math inline">\(H_0\)</span>, se opta por rechazarla en favor de
+<span class="math inline">\(H_1\)</span>, indicando que los resultados
+son más compatibles con esta última.</p>
+<p>A partir de este modelo, que es el que se utiliza en adelante, a
+continuación se prsenta su aplicación en un contexto educativo.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se supone la siguiente hipótesis:</p>
+<blockquote>
+<p><em>“Los estudiantes provenientes de hogares con un alto nivel
+educativo obtienen un rendimiento escolar superior o igual al promedio
+general.”</em></p>
+</blockquote>
+<p>Esta afirmación es de naturaleza general, ya que se refiere a toda la
+población de estudiantes, tanto aquellos que están actualmente en el
+sistema educativo como los que ingresarán en el futuro. Sin embargo,
+dado que no es posible observar a toda la población, el análisis debe
+realizarse sobre una muestra representativa.</p>
+<p>Para formalizar esta hipótesis dentro del marco de prueba de
+hipótesis, se establece:</p>
+<ul>
+<li><strong>Hipótesis nula (<span
+class="math inline">\(H_0\)</span>)</strong>: “El rendimiento promedio
+de los estudiantes provenientes de hogares con un alto nivel educativo
+es superior o igual al promedio general.”<br />
+</li>
+<li><strong>Hipótesis alternativa (<span
+class="math inline">\(H_1\)</span>)</strong>: “El rendimiento promedio
+de los estudiantes provenientes de hogares con un alto nivel educativo
+es inferior al promedio general.”</li>
+</ul>
+<p>Ahora se supone que se conoce que el rendimiento promedio de la
+población general de estudiantes, medido a través de una prueba
+estandarizada, es de <strong>60 puntos</strong>. Se puede entonces
+reformular las hipótesis de la siguiente manera:</p>
+<ul>
+<li><strong>Hipótesis nula (<span
+class="math inline">\(H_0\)</span>)</strong>: “El rendimiento promedio
+de los estudiantes provenientes de hogares con un alto nivel educativo
+es de 60 puntos o mas.”<br />
+</li>
+<li><strong>Hipótesis alternativa (<span
+class="math inline">\(H_1\)</span>)</strong>: “El rendimiento promedio
+de los estudiantes provenientes de hogares con un alto nivel educativo
+es inferior a 60 puntos.”</li>
+</ul>
+<p>Para evaluar estas hipótesis, se selecciona una muestra de
+estudiantes provenientes de hogares con alto nivel educativo y se
+calcula su rendimiento promedio en la prueba. Supongamos que la media
+observada en la muestra es de <strong>58 puntos</strong>.</p>
+<p>A la pregunta ¿Es esta diferencia suficiente para rechazar <span
+class="math inline">\(H_0\)</span>?</p>
+<p>La respuesta no es inmediata. Aunque <strong>58 puntos</strong> es un
+valor inferior a <strong>60</strong>, la diferencia de solo <strong>2
+puntos</strong> podría deberse a fluctuaciones aleatorias en la muestra
+y no necesariamente a un efecto real del nivel educativo familiar sobre
+el rendimiento. Para tomar una decisión informada, es necesario evaluar
+la <strong>probabilidad de obtener un resultado como el observado (o más
+extremo) bajo la suposición de que <span
+class="math inline">\(H_0\)</span> es verdadera</strong>.</p>
+<p>En este caso, la pregunta clave es:</p>
+<blockquote>
+<p><em>“Si el rendimiento de los estudiantes de hogares con alto nivel
+educativo fuera, en promedio, de 60 puntos o mas, ¿con qué frecuencia
+esperaríamos obtener una muestra con una media de 58 puntos debido al
+azar?”</em></p>
+</blockquote>
+<p>Si esta probabilidad es alta, la diferencia observada no es
+suficiente para rechazar <span class="math inline">\(H_0\)</span>, pues
+podría ser atribuida a la variabilidad muestral.</p>
+<p>Por otro lado, al considerar como un escenario alternativo en el que
+la muestra seleccionada arroja un promedio de <strong>15
+puntos</strong>. En este caso, la diferencia con el promedio poblacional
+de <strong>60 puntos</strong> es considerable. Si <span
+class="math inline">\(H_0\)</span> fuera cierta, la probabilidad de
+obtener una muestra con un rendimiento tan bajo sería extremadamente
+baja, lo que justificaría el rechazo de <span
+class="math inline">\(H_0\)</span> en favor de <span
+class="math inline">\(H_1\)</span></p>
+<p>Es decir, la evidencia empírica indicaría que los estudiantes
+provenientes de hogares con alto nivel educativo tienden a obtener
+peores resultados académicos.</p>
+</p>
+</div>
+</br></br>
+<h3>
+El Enfoque Probabilístico en la Toma de Decisiones
+</h3>
+<p>En el proceso de prueba de hipótesis, en lugar de evaluar de manera
+intuitiva si la diferencia observada es significativa, se cuantifica la
+<strong>probabilidad de obtener un valor muestral tan extremo como el
+hallado si <span class="math inline">\(H_0\)</span> fuera
+cierta</strong>.</p>
+<p>Cuando esta probabilidad es elevada, no hay suficiente evidencia para
+rechazar <span class="math inline">\(H_0\)</span>, ya que los resultados
+podrían explicarse por la variabilidad natural de los datos. En cambio,
+cuando la probabilidad es muy baja, se concluye que el resultado
+observado es poco compatible con <span
+class="math inline">\(H_0\)</span>, lo que justifica su rechazo en favor
+de <span class="math inline">\(H_1\)</span>.</p>
+<p>La cuestión central es determinar qué tan baja debe ser esta
+probabilidad para considerar que la evidencia empírica es suficiente
+para rechazar la hipótesis nula.</p>
+</br></br>
+<h3>
+Formalización del Enfoque Probabilístico
+</h3>
+<p>Para llevar a cabo una prueba de hipótesis, es necesario calcular la
+<strong>probabilidad de obtener el resultado observado bajo la
+suposición de que <span class="math inline">\(H_0\)</span> es
+verdadera</strong>. Matemáticamente, esta probabilidad se expresa de la
+siguiente manera:</p>
+<p><span class="math display">\[
+P(\text{resultado observado} \mid H_0 \text{ es verdadera})
+\]</span></p>
+<p>Este valor representa una <strong>probabilidad condicional</strong>,
+ya que mide la probabilidad del resultado muestral bajo el supuesto de
+que la hipótesis nula es correcta.</p>
+<p>En la próxima sección se presenta cómo calcular esta probabilidad de
+manera rigurosa y cómo interpretar los resultados dentro del marco de la
+inferencia estadística.</p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

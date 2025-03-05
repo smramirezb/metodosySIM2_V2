@@ -1,0 +1,39 @@
+---
+title: <span style="color:#686868"> **Referencias**</span>
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = NA)
+
+```
+
+<div class="caja-referencia">
+<h3>Probabilidad y aariable aleatoria:</h3>
+<p>
+R Core Team. (2024). <em>R: A language and environment for statistical computing</em>. R Foundation for Statistical Computing, Vienna, Austria. Recuperado de <a href="https://www.R-project.org/" target="_blank">https://www.R-project.org/</a>
+</p>
+<p>
+Walpole, R. E. (2012). <em>Probability and statistics for engineers and scientists</em> (9th ed.). Pearson Education.</p>
+<p>Anderson, D. R. (2013). <em>Modern business statistics with Microsoft Excel</em> (5th ed.). Cengage Learning.
+</p>
+</div>
+
+<div class="caja-referencia">
+<h3>Prueba de hipótesis:</h3>
+<p>
+Llinás Solano, H. (s.f.). <em>Estadística matemática (teoría con R)</em>. Departamento de Matemáticas y Estadística, Universidad del Norte (Barranquilla, Colombia). Recuperado de <a href="https://rpubs.com/hllinas/MgEst_Hipotesis_teoriaR" target="_blank">https://rpubs.com/hllinas/MgEst_Hipotesis_teoriaR</a>
+</p>
+<p>
+Bologna, E. (s.f.). <em>Un Recorrido por los Métodos Cuantitativos en Ciencias Sociales a bordo de R</em>. Recuperado de <a href="https://estadisticacienciassocialesr.rbind.io/" target="_blank">https://estadisticacienciassocialesr.rbind.io/</a>
+</p>
+</div>
+
+

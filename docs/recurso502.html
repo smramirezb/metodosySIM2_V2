@@ -1,0 +1,4618 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Pruebas sobre una muestra</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Pruebas sobre una muestra</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas sobre dos muestras</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de Estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Referencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso1000.html">Referencias</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Pruebas sobre una muestra</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+</br></br>
+<h2>
+Prueba sobre la media
+</h2>
+</br></br>
+<h3>
+Contexto del Problema
+</h3>
+<p>Se analiza el caso de una carrera universitaria en la que,
+históricamente, el tiempo promedio requerido para completarla ha sido de
+<strong>7.30 años</strong>. El término <em>históricamente</em> hace
+referencia a que este valor ha sido estimado a partir de registros
+acumulados durante varios años, reflejando el desempeño de generaciones
+anteriores de estudiantes bajo un plan de estudios que ha sido
+reemplazado.</p>
+<p>Recientemente, se implementó una modificación en el plan curricular
+con el propósito de optimizar la trayectoria académica. Como
+consecuencia de este cambio, se plantea la hipótesis de que el tiempo
+promedio de graduación podría haber variado.</p>
+<p>En este contexto, el valor de <strong>7.30 años</strong> representa
+la <strong>media poblacional</strong> correspondiente a los estudiantes
+que completaron la carrera bajo el plan de estudios anterior. Dado que
+esta población ya está completamente definida y sus registros se
+encuentran disponibles, este valor se considera un parámetro
+conocido.</p>
+<p>El objetivo del análisis es realizar una inferencia sobre la
+<strong>media poblacional</strong> de los estudiantes que cursan la
+carrera bajo el nuevo plan. Sin embargo, esta población no es
+completamente accesible, ya que incluye tanto a los estudiantes que han
+egresado como a aquellos que aún se encuentran cursando y a quienes
+ingresarán en los próximos años mientras el nuevo plan continúe
+vigente.</p>
+<p>Dado que no es posible observar a todos los promedios de notas en su
+totalidad, la única alternativa es analizar una <strong>muestra
+representativa</strong> de las notas de los egresados que ya han
+completado la carrera con el nuevo plan de estudios y evaluar si el
+tiempo promedio de graduación en esta muestra es significativamente
+diferente del valor histórico de <strong>7.30 años</strong>.</p>
+<p>Este procedimiento permite determinar si el cambio curricular ha
+tenido un efecto estadísticamente significativo en la duración de los
+estudios, proporcionando evidencia empírica para evaluar la efectividad
+de la reforma académica.</p>
+</br></br>
+<h3>
+Formulación de Hipótesis
+</h3>
+<p>En este análisis, se formulan la <strong>hipótesis nula</strong> y la
+<strong>hipótesis alternativa</strong> de la siguiente manera:</p>
+<p><span class="math display">\[
+H_0: \mu = 7.30
+\]</span></p>
+<p><span class="math display">\[
+H_1: \mu \neq 7.30
+\]</span></p>
+<p>La <strong>hipótesis nula</strong> (<span
+class="math inline">\(H_0\)</span>) establece que la media poblacional
+del tiempo de graduación bajo el nuevo plan de estudios es la misma que
+la registrada históricamente, es decir, <strong>no se han producido
+cambios significativos</strong> en la duración de la carrera.</p>
+<p>Por otro lado, la <strong>hipótesis alternativa</strong> (<span
+class="math inline">\(H_1\)</span>) plantea que el tiempo promedio
+requerido para completar la carrera <strong>es diferente</strong> al
+valor histórico de <strong>7.30 años</strong>, lo que indicaría que la
+reforma curricular ha generado un impacto en la duración de los
+estudios.</p>
+<p>Cabe destacar que la hipótesis alternativa no especifica si el tiempo
+promedio ha aumentado o disminuido, sino únicamente que <strong>ha
+cambiado</strong> con respecto al plan anterior. Por esta razón, se
+trata de una <strong>prueba bilateral</strong> o <strong>de dos
+colas</strong>, cuyo propósito es detectar cualquier desviación
+significativa sin realizar una suposición previa sobre la dirección del
+cambio.</p>
+</br></br>
+<h3>
+Distribución Normal y Medias Muestrales
+</h3>
+<p>La <strong>Figura 2.53</strong> presenta la distribución de las
+medias muestrales bajo la hipótesis nula. La curva se encuentra centrada
+en la media hipotética, lo que representa el escenario en el que <span
+class="math inline">\(H_0\)</span> es verdadera. Esta distribución
+asigna probabilidades a los distintos valores de la media muestral
+(<span class="math inline">\(\bar{x}\)</span>), indicando que el valor
+más probable se encuentra en torno a <strong>7.30 años</strong>. A
+medida que los valores se alejan de este punto central, la probabilidad
+de obtener medias muestrales disminuye, lo que se refleja en la
+reducción del área bajo la curva.</p>
+<br/><br/>
+<center>
+<img src="img/fig253.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.53</strong> Distribución de las medias muestrales bajo
+la hipótesis nula.
+</center>
+<p><br/><br/></p>
+</br></br>
+<h3>
+Evaluación de la Evidencia
+</h3>
+<p>Para llevar a cabo la prueba de hipótesis, se requiere una muestra.
+Se supone que se selecciona un grupo de <strong>100 egresados</strong>
+mediante un muestreo aleatorio simple y que el tiempo promedio de
+graduación observado es de <strong>7.50 años</strong>, con una
+desviación estándar de <strong>1.30 años</strong> (<span
+class="math inline">\(\bar{x} = 7.50\)</span>, <span
+class="math inline">\(s = 1.30\)</span>). En este contexto, se requiere
+un criterio que permita determinar si este valor es compatible con la
+hipótesis nula (<span class="math inline">\(\mu = 7.30\)</span>) o si
+constituye evidencia suficiente para rechazarla en favor de la hipótesis
+alternativa (<span class="math inline">\(\mu \neq 7.30\)</span>).</p>
+<p>El criterio de decisión se basa en evaluar la probabilidad de obtener
+el valor observado bajo la suposición de que la hipótesis nula es
+verdadera. Dado que en variables continuas no es posible calcular
+probabilidades exactas para valores individuales (pues la probabilidad
+en un valor concreto es cero), se estima la probabilidad de obtener
+valores iguales o más extremos que el observado (<span
+class="math inline">\(\bar{x} = 7.50\)</span>).</p>
+<p><span class="math display">\[
+\text{¿Qué tan alejado?} \quad \Rightarrow \quad \text{¿Qué tan poco
+probable si $H_0$ es cierta?}
+\]</span></p>
+<p>De este modo, se establece un umbral para la probabilidad máxima de
+ocurrencia del valor muestral. En otras palabras, se define un límite
+para el área extrema en la distribución, permitiendo determinar qué tan
+alejado es “suficientemente alejado” para considerar que el resultado es
+poco probable bajo <span class="math inline">\(H_0\)</span>.</p>
+</br></br>
+<h3>
+La Toma de Decisión
+</h3>
+<p>La hipótesis nula (<span class="math inline">\(H_0\)</span>) se
+rechaza cuando la probabilidad de obtener un valor como el observado, o
+uno aún más extremo, es suficientemente baja. El umbral que define esta
+baja probabilidad puede establecerse previamente, por ejemplo, en
+<strong>0.05</strong>. Esto implica que se consideran como altamente
+improbables aquellos resultados cuya probabilidad de ocurrencia sea
+menor a <strong>0.05</strong> bajo la suposición de que <span
+class="math inline">\(H_0\)</span> es cierta. En estos casos, la
+decisión será rechazar <span class="math inline">\(H_0\)</span>.</p>
+<p>Por el contrario, si los valores observados presentan una
+probabilidad superior a <strong>0.05</strong>, se consideran como
+resultados esperables dentro de la variabilidad muestral, lo que conduce
+a no rechazar <span class="math inline">\(H_0\)</span>.</p>
+<p>De acuerdo con la distribución normal, los valores de <span
+class="math inline">\(z = \pm 1.96\)</span> delimitan un área central
+del <strong>95%</strong>, lo que implica que dejan fuera un área total
+del <strong>5%</strong>. Esto significa que la probabilidad de que un
+valor de <span class="math inline">\(z\)</span> sea superior a
+<strong>1.96</strong> o inferior a <strong>-1.96</strong> es de
+<strong>0.05</strong>, distribuida equitativamente en ambas colas de la
+distribución normal (ver <strong>Figura 2.54</strong> y <strong>Figura
+2.55</strong>).</p>
+<p>En consecuencia, los valores de <span
+class="math inline">\(z\)</span> que exceden estos límites representan
+eventos cuya probabilidad de ocurrencia bajo la hipótesis nula es
+<strong>baja</strong>, lo que los convierte en posibles indicadores de
+una diferencia estadísticamente significativa.</p>
+<br/><br/>
+<center>
+<img src="img/fig254.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.54</strong> Áreas extremas que totalizan una
+probabilidad de 0.05 para el promedio muestral.
+</center>
+<p><br/><br/></p>
+<br/><br/>
+<center>
+<img src="img/fig255.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.55</strong> Áreas extremas que totalizan una
+probabilidad de 0.05 para el promedio muestral estandarizado (<span
+class="math inline">\(Z\)</span>).
+</center>
+<p><br/><br/></p>
+<p>Los valores de la media muestral (<span
+class="math inline">\(\bar{x}\)</span>) que correspondan a puntajes
+<span class="math inline">\(z\)</span> superiores a
+<strong>1.96</strong> o inferiores a <strong>-1.96</strong> presentan
+una probabilidad menor a <strong>0.05</strong>, por lo que se consideran
+poco probables bajo la hipótesis nula y conducen a su rechazo.</p>
+<p>Por el contrario, los valores de <span
+class="math inline">\(z\)</span> comprendidos en el intervalo <span
+class="math inline">\([-1.96, 1.96]\)</span> tienen una probabilidad
+superior a <strong>0.05</strong>, lo que los clasifica como valores
+esperables dentro de la variabilidad muestral y, en consecuencia, llevan
+a no rechazar <span class="math inline">\(H_0\)</span>.</p>
+<p>Los valores <strong>-1.96</strong> y <strong>1.96</strong> se
+denominan <strong>valores críticos</strong> de <span
+class="math inline">\(z\)</span> y se representan con un subíndice:
+<span class="math inline">\(z_c\)</span>.</p>
+<p>En este caso, el valor observado de la media muestral es <span
+class="math inline">\(\bar{x} = 7.50\)</span>. A partir de este punto,
+este valor se denotará como <span
+class="math inline">\(\bar{x}_{obs}\)</span> para referirse a la media
+observada en la muestra.</p>
+<p>El puntaje <span class="math inline">\(z\)</span> correspondiente a
+<span class="math inline">\(\bar{x}_{obs}\)</span> se denomina
+<strong><span class="math inline">\(z\)</span> observado</strong> y se
+representa como <span class="math inline">\(z_{obs}\)</span>. Su valor
+se calcula mediante la siguiente expresión:</p>
+<p><span class="math display">\[
+z_{obs} = \frac{\bar{x}_{obs} - \mu}{s / \sqrt{n}}
+\]</span></p>
+<p>Sustituyendo los valores específicos del problema:</p>
+<p><span class="math display">\[
+z_{obs} = \frac{7.50 - 7.30}{1.30 / \sqrt{100}} = 1.54
+\]</span></p>
+<p>Este valor representa la transformación a puntaje <span
+class="math inline">\(z\)</span> de la media muestral observada, lo que
+permite medir cuántas desviaciones estándar se encuentra <span
+class="math inline">\(\bar{x}\)</span> por encima o por debajo de la
+media hipotética <span class="math inline">\(\mu\)</span>. Este cálculo
+recibe el nombre de <strong>estadístico de prueba</strong> y constituye
+el valor clave para la toma de decisiones en la prueba de hipótesis.</p>
+<p>El puntaje <span class="math inline">\(z_{obs} = 1.54\)</span> no se
+encuentra en la zona extrema de la distribución, ya que no supera el
+umbral de <strong>1.96</strong> en valor absoluto. Por el contrario, se
+sitúa dentro del intervalo <span class="math inline">\([-1.96,
+1.96]\)</span>, correspondiente a la región central de la distribución,
+donde se encuentran los valores más probables.</p>
+<p>En consecuencia, la decisión es <strong>no rechazar <span
+class="math inline">\(H_0\)</span></strong>, lo que indica que no se
+dispone de suficiente evidencia para concluir que el tiempo requerido
+para completar la carrera ha cambiado respecto al valor histórico.</p>
+<p>Dicho de otra manera, el valor observado de la media muestral <span
+class="math inline">\(\bar{x}_{obs} = 7.50\)</span> es un resultado
+esperable bajo la suposición de que la media poblacional es <span
+class="math inline">\(\mu = 7.30\)</span>. Por lo tanto, una media
+muestral de <strong>7.50 años</strong> es compatible con una media
+poblacional de <strong>7.30 años</strong>.</p>
+<p>Debido al procedimiento seguido en el razonamiento y la toma de
+decisiones, se establece que los valores de <span
+class="math inline">\(z\)</span> comprendidos en el intervalo <span
+class="math inline">\([-1.96, 1.96]\)</span> conforman la <strong>zona
+de no rechazo</strong> de <span class="math inline">\(H_0\)</span>.</p>
+<p>Por otro lado, los valores de <span class="math inline">\(z\)</span>
+que exceden estos límites, es decir, aquellos mayores a
+<strong>1.96</strong> o menores a <strong>-1.96</strong>, constituyen la
+<strong>zona de rechazo</strong> de <span
+class="math inline">\(H_0\)</span>. Estos valores indican observaciones
+cuya probabilidad de ocurrencia bajo la hipótesis nula es lo
+suficientemente baja como para considerarlas evidencia en favor de la
+hipótesis alternativa.</p>
+<p>Luego de establecer <strong>0.05</strong> como el umbral de
+probabilidad para definir eventos poco probables, quedaron determinados
+los valores críticos de <span class="math inline">\(z\)</span> (<span
+class="math inline">\(z_c\)</span>), los cuales delimitan las zonas de
+rechazo y de no rechazo de <span class="math inline">\(H_0\)</span>.</p>
+<blockquote>
+<p><em>“La <strong>zona de rechazo</strong> de <span
+class="math inline">\(H_0\)</span> corresponde al conjunto de valores
+extremos de la distribución, donde la probabilidad de encontrar los
+valores muestrales es baja si <span class="math inline">\(H_0\)</span>
+es verdadera.”</em></p>
+</blockquote>
+<blockquote>
+<p><em>“Por otro lado, la <strong>zona de no rechazo</strong> de <span
+class="math inline">\(H_0\)</span> se compone de los valores centrales
+de la distribución, donde la probabilidad de encontrar los valores
+muestrales es mayor si <span class="math inline">\(H_0\)</span> es
+verdadera. Esta zona incluye los valores muestrales compatibles con el
+valor paramétrico que sostiene <span
+class="math inline">\(H_0\)</span>.”</em></p>
+</blockquote>
+<p>El procedimiento seguido consistió en calcular el puntaje <span
+class="math inline">\(z\)</span> correspondiente al valor observado de
+la media muestral (<span class="math inline">\(\bar{x}\)</span>) y luego
+determinar si este valor se encuentra dentro de la zona de rechazo o de
+no rechazo de <span class="math inline">\(H_0\)</span>.</p>
+<p>La elección de <strong>0.05</strong> como umbral para definir una
+probabilidad baja no es obligatoria y podría haber sido distinta. Este
+valor tiene una larga tradición histórica, ya que Fisher lo utilizaba
+regularmente, aunque aclaraba que no era un criterio absoluto ni
+necesariamente óptimo en todas las situaciones.</p>
+<p>Este umbral se conoce como <strong>nivel de significación</strong> y
+se representa con la letra <strong><span
+class="math inline">\(\alpha\)</span></strong> (alfa). Su interpretación
+corresponde a la probabilidad de obtener un valor igual o más extremo
+que el observado bajo la suposición de que la hipótesis nula es
+verdadera. Es decir, se trata de una <strong>probabilidad
+condicional</strong>, expresada de la siguiente manera:</p>
+<p><span class="math display">\[
+P(z \leq -1.96 \cup z \geq 1.96 \mid H_0 \text{ verdadera}) = 0.05
+\]</span></p>
+<p>Es fundamental recordar que <span
+class="math inline">\(\alpha\)</span> mide la <strong>probabilidad de
+que el estadístico <span class="math inline">\(z\)</span> se ubique en
+la región de rechazo</strong> (es decir, más allá de los puntos
+críticos) bajo la suposición de que <span
+class="math inline">\(H_0\)</span> es cierta.</p>
+<p>El valor seleccionado para <span
+class="math inline">\(\alpha\)</span> determina qué valores se
+considerarán como poco probables. En este caso, se han definido como
+aquellos cuya probabilidad de ocurrencia es tan baja como
+<strong>0.05</strong>.</p>
+<p>Sin embargo, es posible utilizar un nivel de significación distinto,
+por ejemplo, <strong>10%</strong>. En este escenario, los valores
+críticos de <span class="math inline">\(z\)</span> cambiarán, ya que los
+puntos que delimitan un área extrema del <strong>0.1</strong>
+corresponden a:</p>
+<p><span class="math display">\[
+z_c = \pm 1.64
+\]</span></p>
+<p>Esto implica que, con un nivel de significación de
+<strong>10%</strong>, se acepta un mayor margen de error en la toma de
+decisiones, y la región de rechazo abarca valores menos extremos en
+comparación con el caso en el que <span class="math inline">\(\alpha =
+0.05\)</span>.</p>
+<p>En este escenario, la probabilidad de que el estadístico <span
+class="math inline">\(z\)</span> tome un valor en la región de rechazo
+bajo la suposición de que <span class="math inline">\(H_0\)</span> es
+verdadera se expresa de la siguiente manera:</p>
+<p><span class="math display">\[
+P(z \leq -1.64 \cup z \geq 1.64 \mid H_0 \text{ verdadera}) = 0.10
+\]</span></p>
+<p>Se denomina <strong>nivel de significación</strong> a la probabilidad
+de que el valor muestral se ubique en la zona de rechazo de <span
+class="math inline">\(H_0\)</span>, en caso de que <span
+class="math inline">\(H_0\)</span> sea verdadera. Este nivel se
+representa mediante <span class="math inline">\(\alpha\)</span> y es
+seleccionado por el equipo de investigación en función del contexto y
+los criterios del estudio.</p>
+<p>Otro nivel de significación frecuentemente utilizado es
+<strong>1%</strong>. En este caso, los valores críticos de <span
+class="math inline">\(z\)</span> corresponden a:</p>
+<p><span class="math display">\[
+z_c = \pm 2.56
+\]</span></p>
+<p>Por lo tanto, la regla de decisión se establece de la siguiente
+manera:</p>
+<ul>
+<li>Si el valor de <span class="math inline">\(z\)</span>
+correspondiente a la media muestral observada (<span
+class="math inline">\(\bar{x}\)</span>) se encuentra en el intervalo
+<span class="math inline">\([-2.56, 2.56]\)</span>, <strong>no se debe
+rechazar <span class="math inline">\(H_0\)</span></strong>.<br />
+</li>
+<li>Si el valor de <span class="math inline">\(z\)</span> es inferior a
+<strong>-2.56</strong> o superior a <strong>2.56</strong>, <strong>se
+debe rechazar <span class="math inline">\(H_0\)</span></strong>.</li>
+</ul>
+<p>La probabilidad condicional se expresa de la siguiente manera:</p>
+<p><span class="math display">\[
+P(z \leq -2.56 \cup z \geq 2.56 \mid H_0 \text{ verdadera}) = 0.01
+\]</span></p>
+<p>Al igual que en los casos anteriores, cuando se establecen los
+valores críticos en términos de puntajes <span
+class="math inline">\(z\)</span>, estos son <strong>fijos</strong> y no
+dependen de los resultados muestrales obtenidos. Constituyen una
+<strong>regla de decisión</strong> definida a priori, utilizada para
+determinar si se debe rechazar la hipótesis nula.</p>
+<p>Cuanto más pequeño sea el nivel de significación <span
+class="math inline">\(\alpha\)</span>, más <strong>exigente</strong>
+será la prueba, en el sentido de que solo permitirá el rechazo de <span
+class="math inline">\(H_0\)</span> si los valores observados se
+encuentran muy alejados de la media hipotética.</p>
+<p>Por el contrario, un nivel de significación de <span
+class="math inline">\(\alpha = 0.10\)</span> se considera <strong>menos
+restrictivo</strong>, ya que permite el rechazo de <span
+class="math inline">\(H_0\)</span> con menores desviaciones del valor
+hipotético, lo que aumenta la tolerancia a la variabilidad muestral.</p>
+<p>De manera general, si se define <span
+class="math inline">\(z_{\alpha/2}\)</span> como el puntaje <span
+class="math inline">\(z\)</span> correspondiente a un área acumulada de
+<span class="math inline">\(\alpha/2\)</span> en la distribución normal
+estándar (es decir, el percentil <span
+class="math inline">\(\alpha/2\)</span>), y <span
+class="math inline">\(z_{(1-\alpha/2)}\)</span> como el percentil <span
+class="math inline">\((1-\alpha/2)\)</span>, la expresión de la
+probabilidad condicional se puede formular de la siguiente manera:</p>
+<p><span class="math display">\[
+P(z \leq z_{\alpha/2} \cup z \geq z_{(1-\alpha/2)} \mid H_0 \text{
+verdadera}) = \alpha
+\]</span></p>
+<p>Esta expresión indica que la probabilidad total de que el estadístico
+<span class="math inline">\(z\)</span> se ubique en la región de rechazo
+de <span class="math inline">\(H_0\)</span>, bajo la suposición de que
+<span class="math inline">\(H_0\)</span> es verdadera, es igual al nivel
+de significación <span class="math inline">\(\alpha\)</span>. Los
+valores críticos <span class="math inline">\(z_{\alpha/2}\)</span> y
+<span class="math inline">\(z_{(1-\alpha/2)}\)</span> se determinan a
+priori en función del nivel de significación seleccionado para la prueba
+de hipótesis. `</p>
+<p>Y las representaciones gráficas de las áreas de rechazo para los tres
+niveles de significación mencionados se pueden ver en las
+<strong>Figuras</strong> <strong>2.55</strong>, <strong>2.56</strong> y
+<strong>2.57</strong>.</p>
+<br/><br/>
+<center>
+<img src="img/fig256.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.56</strong> Comparación de las zonas de rechazo de
+<span class="math inline">\(H_0\)</span> con nivel de significación del
+10%.
+</center>
+<p><br/><br/></p>
+<br/><br/>
+<center>
+<img src="img/fig257.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.57</strong> Comparación de las zonas de rechazo de
+<span class="math inline">\(H_0\)</span> con nivel de significación del
+1%.
+</center>
+<p><br/><br/></p>
+<hr />
+<p>Para la misma carrera universitaria del ejemplo anterior, el promedio
+de calificaciones al egreso, según los registros históricos, era de
+<strong>6.50</strong>. Se plantea la interrogante de si, luego de la
+modificación en el plan de estudios, este promedio ha cambiado o si
+permanece inalterado.</p>
+<p>En este caso, la formulación de las hipótesis se establece de la
+siguiente manera:</p>
+<p><span class="math display">\[
+H_0: \mu = 6.50
+\]</span></p>
+<p><span class="math display">\[
+H_1: \mu \neq 6.50
+\]</span></p>
+<p>La <strong>hipótesis nula</strong> (<span
+class="math inline">\(H_0\)</span>) indica que el promedio de
+calificaciones al egreso no ha sufrido modificaciones tras la
+implementación del nuevo plan de estudios, manteniéndose en
+<strong>6.50</strong>.</p>
+<p>Por otro lado, la <strong>hipótesis alternativa</strong> (<span
+class="math inline">\(H_1\)</span>) plantea que el promedio de
+calificaciones es <strong>diferente</strong> al valor histórico de
+<strong>6.50</strong>, lo que sugiere que la reforma académica podría
+haber generado un impacto en el rendimiento estudiantil.</p>
+<p>Dado que la hipótesis alternativa no especifica la dirección del
+cambio, se trata de una <strong>prueba bilateral</strong>, cuyo objetivo
+es detectar cualquier desviación significativa en la calificación
+promedio, sin asumir previamente si el cambio ha sido un aumento o una
+disminución.</p>
+<p>Por la misma razón expuesta anteriormente, no es posible analizar a
+la población completa, por lo que se utilizan los datos obtenidos en una
+muestra. En este caso, se observa que el promedio de calificaciones de
+una muestra de <strong>100 egresadas y egresados</strong> es de
+<strong>6.65</strong>, con una desviación estándar de
+<strong>0.60</strong>. Es decir:</p>
+<p><span class="math display">\[
+\bar{x} = 6.65, \quad s = 0.60
+\]</span></p>
+<p>A un nivel de significación del <strong>5%</strong>, los valores
+críticos de <span class="math inline">\(z\)</span> corresponden a:</p>
+<p><span class="math display">\[
+z_c = \pm 1.96
+\]</span></p>
+<p>Para determinar si el valor observado de la media muestral es
+compatible con la hipótesis nula, se calcula el <strong>estadístico de
+prueba</strong>, transformando la media muestral en un puntaje <span
+class="math inline">\(z\)</span>:</p>
+<p><span class="math display">\[
+z_{obs} = \frac{\bar{x}_{obs} - \mu}{s / \sqrt{n}}
+\]</span></p>
+<p>Sustituyendo los valores observados:</p>
+<p><span class="math display">\[
+z_{obs} = \frac{6.65 - 6.50}{0.60 / \sqrt{100}} = 2.50
+\]</span></p>
+<p>El valor observado de la media muestral <span
+class="math inline">\(\bar{x} = 6.65\)</span> corresponde a un puntaje
+<span class="math inline">\(z\)</span> que supera el punto crítico de
+<strong>1.96</strong> en valor absoluto. En consecuencia, este resultado
+se encuentra en la <strong>zona de rechazo</strong> de <span
+class="math inline">\(H_0\)</span>, lo que lleva a la decisión de
+<strong>rechazar <span class="math inline">\(H_0\)</span></strong> y
+concluir que el promedio de calificaciones al egreso es
+<strong>significativamente diferente</strong> del promedio histórico de
+<strong>6.50</strong>.</p>
+<p>En ambos ejemplos se observa que la <strong>regla de
+decisión</strong> depende del nivel de significación seleccionado.</p>
+<p>Cuando el nivel de significación se fija en <strong>5%</strong>, la
+regla se expresa de la siguiente manera:</p>
+<ul>
+<li>Si el valor de <span class="math inline">\(z\)</span>
+correspondiente a la media muestral observada (<span
+class="math inline">\(\bar{x}\)</span>) se encuentra en el intervalo
+<span class="math inline">\([-1.96, 1.96]\)</span>, <strong>no se puede
+rechazar <span class="math inline">\(H_0\)</span></strong>.</li>
+<li>Si el valor de <span class="math inline">\(z\)</span> es inferior a
+<strong>-1.96</strong> o superior a <strong>1.96</strong>, <strong>se
+debe rechazar <span class="math inline">\(H_0\)</span></strong>.</li>
+</ul>
+<p>Por otro lado, cuando el nivel de significación es
+<strong>10%</strong>, la regla de decisión se modifica:</p>
+<ul>
+<li>Si el valor de <span class="math inline">\(z\)</span>
+correspondiente a la media muestral observada (<span
+class="math inline">\(\bar{x}\)</span>) se encuentra en el intervalo
+<span class="math inline">\([-1.64, 1.64]\)</span>, <strong>no se puede
+rechazar <span class="math inline">\(H_0\)</span></strong>.</li>
+<li>Si el valor de <span class="math inline">\(z\)</span> es inferior a
+<strong>-1.64</strong> o superior a <strong>1.64</strong>, <strong>se
+debe rechazar <span class="math inline">\(H_0\)</span></strong>.</li>
+</ul>
+<p>Estos umbrales reflejan la influencia del nivel de significación en
+la toma de decisiones, estableciendo diferentes grados de exigencia para
+considerar un resultado como evidencia suficiente para rechazar la
+hipótesis nula.</p>
+<p>Se analizará con mayor detalle el significado de la probabilidad que
+ha sido fijada en <strong>0.05</strong>, aunque también podría
+establecerse en <strong>0.10</strong> o <strong>0.01</strong>, y que se
+denota como <span class="math inline">\(\alpha\)</span>. Esta
+probabilidad representa la <strong>probabilidad de obtener el valor
+observado en la muestra (o uno más extremo) bajo la suposición de que
+<span class="math inline">\(H_0\)</span> es verdadera</strong>.</p>
+<p>Cada vez que se obtienen valores muestrales que se encuentran en la
+región de rechazo, la decisión es <strong>rechazar <span
+class="math inline">\(H_0\)</span></strong>. Sin embargo, si la
+hipótesis nula fuera efectivamente verdadera, esta decisión sería
+incorrecta. No obstante, dado que el verdadero valor del parámetro
+poblacional es desconocido, no es posible verificar directamente si la
+decisión es acertada o errónea.</p>
+<p>Lo que sí se puede concluir es que, al fijar <span
+class="math inline">\(\alpha = 0.05\)</span>, se establece que la
+<strong>probabilidad de cometer un error al rechazar una hipótesis nula
+que realmente es verdadera es del 5%</strong>.</p>
+<p>En el segundo ejemplo, donde la decisión fue <strong>rechazar <span
+class="math inline">\(H_0\)</span></strong>, resulta fundamental indicar
+el nivel de significación con el que se ha tomado la decisión, ya que
+este valor (<strong>5%</strong>) representa la <strong>probabilidad de
+haber cometido un error al rechazar <span
+class="math inline">\(H_0\)</span></strong>. En otras palabras, mide la
+probabilidad de haber obtenido un promedio muestral de
+<strong>6.65</strong> únicamente por azar. Dado que esta probabilidad es
+pequeña, la decisión adoptada fue <strong>rechazar <span
+class="math inline">\(H_0\)</span></strong>.</p>
+</br></br>
+<h3>
+Puntos Críticos en Términos del Estimador
+</h3>
+<p>Existe una alternativa para establecer las <strong>zonas de
+aceptación y rechazo</strong>, que consiste en fijar los puntos críticos
+en términos de la media muestral <span
+class="math inline">\(\bar{x}\)</span>, en lugar de hacerlo utilizando
+los puntajes <span class="math inline">\(z\)</span>.</p>
+<p>En este enfoque, en lugar de determinar los valores críticos <span
+class="math inline">\(z_c\)</span>, se calculan los <strong>valores
+críticos de la media muestral</strong>, denotados como <span
+class="math inline">\(\bar{x}_c\)</span>. Estos valores representan los
+límites dentro de los cuales la media muestral es considerada compatible
+con la hipótesis nula.</p>
+<p>El procedimiento consiste en transformar los valores críticos de
+<span class="math inline">\(z\)</span> a la escala de la media muestral
+utilizando la siguiente expresión:</p>
+<p><span class="math display">\[
+\bar{x}_c = \mu \pm z_c \cdot \frac{s}{\sqrt{n}}
+\]</span></p>
+<p>De esta manera, se define directamente el intervalo de valores de
+<span class="math inline">\(\bar{x}\)</span> dentro del cual <span
+class="math inline">\(H_0\)</span> no será rechazada. Si la media
+muestral observada se encuentra fuera de este intervalo, la decisión
+será rechazar <span class="math inline">\(H_0\)</span>.</p>
+<p>En el ejemplo sobre el tiempo requerido para completar una carrera
+universitaria y con un nivel de significación del <strong>5%</strong>,
+los valores críticos de la media muestral <span
+class="math inline">\(\bar{x}_c\)</span> se calculan de la siguiente
+manera:</p>
+<p><span class="math display">\[
+\bar{x}_c = \mu \pm z_c \cdot \frac{s}{\sqrt{n}}
+\]</span></p>
+<p>Sustituyendo los valores correspondientes:</p>
+<p><span class="math display">\[
+\bar{x}_c = 7.30 \pm 1.96 \cdot \frac{1.30}{\sqrt{100}}
+\]</span></p>
+<p><span class="math display">\[
+\bar{x}_c = 7.30 \pm 0.25
+\]</span></p>
+<p>Al realizar las operaciones, se obtiene:</p>
+<p><span class="math display">\[
+\bar{x}_c = [7.05, 7.55]
+\]</span></p>
+<p>Estos valores representan los puntos críticos expresados en términos
+de la variable original. Con base en estos resultados, la <strong>regla
+de decisión</strong> se define de la siguiente manera:</p>
+<ul>
+<li>Si el valor observado de la media muestral <span
+class="math inline">\(\bar{x}_{obs}\)</span> se encuentra en el
+intervalo <strong>[7.05, 7.55]</strong>, <strong>no se puede rechazar
+<span class="math inline">\(H_0\)</span></strong>.</li>
+<li>Si el valor observado de <span
+class="math inline">\(\bar{x}_{obs}\)</span> es inferior a
+<strong>7.05</strong> o superior a <strong>7.55</strong>, <strong>se
+debe rechazar <span class="math inline">\(H_0\)</span></strong>.</li>
+</ul>
+<p>La expresión en términos de probabilidad condicional es:</p>
+<p><span class="math display">\[
+P(\bar{x} \leq 7.05 \cup \bar{x} \geq 7.55 \mid \mu = 7.30) = 0.05
+\]</span></p>
+<p>Esto indica que la <strong>probabilidad de obtener un valor de <span
+class="math inline">\(\bar{x}\)</span> inferior a 7.05 o superior a
+7.55, bajo la suposición de que la media poblacional es 7.30, es del
+0.05</strong>.</p>
+<p>Este enfoque permite establecer los puntos críticos directamente en
+la escala original de la variable de interés, facilitando la
+interpretación de la prueba de hipótesis.</p>
+<p>Al realizar la prueba, se observa que el valor de la media muestral
+observada es:</p>
+<p><span class="math display">\[
+\bar{x}_{obs} = 7.50
+\]</span></p>
+<p>Este valor no excede los puntos críticos previamente calculados
+(<strong>7.05</strong> y <strong>7.55</strong>), por lo que se encuentra
+dentro de la <strong>zona de no rechazo</strong> de <span
+class="math inline">\(H_0\)</span>.</p>
+<p>En consecuencia, la decisión es <strong>no rechazar <span
+class="math inline">\(H_0\)</span></strong>, lo que indica que no se
+dispone de suficiente evidencia para concluir que el tiempo requerido
+para completar la carrera ha cambiado respecto al valor histórico.</p>
+<p>La <strong>regla de decisión</strong> sigue siendo la misma que en el
+enfoque basado en los puntajes <span class="math inline">\(z\)</span>,
+pero ahora está expresada directamente en términos de la media muestral
+<span class="math inline">\(\bar{x}\)</span>. Del mismo modo, la
+<strong>conclusión</strong> permanece inalterada: <strong>no se rechaza
+<span class="math inline">\(H_0\)</span></strong> y, por lo tanto, no se
+puede afirmar que el tiempo de graduación haya experimentado un cambio
+significativo.</p>
+<p>Volviendo al caso del promedio de calificaciones al egreso, los
+valores críticos de la media muestral se calculan mediante la siguiente
+expresión:</p>
+<p><span class="math display">\[
+\bar{x}_c = \mu \pm z_c \cdot \frac{s}{\sqrt{n}}
+\]</span></p>
+<p>Sustituyendo los valores específicos del problema:</p>
+<p><span class="math display">\[
+\bar{x}_c = 6.50 \pm 1.96 \cdot \frac{0.60}{\sqrt{100}}
+\]</span></p>
+<p><span class="math display">\[
+\bar{x}_c = 6.50 \pm 0.12
+\]</span></p>
+<p>Esto da como resultado los siguientes valores críticos:</p>
+<p><span class="math display">\[
+\bar{x}_c = [6.38, 6.62]
+\]</span></p>
+<p>El valor observado de la media muestral es <strong>6.65</strong>, lo
+que <strong>supera el punto crítico superior</strong> (<span
+class="math inline">\(6.62\)</span>) y, por lo tanto, se encuentra en la
+<strong>zona de rechazo</strong> de <span
+class="math inline">\(H_0\)</span>.</p>
+<p>En consecuencia, la decisión es <strong>rechazar <span
+class="math inline">\(H_0\)</span></strong>, lo que indica que, con la
+implementación del nuevo plan de estudios, la calificación promedio al
+egreso <strong>difiere significativamente</strong> del valor
+histórico.</p>
+<p>Esta conclusión es <strong>equivalente</strong> a la obtenida cuando
+el análisis se realiza en términos del puntaje <span
+class="math inline">\(z\)</span>, lo que demuestra que ambas
+metodologías conducen al mismo resultado.</p>
+</br></br>
+<h4>
+Comparación de los dos procedimientos
+</h4>
+<p>A. Uso de valores críticos de <span
+class="math inline">\(z\)</span></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Determinación de los valores críticos</strong><br />
+Se establece el nivel de significación <span
+class="math inline">\(\alpha\)</span> y se determinan los valores
+críticos de <span class="math inline">\(z\)</span>, denotados como <span
+class="math inline">\(z_c\)</span>, que dejan una probabilidad de <span
+class="math inline">\(\alpha/2\)</span> en cada extremo de la
+distribución normal estándar.</p></li>
+<li><p><strong>Cálculo del estadístico de prueba</strong><br />
+Se transforma el valor observado de la media muestral <span
+class="math inline">\(\bar{x}_{obs}\)</span> en un puntaje <span
+class="math inline">\(z\)</span> utilizando la siguiente expresión:</p>
+<p><span class="math display">\[
+z_{obs} = \frac{\bar{x}_{obs} - \mu}{s / \sqrt{n}}
+\]</span></p></li>
+<li><p><strong>Decisión basada en la posición de <span
+class="math inline">\(z_{obs}\)</span></strong><br />
+Se evalúa la ubicación de <span class="math inline">\(z_{obs}\)</span>
+dentro de la distribución normal estándar:</p>
+<ul>
+<li>Si <span class="math inline">\(z_{obs}\)</span> se encuentra dentro
+del intervalo <span class="math inline">\([-z_c, z_c]\)</span>,
+<strong>no se rechaza <span
+class="math inline">\(H_0\)</span></strong>.</li>
+<li>Si <span class="math inline">\(z_{obs}\)</span> es menor que <span
+class="math inline">\(-z_c\)</span> o mayor que <span
+class="math inline">\(z_c\)</span>, <strong>se rechaza <span
+class="math inline">\(H_0\)</span></strong>.</li>
+</ul></li>
+</ol>
+<p>Este procedimiento permite tomar una decisión sobre la hipótesis nula
+comparando directamente el estadístico de prueba con los valores
+críticos en la escala de <span class="math inline">\(z\)</span>.</p>
+<p>Para un nivel de significación de 0.05 (ó 5%), la <strong>Figura
+2.58</strong> ilustra la aplicación de la regla para el primer
+ejemplo.</p>
+<br/><br/>
+<center>
+<img src="img/fig258.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.58</strong> Ubicación de la zona de rechazo de <span
+class="math inline">\(H_0\)</span> a un nivel de significación de 0.05,
+sobre puntajes estándar <span class="math inline">\(z\)</span>, y del
+valor observado.
+</center>
+<p><br/><br/></p>
+<p>B. Uso de valores críticos de <span
+class="math inline">\(\bar{x}\)</span></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Determinación de los valores críticos de <span
+class="math inline">\(z\)</span></strong><br />
+Se establece el nivel de significación <span
+class="math inline">\(\alpha\)</span> y se determinan los valores
+críticos de <span class="math inline">\(z\)</span>, denotados como <span
+class="math inline">\(z_c\)</span>, que dejan una probabilidad de <span
+class="math inline">\(\alpha/2\)</span> en cada extremo de la
+distribución normal estándar.</p></li>
+<li><p><strong>Cálculo de los valores críticos de la media
+muestral</strong><br />
+Se transforman los valores críticos <span
+class="math inline">\(z_c\)</span> a la escala de la media muestral
+<span class="math inline">\(\bar{x}\)</span> utilizando la siguiente
+expresión:</p>
+<p><span class="math display">\[
+\bar{x}_c = \mu \pm z_c \cdot \frac{s}{\sqrt{n}}
+\]</span></p></li>
+<li><p><strong>Decisión basada en la posición de <span
+class="math inline">\(\bar{x}_{obs}\)</span></strong><br />
+Se evalúa la ubicación de la media muestral observada <span
+class="math inline">\(\bar{x}_{obs}\)</span> dentro de la distribución
+de probabilidad de <span class="math inline">\(\bar{x}\)</span>:</p>
+<ul>
+<li>Si <span class="math inline">\(\bar{x}_{obs}\)</span> se encuentra
+dentro del intervalo <span class="math inline">\([\bar{x}_c^-,
+\bar{x}_c^+]\)</span>, <strong>no se rechaza <span
+class="math inline">\(H_0\)</span></strong>.</li>
+<li>Si <span class="math inline">\(\bar{x}_{obs}\)</span> es menor que
+<span class="math inline">\(\bar{x}_c^-\)</span> o mayor que <span
+class="math inline">\(\bar{x}_c^+\)</span>, <strong>se rechaza <span
+class="math inline">\(H_0\)</span></strong>.</li>
+</ul></li>
+</ol>
+<p>Este procedimiento permite tomar una decisión sobre la hipótesis nula
+comparando directamente el valor observado de la media muestral con los
+valores críticos en la escala original de la variable de estudio.</p>
+<p>Para un nivel de significación de 0.05 (ó 5%), la <strong>Figura
+2.59</strong> ilustra la aplicación de la regla para el primer
+ejemplo.</p>
+<br/><br/>
+<center>
+<img src="img/fig259.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.59</strong> Ubicación de la zona de rechazo de <span
+class="math inline">\(H_0\)</span> a un nivel de significación de 0.05,
+sobre los valores de la media muestral y el valor observado de la media
+en la muestra.
+</center>
+<p><br/><br/></p>
+<p>La diferencia entre los dos enfoques para establecer los puntos
+críticos radica en la forma en que se comparan los valores observados
+con los valores de referencia.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Uso de valores críticos de <span
+class="math inline">\(z\)</span></strong>
+<ul>
+<li>Se determinan los valores críticos <span
+class="math inline">\(z_c\)</span> a partir del nivel de significación
+<span class="math inline">\(\alpha\)</span>.<br />
+</li>
+<li>Se transforma el valor muestral observado de <span
+class="math inline">\(\bar{x}_{obs}\)</span> en un puntaje <span
+class="math inline">\(z_{obs}\)</span>.<br />
+</li>
+<li>La decisión se toma comparando <span
+class="math inline">\(z_{obs}\)</span> con los valores críticos <span
+class="math inline">\(z_c\)</span>.</li>
+</ul></li>
+<li><strong>Uso de valores críticos de <span
+class="math inline">\(\bar{x}\)</span></strong>
+<ul>
+<li>Los valores críticos <span class="math inline">\(z_c\)</span> se
+transforman en puntos críticos de la media muestral <span
+class="math inline">\(\bar{x}_c\)</span>.<br />
+</li>
+<li>Se compara directamente el valor observado <span
+class="math inline">\(\bar{x}_{obs}\)</span> con los valores críticos de
+<span class="math inline">\(\bar{x}\)</span>, sin necesidad de
+transformarlo a la escala de <span
+class="math inline">\(z\)</span>.</li>
+</ul></li>
+</ol>
+<p>Ambos procedimientos conducen a la misma conclusión en la prueba de
+hipótesis, pero el segundo método permite interpretar los resultados
+directamente en la escala original de la variable de estudio,
+facilitando su comprensión y aplicación en contextos no
+estadísticos.</p>
+<p>Las <strong>Figuras</strong> <strong>2.58</strong> y
+<strong>2.59</strong> representan el mismo concepto utilizando
+diferentes escalas. El primero emplea la escala estandarizada del
+puntaje <span class="math inline">\(z\)</span>, mientras que el segundo
+utiliza la escala de la media muestral <span
+class="math inline">\(\bar{x}\)</span>.</p>
+<p>Ambos procedimientos son <strong>equivalentes</strong> y pueden
+aplicarse indistintamente. En los gráficos, las curvas presentan la
+misma forma, ya que el eje horizontal ha sido ajustado para reflejar la
+correspondencia entre ambas representaciones. Sin embargo, es importante
+recordar que la variabilidad de las distribuciones es distinta.</p>
+<ul>
+<li>La primera distribución corresponde a la <strong>normal
+estándar</strong>, con <span class="math inline">\(\sigma = 1\)</span>,
+ya que los valores han sido transformados a la escala de <span
+class="math inline">\(z\)</span>.<br />
+</li>
+<li>La segunda distribución representa la <strong>distribución normal de
+las medias muestrales</strong> (<span
+class="math inline">\(\bar{x}\)</span>), cuya desviación estándar
+depende de la varianza poblacional y del tamaño de la muestra. En este
+caso, la desviación estándar de <span
+class="math inline">\(\bar{x}\)</span> se obtiene como:</li>
+</ul>
+<p><span class="math display">\[
+\sigma_{\bar{x}} = \frac{\sigma}{\sqrt{n}} = 0.13
+\]</span></p>
+<hr />
+</br></br>
+<h3>
+Pruebas Unilaterales
+</h3>
+<p>Con frecuencia, la hipótesis alternativa no solo establece que la
+media poblacional difiere del valor hipotético, sino que también
+especifica la dirección en la que se espera dicha diferencia.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Por ejemplo, en el caso del promedio de calificaciones al egreso,
+podría plantearse la hipótesis de que, tras la modificación del plan de
+estudios, la calificación promedio ha <strong>aumentado</strong> en
+comparación con el valor histórico de <strong>6.50</strong>. En este
+escenario, la hipótesis alternativa se formula de la siguiente
+manera:</p>
+<p><span class="math display">\[
+H_1: \mu &gt; 6.50
+\]</span></p>
+<p>Este planteamiento define una <strong>prueba unilateral</strong>
+hacia la derecha, en la que la hipótesis nula solo se rechazará si la
+media muestral observada es <strong>sustancialmente mayor</strong> que
+<strong>6.50</strong>.</p>
+<p>Para un nivel de significación del <strong>5%</strong>, el valor
+crítico de <span class="math inline">\(z\)</span> que se utiliza es
+aquel que delimita un área de <strong>0.05</strong> en la cola superior
+de la distribución normal estándar. Este valor crítico es:</p>
+<p><span class="math display">\[
+z_c = 1.645
+\]</span></p>
+<p>Dado que la región de rechazo se encuentra únicamente en la cola
+superior de la distribución, los valores muestrales significativamente
+mayores a <strong>6.50</strong> conducirán al rechazo de <span
+class="math inline">\(H_0\)</span>, mientras que los valores menores o
+cercanos a <strong>6.50</strong> no proporcionarán evidencia suficiente
+para rechazar la hipótesis nula.</p>
+<p>Es importante señalar la diferencia entre esta prueba unilateral y
+las pruebas bilaterales tratadas anteriormente.</p>
+<p>En las pruebas bilaterales, con un nivel de significación del
+<strong>5%</strong>, se determinaban <strong>dos</strong> valores
+críticos de <span class="math inline">\(z\)</span>, de manera que la
+probabilidad total en las colas extremas sumara <strong>0.05</strong>.
+Esto equivale a encontrar los valores de <span
+class="math inline">\(z\)</span> que dejan un <strong>95%</strong> del
+área en la región central de la distribución.</p>
+<p>En contraste, en la prueba unilateral, el interés se centra
+únicamente en valores que <strong>excedan</strong> el umbral fijado. Por
+esta razón, se determina <strong>un único</strong> valor crítico de
+<span class="math inline">\(z\)</span>, que deja exactamente
+<strong>5%</strong> del área en la cola superior de la distribución
+normal estándar.</p>
+<p>Este valor crítico es:</p>
+<p><span class="math display">\[
+z_c = 1.64
+\]</span></p>
+<p>Dado que la región de rechazo se encuentra exclusivamente en la cola
+superior, los valores muestrales que superen este umbral proporcionarán
+evidencia suficiente para rechazar <span
+class="math inline">\(H_0\)</span>, mientras que los valores menores no
+justificarán su rechazo (ver <strong>Figura 2.60</strong>).</p>
+<br/><br/>
+<center>
+<img src="img/fig260.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.60</strong> Ubicación de la zona de rechazo de <span
+class="math inline">\(H_0\)</span> para una prueba unilateral derecha a
+un nivel de significación del 5%.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+<p>Por oposición a las pruebas bilaterales, las <strong>pruebas
+unilaterales</strong> se denominan <strong>pruebas de una cola</strong>,
+ya que la región de rechazo se encuentra únicamente en una de las colas
+de la distribución.</p>
+<p>Como se observa en el gráfico, el conjunto de valores de <span
+class="math inline">\(z\)</span> que conducen al rechazo de <span
+class="math inline">\(H_0\)</span> se ubica exclusivamente en la cola
+derecha de la distribución normal estándar. Esto significa que solo los
+valores <strong>suficientemente grandes</strong> de <span
+class="math inline">\(z\)</span> proporcionarán evidencia suficiente
+para rechazar la hipótesis nula.</p>
+<p>Este enfoque se utiliza cuando la hipótesis alternativa especifica
+una dirección particular del cambio, como en el caso de una mejora en el
+rendimiento académico o un incremento en una variable de interés. En
+contraste, las pruebas bilaterales evalúan desviaciones en <strong>ambas
+direcciones</strong>, sin asumir previamente el sentido del posible
+cambio.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En la situación en la que el interés se centra en determinar si el
+promedio de calificaciones al egreso ha <strong>aumentado</strong>
+respecto al valor histórico, las hipótesis de la prueba se expresan de
+la siguiente manera:</p>
+<p><span class="math display">\[
+H_0: \mu \leq 6.50
+\]</span></p>
+<p><span class="math display">\[
+H_1: \mu &gt; 6.50
+\]</span></p>
+<p>Dado que se trata de una <strong>prueba unilateral a la
+derecha</strong>, la región de rechazo se encuentra únicamente en la
+cola superior de la distribución. Se procede a calcular el valor crítico
+de la media muestral <span class="math inline">\(\bar{x}_c\)</span>
+utilizando un nivel de significación del <strong>5%</strong> y <span
+class="math inline">\(\mu=6.50\)</span>:</p>
+<p><span class="math display">\[
+\bar{x}_c = \mu + z_c \cdot \frac{s}{\sqrt{n}}
+\]</span></p>
+<p>Sustituyendo los valores correspondientes:</p>
+<p><span class="math display">\[
+\bar{x}_c = 6.50 + 1.64 \cdot \frac{0.60}{\sqrt{100}}
+\]</span></p>
+<p><span class="math display">\[
+\bar{x}_c = 6.50 + 0.10
+\]</span></p>
+<p><span class="math display">\[
+\bar{x}_c = 6.60
+\]</span></p>
+<p>El valor <strong>6.60</strong> representa el <strong>único punto
+crítico</strong> relevante en esta prueba, ya que al tratarse de una
+prueba unilateral <strong>solo se consideran valores superiores a
+6.50</strong>. La suma se ha realizado porque la prueba es <strong>hacia
+la derecha</strong>, lo que significa que únicamente valores
+<strong>mayores</strong> a este umbral llevarán al rechazo de <span
+class="math inline">\(H_0\)</span> (ver <strong>Figura
+2.61</strong>).</p>
+<br/><br/>
+<center>
+<img src="img/fig261.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.61</strong> Región de rechazo unilateral derecha de
+<span class="math inline">\(H_0: \mu \leq 6.50\)</span> a un nivel de
+significación del 5%, con una muestra de 100 casos y desviación estándar
+0.60, y ubicación del valor observado del estimador.
+</center>
+<p><br/><br/></p>
+<p>El valor observado de la media muestral es:</p>
+<p><span class="math display">\[
+\bar{x}_{obs} = 6.65
+\]</span></p>
+<p>Dado que este valor es <strong>mayor</strong> que el punto crítico
+calculado (<span class="math inline">\(\bar{x}_c = 6.60\)</span>), se
+encuentra en la <strong>zona de rechazo</strong> de <span
+class="math inline">\(H_0\)</span>.</p>
+<p>En consecuencia, la decisión es <strong>rechazar <span
+class="math inline">\(H_0\)</span></strong>, lo que indica que existe
+evidencia suficiente para concluir que el <strong>promedio de
+calificaciones al egreso es significativamente mayor</strong> que el
+valor histórico de <strong>6.50</strong>.</p>
+<p>Este resultado respalda la hipótesis de que el cambio en el plan de
+estudios ha generado un impacto positivo en las calificaciones promedio
+al egreso.</p>
+<p>Si la regla de decisión se hubiera formulado en términos del puntaje
+<span class="math inline">\(z\)</span>, a un nivel de significación del
+<strong>5%</strong>, se requeriría calcular el puntaje <span
+class="math inline">\(z\)</span> correspondiente al valor observado de
+la media muestral:</p>
+<p><span class="math display">\[
+z_{obs} = \frac{\bar{x}_{obs} - \mu}{s / \sqrt{n}}
+\]</span></p>
+<p>Sustituyendo los valores específicos:</p>
+<p><span class="math display">\[
+z_{obs} = \frac{6.65 - 6.50}{0.60 / \sqrt{100}}
+\]</span></p>
+<p><span class="math display">\[
+z_{obs} = \frac{0.15}{0.06} = 2.50
+\]</span></p>
+<p>Dado que este resultado <strong>supera</strong> el punto crítico
+<span class="math inline">\(z_c = 1.64\)</span>, se encuentra en la
+<strong>zona de rechazo</strong> de <span
+class="math inline">\(H_0\)</span>.</p>
+<p>En consecuencia, se concluye nuevamente que <strong>el promedio de
+calificaciones al egreso es significativamente mayor</strong> que el
+valor histórico de <strong>6.50</strong>.</p>
+<p>Este resultado confirma que el análisis puede realizarse
+indistintamente en la escala del puntaje <span
+class="math inline">\(z\)</span> o en la escala de la media muestral
+<span class="math inline">\(\bar{x}\)</span>, obteniendo en ambos casos
+la misma decisión estadística.</p>
+</p>
+</div>
+<p>En los párrafos anteriores se ha introducido una expresión con un
+significado preciso dentro del contexto estadístico. Cuando se afirma
+que un valor es <strong>significativamente mayor</strong>, no se hace
+referencia a la connotación habitual del término en el lenguaje
+cotidiano, donde suele interpretarse como sinónimo de importante, de
+gran magnitud o considerable.</p>
+<p>En el ámbito estadístico, se dice que un valor es
+<strong>significativamente mayor o menor</strong> cuando se ha rechazado
+<span class="math inline">\(H_0\)</span> en una <strong>prueba
+unilateral</strong>. De manera similar, se afirma que <strong>una
+diferencia es significativa</strong> cuando la hipótesis nula rechazada
+corresponde a una <strong>prueba bilateral</strong>.</p>
+<p>Además, es fundamental especificar el nivel de significación
+utilizado en la prueba. Por lo tanto, en este caso, la conclusión debe
+expresarse de la siguiente manera:</p>
+<blockquote>
+<p><strong>“Según los datos observados y con un nivel de significación
+del 5%, la calificación promedio al egreso de la carrera es
+significativamente superior a la histórica.”</strong></p>
+</blockquote>
+<p>Este uso riguroso del término “significativo” garantiza que las
+conclusiones obtenidas en la prueba de hipótesis sean interpretadas
+correctamente dentro del marco del análisis estadístico.</p>
+<blockquote>
+<p><em>“Un resultado es significativo cuando conduce a rechazar una
+<span class="math inline">\(H_0\)</span> a un determinado nivel de
+significación..”</em></p>
+</blockquote>
+<p>Un resultado puede ser <strong>significativo</strong> a un
+determinado nivel de significación y no serlo a otro.</p>
+<p>Por ejemplo, en una prueba bilateral, si al transformar el valor
+observado a un puntaje <span class="math inline">\(z\)</span> se
+obtiene:</p>
+<p><span class="math display">\[
+z = 2.3
+\]</span></p>
+<p>Este resultado lleva a <strong>rechazar <span
+class="math inline">\(H_0\)</span> al 5%</strong>, ya que <span
+class="math inline">\(z = 2.3\)</span> <strong>supera el valor crítico
+de 1.96</strong>. Sin embargo, al utilizar un nivel de significación más
+estricto, como el <strong>1%</strong>, la decisión cambia, ya que <span
+class="math inline">\(z = 2.3\)</span> <strong>no supera el valor
+crítico de 2.56</strong>, por lo que en este caso <strong>no se rechaza
+<span class="math inline">\(H_0\)</span></strong>.</p>
+<p>En este escenario, la conclusión se expresa como:</p>
+<blockquote>
+<p><strong>“Los resultados son significativos al 5%, pero no al
+1%.”</strong></p>
+</blockquote>
+<p>Esto pone en evidencia que el nivel de significación influye
+directamente en la decisión estadística, determinando qué tan exigente
+es el criterio para considerar un resultado como evidencia suficiente
+para rechazar la hipótesis nula.</p>
+</br></br>
+<h3>
+¿Por qué cuando <span class="math inline">\(H_0: \mu \leq 6.50\)</span>
+se usa <span class="math inline">\(\mu = 6.50\)</span>?
+</h3>
+<p>La <strong>Figura 2.62</strong> ilustra distintas curvas normales
+correspondientes a diferentes valores posibles de la media bajo la
+hipótesis nula. Se observa que el valor de la hipótesis nula que
+<strong>menos se aleja</strong> de la región de rechazo es <span
+class="math inline">\(\mu = 6.5\)</span> y el área de rechazo (color
+rojo) es de mayor tamaño.</p>
+<p>En este contexto, los cálculos matemáticos para decidir si se rechaza
+la hipótesis nula se realizan utilizando la <strong>media más
+favorable</strong> a la hipótesis alternativa. Es decir, si se rechaza
+<span class="math inline">\(H_0\)</span> para <span
+class="math inline">\(\mu = 6.5\)</span>, con <strong>mayor
+razón</strong> se rechazará para cualquier otro valor de la media dentro
+de las posibles distribuciones normales con medias distintas.</p>
+<p>Sin embargo, la conclusión del test <strong>se formula respecto a la
+hipótesis nula</strong>:</p>
+<p><span class="math display">\[
+H_0: \mu \leq 6.50
+\]</span></p>
+<p>Este enfoque asegura que la decisión de rechazar <span
+class="math inline">\(H_0\)</span> se basa en la situación más
+conservadora dentro de los valores posibles de la media bajo la
+hipótesis nula, garantizando así un criterio riguroso en la prueba de
+hipótesis.</p>
+<br/><br/>
+<center>
+<img src="img/fig262.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.62</strong> Comparación de curvas posibles para la
+<span class="math inline">\(H_0\)</span>.
+</center>
+<p><br/><br/></p>
+</br></br>
+<h3>
+Muestras Pequeñas y Pruebas t
+</h3>
+<p>La <strong>distribución <span class="math inline">\(t\)</span> de
+Student</strong> se utiliza en pruebas de hipótesis cuando se trabaja
+con <strong>muestras pequeñas</strong> y la <strong>varianza poblacional
+es desconocida</strong>. Sin embargo, su aplicación está sujeta a una
+<strong>restricción importante</strong>:</p>
+<p><strong>Condiciones para el uso de la distribución <span
+class="math inline">\(t\)</span></strong></p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Muestras grandes (<span class="math inline">\(n \geq
+30\)</span>)</strong></p>
+<ul>
+<li>Por el <strong>Teorema Central del Límite (TCL)</strong>, la
+distribución de la media muestral es aproximadamente normal,
+<strong>independientemente de la distribución de la variable en la
+población</strong>.<br />
+</li>
+<li>Se puede utilizar la <strong>distribución normal</strong> para las
+pruebas de hipótesis.</li>
+</ul></li>
+<li><p><strong>Muestras pequeñas (<span class="math inline">\(n &lt;
+30\)</span>)</strong></p>
+<ul>
+<li><strong>Si la variable en la población sigue una distribución
+normal</strong>, entonces la media muestral sigue una
+<strong>distribución <span class="math inline">\(t\)</span> de
+Student</strong> con <span class="math inline">\(n - 1\)</span> grados
+de libertad.<br />
+</li>
+<li><strong>Si la población no tiene distribución normal</strong>, no se
+puede utilizar la distribución <span class="math inline">\(t\)</span>, y
+se requieren procedimientos <strong>no paramétricos</strong>.</li>
+</ul></li>
+</ol>
+<p>Las condiciones para analizar la media poblacional se resumen en la
+<strong>Tabla 2.12</strong>.</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.12</strong> Resumen de los criterios de selección.
+</center>
+<table style="width:100%;">
+<colgroup>
+<col width="23%" />
+<col width="34%" />
+<col width="41%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tamaño de muestra</th>
+<th>Distribución en la población</th>
+<th>Distribución de la media muestral</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Grande</strong> <span class="math inline">\(n \geq
+30\)</span></td>
+<td><strong>Cualquier distribución</strong></td>
+<td><strong>Normal</strong> (por TCL)</td>
+</tr>
+<tr class="even">
+<td><strong>Pequeña</strong> <span class="math inline">\(n &lt;
+30\)</span></td>
+<td><strong>Normal</strong></td>
+<td><strong><span class="math inline">\(t\)</span> de Student con <span
+class="math inline">\(n-1\)</span> grados de libertad</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Pequeña</strong> <span class="math inline">\(n &lt;
+30\)</span></td>
+<td><strong>No normal</strong></td>
+<td><strong>No se puede usar <span class="math inline">\(t\)</span> de
+Student, se requieren métodos no paramétricos</strong></td>
+</tr>
+</tbody>
+</table>
+<p>En la mayoría de los <strong>paquetes de análisis de datos</strong>,
+las <strong>pruebas <span class="math inline">\(t\)</span></strong> se
+utilizan de manera genérica para realizar <strong>pruebas de hipótesis
+sobre la media poblacional</strong>. En estos procedimientos, el
+<strong>estadístico de prueba</strong> se basa en la distribución <span
+class="math inline">\(t\)</span>, en lugar de la distribución normal
+estándar (<span class="math inline">\(z\)</span>).</p>
+<p><strong>Justificación del uso de la distribución <span
+class="math inline">\(t\)</span> de Student</strong></p>
+<ul>
+<li>La <strong>distribución <span class="math inline">\(t\)</span> es la
+opción adecuada para muestras pequeñas</strong> cuando la varianza
+poblacional es desconocida.<br />
+</li>
+<li><strong>Los paquetes estadísticos automatizan el cálculo</strong>,
+utilizando la distribución <span class="math inline">\(t\)</span> en
+lugar de <span class="math inline">\(z\)</span>, sin que el usuario
+tenga que tomar esta decisión manualmente.<br />
+</li>
+<li><strong>Cuando el tamaño de la muestra es grande</strong>, la
+distribución <span class="math inline">\(t\)</span> <strong>converge a
+la normal estándar</strong>, por lo que ambas pruebas proporcionan
+resultados prácticamente idénticos.</li>
+</ul>
+</br></br>
+<h2>
+Prueba sobre la proporción
+</h2>
+<p>De manera análoga a los intervalos de confianza, el análisis de
+hipótesis sobre una proporción comienza utilizando la
+<strong>distribución binomial</strong>, para luego emplear la
+<strong>aproximación normal</strong>, siempre que se cumplan los
+supuestos necesarios.</p>
+<p>El procedimiento sigue los mismos pasos que en el caso de la media.
+En primer lugar, se <strong>plantean las hipótesis nula y
+alternativa</strong>:</p>
+<ul>
+<li>La <strong>hipótesis nula</strong> establece un valor específico
+para la proporción poblacional.<br />
+</li>
+<li>La <strong>hipótesis alternativa</strong> puede adoptar tres formas:
+<ul>
+<li>Indicar que la proporción poblacional es <strong>diferente</strong>
+al valor propuesto por <span class="math inline">\(H_0\)</span>
+(<strong>prueba bilateral</strong>).<br />
+</li>
+<li>Plantear que la proporción es <strong>mayor</strong> (<strong>prueba
+unilateral derecha</strong>).<br />
+</li>
+<li>Establecer que la proporción es <strong>menor</strong>
+(<strong>prueba unilateral izquierda</strong>).</li>
+</ul></li>
+</ul>
+<p>Una vez determinado el <strong>nivel de significación</strong> (<span
+class="math inline">\(\alpha\)</span>) y la dirección de la prueba
+(bilateral o unilateral), es necesario identificar los valores de la
+proporción muestral <strong><span
+class="math inline">\(\hat{p}\)</span></strong> que delimitan las
+regiones de rechazo.</p>
+<ul>
+<li>En una <strong>prueba unilateral derecha</strong>, el área de
+significación se encuentra en la <strong>cola superior</strong> de la
+distribución.<br />
+</li>
+<li>En una <strong>prueba unilateral izquierda</strong>, el área de
+significación se sitúa en la <strong>cola inferior</strong>.<br />
+</li>
+<li>En una <strong>prueba bilateral</strong>, la probabilidad <span
+class="math inline">\(\alpha\)</span> se distribuye
+<strong>simétricamente</strong> en ambas colas.</li>
+</ul>
+<p>Dado que la distribución binomial describe el conteo de éxitos en una
+muestra de tamaño <span class="math inline">\(n\)</span>, es necesario
+transformar la <strong>proporción de éxitos</strong> (<span
+class="math inline">\(p\)</span>) en el <strong>número de
+éxitos</strong> (<span class="math inline">\(X\)</span>). Esta
+transformación se aplica tanto a la <strong>proporción
+hipotética</strong> (<span class="math inline">\(P\)</span>) como a la
+<strong>proporción observada</strong> (<span
+class="math inline">\(\hat{p}\)</span>):</p>
+<p><span class="math display">\[
+P = \frac{X}{n}
+\]</span></p>
+<p>Lo que equivale a:</p>
+<p><span class="math display">\[
+X = P \cdot n
+\]</span></p>
+<p>Del mismo modo, para la proporción muestral:</p>
+<p><span class="math display">\[
+\hat{p} = \frac{\hat{x}}{n}
+\]</span></p>
+<p>Que se reescribe como:</p>
+<p><span class="math display">\[
+\hat{x} = \hat{p} \cdot n
+\]</span></p>
+<p>Esta conversión es fundamental para utilizar la distribución binomial
+en la prueba de hipótesis sobre proporciones, permitiendo luego la
+aproximación normal cuando se cumplen las condiciones necesarias.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Supóngase que, hace tres meses, un partido político tenía una
+intención de voto equivalente al <strong>30%</strong> del padrón
+electoral. Tras algunas acciones de campaña, se considera que esta
+proporción pudo haber <strong>aumentado</strong>. Con base en esta
+hipótesis, se plantea la siguiente prueba:</p>
+<p><span class="math display">\[
+H_0: P \leq 0.30
+\]</span></p>
+<p><span class="math display">\[
+H_1: P &gt; 0.30
+\]</span></p>
+<p>Esta hipótesis será evaluada mediante una <strong>muestra de 50
+casos</strong>. Al igual que en el caso de la media, estos valores se
+establecen de manera <strong>hipotética</strong> como aproximaciones al
+parámetro poblacional, que en este caso es la <strong>proporción
+poblacional</strong> (<span class="math inline">\(P\)</span>).</p>
+<p>La hipótesis nula <span class="math inline">\(H_0\)</span> indica que
+la proporción de votos sigue siendo <strong>la misma</strong> o menor
+que hace tres meses.</p>
+<p>Dado que el interés radica en identificar un posible
+<strong>aumento</strong> en la intención de voto, se trata de una
+<strong>prueba unilateral derecha</strong>, en la cual la hipótesis
+alternativa <span class="math inline">\(H_1\)</span> plantea que la
+proporción de votantes a favor del partido ha aumentado respecto al
+valor inicial de <strong>0.30</strong>.</p>
+<p>El siguiente paso en la prueba consistirá en determinar si la
+evidencia muestral respalda el rechazo de <span
+class="math inline">\(H_0\)</span> en favor de <span
+class="math inline">\(H_1\)</span>.</p>
+<p>Se establece un nivel de significación del <strong>5%</strong> y,
+para determinar los puntos críticos bajo un modelo binomial, se
+transforma el valor hipotético de <span class="math inline">\(P\)</span>
+al número esperado de éxitos en la muestra, utilizando la siguiente
+expresión:</p>
+<p><span class="math display">\[
+X = P \cdot n
+\]</span></p>
+<p>Sustituyendo los valores específicos:</p>
+<p><span class="math display">\[
+X = 0.30 \cdot 50 = 15
+\]</span></p>
+<p>Dado que la prueba es <strong>unilateral derecha</strong>, el punto
+crítico corresponde al menor valor de <span
+class="math inline">\(X\)</span> que deja un <strong>5%</strong> de los
+valores posibles en la cola superior de la distribución binomial. Esto
+implica determinar el <strong>percentil 95</strong> de la distribución
+binomial con los parámetros:</p>
+<p><span class="math display">\[
+n = 50, \quad P = 0.30, \quad P(X &gt; x) = 0.05
+\]</span></p>
+<p>Como la región de rechazo se encuentra en la cola superior de la
+distribución, se busca el valor de <span
+class="math inline">\(X\)</span> que satisface la siguiente
+condición:</p>
+<p><span class="math display">\[
+P(X \leq x) = 0.95
+\]</span></p>
+<p>El cálculo del <strong>percentil 95</strong> se realiza con la
+siguiente instrucción en <strong>R</strong> obteniedo como resultado
+20:</p>
+<pre>
+# Cargar librería necesaria
+library(stats)
+
+# Definir los parámetros
+n <- 50  # Tamaño de la muestra
+p <- 0.30  # Proporción poblacional hipotética
+
+# Calcular el percentil 95 de la distribución binomial
+percentil_95 <- qbinom(0.95, n, p)
+
+# Mostrar el resultado
+percentil_95
+</pre>
+<pre class="r"><code># Cargar librería necesaria
+library(stats)
+
+# Definir los parámetros
+n &lt;- 50  # Tamaño de la muestra
+p &lt;- 0.30  # Proporción poblacional hipotética
+
+# Calcular el percentil 95 de la distribución binomial
+percentil_95 &lt;- qbinom(0.95, n, p)
+
+# Mostrar el resultado
+percentil_95</code></pre>
+<pre><code>[1] 20</code></pre>
+<p>El número de éxitos obtenido es <strong>20</strong>, lo que indica
+que el valor de <span class="math inline">\(\hat{x}\)</span> que es
+superado por el <strong>5%</strong> de los valores muestrales posibles
+es precisamente <strong>20</strong>.</p>
+<p>Si la proporción de votos que el candidato tiene en la población
+total fuera del <strong>30%</strong> (hipótesis nula), entonces en una
+muestra de <strong>50</strong> casos, se esperaría observar
+aproximadamente <strong>15 votos</strong> a su favor. Este valor
+corresponde al <strong>30% de 50</strong>, que representa la
+<strong>media de la distribución binomial</strong>, es decir, su
+esperanza matemática:</p>
+<p><span class="math display">\[
+E(X) = P \cdot n = 0.30 \cdot 50 = 15
+\]</span></p>
+<p>Dado que el criterio de significación es del <strong>5%</strong>, se
+establece el valor de <strong>20 votos</strong> como <strong>punto
+crítico</strong>. Esto implica que si la proporción de votos en la
+población fuera realmente del <strong>30%</strong>, la probabilidad de
+obtener <strong>más de 20 votos</strong> en una muestra de
+<strong>50</strong> es menor al <strong>5%</strong>.</p>
+<p>Con base en este resultado, la <strong>regla de decisión</strong> se
+define de la siguiente manera:</p>
+<ul>
+<li><strong>Si el número de votos observados en la muestra es mayor que
+20</strong>, <strong>se rechaza <span
+class="math inline">\(H_0\)</span></strong>, lo que sugiere que la
+proporción de votos ha aumentado significativamente.</li>
+<li><strong>Si el número de votos observados en la muestra es menor o
+igual a 20</strong>, <strong>no se rechaza <span
+class="math inline">\(H_0\)</span></strong>, lo que indica que no hay
+suficiente evidencia para concluir que la proporción de votos ha
+cambiado respecto al <strong>30%</strong> inicial.</li>
+</ul>
+<p>Este criterio permite evaluar si los cambios en la intención de voto
+observados en la muestra son suficientemente grandes como para
+considerar que la proporción poblacional ha aumentado de manera
+significativa.</p>
+<p>Si en la encuesta realizada sobre la muestra de <strong>50</strong>
+casos se observa que <strong>16 personas</strong> indican que votarán
+por el candidato, la proporción muestral se calcula como:</p>
+<p><span class="math display">\[
+\hat{p} = \frac{16}{50} = 0.32 \quad \text{(32%)}
+\]</span></p>
+<p>Dado que la regla de decisión establece que la hipótesis nula solo se
+rechaza si el número de votos observados es <strong>mayor que
+20</strong>, y en este caso se han registrado <strong>16 votos</strong>,
+la decisión es <strong>no rechazar <span
+class="math inline">\(H_0\)</span></strong>.</p>
+<p>Esto implica que, con base en la muestra obtenida, <strong>no hay
+suficiente evidencia estadística</strong> para concluir que la
+proporción de votos que el candidato tiene en la población haya
+aumentado significativamente respecto al <strong>30%</strong>
+previo.</p>
+<p>El <strong>punto crítico</strong> establecido en <strong>20
+éxitos</strong> en la muestra equivale a una proporción crítica de:</p>
+<p><span class="math display">\[
+\hat{p}_c = \frac{20}{50} = 0.40 \quad \text{(40%)}
+\]</span></p>
+<p>Por lo tanto, la comparación del <strong>número de éxitos
+muestrales</strong> con el <strong>punto crítico</strong> puede
+expresarse de dos maneras equivalentes:</p>
+<ul>
+<li><strong>En términos absolutos:</strong> la comparación de los
+<strong>16 éxitos observados</strong> frente a los <strong>20 éxitos del
+punto crítico</strong>.</li>
+<li><strong>En términos de proporción:</strong> la comparación del
+<strong>32% muestral</strong> (<span class="math inline">\(\hat{p} =
+0.32\)</span>) frente al <strong>40% crítico</strong> (<span
+class="math inline">\(\hat{p}_c = 0.40\)</span>).</li>
+</ul>
+<p>Ambas interpretaciones llevan a la misma conclusión en la prueba de
+hipótesis, evidenciando que la proporción observada en la muestra no
+supera el umbral establecido para el rechazo de la hipótesis nula.</p>
+</p>
+</div>
+<p>Si se dispone de una muestra de <strong>mayor tamaño</strong> y se
+cumple la condición de normalidad:</p>
+<p><span class="math display">\[
+n \cdot P \geq 5 \quad \text{y} \quad n \cdot (1 - P) \geq 5
+\]</span></p>
+<p>entonces se puede utilizar la <strong>aproximación normal</strong> de
+la distribución binomial para la prueba de hipótesis.</p>
+<p>Para ello, se establece un <strong>nivel de significación del
+5%</strong>, lo que en una <strong>prueba unilateral</strong> determina
+un valor crítico de:</p>
+<p><span class="math display">\[
+z_c = 1.64
+\]</span></p>
+<p>Bajo esta aproximación, la <strong>zona de rechazo</strong> se define
+en términos del estadístico <span class="math inline">\(z\)</span>,
+quedando establecida de la siguiente manera:</p>
+<ul>
+<li><strong>Región de rechazo</strong>: valores de <span
+class="math inline">\(z\)</span> <strong>mayores</strong> que
+<strong>1.64</strong>.</li>
+<li><strong>Región de no rechazo</strong>: valores de <span
+class="math inline">\(z\)</span> <strong>menores o iguales</strong> a
+<strong>1.64</strong>.</li>
+</ul>
+<p>Una vez establecido el <strong>nivel de significación</strong> (<span
+class="math inline">\(\alpha\)</span>) y determinada la
+<strong>lateralidad de la prueba</strong> (en este caso, una
+<strong>prueba unilateral derecha</strong>), queda definido el punto
+crítico en términos del <strong>puntaje <span
+class="math inline">\(z\)</span></strong>.</p>
+<p>La principal diferencia al transformar una proporción muestral en un
+puntaje <span class="math inline">\(z\)</span> radica en el cálculo de
+su <strong>error estándar</strong>, que en la aproximación normal de la
+distribución muestral de <span class="math inline">\(\hat{p}\)</span> se
+expresa como:</p>
+<p><span class="math display">\[
+\sigma_{\hat{p}} = \sqrt{\frac{P \cdot (1 - P)}{n}}
+\]</span></p>
+<p>En la construcción de <strong>intervalos de confianza</strong>, se
+utiliza una estimación de la varianza basada en la proporción muestral,
+dado que el valor de la <strong>proporción poblacional</strong> es
+desconocido. Es decir, se emplea la aproximación:</p>
+<p><span class="math display">\[
+\hat{p} \cdot (1 - \hat{p})
+\]</span></p>
+<p>Sin embargo, en una <strong>prueba de hipótesis</strong>, la
+situación es diferente, ya que se cuenta con una <strong>proporción
+poblacional hipotética</strong> (<span
+class="math inline">\(P\)</span>), que es la que se debe utilizar para
+calcular el <strong>error estándar</strong> <span
+class="math inline">\(\sigma_{\hat{p}}\)</span>.</p>
+<p>Dado lo anterior, la transformación del valor observado en la muestra
+al puntaje <span class="math inline">\(z\)</span> se realiza con la
+siguiente expresión:</p>
+<p><span class="math display">\[
+z_{obs} = \frac{\hat{p}_{obs} - P}{\sqrt{\frac{P \cdot (1 - P)}{n}}}
+\]</span></p>
+<p>Este es el <strong>estadístico de prueba</strong> que se debe
+utilizar cuando la aproximación normal a la distribución binomial es
+válida.</p>
+<p>La <strong>decisión</strong> sobre la hipótesis nula dependerá de la
+posición del valor calculado <span
+class="math inline">\(z_{obs}\)</span>:</p>
+<ul>
+<li><strong>Si <span class="math inline">\(z_{obs}\)</span> se encuentra
+en la zona de rechazo</strong>, <strong>se rechaza <span
+class="math inline">\(H_0\)</span></strong>, lo que indica que la
+proporción muestral observada es significativamente mayor que la
+proporción poblacional hipotética.</li>
+<li><strong>Si <span class="math inline">\(z_{obs}\)</span> se encuentra
+en la zona de no rechazo</strong>, <strong>no se rechaza <span
+class="math inline">\(H_0\)</span></strong>, lo que implica que no hay
+suficiente evidencia para concluir que la proporción poblacional ha
+cambiado.</li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Siguiendo con el ejemplo, se mantienen las mismas hipótesis
+establecidas anteriormente:</p>
+<p><span class="math display">\[
+H_0: P \leq 0.30
+\]</span></p>
+<p><span class="math display">\[
+H_1: P &gt; 0.30
+\]</span></p>
+<p>En este caso, la muestra ha sido ampliada a <strong>200 personas
+habilitadas para votar</strong>, y se observa que <strong>64 de
+ellas</strong> afirman que votarán por el candidato. Esto resulta en una
+proporción muestral de:</p>
+<p><span class="math display">\[
+\hat{p} = \frac{64}{200} = 0.32
+\]</span></p>
+<p>El objetivo es determinar si esta proporción observada puede
+considerarse un aumento real respecto del <strong>30%</strong>
+establecido en la hipótesis nula, o si la diferencia es atribuible al
+azar.</p>
+<p>Para evaluar la significancia de la diferencia, se transforma el
+valor observado de la proporción muestral en un <strong>puntaje <span
+class="math inline">\(z\)</span></strong> utilizando la siguiente
+expresión:</p>
+<p><span class="math display">\[
+z_{obs} = \frac{\hat{p}_{obs} - P}{\sqrt{\frac{P \cdot (1 - P)}{n}}}
+\]</span></p>
+<p>Sustituyendo los valores correspondientes:</p>
+<p><span class="math display">\[
+z_{obs} = \frac{0.32 - 0.30}{\sqrt{\frac{0.30 \cdot (1 - 0.30)}{200}}}
+\]</span></p>
+<p><span class="math display">\[
+z_{obs} = \frac{0.02}{0.0324} = 0.617
+\]</span></p>
+<p>Dado que este valor de <strong><span
+class="math inline">\(z_{obs}\)</span></strong> <strong>no supera el
+punto crítico</strong> establecido en <strong><span
+class="math inline">\(z_c = 1.64\)</span></strong>, se sitúa dentro de
+la <strong>zona de no rechazo</strong> de <span
+class="math inline">\(H_0\)</span>.</p>
+<p>Por lo tanto, la decisión es <strong>no rechazar <span
+class="math inline">\(H_0\)</span></strong>, lo que indica que no hay
+suficiente evidencia estadística para concluir que la proporción de
+votos ha aumentado respecto del <strong>30%</strong> original.</p>
+<p>Para expresar la prueba en términos del estimador <span
+class="math inline">\(\hat{p}\)</span>, se transforma el <strong>punto
+crítico</strong> utilizando la siguiente expresión:</p>
+<p><span class="math display">\[
+\hat{p}_c = P + z_c \cdot \sqrt{\frac{P \cdot (1 - P)}{n}}
+\]</span></p>
+<p>Dado que se trata de una <strong>prueba unilateral derecha</strong>,
+solo se utiliza el <strong>signo positivo</strong> en la ecuación:</p>
+<p><span class="math display">\[
+\hat{p}_c = 0.30 + 1.64 \cdot \sqrt{\frac{0.30 \cdot (1 - 0.30)}{200}}
+\]</span></p>
+<p><span class="math display">\[
+\hat{p}_c = 0.30 + 0.053 = 0.353
+\]</span></p>
+<p>Esto indica que el punto crítico de la proporción muestral es
+<strong>0.353</strong>. Por lo tanto:</p>
+<ul>
+<li>Si <span class="math inline">\(\hat{p}_{obs} &gt; 0.353\)</span>, se
+<strong>rechaza <span class="math inline">\(H_0\)</span></strong>.</li>
+<li>Si <span class="math inline">\(\hat{p}_{obs} \leq 0.353\)</span>,
+<strong>no se rechaza <span
+class="math inline">\(H_0\)</span></strong>.</li>
+</ul>
+<p>Dado que en este caso <span class="math inline">\(\hat{p}_{obs} =
+0.32\)</span>, la decisión sigue siendo <strong>no rechazar <span
+class="math inline">\(H_0\)</span></strong>.</p>
+</p>
+</div>
+<p>La <strong>Tabla 2.13</strong> resume las pruebas de hipótesis más
+comunes para una muestra, especificando el <strong>parámetro de
+interés</strong>, su <strong>estimador</strong>, el <strong>estadístico
+de prueba</strong>, y los <strong>supuestos necesarios</strong>. El
+estadístico <span class="math inline">\(t\)</span> se distribuye
+<strong>t Student </strong> con <span class="math inline">\(n-1\)</span>
+grados de libertad y el estadístico <span
+class="math inline">\(z\)</span> se distribuye <strong>normal
+estándar</strong> con media 0 y desviación estándar de 1.</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.13</strong> Resumen de los criterios de selección.
+</center>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="16%" />
+<col width="30%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parámetro</th>
+<th>Estimador</th>
+<th>Estadístico de prueba</th>
+<th>Supuestos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Media</strong> <span class="math inline">\(\mu\)</span></td>
+<td>Media muestral <span class="math inline">\(\bar{x}\)</span></td>
+<td><span class="math inline">\(t = \frac{\bar{x} - \mu}{s /
+\sqrt{n}}\)</span></td>
+<td><span class="math inline">\(n \geq 30\)</span> ó <span
+class="math inline">\(X\)</span> normal en la población</td>
+</tr>
+<tr class="even">
+<td><strong>Proporción</strong> <span
+class="math inline">\(P\)</span></td>
+<td>Proporción muestral <span
+class="math inline">\(\hat{p}\)</span></td>
+<td><span class="math inline">\(z = \frac{\hat{p} -
+P}{\sqrt{P(1-P)/n}}\)</span></td>
+<td><span class="math inline">\(n \cdot P \geq 5\)</span> y <span
+class="math inline">\(n \cdot (1-P) \geq 5\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+</br></br>
+<h2>
+Tipos de error en las pruebas de hipótesis
+</h2>
+<p>Dado que la decisión de aceptar o rechazar la hipótesis nula (<span
+class="math inline">\(H_0\)</span>) se basa en un criterio
+probabilístico, <strong>siempre existe la posibilidad de tomar una
+decisión incorrecta</strong>.</p>
+<p>Esta situación ocurre porque las muestras son seleccionadas de manera
+<strong>aleatoria</strong>, lo que implica que la muestra utilizada para
+realizar la inferencia puede no ser representativa de la población. En
+particular, puede suceder que la muestra analizada corresponda a un
+<strong>caso extremo</strong>, lo que podría llevar a una conclusión
+errónea.</p>
+<p>Aunque la probabilidad de obtener una muestra atípica es
+<strong>baja</strong>, no se puede descartar completamente. Este riesgo
+es inherente a cualquier procedimiento de inferencia estadística y se
+cuantifica a través de los <strong>errores tipo I y tipo II</strong>,
+los cuales dependen del nivel de significación (<span
+class="math inline">\(\alpha\)</span>) y del poder estadístico de la
+prueba.</p>
+</br></br>
+<h3>
+Nivel de Significación y Error Tipo I
+</h3>
+<p>Como se ha observado, el <strong>nivel de significación</strong>
+(<span class="math inline">\(\alpha\)</span>) mide la
+<strong>probabilidad de obtener un determinado resultado muestral bajo
+la suposición de que <span class="math inline">\(H_0\)</span> es
+cierta</strong>. Este valor se establece como una <strong>probabilidad
+pequeña</strong>, comúnmente fijada en <strong>0.05</strong> o
+<strong>0.01</strong>, y define el umbral a partir del cual se considera
+que el resultado es <strong>suficientemente improbable</strong> como
+para rechazar <span class="math inline">\(H_0\)</span>.</p>
+<p>Si la hipótesis nula es verdadera y la muestra seleccionada es
+<strong>extrema</strong>, es decir, su valor se encuentra en alguna de
+las colas de la distribución, la decisión será <strong>rechazar <span
+class="math inline">\(H_0\)</span></strong>. En este caso, la decisión
+será errónea, ya que el rechazo no se debe a que <span
+class="math inline">\(H_0\)</span> sea realmente falsa, sino a que la
+muestra tomada pertenece a un <strong>evento poco probable</strong> bajo
+la hipótesis nula.</p>
+<p>La decisión de <strong>rechazar <span
+class="math inline">\(H_0\)</span></strong> puede deberse a dos
+razones:</p>
+<ol style="list-style-type: decimal">
+<li><strong><span class="math inline">\(H_0\)</span> es realmente
+falsa</strong>, en cuyo caso la decisión es correcta.</li>
+<li><strong><span class="math inline">\(H_0\)</span> es verdadera, pero
+la muestra seleccionada es extrema</strong>, lo que lleva a una
+conclusión errónea.</li>
+</ol>
+<p>Dado que la inferencia estadística se basa en muestras y no en la
+observación de toda la población, <strong>siempre existe la posibilidad
+de cometer errores en la decisión</strong>. En este contexto, el nivel
+de significación <strong>mide la probabilidad de cometer un error al
+rechazar una hipótesis nula verdadera</strong>, es decir:</p>
+<p><span class="math display">\[
+P(\text{Rechazar } H_0 \mid H_0 \text{ verdadera}) = \alpha
+\]</span></p>
+<p>Este tipo de error, conocido como <strong>Error de Tipo I
+(ETI)</strong>, <strong>no es un error de cálculo ni una
+equivocación</strong>, sino una imprecisión inherente a todos los
+procesos de inferencia estadística. Se trata de una consecuencia natural
+de la variabilidad muestral y del establecimiento de un criterio de
+decisión basado en probabilidades.</p>
+<p>Dado que la posibilidad de cometer un <strong>Error Tipo I</strong>
+no puede eliminarse por completo, se controla estableciendo un
+<strong>nivel de significación adecuado</strong>, asegurando que la
+probabilidad de tomar una decisión incorrecta sea baja y acorde con la
+precisión deseada en el análisis.</p>
+<blockquote>
+<p><em>“El Error de Tipo I consiste en rechazar la <span
+class="math inline">\(H_0\)</span> cuando esta es verdadera. Su
+probabilidad está fijada de antemano y es <span
+class="math inline">\(\alpha\)</span>, el nivel de significación de la
+prueba.”</em></p>
+</blockquote>
+<p>El establecimiento del nivel de significación <span
+class="math inline">\(\alpha\)</span> implica aceptar un <strong>riesgo
+controlado</strong> de cometer un <strong>Error Tipo I (ETI)</strong>.
+Es decir, al fijar un valor para <span
+class="math inline">\(\alpha\)</span>, se establece el umbral de
+probabilidad con el cual se está dispuesto a aceptar la posibilidad de
+<strong>rechazar <span class="math inline">\(H_0\)</span> cuando en
+realidad es verdadera</strong>.</p>
+<p>Por ejemplo, en un experimento diseñado para evaluar si un fármaco
+produce efectos sobre una determinada patología, la hipótesis nula se
+formula como:</p>
+<p><span class="math display">\[
+H_0: \text{El fármaco no tiene efecto sobre la patología}
+\]</span></p>
+<p>Si se comete un <strong>Error Tipo I</strong>, la conclusión será que
+el fármaco tiene efecto (<strong>rechazo incorrecto de <span
+class="math inline">\(H_0\)</span></strong>), cuando en realidad
+<strong>no lo tiene</strong>.</p>
+<p>Dado que en la práctica <strong>no se conoce si <span
+class="math inline">\(H_0\)</span> es verdadera o falsa</strong>, cada
+vez que se toma la decisión de <strong>rechazar <span
+class="math inline">\(H_0\)</span></strong>, se debe recordar que existe
+una probabilidad <span class="math inline">\(\alpha\)</span> de haber
+tomado una decisión incorrecta. Es decir, si el nivel de significación
+se ha fijado en <strong>5%</strong>, entonces hay una probabilidad del
+<strong>0.05</strong> de que el rechazo de <span
+class="math inline">\(H_0\)</span> sea un error debido a la variabilidad
+muestral, y no a un verdadero efecto del fármaco.</p>
+<p>Por esta razón, en aplicaciones críticas, como en estudios clínicos o
+investigaciones científicas, se utilizan niveles de significación más
+estrictos, como <strong><span class="math inline">\(\alpha =
+0.01\)</span> o <span class="math inline">\(\alpha =
+0.001\)</span></strong>, con el fin de minimizar la posibilidad de
+cometer un <strong>Error Tipo I</strong> y evitar conclusiones erróneas
+con consecuencias graves.</p>
+</br></br>
+<h3>
+Error Tipo II
+</h3>
+<p>Además del <strong>Error Tipo I (ETI)</strong>, existe otro tipo de
+error en la inferencia estadística, denominado <strong>Error Tipo II
+(ETII)</strong>. Este error ocurre cuando <strong>no se rechaza <span
+class="math inline">\(H_0\)</span> a pesar de que esta es
+falsa</strong>.</p>
+<p>En el experimento sobre la efectividad de un fármaco en el
+tratamiento de una patología, la hipótesis nula se establece como:</p>
+<p><span class="math display">\[
+H_0: \text{El fármaco no tiene efecto sobre la patología}
+\]</span></p>
+<p>Si se comete un <strong>Error Tipo II</strong>, la conclusión será
+que el fármaco <strong>no tiene efecto</strong> (<strong>no se rechaza
+<span class="math inline">\(H_0\)</span></strong>), cuando en realidad
+<strong>sí lo tiene</strong> (<span class="math inline">\(H_0\)</span>
+es falsa). Es decir, se deja pasar una oportunidad de detectar un efecto
+real debido a la variabilidad muestral.</p>
+<p>La probabilidad de cometer el <strong>Error Tipo II</strong> se
+denota como <span class="math inline">\(\beta\)</span>, y su
+probabilidad está relacionada con el <strong>nivel de
+significación</strong> (<span class="math inline">\(\alpha\)</span>) y
+con el <strong>poder estadístico</strong> de la prueba (<span
+class="math inline">\(1 - \beta\)</span>):</p>
+<ul>
+<li><strong><span class="math inline">\(\alpha\)</span></strong>:
+Probabilidad de cometer un <strong>Error Tipo I</strong> (rechazar <span
+class="math inline">\(H_0\)</span> cuando es verdadera).</li>
+<li><strong><span class="math inline">\(\beta\)</span></strong>:
+Probabilidad de cometer un <strong>Error Tipo II</strong> (no rechazar
+<span class="math inline">\(H_0\)</span> cuando es falsa).</li>
+<li><strong><span class="math inline">\(1 - \beta\)</span></strong>:
+<strong>Poder estadístico</strong>, es decir, la capacidad de la prueba
+para detectar un efecto real cuando este existe.</li>
+</ul>
+<p>Cometer un <strong>Error Tipo II</strong> puede tener consecuencias
+importantes, especialmente en contextos como la investigación médica,
+donde no detectar un efecto significativo puede llevar a la conclusión
+errónea de que un tratamiento no es eficaz, cuando en realidad sí lo
+es.</p>
+<p>Para reducir la probabilidad de un <strong>Error Tipo II</strong>, es
+fundamental:</p>
+<ul>
+<li><strong>Aumentar el tamaño de la muestra</strong>, lo que disminuye
+la variabilidad muestral.</li>
+<li><strong>Incrementar el nivel de significación (<span
+class="math inline">\(\alpha\)</span>)</strong>, aunque esto incrementa
+el riesgo de un <strong>Error Tipo I</strong>.</li>
+<li><strong>Asegurar que la prueba tenga suficiente poder estadístico
+(<span class="math inline">\(1 - \beta\)</span>)</strong>.</li>
+</ul>
+<p>El balance entre los errores tipo I y tipo II es un aspecto clave en
+el diseño experimental y en la toma de decisiones estadísticas.</p>
+<blockquote>
+<p><em>“Se llama Error de Tipo II a la decisión de no rechazar una
+hipótesis nula cuando ésta es falsa.”</em></p>
+</blockquote>
+</br></br>
+<h3>
+Impacto diferencial de los errores tipo I y tipo II
+</h3>
+<p>El costo de cometer un <strong>Error Tipo I (ETI)</strong> o un
+<strong>Error Tipo II (ETII)</strong> varía según el contexto de la
+prueba de hipótesis. La gravedad de cada error depende de las
+implicaciones prácticas de la decisión que se tome con base en los
+resultados estadísticos.</p>
+<p>Cuando se analiza la efectividad de un tratamiento médico, la
+hipótesis nula se establece como:</p>
+<p><span class="math display">\[
+H_0: \text{La intervención terapéutica no tiene efectos}
+\]</span></p>
+<p>En este caso, los posibles errores se interpretan de la siguiente
+manera:</p>
+<ul>
+<li><strong>Error Tipo I (ETI):</strong> Se concluye que la intervención
+tiene efecto (<strong>se rechaza <span
+class="math inline">\(H_0\)</span></strong>) cuando en realidad no lo
+tiene.
+<ul>
+<li>Esto llevaría a recomendar un tratamiento que en realidad <strong>no
+es efectivo</strong>, lo que podría exponer a los pacientes a riesgos
+innecesarios o efectos secundarios sin obtener beneficios
+terapéuticos.<br />
+</li>
+<li>Si la intervención es altamente riesgosa, el <strong>Error Tipo
+I</strong> es particularmente grave, ya que implicaría someter a los
+pacientes a un procedimiento peligroso sin justificación
+científica.</li>
+</ul></li>
+<li><strong>Error Tipo II (ETII):</strong> Se concluye que la
+intervención <strong>no tiene efecto</strong> (<strong>no se rechaza
+<span class="math inline">\(H_0\)</span></strong>) cuando en realidad sí
+lo tiene.
+<ul>
+<li>Esto llevaría a <strong>descartar un tratamiento que sí es
+beneficioso</strong>, lo que privaría a los pacientes de una terapia
+efectiva.<br />
+</li>
+<li>En este caso, el <strong>Error Tipo II</strong> representa la
+pérdida de una oportunidad de mejora en la salud de los pacientes.</li>
+</ul></li>
+</ul>
+<p>La determinación de cuál error es más grave depende del contexto
+específico de la investigación o aplicación. En algunos casos, es
+preferible <strong>minimizar la probabilidad de un Error Tipo
+I</strong>, mientras que en otros se prioriza <strong>reducir el Error
+Tipo II</strong>.</p>
+<ul>
+<li>En estudios clínicos de tratamientos con <strong>efectos adversos
+potencialmente graves</strong>, se suele utilizar un nivel de
+significación <strong>más estricto</strong> (<span
+class="math inline">\(\alpha = 0.01\)</span> o <span
+class="math inline">\(\alpha = 0.001\)</span>) para minimizar la
+probabilidad de un <strong>Error Tipo I</strong>.</li>
+<li>En investigaciones donde el objetivo es <strong>detectar efectos
+beneficiosos con alta sensibilidad</strong>, se busca aumentar el
+<strong>poder estadístico</strong> (<span class="math inline">\(1 -
+\beta\)</span>) para reducir la probabilidad de un <strong>Error Tipo
+II</strong>.</li>
+</ul>
+<p>La decisión sobre qué error es más grave <strong>no pertenece al
+ámbito de la estadística</strong>, sino que debe ser evaluada en función
+del impacto y las consecuencias prácticas de cada decisión.</p>
+</br></br>
+<h3>
+Falsos Positivos y Falsos Negativos
+</h3>
+<p>En el ámbito de las pruebas diagnósticas y la inferencia estadística,
+los <strong>Errores Tipo I y Tipo II</strong> tienen equivalentes en
+términos de resultados erróneos en pruebas médicas o experimentos
+científicos.</p>
+<ul>
+<li><strong>Falso positivo:</strong> Ocurre cuando una prueba produce un
+resultado <strong>positivo</strong> en una persona sana. En términos
+generales, este tipo de error consiste en <strong>concluir que “algo
+sucedió” cuando en realidad no fue así</strong>.
+<ul>
+<li>En pruebas de hipótesis, un <strong>falso positivo equivale a un
+Error Tipo I (ETI)</strong>, es decir, se <strong>rechaza <span
+class="math inline">\(H_0\)</span> cuando en realidad es
+verdadera</strong>.</li>
+</ul></li>
+<li><strong>Falso negativo:</strong> Se produce cuando una prueba da un
+resultado <strong>negativo</strong> en una persona que sí está enferma.
+Este error consiste en <strong>creer que “nada sucedió” cuando en
+realidad sí sucedió</strong>.
+<ul>
+<li>En pruebas de hipótesis, un <strong>falso negativo equivale a un
+Error Tipo II (ETII)</strong>, es decir, <strong>no se rechaza <span
+class="math inline">\(H_0\)</span> cuando en realidad es
+falsa</strong>.</li>
+</ul></li>
+</ul>
+</br></br>
+<h3>
+Implicaciones de los Errores en Pruebas de Hipótesis
+</h3>
+<p>El análisis de estos errores permite destacar dos aspectos
+fundamentales de las pruebas de hipótesis:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Las conclusiones son probabilísticas, no absolutas.</strong>
+<ul>
+<li>Una prueba de hipótesis no establece verdades absolutas, sino que
+proporciona <strong>evidencia</strong> a favor o en contra de una
+hipótesis con cierto nivel de confianza.<br />
+</li>
+<li>Aun cuando una prueba sugiera un resultado significativo, siempre
+existe una <strong>probabilidad de error</strong> asociada a la decisión
+tomada.</li>
+</ul></li>
+<li><strong>Toda conclusión proveniente de procedimientos estadísticos
+está sujeta a error.</strong>
+<ul>
+<li>Ninguna prueba de hipótesis es infalible, ya que se basa en muestras
+y no en el análisis de toda la población.<br />
+</li>
+<li>Tanto los <strong>Errores Tipo I y Tipo II</strong> como los
+<strong>falsos positivos y falsos negativos</strong> son consecuencias
+naturales de la variabilidad inherente a los datos.</li>
+</ul></li>
+</ol>
+<p>Estos errores <strong>no representan fallos en el procedimiento de
+prueba de hipótesis</strong>, sino que reflejan <strong>las limitaciones
+inherentes al proceso de generación de conocimiento</strong>. En
+estadística y en cualquier disciplina científica, <strong>no existen
+certezas absolutas, solo aproximaciones basadas en la evidencia
+disponible</strong>.</p>
+<p>Comprender esta naturaleza probabilística es esencial para
+interpretar correctamente los resultados de pruebas estadísticas y para
+tomar decisiones informadas en diversos campos de aplicación, desde la
+medicina hasta la investigación científica.</p>
+</br></br>
+<h3>
+Relación entre Error Tipo I, Tamaño de Muestra y Potencia de una Prueba
+</h3>
+<p>A diferencia del <strong>Error Tipo I (ETI)</strong>, cuya
+probabilidad <span class="math inline">\(\alpha\)</span> se fija de
+antemano al establecer el nivel de significación de la prueba, la
+<strong>probabilidad de cometer un Error Tipo II (ETII)</strong> no es
+un valor predefinido, sino que depende del <strong>valor real del
+parámetro</strong> en la población.</p>
+<p>El riesgo de no rechazar <span class="math inline">\(H_0\)</span>
+cuando en realidad es falsa depende de <strong>qué tan diferente sea el
+valor real del parámetro respecto al valor especificado en <span
+class="math inline">\(H_0\)</span></strong>. Intuitivamente, <strong>es
+más difícil detectar una diferencia pequeña que una diferencia
+grande</strong>:</p>
+<ul>
+<li><strong>Si la diferencia entre el valor real y el valor hipotético
+es pequeña</strong>, es más probable que la variabilidad muestral impida
+detectarla, lo que aumenta la probabilidad de cometer un <strong>Error
+Tipo II</strong> (<span class="math inline">\(\beta\)</span>).</li>
+<li><strong>Si la diferencia entre el valor real y el valor hipotético
+es grande</strong>, es menos probable que se confundan ambos valores,
+reduciendo así la probabilidad de cometer un <strong>Error Tipo
+II</strong>.</li>
+</ul>
+<p>En términos generales, <strong>es más fácil confundir valores
+cercanos que valores muy distintos</strong>, lo que explica por qué la
+probabilidad de cometer un <strong>Error Tipo II</strong> varía según la
+distancia entre el verdadero valor del parámetro y el valor
+hipotético.</p>
+<p>Se denota con <span class="math inline">\(\beta\)</span> la
+<strong>probabilidad de cometer un Error Tipo II</strong>, es decir:</p>
+<p><span class="math display">\[
+\beta = P(\text{No rechazar } H_0 \mid H_0 \text{ es falsa})
+\]</span></p>
+<p>Para determinar <span class="math inline">\(\beta\)</span>, es
+necesario considerar las diferentes <strong>posibilidades del verdadero
+valor del parámetro</strong> y evaluar cómo afecta la distribución
+muestral en cada caso.</p>
+<p>A continuación se explorará el cálculo de <span
+class="math inline">\(\beta\)</span> y su relación con el <strong>poder
+estadístico</strong> de la prueba, el cual se define como:</p>
+<p><span class="math display">\[
+1 - \beta = P(\text{Rechazar } H_0 \mid H_0 \text{ es falsa})
+\]</span></p>
+<p>Este concepto es clave en el diseño experimental y permite ajustar
+los parámetros de la prueba para minimizar el riesgo de cometer un
+<strong>Error Tipo II</strong>.</p>
+<p>El gráfico de la <strong>Figura 2.63</strong> ilustra una prueba de
+hipótesis <strong>unilateral derecha</strong> aplicada a la media
+poblacional, donde las hipótesis se formulan de la siguiente manera:</p>
+<p><span class="math display">\[
+H_0: \mu \leq \mu_0
+\]</span></p>
+<p><span class="math display">\[
+H_1: \mu &gt; \mu_0
+\]</span></p>
+<br/><br/>
+<center>
+<img src="img/fig263.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.63</strong> Relaciones entre errores tipo I y II,
+potencia.
+</center>
+<p><br/><br/></p>
+<p>En esta prueba, <span class="math inline">\(\mu_0\)</span> representa
+un valor <strong>determinado e hipotético</strong> para la media
+poblacional bajo la hipótesis nula. En el gráfico, se ha ubicado este
+valor junto con la <strong>zona de rechazo</strong> de <span
+class="math inline">\(H_0\)</span>, estableciendo un <strong>nivel de
+significación</strong> de:</p>
+<p><span class="math display">\[
+\alpha = 0.05
+\]</span></p>
+<p>Además, se ha representado otra curva que ilustra la distribución de
+la media muestral bajo una <strong>media poblacional
+alternativa</strong>.</p>
+<ul>
+<li><strong>Curva izquierda (azul):</strong> Representa la distribución
+de probabilidad de <span class="math inline">\(\bar{x}\)</span> si la
+hipótesis nula fuera <strong>verdadera</strong> (<span
+class="math inline">\(\mu = \mu_0\)</span>).<br />
+</li>
+<li><strong>Curva derecha (roja):</strong> Representa la distribución de
+probabilidad de <span class="math inline">\(\bar{x}\)</span> si la
+hipótesis nula fuera <strong>falsa</strong>, es decir, si la verdadera
+media poblacional fuera <span class="math inline">\(\mu_1\)</span>,
+donde <span class="math inline">\(\mu_1 &gt; \mu_0\)</span>.</li>
+</ul>
+<p>La <strong>curva azul</strong> representa la distribución de la media
+muestral <span class="math inline">\(\bar{x}\)</span> bajo la hipótesis
+nula <span class="math inline">\(H_0\)</span>. En este contexto:</p>
+<ul>
+<li>Si <span class="math inline">\(H_0\)</span> es
+<strong>verdadera</strong>, <span class="math inline">\(\bar{x}\)</span>
+tiene una <strong>probabilidad <span
+class="math inline">\(\alpha\)</span></strong> de ubicarse en la
+<strong>zona de rechazo</strong>.<br />
+</li>
+<li>Si <span class="math inline">\(H_0\)</span> es
+<strong>verdadera</strong> y <span
+class="math inline">\(\bar{x}\)</span> cae dentro de la zona de rechazo,
+se cometerá un <strong>Error Tipo I (ETI)</strong> al rechazar
+incorrectamente <span class="math inline">\(H_0\)</span>.<br />
+</li>
+<li>El complemento del nivel de significación, es decir, <strong><span
+class="math inline">\(1 - \alpha\)</span></strong>, representa la
+<strong>probabilidad de tomar la decisión correcta cuando <span
+class="math inline">\(H_0\)</span> es verdadera</strong>. Este valor
+corresponde a la <strong>probabilidad de que <span
+class="math inline">\(\bar{x}\)</span> se encuentre dentro de la región
+de no rechazo</strong> bajo la hipótesis nula.</li>
+</ul>
+<p>La <strong>curva roja</strong> representa la distribución de la media
+muestral <span class="math inline">\(\bar{x}\)</span> bajo la hipótesis
+alternativa. En este contexto:</p>
+<ul>
+<li><strong>Si <span class="math inline">\(H_0\)</span> es
+falsa</strong>, <span class="math inline">\(\bar{x}\)</span> tiene una
+<strong>probabilidad <span class="math inline">\(1 -
+\beta\)</span></strong> de ubicarse en la <strong>zona de
+rechazo</strong>, lo que llevará a tomar la <strong>decisión correcta de
+rechazar una <span class="math inline">\(H_0\)</span>
+falsa</strong>.</li>
+<li><strong>Si <span class="math inline">\(H_0\)</span> es
+falsa</strong>, la probabilidad de no rechazarla es <strong><span
+class="math inline">\(\beta\)</span></strong>, lo que equivale a aceptar
+erróneamente una hipótesis nula falsa.</li>
+</ul>
+<p>En una prueba de hipótesis, existen <strong>dos posibles estados de
+la realidad</strong> y <strong>dos decisiones posibles</strong> con base
+en los datos muestrales. Esto da lugar a <strong>cuatro
+combinaciones</strong> que pueden ocurrir, con sus respectivas
+probabilidades (ver <strong>Tabla 2.14</strong>).</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.14</strong> Combinaciones de estados de realidad y
+decisiones en pruebas de hipótesis.
+</center>
+<table style="width:100%;">
+<colgroup>
+<col width="36%" />
+<col width="32%" />
+<col width="30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Estado de la realidad</strong></th>
+<th><strong>No rechazar <span
+class="math inline">\(H_0\)</span></strong></th>
+<th><strong>Rechazar <span
+class="math inline">\(H_0\)</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(H_0\)</span>
+<strong>verdadera</strong></td>
+<td>Decisión correcta (<span class="math inline">\(1 -
+\alpha\)</span>)</td>
+<td><strong>Error Tipo I</strong> (<span
+class="math inline">\(\alpha\)</span>)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(H_0\)</span> <strong>falsa</strong></td>
+<td><strong>Error Tipo II</strong> (<span
+class="math inline">\(\beta\)</span>)</td>
+<td>Decisión correcta (<span class="math inline">\(1 -
+\beta\)</span>)</td>
+</tr>
+</tbody>
+</table>
+<br/><br/>
+<center>
+<img src="img/fig264.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.64</strong> Comparación entre error tipo I y potencia
+del test.
+</center>
+<p><br/><br/></p>
+<p>La <strong>Figura 2.64</strong> ilustra la relación entre el
+<strong>nivel de significación</strong> (<span
+class="math inline">\(\alpha\)</span>), la <strong>potencia de la
+prueba</strong> (<span class="math inline">\(1 - \beta\)</span>) y la
+<strong>probabilidad de cometer un Error Tipo II</strong> (<span
+class="math inline">\(\beta\)</span>):</p>
+<ul>
+<li><strong>El punto crítico <span
+class="math inline">\(x_c\)</span></strong> define la frontera entre la
+<strong>zona de no rechazo</strong> y la <strong>zona de
+rechazo</strong> de <span class="math inline">\(H_0\)</span>.</li>
+<li><strong>El área amarilla</strong> representa el <strong>nivel de
+significación (<span class="math inline">\(\alpha\)</span>)</strong>, es
+decir, la probabilidad de rechazar incorrectamente <span
+class="math inline">\(H_0\)</span> cuando es verdadera (<strong>Error
+Tipo I</strong>).</li>
+<li><strong>El área verde</strong> representa la <strong>potencia de la
+prueba (<span class="math inline">\(1 - \beta\)</span>)</strong>, que
+indica la probabilidad de rechazar correctamente <span
+class="math inline">\(H_0\)</span> cuando es falsa.</li>
+<li><strong>El área restante (color complementario a verde y
+amarillo)</strong> representa la <strong>probabilidad de cometer un
+Error Tipo II (<span class="math inline">\(\beta\)</span>)</strong>, es
+decir, aceptar incorrectamente <span class="math inline">\(H_0\)</span>
+cuando es falsa.</li>
+</ul>
+<p>La <strong>Figura 2.65</strong> muestra como la reducción del nivel
+de significación <strong>del 5% al 1%</strong> provoca un
+<strong>desplazamiento del punto crítico hacia la derecha</strong> en la
+distribución bajo la hipótesis nula. Como consecuencia, disminuye <span
+class="math inline">\(1- \beta\)</span>, por tanto aumenta el área bajo
+la <strong>curva correspondiente a <span
+class="math inline">\(H_0\)</span> falsa</strong>, lo que incrementa la
+probabilidad de cometer un <strong>Error Tipo II (<span
+class="math inline">\(\beta\)</span>)</strong>.</p>
+<ul>
+<li><strong>Al reducir el nivel de significación <span
+class="math inline">\(\alpha\)</span>, se hace la prueba más
+estricta</strong>, disminuyendo la probabilidad de <strong>rechazar
+<span class="math inline">\(H_0\)</span> por error</strong> (Error Tipo
+I).<br />
+</li>
+<li><strong>Sin embargo, este cambio aumenta la probabilidad de aceptar
+erróneamente <span class="math inline">\(H_0\)</span></strong> cuando en
+realidad es falsa, es decir, incrementa el <strong>Error Tipo II (<span
+class="math inline">\(\beta\)</span>)</strong>.</li>
+<li><strong>El poder de la prueba (<span class="math inline">\(1 -
+\beta\)</span>) se reduce</strong>, ya que ahora es más difícil detectar
+un efecto real cuando existe.</li>
+</ul>
+<br/><br/>
+<center>
+<img src="img/fig265.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.65</strong> Comparación entre error tipo I y potencia
+del test variando alpha.
+</center>
+<p><br/><br/></p>
+<p>También es posible mostrar graficamente que si la verdadera media
+poblacional <strong>se aleja significativamente</strong> de la media
+hipotética bajo la hipótesis nula (<span
+class="math inline">\(\mu_0\)</span>), la <strong>probabilidad de
+cometer un Error Tipo II (<span class="math inline">\(\beta\)</span>)
+disminuye</strong>.</p>
+<ul>
+<li>Para valores de la media poblacional cercanos a <span
+class="math inline">\(\mu_0\)</span>, la distribución de la media
+muestral bajo <span class="math inline">\(H_1\)</span> <strong>se
+superpone en gran medida con la distribución bajo <span
+class="math inline">\(H_0\)</span></strong>, lo que <strong>aumenta la
+probabilidad de no detectar la diferencia</strong> y aceptar
+incorrectamente <span class="math inline">\(H_0\)</span>.<br />
+</li>
+<li>A medida que la <strong>verdadera media poblacional se
+aleja</strong> (<span class="math inline">\(\mu_3 &gt; \mu_1 &gt;
+\mu_0\)</span>), la <strong>superposición entre ambas distribuciones se
+reduce</strong>, lo que <strong>disminuye la probabilidad de cometer un
+Error Tipo II (<span
+class="math inline">\(\beta\)</span>)</strong>.</li>
+<li>Este comportamiento indica que la prueba tiene <strong>mayor
+capacidad de detección</strong> cuando la diferencia entre la media real
+y la media hipotética es grande.</li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se considera la prueba unilateral derecha sobre el promedio de notas
+al egreso de una carrera universitaria, con las siguientes
+hipótesis:</p>
+<p><span class="math display">\[
+H_0: \mu  \leq 6.50
+\]</span></p>
+<p><span class="math display">\[
+H_1: \mu &gt; 6.50
+\]</span></p>
+<p>El objetivo es determinar la probabilidad de <strong>no rechazar
+incorrectamente <span class="math inline">\(H_0\)</span></strong> si la
+<strong>verdadera media</strong> de notas al egreso fuera
+<strong>6.55</strong>. Es decir, se busca calcular la probabilidad de
+cometer un <strong>Error Tipo II (<span
+class="math inline">\(\beta\)</span>)</strong>, que corresponde a:</p>
+<p><span class="math display">\[
+\beta = P(\text{No rechazar } H_0 \mid H_0 \text{ es falsa})=P(\bar{x}
+&lt; \bar{x}_c \mid \mu = 6.55)
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(\bar{x}_c\)</span> es el <strong>punto
+crítico</strong> previamente calculado, que a un <strong>nivel de
+significación del 5%</strong> es <strong>6.60</strong>.</li>
+<li>La distribución de la media muestral bajo <strong><span
+class="math inline">\(H_1\)</span></strong> (cuando <span
+class="math inline">\(\mu = 6.55\)</span>) sigue una distribución normal
+con media <strong>6.55</strong> y un error estándar que depende de la
+desviación estándar muestral y el tamaño de la muestra.</li>
+</ul>
+<p>En este caso, la <strong>probabilidad de cometer un Error Tipo II
+(<span class="math inline">\(\beta\)</span>)</strong> se define como el
+<strong>área bajo la curva inferior</strong> que está por debajo del
+<strong>punto crítico <span class="math inline">\(x_c =
+6.60\)</span></strong>.</p>
+<p>Para determinar <span class="math inline">\(\beta\)</span>, es
+necesario calcular la <strong>probabilidad acumulada bajo la
+distribución normal</strong> cuando la verdadera media es <span
+class="math inline">\(\mu = 6.55\)</span>, lo cual requiere transformar
+el punto crítico a un <strong>puntaje estándar <span
+class="math inline">\(z\)</span></strong>:</p>
+<p><span class="math display">\[
+z = \frac{x_c - \mu_1}{\sigma_{\bar{x}}}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(x_c = 6.60\)</span> es el <strong>punto
+crítico</strong>, determinado previamente con un <strong>nivel de
+significación del 5%</strong>.</li>
+<li><span class="math inline">\(\mu_1 = 6.55\)</span> es la
+<strong>verdadera media poblacional bajo <span
+class="math inline">\(H_1\)</span></strong>.</li>
+<li><span class="math inline">\(\sigma_{\bar{x}}\)</span> es el
+<strong>error estándar de la media</strong>, dado por:</li>
+</ul>
+<p><span class="math display">\[
+\sigma_{\bar{x}} = \frac{\sigma}{\sqrt{n}}
+\]</span></p>
+<p>Sustituyendo los valores:</p>
+<p><span class="math display">\[
+z = \frac{6.60 - 6.55}{\frac{0.60}{\sqrt{100}}} = \frac{0.05}{0.06} =
+0.83
+\]</span></p>
+<p>A partir de la <strong>función de distribución acumulada de la normal
+estándar</strong>, se obtiene:</p>
+<p><span class="math display">\[
+P(Z &lt; 0.83) = 0.7977
+\]</span></p>
+<p>Por lo tanto, la <strong>probabilidad de cometer un Error Tipo II
+(<span class="math inline">\(\beta\)</span>)</strong> es
+<strong>0.7977</strong>. Es decir, si el verdadero promedio al egreso
+fuera de 6.55, habría una probabilidad de 0.7967 de creer que sigue
+siendo igual al histórico, de 6.60.</p>
+<p>La <strong>potencia de una prueba estadística</strong> se define como
+la probabilidad de detectar correctamente un efecto real cuando este
+existe. Se calcula como:</p>
+<p><span class="math display">\[
+\text{Potencia} = 1 - \beta
+\]</span></p>
+<p>Sustituyendo el valor previamente calculado de <span
+class="math inline">\(\beta = 0.7967\)</span>:</p>
+<p><span class="math display">\[
+\text{Potencia} = 1 - 0.7967 = 0.2033
+\]</span></p>
+<p>Esto indica que la probabilidad de detectar correctamente una
+diferencia de <strong>0.05</strong> entre la <strong>media real</strong>
+(<span class="math inline">\(\mu = 6.55\)</span>) y la <strong>media
+hipotética</strong> (<span class="math inline">\(\mu_0 = 6.50\)</span>),
+con un <strong>nivel de significación del 5%</strong> y una
+<strong>muestra de 100 observaciones</strong>, es
+<strong>0.2033</strong>.</p>
+<p>El código de <strong>R</strong> para determinar la probabilidad de
+cometer el error tipo II y la potencia del test es el siguiente:</p>
+<pre>
+# Definir parámetros
+mu_1 <- 6.55  # Verdadera media poblacional bajo H1
+sigma <- 0.60  # Desviación estándar poblacional
+n <- 100       # Tamaño de la muestra
+x_critico <- 6.60  # Punto crítico
+
+# Calcular el error estándar
+se <- sigma / sqrt(n)
+
+# Calcular el puntaje Z asociado a Beta
+z_beta <- (x_critico - mu_1) / se
+beta <- pnorm(z_beta)  # Área acumulada a la izquierda de z_beta
+potencia<-1-beta
+
+# Mostrar resultados
+cat("Puntaje Z asociado a Beta:", round(z_beta, 3), "\n")
+cat("Probabilidad de cometer un Error Tipo II (Beta):", round(beta, 4), "\n")
+cat("Potencia:", round(potencia, 4), "\n")
+</pre>
+<pre class="r"><code># Definir parámetros
+mu_1 &lt;- 6.55  # Verdadera media poblacional bajo H1
+sigma &lt;- 0.60  # Desviación estándar poblacional
+n &lt;- 100       # Tamaño de la muestra
+x_critico &lt;- 6.60  # Punto crítico
+
+# Calcular el error estándar
+se &lt;- sigma / sqrt(n)
+
+# Calcular el puntaje Z asociado a Beta
+z_beta &lt;- (x_critico - mu_1) / se
+beta &lt;- pnorm(z_beta)  # Área acumulada a la izquierda de z_beta
+potencia&lt;-1-beta
+
+# Mostrar resultados
+cat(&quot;Puntaje Z asociado a Beta:&quot;, round(z_beta, 3), &quot;\n&quot;)</code></pre>
+<pre><code>Puntaje Z asociado a Beta: 0.833 </code></pre>
+<pre class="r"><code>cat(&quot;Probabilidad de cometer un Error Tipo II (Beta):&quot;, round(beta, 4), &quot;\n&quot;)</code></pre>
+<pre><code>Probabilidad de cometer un Error Tipo II (Beta): 0.7977 </code></pre>
+<pre class="r"><code>cat(&quot;Potencia:&quot;, round(potencia, 4), &quot;\n&quot;)</code></pre>
+<pre><code>Potencia: 0.2023 </code></pre>
+<p>Ota alternativa para aproximar el resultado es el siguiente:</p>
+<pre>
+# Definir parámetros
+mu_0<-6.5 
+mu_1 <- 6.55  # Verdadera media poblacional bajo H1
+
+sigma <- 0.60  # Desviación estándar poblacional
+n <- 100       # Tamaño de la muestra
+
+
+d<-mu_1-mu_0
+
+power.t.test(n=n,delta=d,sig.level=0.05,type= "one.sample", alternative="one.sided",sd=sigma)$power
+</pre>
+<pre class="r"><code># Definir parámetros
+mu_0&lt;-6.5 
+mu_1 &lt;- 6.55  # Verdadera media poblacional bajo H1
+
+sigma &lt;- 0.60  # Desviación estándar poblacional
+n &lt;- 100       # Tamaño de la muestra
+
+
+d&lt;-mu_1-mu_0
+
+power.t.test(n=n,delta=d,sig.level=0.05,type= &quot;one.sample&quot;, alternative=&quot;one.sided&quot;,sd=sigma)$power</code></pre>
+<pre><code>[1] 0.2069046</code></pre>
+</p>
+</div>
+</br></br>
+<h3>
+Curva de Potencia
+</h3>
+<p>Dado que la <strong>verdadera media poblacional</strong> es
+desconocida, solo es posible <strong>conjeturar</strong> sobre ella y
+calcular la <strong>probabilidad de cometer un Error Tipo II (<span
+class="math inline">\(\beta\)</span>)</strong> y la <strong>potencia de
+la prueba (<span class="math inline">\(1 - \beta\)</span>)</strong> para
+distintos valores posibles de la media poblacional alternativa.</p>
+<p>La <strong>Figura 2.66</strong> ilustra cómo varía la potencia cuando
+se consideran <strong>valores diferentes</strong> de la media
+alternativa. En la práctica, resulta más útil calcular la
+<strong>potencia de la prueba para un rango más amplio de valores de la
+media alternativa</strong>, lo que permite evaluar la <strong>calidad de
+la prueba estadística</strong>.</p>
+<p>El cálculo de <span class="math inline">\(\beta\)</span> y <span
+class="math inline">\(1 - \beta\)</span> sigue el mismo procedimiento
+descrito anteriormente, pero se repite para cada <strong>posible valor
+de la media alternativa <span
+class="math inline">\(\mu_k\)</span></strong>. Este procedimiento puede
+automatizarse en <strong>R</strong> para mayor eficiencia.</p>
+<p>Para este cálculo, se mantiene constante:</p>
+<ul>
+<li><strong>El punto crítico <span class="math inline">\(x_c =
+6.60\)</span></strong> (determinado previamente con un nivel de
+significación del 5%).<br />
+</li>
+<li><strong>La desviación estándar <span class="math inline">\(\sigma =
+0.60\)</span></strong>.<br />
+</li>
+<li><strong>El tamaño de la muestra <span class="math inline">\(n =
+100\)</span></strong>.</li>
+</ul>
+<p>Para cada media alternativa <span
+class="math inline">\(\mu_k\)</span>, se calcula el <strong>puntaje
+estándar <span class="math inline">\(z\)</span></strong> y se obtiene
+<span class="math inline">\(\beta\)</span> a partir de la función de
+distribución acumulada de la normal estándar:</p>
+<p><span class="math display">\[
+z_k = \frac{x_c - \mu_k}{\sigma_{\bar{x}}}
+\]</span></p>
+<p><span class="math display">\[
+\beta_k = P(Z &lt; z_k)
+\]</span></p>
+<p>Finalmente, la <strong>potencia de la prueba</strong> se obtiene
+como:</p>
+<p><span class="math display">\[
+\text{Potencia} = 1 - \beta_k
+\]</span></p>
+<p>El código de <strong>R</strong> es para calcular las potencias y
+crear la curva de potencia es el siguiente:</p>
+<pre>
+# Definir parámetros fijos
+sigma <- 0.60  # Desviación estándar poblacional
+n <- 100       # Tamaño de la muestra
+x_critico <- 6.60  # Punto crítico
+
+# Calcular el error estándar
+se <- sigma / sqrt(n)
+
+# Definir un rango de valores posibles para la media alternativa (mu_k)
+mu_k_values <- seq(6.50, 6.70, by = 0.01)  # Medias desde 6.50 hasta 6.70
+
+# Calcular Beta y Potencia para cada media alternativa
+results <- data.frame(
+  mu_k = mu_k_values,
+  z_k = (x_critico - mu_k_values) / se,
+  beta_k = pnorm((x_critico - mu_k_values) / se),
+  potencia = 1 - pnorm((x_critico - mu_k_values) / se)
+)
+
+# Mostrar resultados en tabla
+library(knitr)
+# kable(results, digits = 4, caption = "Cálculo de la potencia para diferentes valores de la media alternativa")
+
+# Crear el gráfico de Potencia en función de la media alternativa
+plot266<-plot.potencia<-ggplot(results, aes(x = mu_k, y = potencia)) +
+  geom_line(color = "red", size = 1) +
+  geom_point(color = "red", size = 2) +
+  labs(title = "Potencia de la prueba en función de la media alternativa",
+       x = "Media alternativa (\u03bc_k)",
+       y = "Potencia (1 - \u03b2)") +
+  theme_minimal()
+</pre>
+<pre class="r"><code># Definir parámetros fijos
+sigma &lt;- 0.60  # Desviación estándar poblacional
+n &lt;- 100       # Tamaño de la muestra
+x_critico &lt;- 6.60  # Punto crítico
+
+# Calcular el error estándar
+se &lt;- sigma / sqrt(n)
+
+# Definir un rango de valores posibles para la media alternativa (mu_k)
+mu_k_values &lt;- seq(6.50, 6.70, by = 0.01)  # Medias desde 6.50 hasta 6.70
+
+# Calcular Beta y Potencia para cada media alternativa
+results &lt;- data.frame(
+  mu_k = mu_k_values,
+  z_k = (x_critico - mu_k_values) / se,
+  beta_k = pnorm((x_critico - mu_k_values) / se),
+  potencia = 1 - pnorm((x_critico - mu_k_values) / se)
+)
+
+# Mostrar resultados en tabla
+library(knitr)
+# kable(results, digits = 4, caption = &quot;Cálculo de la potencia para diferentes valores de la media alternativa&quot;)
+
+# Crear el gráfico de Potencia en función de la media alternativa
+plot266&lt;-plot.potencia&lt;-ggplot(results, aes(x = mu_k, y = potencia)) +
+  geom_line(color = &quot;red&quot;, size = 1) +
+  geom_point(color = &quot;red&quot;, size = 2) +
+  labs(title = &quot;Potencia de la prueba en función de la media alternativa&quot;,
+       x = &quot;Media alternativa (\u03bc_k)&quot;,
+       y = &quot;Potencia (1 - \u03b2)&quot;) +
+  theme_minimal()</code></pre>
+<p>Los resultados se pueden ver en la <strong>Tabla 2.15</strong> y en
+la <strong>Figura 2.66</strong>.</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.15</strong> Potencia con <span
+class="math inline">\(\mu_0 = 6.50\)</span>, <span
+class="math inline">\(\alpha = 0.05\)</span> y <span
+class="math inline">\(n = 100\)</span>.
+</center>
+<pre>
+| mu_k|     z_k| beta_k| potencia|
+|----:|-------:|------:|--------:|
+| 6.50|  1.6667| 0.9522|   0.0478|
+| 6.51|  1.5000| 0.9332|   0.0668|
+| 6.52|  1.3333| 0.9088|   0.0912|
+| 6.53|  1.1667| 0.8783|   0.1217|
+| 6.54|  1.0000| 0.8413|   0.1587|
+| 6.55|  0.8333| 0.7977|   0.2023|
+| 6.56|  0.6667| 0.7475|   0.2525|
+| 6.57|  0.5000| 0.6915|   0.3085|
+| 6.58|  0.3333| 0.6306|   0.3694|
+| 6.59|  0.1667| 0.5662|   0.4338|
+| 6.60|  0.0000| 0.5000|   0.5000|
+| 6.61| -0.1667| 0.4338|   0.5662|
+| 6.62| -0.3333| 0.3694|   0.6306|
+| 6.63| -0.5000| 0.3085|   0.6915|
+| 6.64| -0.6667| 0.2525|   0.7475|
+| 6.65| -0.8333| 0.2023|   0.7977|
+| 6.66| -1.0000| 0.1587|   0.8413|
+| 6.67| -1.1667| 0.1217|   0.8783|
+| 6.68| -1.3333| 0.0912|   0.9088|
+| 6.69| -1.5000| 0.0668|   0.9332|
+| 6.70| -1.6667| 0.0478|   0.9522|
+</pre>
+<br/><br/>
+<center>
+<img src="img/fig266.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.66</strong> Curva de potencia con <span
+class="math inline">\(\mu_0 = 6.50\)</span>, <span
+class="math inline">\(\alpha = 0.05\)</span> y <span
+class="math inline">\(n = 100\)</span>.
+</center>
+<p><br/><br/></p>
+<p>Otra opción para calcular potencias y crear la curva de potencia es
+usar ´power.t.test´. El código realiza un análisis de potencia
+estadística para una prueba t de una muestra (´type=“one.sample”´) con
+hipótesis unilateral (´alternative=“one.sided”´). Los resultados se
+pueden ver en la <strong>Tabla 2.16</strong> y <strong>Figura
+2.67</strong>.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(knitr)
+
+# Definir parámetros fijos
+mu_0 <- 6.50   # Media bajo H0
+sigma <- 0.60  # Desviación estándar poblacional
+n <- 100       # Tamaño de la muestra
+alpha <- 0.05  # Nivel de significación
+
+# Definir un rango de valores posibles para la media alternativa (mu_k)
+mu_k_values <- seq(6.45, 6.70, by = 0.01)  # Medias desde 6.45 hasta 6.70
+delta_values <- mu_k_values - mu_0  # Diferencia entre la media alternativa y la media nula
+
+# Calcular la potencia usando power.t.test()
+power_values <- sapply(delta_values, function(d) {
+  power.t.test(n=n, delta=d, sig.level=alpha, type="one.sample", alternative="one.sided", sd=sigma)$power
+})
+
+# Crear un data frame con los resultados
+results <- data.frame(
+  mu_k = mu_k_values,
+  delta = delta_values,
+  potencia = power_values
+)
+
+# Mostrar los resultados en tabla
+kable(results, digits = 4, caption = "Cálculo de la potencia para diferentes valores de la media alternativa usando power.t.test()")
+
+# Crear el gráfico de la curva de potencia
+ggplot(results, aes(x = mu_k, y = potencia)) +
+  geom_line(color = "blue", size = 1) +
+  geom_point(color = "blue", size = 2) +
+  geom_hline(yintercept = 0.8, color = "gray", linetype = "dashed") +
+  annotate("text", x = max(mu_k_values) - 0.02, y = 0.82, label = "80% Potencia (Referencia)", color = "gray", size = 4) +
+  labs(title = "Curva de Potencia con Prueba t ($\\mu_0 = 6.50$, $\\alpha = 0.05$, $n = 100$)",
+       x = "Media alternativa (\u03bc_k)",
+       y = "Potencia (1 - \u03b2)") +
+  theme_minimal()
+</pre
+
+
+
+``` r
+# Cargar librerías necesarias
+library(ggplot2)
+library(knitr)
+
+# Definir parámetros fijos
+mu_0 <- 6.50   # Media bajo H0
+sigma <- 0.60  # Desviación estándar poblacional
+n <- 100       # Tamaño de la muestra
+alpha <- 0.05  # Nivel de significación
+
+# Definir un rango de valores posibles para la media alternativa (mu_k)
+mu_k_values <- seq(6.45, 6.70, by = 0.01)  # Medias desde 6.45 hasta 6.70
+delta_values <- mu_k_values - mu_0  # Diferencia entre la media alternativa y la media nula
+
+# Calcular la potencia usando power.t.test()
+power_values <- sapply(delta_values, function(d) {
+  power.t.test(n=n, delta=d, sig.level=alpha, type="one.sample", alternative="one.sided", sd=sigma)$power
+})
+
+# Crear un data frame con los resultados
+results <- data.frame(
+  mu_k = mu_k_values,
+  delta = delta_values,
+  potencia = power_values
+)
+
+# Mostrar los resultados en tabla
+kable(results, digits = 4, caption = "Cálculo de la potencia para diferentes valores de la media alternativa usando power.t.test()")
+```
+
+
+
+Table: Cálculo de la potencia para diferentes valores de la media alternativa usando power.t.test()
+
+| mu_k| delta| potencia|
+|----:|-----:|--------:|
+| 6.45| -0.05|   0.0067|
+| 6.46| -0.04|   0.0105|
+| 6.47| -0.03|   0.0161|
+| 6.48| -0.02|   0.0241|
+| 6.49| -0.01|   0.0351|
+| 6.50|  0.00|   0.0500|
+| 6.51|  0.01|   0.0695|
+| 6.52|  0.02|   0.0945|
+| 6.53|  0.03|   0.1254|
+| 6.54|  0.04|   0.1629|
+| 6.55|  0.05|   0.2069|
+| 6.56|  0.06|   0.2573|
+| 6.57|  0.07|   0.3134|
+| 6.58|  0.08|   0.3742|
+| 6.59|  0.09|   0.4384|
+| 6.60|  0.10|   0.5042|
+| 6.61|  0.11|   0.5698|
+| 6.62|  0.12|   0.6336|
+| 6.63|  0.13|   0.6939|
+| 6.64|  0.14|   0.7494|
+| 6.65|  0.15|   0.7990|
+| 6.66|  0.16|   0.8422|
+| 6.67|  0.17|   0.8788|
+| 6.68|  0.18|   0.9090|
+| 6.69|  0.19|   0.9332|
+| 6.70|  0.20|   0.9521|
+
+``` r
+# Crear el gráfico de la curva de potencia
+plot267<-ggplot(results, aes(x = mu_k, y = potencia)) +
+  geom_line(color = "blue", size = 1) +
+  geom_point(color = "blue", size = 2) +
+  geom_hline(yintercept = 0.8, color = "gray", linetype = "dashed") +
+  annotate("text", x = max(mu_k_values) - 0.02, y = 0.82, label = "80% Potencia (Referencia)", color = "gray", size = 4) +
+  labs(title = "Curva de Potencia con Prueba t ($\\mu_0 = 6.50$, $\\alpha = 0.05$, $n = 100$)",
+       x = "Media alternativa (\u03bc_k)",
+       y = "Potencia (1 - \u03b2)") +
+  theme_minimal()
+```
+
+
+<br/>
+<br/>
+<center>
+<strong>Tabla 2.16</strong> Potencia con <span
+class="math inline">\(\mu_0 = 6.50\)</span>, <span
+class="math inline">\(\alpha = 0.05\)</span> y <span
+class="math inline">\(n = 100\)</span>.
+</center>
+<pre>
+Table: Cálculo de la potencia para diferentes valores de la media alternativa usando power.t.test()
+| mu_k| delta| potencia|
+|----:|-----:|--------:|
+| 6.45| -0.05|   0.0067|
+| 6.46| -0.04|   0.0105|
+| 6.47| -0.03|   0.0161|
+| 6.48| -0.02|   0.0241|
+| 6.49| -0.01|   0.0351|
+| 6.50|  0.00|   0.0500|
+| 6.51|  0.01|   0.0695|
+| 6.52|  0.02|   0.0945|
+| 6.53|  0.03|   0.1254|
+| 6.54|  0.04|   0.1629|
+| 6.55|  0.05|   0.2069|
+| 6.56|  0.06|   0.2573|
+| 6.57|  0.07|   0.3134|
+| 6.58|  0.08|   0.3742|
+| 6.59|  0.09|   0.4384|
+| 6.60|  0.10|   0.5042|
+| 6.61|  0.11|   0.5698|
+| 6.62|  0.12|   0.6336|
+| 6.63|  0.13|   0.6939|
+| 6.64|  0.14|   0.7494|
+| 6.65|  0.15|   0.7990|
+| 6.66|  0.16|   0.8422|
+| 6.67|  0.17|   0.8788|
+| 6.68|  0.18|   0.9090|
+| 6.69|  0.19|   0.9332|
+| 6.70|  0.20|   0.9521|
+</pre>
+<br/><br/>
+<center>
+<img src="img/fig267.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.67</strong> Curva de potencia con <span
+class="math inline">\(\mu_0 = 6.50\)</span>, <span
+class="math inline">\(\alpha = 0.05\)</span> y <span
+class="math inline">\(n = 100\)</span>.
+</center>
+<p><br/><br/></p>
+<p>En el contexto de una <strong>prueba unilateral</strong>, la
+<strong>potencia de la prueba (<span class="math inline">\(1 -
+\beta\)</span>)</strong> varía en función de los diferentes valores
+posibles de la <strong>media alternativa</strong> (<span
+class="math inline">\(\mu_k\)</span>).</p>
+<p>A medida que la <strong>verdadera media poblacional</strong> se aleja
+de la <strong>media nula</strong> (<span class="math inline">\(\mu_0 =
+6.50\)</span>), la <strong>probabilidad de cometer un Error Tipo II
+(<span class="math inline">\(\beta\)</span>) disminuye</strong>, y, en
+consecuencia, la <strong>potencia de la prueba aumenta</strong> (ver
+<strong>Tablas 2.13</strong> y <strong>2.14</strong>).</p>
+<ul>
+<li><strong>Cuando la media alternativa (<span
+class="math inline">\(\mu_k\)</span>) es cercana a la media nula (<span
+class="math inline">\(\mu_0\)</span>), la potencia es baja</strong>, lo
+que implica una <strong>alta probabilidad de no rechazar incorrectamente
+<span class="math inline">\(H_0\)</span></strong>.<br />
+</li>
+<li><strong>Cuando la diferencia entre <span
+class="math inline">\(\mu_k\)</span> y <span
+class="math inline">\(\mu_0\)</span> aumenta, la potencia se
+incrementa</strong>, ya que la prueba se vuelve más efectiva en detectar
+la diferencia.<br />
+</li>
+<li>Este comportamiento se <strong>representa gráficamente mediante la
+curva de potencia</strong>, donde el eje <strong><span
+class="math inline">\(x\)</span></strong> corresponde a los valores de
+la media alternativa (<span class="math inline">\(\mu_k\)</span>), y el
+eje <strong><span class="math inline">\(y\)</span></strong> representa
+la <strong>potencia</strong> (ver <strong>Figuras 2.66</strong> y
+<strong>2.67</strong>).</li>
+</ul>
+</br></br>
+<h3>
+Significación Estadística y Valor-p
+</h3>
+<p>Hasta este punto, se ha indicado que el <strong>equipo de
+investigación</strong> es quien <strong>establece el nivel de
+significación estadística</strong> al realizar una prueba de hipótesis.
+A partir de este valor, se determinan las <strong>zonas de rechazo y no
+rechazo</strong> de la hipótesis nula (<span
+class="math inline">\(H_0\)</span>).</p>
+<p><strong>Proceso de decisión en una prueba de hipótesis</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Determinación del nivel de significación (<span
+class="math inline">\(\alpha\)</span>)</strong>:</p>
+<ul>
+<li>Se fija un umbral que define la probabilidad de cometer un
+<strong>Error Tipo I (<span
+class="math inline">\(\alpha\)</span>)</strong>.<br />
+</li>
+<li>Valores típicos de <span class="math inline">\(\alpha\)</span> son
+<strong>0.05, 0.01 o 0.10</strong>, dependiendo del contexto del
+estudio.</li>
+</ul></li>
+<li><p><strong>Definición de las zonas de rechazo y no
+rechazo</strong>:</p>
+<ul>
+<li>Se determinan los <strong>valores críticos</strong> para la
+estadística de prueba, utilizando distribuciones teóricas (normal, t,
+chi-cuadrado, etc.).<br />
+</li>
+<li>Estas zonas pueden expresarse en términos de <strong>valores
+estandarizados (z o t)</strong> o <strong>directamente sobre el
+estimador</strong> (media muestral, proporción, etc.).</li>
+</ul></li>
+<li><p><strong>Cálculo del valor de la estadística de prueba con los
+datos muestrales</strong>.</p></li>
+<li><p><strong>Comparación con los valores críticos</strong>:</p>
+<ul>
+<li>Si la estadística de prueba cae en la <strong>zona de
+rechazo</strong>, se concluye que hay suficiente evidencia para
+<strong>rechazar <span
+class="math inline">\(H_0\)</span></strong>.<br />
+</li>
+<li>Si cae en la <strong>zona de no rechazo</strong>, no se puede
+descartar <span class="math inline">\(H_0\)</span> con los datos
+disponibles.</li>
+</ul></li>
+<li><p><strong>Comunicación de los resultados</strong>:</p>
+<ul>
+<li>La forma en que se reporta el resultado de la prueba es mediante
+expresiones como:</li>
+</ul></li>
+</ol>
+<p><span class="math display">\[
+\text{&quot;Se rechaza \(H_0\) a un nivel del 5%.&quot;}
+\]</span></p>
+<p>Esto indica que, dado un <strong>nivel de significación de
+5%</strong>, la evidencia muestral respalda la hipótesis alternativa
+<span class="math inline">\(H_1\)</span> con un <strong>riesgo del 5% de
+cometer un Error Tipo I</strong>.</p>
+<p>**Importancia de la magnitud del puntaje <span
+class="math inline">\(z_{obs}\)</span> en una prueba unilateral derecha*
+*</p>
+<p>En una <strong>prueba unilateral derecha</strong> con un nivel de
+significación del <strong>5%</strong>, el <strong>puntaje crítico <span
+class="math inline">\(z_c\)</span></strong> que define la frontera entre
+la <strong>zona de rechazo y la zona de no rechazo</strong> es:</p>
+<p><span class="math display">\[
+z_c = 1.64
+\]</span></p>
+<p>Esto significa que si el <strong>puntaje observado <span
+class="math inline">\(z_{obs}\)</span></strong> es mayor a 1.64, se
+concluye que hay suficiente evidencia para <strong>rechazar <span
+class="math inline">\(H_0\)</span></strong>.</p>
+<p><strong>Diferencia en la magnitud de <span
+class="math inline">\(z_{obs}\)</span></strong></p>
+<ul>
+<li><strong>Si <span class="math inline">\(z_{obs} = 2.00\)</span>, se
+rechaza <span class="math inline">\(H_0\)</span> porque está por encima
+del punto crítico, pero cerca del umbral</strong>.<br />
+</li>
+<li><strong>Si <span class="math inline">\(z_{obs} = 3.20\)</span>,
+también se rechaza <span class="math inline">\(H_0\)</span>, pero la
+evidencia es más fuerte</strong>, ya que el valor se aleja
+significativamente de la hipótesis nula.</li>
+</ul>
+<p>Esta diferencia es relevante, pues aunque en ambos casos se rechaza
+<span class="math inline">\(H_0\)</span>, el grado de evidencia
+proporcionado por la muestra es distinto. Un <strong>puntaje <span
+class="math inline">\(z\)</span> más alto indica una diferencia más
+pronunciada entre el valor observado y el valor hipotético</strong>.</p>
+<p>Para visualizar esto, se consideran dos estadísticos de prueba
+diferentes (ver <strong>Figura 2.68</strong>), denotados como:</p>
+<p><span class="math display">\[
+z_{obs}^{(a)} = 2.00, \quad z_{obs}^{(b)} = 3.20
+\]</span></p>
+<br/><br/>
+<center>
+<img src="img/fig268.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.68</strong> Ejemplo de dos valores posibles de<br />
+<span class="math inline">\(z_{obs}\)</span> que conducen a rechazar
+<span class="math inline">\(H_0\)</span>.
+</center>
+<p><br/><br/></p>
+<p>Aunque dos valores de <strong><span
+class="math inline">\(z_{obs}\)</span></strong> pueden llevar a la misma
+decisión de <strong>rechazar <span
+class="math inline">\(H_0\)</span></strong>, su magnitud
+<strong>proporciona información adicional sobre la solidez de la
+evidencia</strong> en contra de la hipótesis nula.</p>
+<p>Por ejemplo, en una prueba unilateral derecha con un <strong>nivel de
+significación del 5%</strong>, el <strong>puntaje crítico</strong> que
+separa la zona de no rechazo de la zona de rechazo es:</p>
+<p><span class="math display">\[
+z_c = 1.64
+\]</span></p>
+<p>Dado este punto de referencia:</p>
+<ul>
+<li><strong>Si <span class="math inline">\(z_{obs} =
+2.00\)</span></strong>, se encuentra en la zona de rechazo, pero está
+relativamente cerca del umbral crítico.<br />
+</li>
+<li><strong>Si <span class="math inline">\(z_{obs} =
+3.20\)</span></strong>, también está en la zona de rechazo, pero su
+magnitud es significativamente mayor, lo que indica que la diferencia
+observada es menos probable bajo <span
+class="math inline">\(H_0\)</span>.</li>
+</ul>
+<p>Dado que <strong><span class="math inline">\(z_{obs} =
+3.20\)</span></strong> es menos probable bajo <span
+class="math inline">\(H_0\)</span> que <strong><span
+class="math inline">\(z_{obs} = 2.00\)</span></strong>, se puede
+argumentar que el primero proporciona <strong>más evidencia en contra de
+la hipótesis nula</strong>. Sin embargo, cuando los resultados se
+presentan de manera estándar, como:</p>
+<p><span class="math display">\[
+\text{&quot;Se rechaza \( H_0 \) a un nivel del 5%.&quot;}
+\]</span></p>
+<p>no se distingue entre una diferencia pequeña y una diferencia grande,
+lo que puede llevar a interpretaciones ambiguas.</p>
+<p><strong>Interpretación del valor-p en pruebas de hipótesis
+</strong></p>
+<p>El <strong>valor-p</strong> es una medida fundamental en la
+<strong>inferencia estadística</strong>, ya que permite cuantificar la
+evidencia en contra de la <strong>hipótesis nula (<span
+class="math inline">\(H_0\)</span>)</strong>.</p>
+<p>El <strong>valor-p</strong> se define como la <strong>probabilidad de
+obtener un resultado igual o más extremo que el observado en la muestra,
+suponiendo que <span class="math inline">\(H_0\)</span> es
+verdadera</strong>. Es decir, indica <strong>qué tan probable es que la
+diferencia observada ocurra solo por azar</strong>.</p>
+<p>Formalmente, se expresa como:</p>
+<p><span class="math display">\[
+valor-p = P(|U| \geq U_{obs} \mid H_0 \text{ verdadera})
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(U\)</span> es el <strong>estimador del
+parámetro poblacional</strong> bajo prueba.<br />
+</li>
+<li><span class="math inline">\(U_{obs}\)</span> es el <strong>valor
+observado del estadístico de prueba</strong> en la muestra.<br />
+</li>
+<li><span class="math inline">\(|U| \geq U_{obs}\)</span> representa
+<strong>resultados tan extremos o más extremos que el
+observado</strong>.</li>
+</ul>
+<p><strong>Interpretación del valor-p </strong></p>
+<ul>
+<li><strong>Un valor-p pequeño indica que los datos observados son poco
+probables bajo <span class="math inline">\(H_0\)</span></strong>, lo que
+sugiere <strong>evidencia en contra de la hipótesis nula</strong>.<br />
+</li>
+<li><strong>Si valor-p es mayor que el nivel de significación (<span
+class="math inline">\(\alpha\)</span>), no se rechaza <span
+class="math inline">\(H_0\)</span></strong>, ya que el resultado podría
+deberse al azar.<br />
+</li>
+<li><strong>Si valor-p es menor que <span
+class="math inline">\(\alpha\)</span>, se rechaza <span
+class="math inline">\(H_0\)</span></strong>, indicando que la diferencia
+observada es estadísticamente significativa.</li>
+</ul>
+<p>El <strong>valor-p</strong> es una medida que permite evaluar la
+fuerza de la evidencia en contra de la hipótesis nula (<span
+class="math inline">\(H_0\)</span>). Su magnitud es clave en la
+interpretación de los resultados de una prueba de hipótesis.</p>
+<p><strong>Cuanto más pequeño sea el valor-p, mayor será la evidencia
+para rechazar <span class="math inline">\(H_0\)</span></strong>. Un
+valor-p bajo indica que el resultado observado es poco probable bajo el
+supuesto de que <span class="math inline">\(H_0\)</span> es verdadera,
+lo que sugiere que la hipótesis alternativa (<span
+class="math inline">\(H_1\)</span>) podría ser cierta.</p>
+<p><strong>Un valor-p grande indica que el resultado observado es
+compatible con <span class="math inline">\(H_0\)</span></strong>. En
+este caso, no hay suficiente evidencia para rechazar la hipótesis nula,
+lo que implica que la diferencia observada podría deberse al azar.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se considera el siguiente problema en el contexto de una
+<strong>prueba de hipótesis para la media poblacional</strong>:</p>
+<p><span class="math display">\[
+H_0: \mu \leq 6.50
+\]</span></p>
+<p><span class="math display">\[
+H_1: \mu &gt; 6.50
+\]</span></p>
+<p>En una muestra de <strong>100 estudiantes</strong>, se ha
+obtenido:</p>
+<ul>
+<li><strong>Media muestral observada</strong>: <span
+class="math inline">\(\bar{x}_{obs} = 6.65\)</span><br />
+</li>
+<li><strong>Desviación estándar muestral</strong>: <span
+class="math inline">\(s = 0.60\)</span><br />
+</li>
+<li><strong>Tamaño de la muestra</strong>: <span class="math inline">\(n
+= 100\)</span></li>
+</ul>
+<p>Se debe calcular la <strong>probabilidad de obtener un valor tan
+extremo o más extremo que el observado, si <span
+class="math inline">\(H_0\)</span> es verdadera</strong>, tomando como
+cierto que <span class="math inline">\(\mu =6.50\)</span>. Esto se
+expresa como la siguiente <strong>probabilidad condicional</strong>:</p>
+<p><span class="math display">\[
+P(\bar{x} \geq 6.65 \mid \mu = 6.50)
+\]</span></p>
+<p>Dado que se trata de una <strong>prueba unilateral derecha</strong>,
+se busca la <strong>probabilidad de que la media muestral sea mayor o
+igual a 6.65</strong>, asumiendo que la verdadera media poblacional es
+<strong>6.50</strong>.</p>
+<p>Para calcular esta probabilidad, se convierte la media muestral en un
+<strong>puntaje <span class="math inline">\(z\)</span></strong> mediante
+la fórmula:</p>
+<p><span class="math display">\[
+z = \frac{\bar{x}_{obs} - \mu}{s / \sqrt{n}}
+\]</span></p>
+<p>Sustituyendo los valores:</p>
+<p><span class="math display">\[
+z = \frac{6.65 - 6.50}{0.60 / \sqrt{100}} = \frac{0.15}{0.06} = 2.50
+\]</span></p>
+<p>Por lo tanto, se debe hallar la probabilidad:</p>
+<p><span class="math display">\[
+P(z \geq 2.50)
+\]</span></p>
+<p>Esta probabilidad se obtiene como el complemento de la probabilidad
+acumulada hasta <span class="math inline">\(z = 2.50\)</span>:</p>
+<p><span class="math display">\[
+valor-p=P(z \geq 2.50) = 1 - P(z \leq 2.50)=0.006209665
+\]</span></p>
+<p>Realizando el cálculo usando <strong>R</strong>, los códigos son:</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(knitr)
+
+# Definir parámetros de la prueba
+x_obs <- 6.65  # Media muestral observada
+mu_0 <- 6.50   # Media bajo H0
+s <- 0.60      # Desviación estándar muestral
+n <- 100       # Tamaño de la muestra
+
+# Calcular estadístico z
+z_obs <- (x_obs - mu_0) / (s / sqrt(n))
+
+# Calcular el valor p
+p_value <- 1 - pnorm(z_obs)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(knitr)
+
+# Definir parámetros de la prueba
+x_obs &lt;- 6.65  # Media muestral observada
+mu_0 &lt;- 6.50   # Media bajo H0
+s &lt;- 0.60      # Desviación estándar muestral
+n &lt;- 100       # Tamaño de la muestra
+
+# Calcular estadístico z
+z_obs &lt;- (x_obs - mu_0) / (s / sqrt(n))
+
+# Calcular el valor p
+p_value &lt;- 1 - pnorm(z_obs)</code></pre>
+<p>En el caso anterior, donde <strong><span
+class="math inline">\(valor-p = 0.0062\)</span></strong>:</p>
+<ul>
+<li>Se puede decir que <strong><span class="math inline">\(H_0\)</span>
+se rechaza al nivel del 5%</strong>.</li>
+<li>También se puede indicar que <strong><span
+class="math inline">\(H_0\)</span> se rechaza al nivel del 1%</strong>,
+ya que <span class="math inline">\(valor-p &lt; 0.01\)</span>.<br />
+</li>
+<li><strong>Reportar el valor exacto (<span
+class="math inline">\(valor-p = 0.0062\)</span>) permite que otros
+investigadores interpreten la magnitud de la evidencia en contra de
+<span class="math inline">\(H_0\)</span></strong>.</li>
+</ul>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se plantea una <strong>prueba de hipótesis para la media
+poblacional</strong> con el objetivo de determinar si el <strong>número
+promedio de hijos e hijas por mujer en una comunidad es mayor a
+2</strong>.</p>
+<p><strong>Planteamiento de hipótesis</strong></p>
+<p><span class="math display">\[
+H_0: \mu \leq 2
+\]</span></p>
+<p><span class="math display">\[
+H_1: \mu &gt; 2
+\]</span></p>
+<p>Se dispone de una muestra de <strong>150 observaciones</strong>, para
+la cual se generan datos <strong>ficticios</strong> a partir de una
+<strong>distribución normal</strong> con una media cercana a
+<strong>2.3</strong> y una desviación estándar de
+<strong>1.2</strong>.</p>
+<pre>
+
+# Fijar semilla para reproducibilidad
+set.seed(13)
+
+# Generar datos ficticios con distribución normal
+n <- 150  # Tamaño de la muestra
+mu_real <- 2.3  # Media real de la población simulada
+sigma <- 1.2  # Desviación estándar
+x <- rnorm(n, mean = mu_real, sd = sigma)  # Datos simulados
+
+# Calcular estadísticos descriptivos
+x_obs <- mean(x)  # Media muestral observada
+s <- sd(x)  # Desviación estándar muestral
+</pre>
+<pre class="r"><code># Fijar semilla para reproducibilidad
+set.seed(13)
+
+# Generar datos ficticios con distribución normal
+n &lt;- 150  # Tamaño de la muestra
+mu_real &lt;- 2.3  # Media real de la población simulada
+sigma &lt;- 1.2  # Desviación estándar
+x &lt;- rnorm(n, mean = mu_real, sd = sigma)  # Datos simulados
+
+# Calcular estadísticos descriptivos
+x_obs &lt;- mean(x)  # Media muestral observada
+s &lt;- sd(x)  # Desviación estándar muestral</code></pre>
+<p>El comando <strong><code>t.test()</code></strong> en
+<strong>R</strong> permite realizar una <strong>prueba de hipótesis para
+la media poblacional</strong>. Para su uso, se deben proporcionar los
+siguientes argumentos:</p>
+<ol style="list-style-type: decimal">
+<li><strong>La variable de interés</strong> (proveniente de una matriz
+de datos o un vector).<br />
+</li>
+<li><strong>El valor de la media bajo la hipótesis nula</strong>
+(<code>mu</code>).<br />
+</li>
+<li><strong>La lateralidad de la prueba</strong>, definida con el
+argumento <code>alternative</code>:
+<ul>
+<li><strong>Bilateral</strong>:
+<code>alternative = "two.sided"</code><br />
+</li>
+<li><strong>Unilateral derecha</strong>:
+<code>alternative = "greater"</code><br />
+</li>
+<li><strong>Unilateral izquierda</strong>:
+<code>alternative = "less"</code></li>
+</ul></li>
+</ol>
+<p>Los códigos para aplicar el test son:</p>
+<pre>
+# Fijar semilla para reproducibilidad
+set.seed(13)
+
+# Generar datos ficticios con distribución normal
+n <- 150  # Tamaño de la muestra
+mu_real <- 2.3  # Media real de la población simulada
+sigma <- 1.2  # Desviación estándar
+x <- rnorm(n, mean = mu_real, sd = sigma)  # Datos simulados
+
+# Calcular estadísticos descriptivos
+x_obs <- mean(x)  # Media muestral observada
+s <- sd(x)  # Desviación estándar muestral
+
+# Prueba t (aproximación cuando no se usa z directamente)
+t.test(x, alternative = "greater", mu = 2)
+</pre>
+<pre class="r"><code># Fijar semilla para reproducibilidad
+set.seed(13)
+
+# Generar datos ficticios con distribución normal
+n &lt;- 150  # Tamaño de la muestra
+mu_real &lt;- 2.3  # Media real de la población simulada
+sigma &lt;- 1.2  # Desviación estándar
+x &lt;- rnorm(n, mean = mu_real, sd = sigma)  # Datos simulados
+
+# Calcular estadísticos descriptivos
+x_obs &lt;- mean(x)  # Media muestral observada
+s &lt;- sd(x)  # Desviación estándar muestral
+
+# Prueba t (aproximación cuando no se usa z directamente)
+t.test(x, alternative = &quot;greater&quot;, mu = 2)</code></pre>
+<pre><code>
+    One Sample t-test
+
+data:  x
+t = 2.4448, df = 149, p-value = 0.007829
+alternative hypothesis: true mean is greater than 2
+95 percent confidence interval:
+ 2.073491      Inf
+sample estimates:
+mean of x 
+ 2.227528 </code></pre>
+<p>Los resultados del test son:</p>
+<pre>
+    One Sample t-test
+
+data:  x
+t = 2.4448, df = 149, p-value = 0.007829
+alternative hypothesis: true mean is greater than 2
+95 percent confidence interval:
+ 2.073491      Inf
+sample estimates:
+mean of x 
+ 2.227528 
+</pre>
+<p>Se dispone de una muestra de <strong>150 observaciones</strong>, con
+los siguientes resultados:</p>
+<ul>
+<li><strong>Estadístico de prueba <span
+class="math inline">\(t\)</span></strong>: <span
+class="math inline">\(2.4448\)</span><br />
+</li>
+<li><strong>Valor-p</strong>: <span
+class="math inline">\(0.007829\)</span><br />
+</li>
+<li><strong>Intervalo de confianza del 95% para <span
+class="math inline">\(\mu\)</span></strong>: <span
+class="math inline">\([2.073491, +\infty)\)</span></li>
+</ul>
+<p>El valor-p=0.007829 es menor a los niveles de significación del 5% y
+1%, lo que permite rechazar la hipótesis nula en ambas instancias, 5% y
+1% de significancia.</p>
+<p>El intervalo de confianza al 95% para la media está limitado
+inferiormente por 2.073491, es decir, con una confianza del 95%, el
+valor hipotético de la media se encuentra dentro del rango de medias
+mayores a 2.</p>
+</p>
+</div>
+<p><strong>Cuando la muestra es pequeña y la variable tiene una
+distribución normal en la población, se emplea la distribución <span
+class="math inline">\(t\)</span> de Student con <span
+class="math inline">\(n-1\)</span> grados de libertad</strong>. Si la
+muestra es grande, <strong>se puede utilizar la distribución normal
+estándar, independientemente de la distribución de la
+población</strong>.</p>
+<p>En la mayoría de los <strong>paquetes de análisis de datos</strong>
+la <strong>prueba <span class="math inline">\(t\)</span> se usa como
+estándar</strong> en la evaluación de hipótesis sobre la media
+poblacional. En estos procedimientos, el <strong>estadístico de
+prueba</strong> se basa en la distribución <span
+class="math inline">\(t\)</span>, en lugar de la normal estándar (<span
+class="math inline">\(z\)</span>), debido a que:</p>
+<ul>
+<li><strong>La distribución <span class="math inline">\(t\)</span> es la
+opción adecuada para muestras pequeñas cuando la varianza poblacional es
+desconocida</strong>.<br />
+</li>
+<li><strong>Cuando el tamaño de la muestra es grande (<span
+class="math inline">\(n \geq 30\)</span>), la distribución <span
+class="math inline">\(t\)</span> converge a la normal estándar</strong>,
+por lo que ambas pruebas producen resultados equivalentes.</li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se plantea una <strong>prueba de hipótesis</strong> con el objetivo
+de comparar la proporción de población adulta con obesidad en
+<strong>Argentina</strong> con el valor de referencia global reportado
+por la <strong>Organización Mundial de la Salud (OMS, 2016)</strong>.
+Según este informe, en 2016, el <strong>13% de la población mundial
+adulta sufría de obesidad</strong>.</p>
+<p>Se define como <strong>persona obesa</strong> a aquella cuyo
+<strong>Índice de Masa Corporal (IMC)</strong> es mayor o igual a
+<strong>30</strong>, donde el IMC se calcula como:</p>
+<p><span class="math display">\[
+IMC = \frac{\text{Peso (kg)}}{\text{Altura (m)}^2}
+\]</span></p>
+<p>Para el presente estudio, se emplean datos de la <strong>Encuesta
+Nacional de Factores de Riesgo (ENFR) 2013</strong>, en la que la
+variable <code>"IMC_agrupado"</code> clasifica a las personas en las
+siguientes categorías:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Peso normal</strong><br />
+</li>
+<li><strong>Sobrepeso</strong><br />
+</li>
+<li><strong>Obesidad</strong><br />
+</li>
+<li><strong>No sabe/No contesta (NS/NC) sobre peso y/o
+talla</strong></li>
+</ol>
+<p>Con las siguientes frecuencias absolutas por categoría:</p>
+<pre>
+     1     2     3     9   Sum 
+12442 11343  6505  2075 32365
+</pre>
+<p>Dado que se busca evaluar si la prevalencia de obesidad en Argentina
+<strong>es superior a la media mundial del 13%</strong>, se establece la
+siguiente formulación de hipótesis:</p>
+<p><span class="math display">\[
+H_0: P \leq 0.13
+\]</span></p>
+<p><span class="math display">\[
+H_1: P &gt; 0.13
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(P\)</span> representa la
+<strong>proporción de población adulta en Argentina con
+obesidad</strong>.<br />
+</li>
+<li>La prueba es <strong>unilateral derecha</strong>, ya que se analiza
+si la prevalencia en Argentina es <strong>mayor</strong> que el 13%
+global.</li>
+</ul>
+<p>Con los códigos siguientes:</p>
+<pre>
+# Crear los datos
+datos.agrupados <- data.frame(
+  categoria = c(1, 2, 3),
+  freq = c(12442, 11343, 6505)
+)
+
+# Extraer valores para la prueba
+x <- datos.agrupados$freq[datos.agrupados$categoria == 3]  # Casos en categoría 3
+n <- sum(datos.agrupados$freq)  # Total de casos
+p_0 <- 0.13  # Proporción esperada bajo H0
+
+# Realizar la prueba de proporción unilateral (prueba z para proporciones)
+prop_test_result  <- prop.test(x, n, p = p_0, alternative = "greater", correct = FALSE)
+</pre>
+<pre class="r"><code># Crear los datos
+datos.agrupados &lt;- data.frame(
+  categoria = c(1, 2, 3),
+  freq = c(12442, 11343, 6505)
+)
+
+# Extraer valores para la prueba
+x &lt;- datos.agrupados$freq[datos.agrupados$categoria == 3]  # Casos en categoría 3
+n &lt;- sum(datos.agrupados$freq)  # Total de casos
+p_0 &lt;- 0.13  # Proporción esperada bajo H0
+
+# Realizar la prueba de proporción unilateral (prueba z para proporciones)
+prop_test_result  &lt;- prop.test(x, n, p = p_0, alternative = &quot;greater&quot;, correct = FALSE)</code></pre>
+<p>Se obtine un valor-p inferior a 2.2e-16, por tanto se ha encontrado
+suficiente evidencia estadística para afirmar que la proporción de
+obesidad en Argentina es superior a la prevalencia mundial del 13%, con
+una significancia del 1%.</p>
+</p>
+</div>
+</br></br>
+<h2>
+Prueba sobre la varianza
+</h2>
+<p>El <strong>test de hipótesis para una varianza</strong> es una prueba
+estadística utilizada para determinar si la varianza de una población es
+igual a un valor específico o si difiere significativamente de dicho
+valor. Este tipo de prueba es útil en contextos donde se requiere
+evaluar la dispersión de los datos en relación con un estándar o una
+suposición teórica.</p>
+<p>Dado un conjunto de datos provenientes de una población normal, se
+desea contrastar la hipótesis sobre su varianza <span
+class="math inline">\(\sigma^2\)</span>. Las <strong>Hipótesis
+alternativa (<span class="math inline">\(H_1\)</span>)</strong> pueden
+ser alguna de las siguientes, donde <span
+class="math inline">\(\sigma_0^2\)</span> es un valor dado respecto al
+que se quiere comparar la varianza de la población:</p>
+<ul>
+<li><strong>Bilateral</strong>: <span class="math inline">\(\sigma^2
+\neq \sigma_0^2\)</span> (la varianza es diferente de <span
+class="math inline">\(\sigma_0^2\)</span>).</li>
+<li><strong>Unilateral derecha</strong>: <span
+class="math inline">\(\sigma^2 &gt; \sigma_0^2\)</span> (la varianza es
+mayor que <span class="math inline">\(\sigma_0^2\)</span>).</li>
+<li><strong>Unilateral izquierda</strong>: <span
+class="math inline">\(\sigma^2 &lt; \sigma_0^2\)</span> (la varianza es
+menor que <span class="math inline">\(\sigma_0^2\)</span>).</li>
+</ul>
+<p>El test se basa en la distribución <strong>Chi-cuadrado</strong>
+(<span class="math inline">\(\chi^2\)</span>), dado que la varianza
+muestral sigue la distribución:</p>
+<p><span class="math display">\[
+\chi^2 = \frac{(n - 1) S^2}{\sigma_0^2}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(n\)</span> es el tamaño de la
+muestra,</li>
+<li><span class="math inline">\(S^2\)</span> es la varianza
+muestral,</li>
+<li><span class="math inline">\(\sigma_0^2\)</span> es la varianza
+poblacional bajo la hipótesis nula.</li>
+</ul>
+<p>Bajo <span class="math inline">\(H_0\)</span>, el estadístico <span
+class="math inline">\(\chi^2\)</span> sigue una distribución
+Chi-cuadrado con <span class="math inline">\(n - 1\)</span> grados de
+libertad.</p>
+<p>La decisión de rechazar <span class="math inline">\(H_0\)</span> se
+toma comparando el valor calculado de <span
+class="math inline">\(\chi^2\)</span> con los valores críticos obtenidos
+de la distribución Chi-cuadrado para un nivel de significancia <span
+class="math inline">\(\alpha\)</span>:</p>
+<ul>
+<li><strong>Prueba bilateral</strong>: Rechazar <span
+class="math inline">\(H_0\)</span> si <span
+class="math inline">\(\chi^2\)</span> cae fuera del intervalo <span
+class="math inline">\((\chi^2_{\alpha/2, n-1}, \chi^2_{1-\alpha/2,
+n-1})\)</span>.</li>
+<li><strong>Prueba unilateral derecha</strong>: Rechazar <span
+class="math inline">\(H_0\)</span> si <span class="math inline">\(\chi^2
+&gt; \chi^2_{1-\alpha, n-1}\)</span>.</li>
+<li><strong>Prueba unilateral izquierda</strong>: Rechazar <span
+class="math inline">\(H_0\)</span> si <span class="math inline">\(\chi^2
+&lt; \chi^2_{\alpha, n-1}\)</span>.</li>
+</ul>
+<p>En casos donde los datos no sigan una distribución normal, se
+recomienda utilizar pruebas no paramétricas o métodos basados en
+permutaciones para evaluar la varianza.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En este ejemplo, la prueba de hipótesis para la varianza se emplea
+para evaluar si la <strong>varianza de una población normal difiere de
+un valor específico</strong>. En <strong>R</strong>, esta prueba se
+realiza mediante la función <code>varTest()</code> del paquete
+<code>EnvStats</code>, el cual requiere que la población de origen siga
+una distribución <strong>normal</strong>.</p>
+<p>Se plantea la hipótesis nula y alternativa de la siguiente
+manera:</p>
+<p><span class="math display">\[
+H_0: \sigma^2 = 100
+\]</span></p>
+<p><span class="math display">\[
+H_1: \sigma^2 \neq 100
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(\sigma^2\)</span> representa la
+<strong>varianza poblacional</strong>.<br />
+</li>
+<li>La prueba es <strong>bilateral</strong>, ya que se evalúa si la
+varianza es <strong>diferente</strong> del valor de referencia
+(100).</li>
+</ul>
+<p>La implementación en <strong>R</strong> se realiza con los siguientes
+códigos:</p>
+<pre>
+# Instalar el paquete si no está instalado
+# install.packages("EnvStats")
+
+# Cargar librería necesaria
+library(EnvStats)
+
+# Generar datos de ejemplo
+set.seed(123)
+datos <- rnorm(30, mean = 50, sd = 10)  # Muestra de tamaño 30 con desviación estándar 10
+
+# Prueba de hipótesis para la varianza (valor esperado de sigma^2 = 100)
+resultado <- varTest(datos, sigma.squared = 100, alternative = "two.sided")
+
+# Mostrar resultados
+print(resultado)
+</pre>
+<pre class="r"><code># Instalar el paquete si no está instalado
+# install.packages(&quot;EnvStats&quot;)
+
+# Cargar librería necesaria
+library(EnvStats)
+
+# Generar datos de ejemplo
+set.seed(123)
+datos &lt;- rnorm(30, mean = 50, sd = 10)  # Muestra de tamaño 30 con desviación estándar 10
+
+# Prueba de hipótesis para la varianza (valor esperado de sigma^2 = 100)
+resultado &lt;- varTest(datos, sigma.squared = 100, alternative = &quot;two.sided&quot;)
+
+# Mostrar resultados
+print(resultado)</code></pre>
+<p>Se ha llevado a cabo una <strong>prueba de hipótesis para la varianza
+poblacional</strong>, evaluando si la varianza de la población es
+<strong>igual a 100</strong>, bajo el supuesto de
+<strong>normalidad</strong>.</p>
+<p>A partir de la muestra analizada, se obtienen los siguientes
+valores:</p>
+<ul>
+<li><strong>Estadístico de prueba <span
+class="math inline">\(\chi^2\)</span></strong>: <span
+class="math inline">\(27.91022\)</span>.<br />
+</li>
+<li><strong>Grados de libertad</strong>: <span class="math inline">\(v =
+n - 1 = 29\)</span>.<br />
+</li>
+<li><strong>Valor <span class="math inline">\(p\)</span></strong>: <span
+class="math inline">\(0.954565\)</span>.<br />
+</li>
+<li><strong>Nivel de significación (<span
+class="math inline">\(\alpha\)</span>) considerado</strong>: <span
+class="math inline">\(5\%\)</span> (<span
+class="math inline">\(0.05\)</span>).</li>
+</ul>
+<p>Dado que el <strong>valor-p obtenido es mayor que el nivel de
+significación del 5%</strong>, <strong>no se rechaza la hipótesis
+nula</strong> <span class="math inline">\(H_0\)</span>, lo que indica
+que <strong>no hay evidencia suficiente para afirmar que la varianza
+poblacional difiere de 100 con una significancia del 5%</strong>.</p>
+</p>
+</div>
+<hr />
+<p>La <strong>Tabla 2.17</strong> presenta un resumen de los
+<strong>test estadísticos</strong> aplicados a una muestra cuando el
+<strong>parámetro de interés</strong> es la <strong>media</strong>, la
+<strong>varianza</strong> o la <strong>proporción</strong>. En esta
+tabla se especifican los <strong>supuestos necesarios</strong> para
+aplicar cada prueba, el <strong>estadístico de prueba</strong> y su
+<strong>distribución asociada</strong>, que puede ser
+<strong>normal</strong> (<span class="math inline">\(Z\)</span>),
+<strong>t de Student</strong> (<span class="math inline">\(t\)</span>) o
+<strong>chi-cuadrado</strong> (<span
+class="math inline">\(\chi^2\)</span>).</p>
+<p>La <strong>Tabla 2.18</strong> resume el <strong>criterio de
+decisión</strong> para rechazar o no la <strong>hipótesis nula</strong>,
+utilizando tanto la <strong>región de rechazo</strong> como el
+<strong>valor-p</strong>. Se detallan las reglas de decisión según el
+nivel de significación <span class="math inline">\(\alpha\)</span> y el
+valor observado del estadístico de prueba.</p>
+<p>La <strong>Tabla 2.19</strong> presenta las <strong>diferentes
+opciones de formulación de hipótesis</strong>, ya sea
+<strong>unilateral</strong> o <strong>bilateral</strong>, utilizando el
+parámetro general <span class="math inline">\(\theta\)</span>, el cual
+puede representar la <strong>media poblacional</strong> (<span
+class="math inline">\(\mu\)</span>), la <strong>varianza
+poblacional</strong> (<span class="math inline">\(\sigma^2\)</span>) o
+la <strong>proporción poblacional</strong> (<span
+class="math inline">\(P\)</span>), según el contexto del análisis.</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.17</strong> Resumen de pruebas de hipótesis para una
+población.
+</center>
+<table>
+<colgroup>
+<col width="16%" />
+<col width="21%" />
+<col width="27%" />
+<col width="34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>Parámetro</strong></th>
+<th align="center"><strong>Supuestos</strong></th>
+<th align="center"><strong>Hipótesis Nula <span
+class="math inline">\(H_0\)</span></strong></th>
+<th align="center"><strong>Estadístico de Prueba y
+Distribución</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Media <span
+class="math inline">\(\mu\)</span></strong></td>
+<td align="center">Población normal o <span class="math inline">\(n \geq
+30\)</span>, varianza <span class="math inline">\(\sigma^2\)</span>
+conocida</td>
+<td align="center"><span class="math inline">\(\mu = \mu_0\)</span></td>
+<td align="center"><span class="math inline">\(Z = \frac{\bar{x} -
+\mu_0}{\frac{\sigma}{\sqrt{n}}} \sim N(0,1)\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Población normal, varianza <span
+class="math inline">\(\sigma^2\)</span> desconocida, <span
+class="math inline">\(n \geq 30\)</span></td>
+<td align="center"><span class="math inline">\(\mu = \mu_0\)</span></td>
+<td align="center"><span class="math inline">\(Z = \frac{\bar{x} -
+\mu_0}{\frac{S}{\sqrt{n}}} \sim N(0,1)\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center">Población normal, varianza <span
+class="math inline">\(\sigma^2\)</span> desconocida, <span
+class="math inline">\(n &lt; 30\)</span></td>
+<td align="center"><span class="math inline">\(\mu = \mu_0\)</span></td>
+<td align="center"><span class="math inline">\(T = \frac{\bar{x} -
+\mu_0}{\frac{s}{\sqrt{n}}} \sim t_{(v=n-1)}\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Proporción <span
+class="math inline">\(P\)</span></strong></td>
+<td align="center"><span class="math inline">\(n \leq 30\)</span></td>
+<td align="center"><span class="math inline">\(P = p_0\)</span></td>
+<td align="center"><span class="math inline">\(X \sim Bin(n,
+p_0)\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><span class="math inline">\(n \geq 30\)</span>, <span
+class="math inline">\(np \geq 5\)</span>, <span
+class="math inline">\(n(1-p) \geq 5\)</span></td>
+<td align="center"><span class="math inline">\(P = p_0\)</span></td>
+<td align="center"><span class="math inline">\(Z = \frac{x -
+np_0}{\sqrt{np_0(1-p_0)}} = \frac{\hat{p} -
+p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} \sim N(0,1)\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Varianza <span
+class="math inline">\(\sigma^2\)</span></strong></td>
+<td align="center">Población normal</td>
+<td align="center"><span class="math inline">\(\sigma^2 =
+\sigma_0^2\)</span></td>
+<td align="center"><span class="math inline">\(\chi^2 =
+\frac{(n-1)s^2}{\sigma_0^2} \sim \chi^2_{(v=n-1)}\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<br/><br/>
+<center>
+<strong>Tabla 2.18</strong> Reglas de decisión.
+</center>
+<table>
+<colgroup>
+<col width="20%" />
+<col width="79%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>Regla</strong></th>
+<th align="left"><strong>Criterio de Decisión</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Regla 1</strong></td>
+<td align="left">Si el <strong>Estadístico de Prueba</strong> cae en la
+<strong>Región de Rechazo</strong>, entonces se rechaza <span
+class="math inline">\(H_{0}\)</span> y se <strong>acepta</strong> la
+hipótesis alternativa <span class="math inline">\(H_{1}\)</span>. <br>
+Si, por el contrario, el <strong>Estadístico de Prueba</strong>
+<strong>No</strong> cae en la <strong>Región de Rechazo</strong>,
+entonces <strong>No</strong> se rechaza <span
+class="math inline">\(H_{0}\)</span>, es decir, no existe suficiente
+evidencia para descartarla.</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Regla 2</strong></td>
+<td align="left">Si <span class="math inline">\(\alpha &gt;\)</span>
+<strong>valor-p</strong>, entonces se <strong>rechaza</strong> <span
+class="math inline">\(H_{0}\)</span> y se <strong>acepta</strong> <span
+class="math inline">\(H_{1}\)</span>. <br> Si, por el contrario, <span
+class="math inline">\(\alpha &lt;\)</span> <strong>valor-p</strong>,
+entonces <strong>No</strong> se rechaza <span
+class="math inline">\(H_{0}\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<br/><br/>
+<center>
+<strong>Tabla 2.19</strong> Tipos de Pruebas de Hipótesis.
+</center>
+<table>
+<colgroup>
+<col width="23%" />
+<col width="76%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>Tipo de Prueba</strong></th>
+<th align="left"><strong>Formulación de Hipótesis</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Dos colas</strong></td>
+<td align="left"><span class="math inline">\(H_{0}: \theta =
+\theta_{0}\)</span> vs <span class="math inline">\(H_{1}: \theta \neq
+\theta_{0}\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Cola superior</strong></td>
+<td align="left"><span class="math inline">\(H_{0}: \theta \leq
+\theta_{0}\)</span> vs <span class="math inline">\(H_{1}: \theta &gt;
+\theta_{0}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Cola inferior</strong></td>
+<td align="left"><span class="math inline">\(H_{0}: \theta \geq
+\theta_{0}\)</span> vs <span class="math inline">\(H_{1}: \theta &lt;
+\theta_{0}\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+</br></br>
+<h2>
+Prueba sobre la normalidad
+</h2>
+<p>El supuesto de <strong>normalidad</strong> es fundamental en los
+intervalos de confianza paramétricos, las pruebas paramétricas, como la
+<strong>prueba t de Student</strong>, <strong>ANOVA</strong> y
+<strong>regresión lineal</strong>, ya que la validez de estas pruebas
+depende de la normalidad de los datos. Si bien en muestras grandes, para
+sumas, promedios y proporciones, el <strong>teorema central del
+límite</strong> permite que los resultados sean robustos frente a
+pequeñas desviaciones de la normalidad, en muestras pequeñas, la
+verificación de este supuesto es crucial.</p>
+<p>En la <strong>Tabla 2.20</strong>, se presenta un resumen de las
+<strong>pruebas de normalidad</strong> y estadísticas más comunes,
+especificando el <strong>tamaño de muestra recomendado</strong> y las
+<strong>hipótesis</strong> correspondientes.</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.20</strong> Herramientas para revisar la normalidad.
+</center>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="11%" />
+<col width="11%" />
+<col width="15%" />
+<col width="24%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Test</strong></th>
+<th><strong>Adecuado para muestras grandes</strong></th>
+<th><strong>Tamaño de muestra recomendado</strong></th>
+<th><strong>Características</strong></th>
+<th><strong>Hipótesis Nula <span
+class="math inline">\(H_0\)</span></strong></th>
+<th><strong>Hipótesis Alternativa <span
+class="math inline">\(H_1\)</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Shapiro-Wilk (<code>shapiro.test()</code>)</strong></td>
+<td>No</td>
+<td><span class="math inline">\(n \leq 50\)</span> (hasta 5000, pero
+pierde potencia)</td>
+<td>Alta potencia en muestras pequeñas, pero demasiado sensible en
+muestras grandes.</td>
+<td>Los datos siguen una distribución normal.</td>
+<td>Los datos no siguen una distribución normal.</td>
+</tr>
+<tr class="even">
+<td><strong>Kolmogorov-Smirnov (<code>ks.test()</code>)</strong></td>
+<td>No</td>
+<td><span class="math inline">\(n &gt; 30\)</span>, pero <strong>no
+recomendado para normalidad</strong></td>
+<td>Evalúa la distancia entre la distribución empírica y la normal
+teórica. Sensible a valores atípicos.</td>
+<td>Los datos siguen una distribución normal.</td>
+<td>Los datos no siguen una distribución normal.</td>
+</tr>
+<tr class="odd">
+<td><strong>Anderson-Darling (<code>ad.test()</code> en
+<code>nortest</code>)</strong></td>
+<td>Sí</td>
+<td><span class="math inline">\(n \geq 10\)</span> (mejor para <span
+class="math inline">\(n &gt; 30\)</span>)</td>
+<td>Más preciso en la detección de desviaciones en las colas de la
+distribución. Útil para tamaños pequeños y grandes.</td>
+<td>Los datos siguen una distribución normal.</td>
+<td>Los datos no siguen una distribución normal.</td>
+</tr>
+<tr class="even">
+<td><strong>Lilliefors (Kolmogorov-Smirnov modificado)
+(<code>lillie.test()</code> en <code>nortest</code>)</strong></td>
+<td>Sí</td>
+<td><span class="math inline">\(20 \leq n \leq 1000\)</span></td>
+<td>Versión ajustada del test KS que mejora su desempeño al estimar
+parámetros de normalidad.</td>
+<td>Los datos siguen una distribución normal.</td>
+<td>Los datos no siguen una distribución normal.</td>
+</tr>
+<tr class="odd">
+<td><strong>Cramér-von Mises (<code>cvm.test()</code> en
+<code>nortest</code>)</strong></td>
+<td>Sí</td>
+<td><span class="math inline">\(n \geq 10\)</span> (más fiable para
+<span class="math inline">\(n &gt; 30\)</span>)</td>
+<td>Buena alternativa robusta a Shapiro-Wilk, menos sensible a pequeñas
+desviaciones.</td>
+<td>Los datos siguen una distribución normal.</td>
+<td>Los datos no siguen una distribución normal.</td>
+</tr>
+<tr class="even">
+<td><strong>D’Agostino-Pearson (<code>skewness()</code> y
+<code>kurtosis()</code> en <code>moments</code>)</strong></td>
+<td>Sí</td>
+<td><span class="math inline">\(n &gt; 50\)</span> (idealmente <span
+class="math inline">\(n &gt; 100\)</span>)</td>
+<td>Evalúa la asimetría y curtosis para detectar desviaciones de la
+normalidad. No es una prueba directa de normalidad.</td>
+<td>Los datos presentan asimetría = 0 y curtosis = 3 (normalidad).</td>
+<td>Los datos tienen asimetría diferente de 0 o curtosis diferente de
+3.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Para analizar la edad de los participantes de la Carrera La Luz, se
+toma una muestra aleatoria de tamaño 50. Antes de realizar un test de
+media, se verifica si la distribución de la población de la que proviene
+la muestra es aproximadamente normal mediante un test de normalidad. Si
+se cumple el supuesto de normalidad, se procede a realizar una
+<strong>prueba t</strong> para una media, dado que la varianza
+poblacional es desconocida. En caso contrario, se recomienda utilizar
+una prueba no paramétrica para comparar la mediana con el valor de
+referencia. Se desea contrastar si la edad promedio de los participantes
+es significativamente diferente de 31 años con un nivel de confianza del
+90 %.</p>
+<p>Con el objetivo de analizar la distribución de la variable Edad, se
+implementaron los siguientes códigos, con los cuales se ajustaron cuatro
+pruebas de normalidad, además de la generación de un histograma con
+curva de densidad y la realización de una prueba de hipótesis para la
+media.</p>
+<pre>
+# Cargar paquetes necesarios
+library(ggplot2)
+library(nortest)  # Para pruebas de normalidad adicionales
+
+# Muestra de tamaño n=50 de la edad de los participantes de la Carrera La Luz
+x <- c(37, 36, 36, 27, 21, 24, 31, 29, 29, 29, 31, 26, 34, 39, 33, 27, 30, 29, 28, 
+       34, 39, 36, 34, 27, 38, 32, 27, 27, 32, 38, 27, 31, 38, 36, 33, 18, 25, 26, 
+       33, 34, 35, 35, 33, 34, 30, 39, 27, 35, 31, 36)
+
+# Pruebas de normalidad recomendadas para n=50
+shapiro_test <- shapiro.test(x)  # Shapiro-Wilk
+ad_test <- ad.test(x)            # Anderson-Darling
+lillie_test <- lillie.test(x)    # Lilliefors (Kolmogorov-Smirnov ajustado)
+cvm_test <- cvm.test(x)          # Cramer-von Mises
+
+# Mostrar resultados de normalidad
+print(shapiro_test)
+print(ad_test)
+print(lillie_test)
+print(cvm_test)
+
+# Crear un data frame para ggplot2
+df <- data.frame(x)
+
+# Gráfico de histograma con densidad (compatible con ggplot2 3.4.0+)
+ggplot(df, aes(x = x)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 10, fill = "blue", alpha = 0.5, color = "black") +  # Histograma
+  geom_density(color = "black", linewidth = 1) +  # Curva de densidad empírica
+  labs(title = "Histograma de Densidad de la Muestra", x = "Edad", y = "Densidad") +
+  theme_minimal()
+
+# Prueba de hipótesis para la media (H0: media = 30)
+mu_ref <- 30  # Valor de referencia para la media
+
+test_media <- t.test(x, alternative = "two.sided", mu = mu_ref, conf.level = 0.95)
+</pre>
+<pre class="r"><code># Cargar paquetes necesarios
+library(ggplot2)
+library(nortest)  # Para pruebas de normalidad adicionales
+
+# Muestra de tamaño n=50 de la edad de los participantes de la Carrera La Luz
+x &lt;- c(37, 36, 36, 27, 21, 24, 31, 29, 29, 29, 31, 26, 34, 39, 33, 27, 30, 29, 28, 
+       34, 39, 36, 34, 27, 38, 32, 27, 27, 32, 38, 27, 31, 38, 36, 33, 18, 25, 26, 
+       33, 34, 35, 35, 33, 34, 30, 39, 27, 35, 31, 36)
+
+# Pruebas de normalidad recomendadas para n=50
+shapiro_test &lt;- shapiro.test(x)  # Shapiro-Wilk
+ad_test &lt;- ad.test(x)            # Anderson-Darling
+lillie_test &lt;- lillie.test(x)    # Lilliefors (Kolmogorov-Smirnov ajustado)
+cvm_test &lt;- cvm.test(x)          # Cramer-von Mises
+
+# Mostrar resultados de normalidad
+#print(shapiro_test)
+#print(ad_test)
+#print(lillie_test)
+#print(cvm_test)
+
+# Crear un data frame para ggplot2
+df &lt;- data.frame(x)
+
+# Gráfico de histograma con densidad (compatible con ggplot2 3.4.0+)
+plot269 &lt;- ggplot(df, aes(x = x)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 10, fill = &quot;blue&quot;, alpha = 0.5, color = &quot;black&quot;) +  # Histograma
+  geom_density(color = &quot;black&quot;, linewidth = 1) +  # Curva de densidad empírica
+  labs(title = &quot;Histograma de Densidad de la Muestra&quot;, x = &quot;Edad&quot;, y = &quot;Densidad&quot;) +
+  theme_minimal()
+
+# Prueba de hipótesis para la media (H0: media = 30)
+mu_ref &lt;- 30  # Valor de referencia para la media
+
+test_media &lt;- t.test(x, alternative = &quot;two.sided&quot;, mu = mu_ref, conf.level = 0.95)</code></pre>
+<p>Los siguientes son los resultados de los test de normalidad, cuya
+hipótesis nula es que la Edad se distribuye normal.</p>
+<pre>
+
+    Shapiro-Wilk normality test
+
+data:  x
+W = 0.96305, p-value = 0.1194
+
+-----
+Anderson-Darling normality test
+
+data:  x
+A = 0.49521, p-value = 0.2051
+
+-----
+    Lilliefors (Kolmogorov-Smirnov) normality test
+
+data:  x
+D = 0.10049, p-value = 0.2353
+
+
+-----
+Cramer-von Mises normality test
+
+data:  x
+W = 0.073575, p-value = 0.2457
+
+</pre>
+<br/><br/>
+<center>
+<img src="img/fig269.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.69</strong> Distribución de la edad.
+</center>
+<p><br/><br/></p>
+<p>Según la <strong>Figura 2.69</strong>, la distribución de la edad
+presenta una ligera asimetría y dos clases modales claramente marcadas.
+No obstante, las pruebas de normalidad Shapiro-Wilk, Anderson-Darling,
+Lilliefors (Kolmogorov-Smirnov) y Cramér-von Mises arrojaron valores-p
+superiores a 0.05. Esto indica que, con un nivel de significancia del
+5%, no hay suficiente información en la muestra para rechazar la
+hipótesis nula de normalidad para la variable Edad.</p>
+<p>En la <strong>prueba t</strong> de dos colas para una media, donde la
+hipótesis alternativa plantea que la media de la edad es
+<strong>diferente de 30</strong>, se obtuvo un <strong>valor-p =
+0.03051</strong>.</p>
+<p>Dado que el <strong>nivel de significación</strong> es del
+<strong>5%</strong> (<span class="math inline">\(\alpha =
+0.05\)</span>), y el valor-p es <strong>menor</strong> que este umbral
+(<span class="math inline">\(0.03051 &lt; 0.05\)</span>), <strong>se
+rechaza la hipótesis nula</strong> <span class="math inline">\(H_0: \mu
+= 30\)</span>.</p>
+<p>En consecuencia, se concluye que <strong>existe evidencia estadística
+suficiente</strong> para inferir que la <strong>media de la edad es
+significativamente diferente de 30</strong>, con un <strong>nivel de
+significación del 5%</strong>.</p>
+<pre>
+One Sample t-test
+
+data:  x
+t = 2.2278, df = 49, p-value = 0.03051
+alternative hypothesis: true mean is not equal to 30
+95 percent confidence interval:
+ 30.14891 32.89109
+sample estimates:
+mean of x 
+    31.52 
+</pre>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Una empresa somete a sus aspirantes a un curso de entrenamiento como
+parte del proceso de selección de personal. Según datos históricos,
+<strong>el 76 % de los aspirantes aprueban el curso</strong>. Sin
+embargo, en el último proceso de selección, se implementaron
+modificaciones en el programa de entrenamiento con el objetivo de hacer
+la selección más rigurosa. En esta nueva versión, <strong>se
+inscribieron 40 aspirantes y solo 24 lograron aprobar el
+curso</strong>.</p>
+<p>El objetivo es determinar si los cambios en el programa
+<strong>redujeron significativamente la tasa de aprobación</strong>.
+Para ello, se plantea la siguiente prueba de hipótesis para la
+proporción de éxito <span class="math inline">\(p\)</span>:</p>
+<ul>
+<li><strong>Hipótesis nula</strong> (<span
+class="math inline">\(H_0\)</span>): La proporción de aprobación
+<strong>no ha disminuido</strong> o es incluso mayor que antes.<br />
+<span class="math display">\[
+H_0: P \geq 0.76
+\]</span></li>
+<li><strong>Hipótesis alternativa</strong> (<span
+class="math inline">\(H_a\)</span>): La proporción de aprobación
+<strong>ha disminuido</strong> respecto a la tasa histórica.<br />
+<span class="math display">\[
+H_a: P &lt; 0.76
+\]</span></li>
+</ul>
+<p>Dado que el interés radica en evaluar una posible reducción en la
+tasa de aprobación, se emplea una <strong>prueba de proporciones de una
+cola</strong> (<em>cola inferior</em>). La prueba se implementa con el
+siguiente código en <strong>R</strong>:</p>
+<pre>
+# Prueba de hipótesis para la proporción de aprobación
+prop.test(24, 40, p = 0.76,
+          alternative = "less",
+          conf.level = 0.95)
+</pre>
+<pre class="r"><code># Prueba de hipótesis para la proporción de aprobación
+prop.test(24, 40, p = 0.76,
+          alternative = &quot;less&quot;,
+          conf.level = 0.95)</code></pre>
+<pre><code>
+    1-sample proportions test with continuity correction
+
+data:  24 out of 40, null probability 0.76
+X-squared = 4.7711, df = 1, p-value = 0.01447
+alternative hypothesis: true p is less than 0.76
+95 percent confidence interval:
+ 0.0000000 0.7282033
+sample estimates:
+  p 
+0.6 </code></pre>
+<p>El resultado de la implementación es la siguiente:</p>
+<pre>
+1-sample proportions test with continuity correction
+
+data:  24 out of 40, null probability 0.76
+X-squared = 4.7711, df = 1, p-value = 0.01447
+alternative hypothesis: true p is less than 0.76
+95 percent confidence interval:
+ 0.0000000 0.7282033
+sample estimates:
+  p 
+0.6 
+</pre>
+<p>El valor p obtenido en la prueba es <strong>0.01447</strong>, el cual
+es menor que el nivel de significancia establecido (<span
+class="math inline">\(\alpha = 0.05\)</span>). Por lo tanto, se rechaza
+la hipótesis nula en favor de la hipótesis alternativa.</p>
+<p>Los resultados sugieren que la proporción de aprobación en la nueva
+versión del programa es <strong>significativamente menor que el 76
+%</strong> registrado en procesos anteriores. Por lo tanto, se puede
+inferir con un <strong>95 % de confianza</strong> que los cambios en el
+programa de entrenamiento han reducido la tasa de selección.</p>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Un <strong>fabricante de baterías</strong> para celulares afirma que
+la <strong>duración de sus baterías</strong> sigue una distribución
+aproximadamente <strong>normal</strong> con una <strong>desviación
+estándar</strong> de <strong>9 horas</strong> (<span
+class="math inline">\(\sigma = 9\)</span>), lo que implica que la
+<strong>varianza teórica</strong> es <strong><span
+class="math inline">\(\sigma^2 = 81\)</span></strong>.</p>
+<p>Antes de realizar un pedido, un comprador decide <strong>verificar la
+veracidad</strong> de esta afirmación. Para ello, solicita <strong>una
+muestra de 10 baterías</strong>, las cuales son sometidas a
+<strong>pruebas en un laboratorio</strong>, obteniendo los siguientes
+tiempos de duración (en horas):</p>
+<p><span class="math display">\[
+11.1, 15.6, 11.1, 7.5, 7.9, 14.7, 6.3, 8.5, 8.0, 7.6
+\]</span></p>
+<p>El objetivo es determinar si los datos obtenidos <strong>respaldan la
+afirmación del fabricante</strong> o si existe <strong>evidencia
+suficiente para rechazarla</strong>.</p>
+<hr />
+<p>Dado que se busca evaluar si la <strong>varianza poblacional es
+diferente</strong> de 81 <span class="math inline">\(horas^2\)</span>,
+se desea usar una <strong>prueba de chi-cuadrado bilateral</strong>, con
+las siguientes hipótesis:</p>
+<p><span class="math display">\[
+H_0: \sigma^2 = 81
+\]</span></p>
+<p><span class="math display">\[
+H_a: \sigma^2 \neq 81
+\]</span></p>
+<p>Con los siguientes códigos se realiza el test de normalidad de
+Shapiro-Wilk y de varianza:</p>
+<pre>
+# Cargar paquetes necesarios
+library(nortest)  # Para pruebas adicionales de normalidad
+library(EnvStats) # Para prueba de varianza
+
+# Datos de tiempos de duración
+tiempos <- c(11.1, 15.6, 11.1, 7.5, 7.9, 14.7, 6.3, 8.5, 8.0, 7.6)
+
+# Prueba de normalidad de Shapiro-Wilk
+shapiro_test <- shapiro.test(tiempos)
+print(shapiro_test)
+
+# Prueba de varianza bilateral (H0: sigma^2 = 81, Ha: sigma^2 ≠ 81)
+varianza_teorica <- 81
+test_varianza <- varTest(tiempos, sigma.squared = varianza_teorica, alternative = "two.sided", conf.level = 0.95)
+print(test_varianza)
+</pre>
+<pre class="r"><code># Cargar paquetes necesarios
+library(nortest)  # Para pruebas adicionales de normalidad
+library(EnvStats) # Para prueba de varianza
+
+# Datos de tiempos de duración
+tiempos &lt;- c(11.1, 15.6, 11.1, 7.5, 7.9, 14.7, 6.3, 8.5, 8.0, 7.6)
+
+# Prueba de normalidad de Shapiro-Wilk
+shapiro_test &lt;- shapiro.test(tiempos)
+print(shapiro_test)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  tiempos
+W = 0.85522, p-value = 0.06699</code></pre>
+<pre class="r"><code># Prueba de varianza bilateral (H0: sigma^2 = 81, Ha: sigma^2 ≠ 81)
+varianza_teorica &lt;- 81
+test_varianza &lt;- varTest(tiempos, sigma.squared = varianza_teorica, alternative = &quot;two.sided&quot;, conf.level = 0.95)
+print(test_varianza)</code></pre>
+<pre><code>
+Results of Hypothesis Test
+--------------------------
+
+Null Hypothesis:                 variance = 81
+
+Alternative Hypothesis:          True variance is not equal to 81
+
+Test Name:                       Chi-Squared Test on Variance
+
+Estimated Parameter(s):          variance = 10.21567
+
+Data:                            tiempos
+
+Test Statistic:                  Chi-Squared = 1.135074
+
+Test Statistic Parameter:        df = 9
+
+P-value:                         0.00188424
+
+95% Confidence Interval:         LCL =  4.833208
+                                 UCL = 34.047311</code></pre>
+<p>De acuerdo con el test de normalidad, el valor-p=0.06699, por tanto,
+con una significancia del 5% no hay suficiente información en la muestra
+para rechazar la hipótesis de normalidad de los tiempos. Esto permite la
+realización del test paramétrico de varianza que se analiza a
+continuación.</p>
+<pre>
+Shapiro-Wilk normality test
+
+data:  tiempos
+W = 0.85522, p-value = 0.06699
+</pre>
+<p>De acuerdo con el test de varianzas, el valor-p= 0.00188424, por
+tanto, con una significancia del 1%, se rechaza que la varianza de los
+tiempos sea igual a 81, por tanto se acepta que la variabilidad de los
+tiempos respecto a la media es distinta a 81 <span
+class="math inline">\(horas^2\)</span>.</p>
+<pre>
+Results of Hypothesis Test
+--------------------------
+
+Null Hypothesis:                 variance = 81
+
+Alternative Hypothesis:          True variance is not equal to 81
+
+Test Name:                       Chi-Squared Test on Variance
+
+Estimated Parameter(s):          variance = 10.21567
+
+Data:                            tiempos
+
+Test Statistic:                  Chi-Squared = 1.135074
+
+Test Statistic Parameter:        df = 9
+
+P-value:                         0.00188424
+
+95% Confidence Interval:         LCL =  4.833208
+                                 UCL = 34.047311
+</pre>
+</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

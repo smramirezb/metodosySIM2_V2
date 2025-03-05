@@ -1,0 +1,110 @@
+---
+title : <span style="color:#034a94"> **Probabilidad**</span>
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = NA)
+```
+
+</br></br>
+
+
+A continuación se presentan una serie de códigos relacionados el calculo de probabilidades
+
+## <span style="color:#034a94">**Simulación del lanzamiento de un dados**</span>
+
+Para simular el lanzamiento de un dado utilizaremos la función `sample(x, size, replace = FALSE, prob = NULL)`, con parámetros: `x` : valores del espacio muestral; `size` : tamaño de la muestra y `replace` : para determinar si la selección se realiza con remplazo o sin remplazo.
+
+`sample(1:6,2000, replace = TRUE)`, da un resultado una muestra de 2000 valores enteros entre 1 y 6, con repetición.
+
+```{r}
+n=20000                            # Tamaño de la muestra
+x=sample(1:6,n, replace = TRUE)  # Extracción de la muestra 
+td1=prop.table(table(x))         # Tabla de los resultados
+barplot(td1, las=1, ylim = c(0,0.2))              # Gráfico de los resultados
+```
+
+</br></br>
+
+## <span style="color:#034a94">**Lanzamiento de dos dados**</span>
+
+
+```{r}
+n=5000                               # Tamaño de muestra
+d1=sample(1:6,n, replace = TRUE)    # Muestra dado 1
+d2=sample(1:6,n, replace = TRUE)    # Muestra dado 2
+dados=data.frame(d1,d2)             # Creación de data.frame 
+suma=apply(dados, 1, sum)           # Obtención de la suma de los dos datos
+barplot(table(suma), las=1,cex.axis=0.7, ylim = c(0,1000))  # gráfico  de la suma
+```
+
+</br></br>
+
+
+##  <span style="color:#034a94">**Extracción de urna**</span> 
+
+Para simular la extracción de bolas de una urna, se utilizan las funciones `sample()` y `rep()` mostradas en el siguiente ejemplo :
+
++  Simulación de urna con:  3 bolas azules, 5 blancas y 4 rojas
+    + 1 representa las bolas blancas
+    + 2 representa las bolas rojas
+    + 3 representa las bolas azules
+
+```{r}
+u=sample(c("azul","blanca","roja"),  # Vector con elementos 
+       size=200,                    # Tamaño de la muestra
+       rep=TRUE,                   # Con repeticion 
+       prob=c(3,5,4))              # Número de bolas por color
+barplot(table(u), las=1)
+
+```
+ 
+</br></br>
+
+# <span style="color:#034a94">**Tablas de contingencia**</span>
+
+Las tablas de contingencia o tablas cruzadas se basan en las tablas de frecuencia para dos variables cualitativas o cuantitativas con pocos valores. En ellas se representan probabilidades conjuntas, marginales y condicionales
+
+
+</br>
+
+```{r}
+x=c(20,60,100,30,140,50)
+	m=matrix(x,ncol=2)
+	rownames(m)=c("Adminitrativo","Operativo","Vendedor")
+	colnames(m)=c("Mujer","Hombre")
+	m
+```
+
+
+
+```{r}
+addmargins(m)
+```
+
+
+```{r}
+prop.table(m)
+```
+
+
+Esta función también se utiliza para calcular las probabilidades condicionales por filas
+
+```{r}
+prop.table(m,1)
+```
+
+o las probabilidades condicionales por columnas
+
+```{r}
+prop.table(m,2)
+```
+

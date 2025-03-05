@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Estimación por intervalos de confianza</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Estimación por intervalos de confianza</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+<p><br/><br/></p>
+<!-- ```{r, echo=FALSE, out.width="100%", fig.align = "center"} -->
+<!-- knitr::include_graphics("img/manos2.png") -->
+<!-- ``` -->
+<!-- Tomada de : pixabay.com -->
+<p><br/></p>
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>Los <strong>intervalos de confianza</strong> son una herramienta
+fundamental en estadística inferencial que permite estimar un parámetro
+poblacional a partir de una muestra. En lugar de proporcionar un valor
+único como estimación, un intervalo de confianza define un rango de
+valores posibles del parámetro desconocido con un cierto nivel de
+confianza, generalmente expresado en porcentaje (como el 95% o el
+99%).</p>
+<p>Matemáticamente, un intervalo de confianza para un parámetro <span
+class="math inline">\(\theta\)</span> se expresa como:</p>
+<p><span class="math display">\[
+(IC) = (L_I, L_S)
+\]</span></p>
+<p>donde <span class="math inline">\(L_I\)</span> y <span
+class="math inline">\(L_S\)</span> representan los límites inferior y
+superior del intervalo, respectivamente. La amplitud del intervalo
+depende del nivel de confianza deseado y de la variabilidad de los
+datos.</p>
+<p>Los intervalos de confianza son ampliamente utilizados en diferentes
+áreas, entre ellas:</p>
+<ul>
+<li><strong>Inferencia estadística:</strong> Permiten realizar
+estimaciones más precisas de parámetros poblacionales como la media, la
+proporción o la desviación estándar.<br />
+</li>
+<li><strong>Toma de decisiones:</strong> Se usan en estudios científicos
+y análisis de datos para respaldar conclusiones sin necesidad de conocer
+toda la población.<br />
+</li>
+<li><strong>Control de calidad:</strong> En procesos industriales,
+ayudan a evaluar si un producto cumple con ciertos estándares de calidad
+dentro de un margen aceptable.<br />
+</li>
+<li><strong>Estudios clínicos y epidemiología:</strong> Se utilizan para
+evaluar la efectividad de tratamientos y medicamentos, proporcionando
+rangos en los que se espera encontrar el efecto real en la
+población.<br />
+</li>
+<li><strong>Predicción y modelado:</strong> Son clave en modelos
+predictivos y de pronóstico, ayudando a cuantificar la incertidumbre en
+las estimaciones.</li>
+</ul>
+<p>Debido a su capacidad para representar la incertidumbre de una
+estimación, los intervalos de confianza son una de las herramientas más
+utilizadas en el análisis de datos y la toma de decisiones basada en la
+evidencia.</p>
+</br></br>
+<h2>
+Nivel de Confianza
+</h2>
+<p>La <strong>Figura 2.48</strong> muestra los resultados de la
+simulación de 100 muestras aleatorias provenientes de una población con
+media 10. Para cada muestra, se calcularon los <strong>intervalos de
+confianza</strong> de la media, donde cada punto representa una
+estimación puntual y las barras verticales corresponden a sus
+respectivos intervalos de confianza. La línea negra horizontal indica el
+valor real del parámetro, es decir, la media igual a 10.</p>
+<p>En el gráfico, algunos intervalos de confianza están resaltados en
+<strong>color naranja</strong>, lo que indica que <strong>no
+incluyen</strong> la línea negra de referencia y, por lo tanto, no
+contienen el valor real del parámetro. En contraste, los 98 intervalos
+restantes, representados en <strong>color azul</strong>, sí incluyen el
+valor real de la media.</p>
+<p>En este caso, de los 100 intervalos de confianza construidos para la
+media poblacional, el <strong>98% contienen el valor real del
+parámetro</strong>, lo que refleja que estos intervalos fueron generados
+con un <strong>nivel de confianza del 98%</strong>. Esto ejemplifica la
+interpretación probabilística de los intervalos de confianza: en
+repetidas muestras, un número muy grande, un porcentaje cercano al nivel
+de confianza incluirá el valor real del parámetro, mientras que el resto
+no lo hará.</p>
+<br/><br/>
+<center>
+<img src="img/RplotConfianza.png" width="100%" style="display: block; margin: auto;" />
+<strong>Figura 2.48</strong> Ilustración del nivel de confianza.
+</center>
+<p><br/><br/></p>
+</br></br>
+<h2>
+Intervalos de confianza para una población
+</h2>
+</br></br>
+<h3>
+Intervalo de Confianza para la Media con Varianza Conocida
+</h3>
+<p>Para estimar la media poblacional cuando la varianza es conocida,
+partimos de la relación que establece que el parámetro <span
+class="math inline">\(\theta\)</span> se encuentra dentro de un
+intervalo:</p>
+<p><span class="math display">\[
+L_{I} \leq \theta \leq L_{S}
+\]</span></p>
+<p>Bajo el supuesto de que la variable estandarizada <span
+class="math inline">\(Z\)</span> sigue una distribución normal
+estándar:</p>
+<p><span class="math display">\[
+Z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0,1)
+\]</span></p>
+<p>se puede construir el siguiente intervalo de probabilidad:</p>
+<p><span class="math display">\[
+P(L_{IC} \leq Z \leq L_{SC}) = 1 - \alpha
+\]</span></p>
+<p>donde <span class="math inline">\((1 - \alpha)\)</span> representa el
+<strong>nivel de confianza</strong>. Es importante destacar que este
+concepto difiere del de probabilidad, ya que la confianza se interpreta
+como la proporción de intervalos construidos a partir de muestras
+aleatorias que contendrán el parámetro real. Esto significa que si se
+construyen 100 intervalos a partir de diferentes muestras,
+aproximadamente <span class="math inline">\((1 - \alpha)\times
+100\)</span>% de ellos incluirán el verdadero valor del parámetro <span
+class="math inline">\(\mu\)</span>.</p>
+<p>A partir de la definición de la normal estándar, se obtiene:</p>
+<p><span class="math display">\[
+P(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}) = 1 - \alpha
+\]</span></p>
+<p>Reemplazando la expresión de <span
+class="math inline">\(Z\)</span>:</p>
+<p><span class="math display">\[
+P\Bigg(-z_{\alpha/2} \leq \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \leq
+z_{\alpha/2}\Bigg) = 1 - \alpha
+\]</span></p>
+<p>Despejando <span class="math inline">\(\mu\)</span>, obtenemos el
+intervalo de confianza para la media poblacional:</p>
+<p><span class="math display">\[
+P\Bigg(\bar{X} - z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \leq \mu \leq
+\bar{X} + z_{\alpha/2} \frac{\sigma}{\sqrt{n}}\Bigg) = 1 - \alpha
+\]</span></p>
+<p>Por lo tanto, el <strong>intervalo de confianza para la media
+poblacional</strong> cuando la varianza es conocida se expresa como:</p>
+<p><span class="math display">\[
+IC_{\mu}: \bar{x} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+\]</span></p>
+<p><strong>Supuestos:</strong></p>
+<ul>
+<li><span class="math inline">\(X \sim N(\mu, \sigma^{2})\)</span>,
+<span class="math inline">\(\sigma^2\)</span> conocida</li>
+</ul>
+<p><br/><br/> El término <span
+class="math inline">\(z_{\alpha/2}\)</span> representa el <strong>valor
+crítico</strong> de la <strong>distribución normal estándar</strong>
+<span class="math inline">\(N(0,1)\)</span> asociado a un nivel de
+confianza <span class="math inline">\(1 - \alpha\)</span>.</p>
+<p>En el contexto de los <strong>intervalos de confianza</strong>, <span
+class="math inline">\(z_{\alpha/2}\)</span> es el valor en la tabla de
+la distribución normal estándar que deja un área de <span
+class="math inline">\(\alpha/2\)</span> en cada una de las colas de la
+distribución. Esto se debe a que el <strong>nivel de confianza</strong>
+<span class="math inline">\(1 - \alpha\)</span> se distribuye
+simétricamente alrededor de la media.</p>
+<p><strong>Explicación Gráfica</strong></p>
+<ul>
+<li>La distribución normal estándar es simétrica con media <span
+class="math inline">\(0\)</span> y desviación estándar <span
+class="math inline">\(1\)</span>.<br />
+</li>
+<li>Un nivel de confianza <span class="math inline">\(1 -
+\alpha\)</span> indica que la probabilidad acumulada en el centro de la
+distribución es <span class="math inline">\(1- \alpha\)</span>.<br />
+</li>
+<li>Como la distribución es simétrica, la probabilidad restante <span
+class="math inline">\(\alpha\)</span> se divide en partes iguales entre
+las dos colas, por lo que cada cola contiene una probabilidad de <span
+class="math inline">\(\alpha/2\)</span>.<br />
+</li>
+<li>El valor crítico <span class="math inline">\(z_{\alpha/2}\)</span>
+es el <strong>percentil</strong> de la normal estándar donde la cola
+derecha tiene un área de <span class="math inline">\(\alpha/2\)</span>,
+es decir, <strong>la probabilidad de que una observación de la normal
+estándar sea mayor que <span class="math inline">\(z_{\alpha/2}\)</span>
+es exactamente <span
+class="math inline">\(\alpha/2\)</span></strong>.</li>
+</ul>
+<p><strong>Valores Comunes de <span
+class="math inline">\(z_{\alpha/2}\)</span></strong></p>
+<p>Los valores críticos más utilizados en estadística para distintos
+niveles de confianza son:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Nivel de Confianza (<span class="math inline">\(1 -
+\alpha\)</span>)</th>
+<th><span class="math inline">\(\alpha\)</span></th>
+<th><span class="math inline">\(z_{\alpha/2}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>90%</td>
+<td>0.10</td>
+<td>1.645</td>
+</tr>
+<tr class="even">
+<td>95%</td>
+<td>0.05</td>
+<td>1.960</td>
+</tr>
+<tr class="odd">
+<td>99%</td>
+<td>0.01</td>
+<td>2.576</td>
+</tr>
+</tbody>
+</table>
+<p>Estos valores se obtienen a partir de la <strong>tabla de la normal
+estándar</strong> y son fundamentales para la construcción de intervalos
+de confianza y pruebas de hipótesis.</p>
+<p>En <strong>R</strong>, los valores críticos se pueden determinar
+usando los siguientes códigos:</p>
+<pre>
+# Definir niveles de confianza
+niveles_confianza <- c(0.90, 0.95, 0.99)
+
+# Calcular los valores críticos z_alpha/2
+valores_criticos <- qnorm(1 - (1 - niveles_confianza) / 2)
+valores_criticos <- qnorm((1 - niveles_confianza) / 2,lower.tail=FALSE)
+
+# Mostrar los resultados
+data.frame(Nivel_de_Confianza = niveles_confianza, 
+           Alpha = 1 - niveles_confianza, 
+           Z_critico = valores_criticos)
+</pre>
+<pre class="r"><code># Definir niveles de confianza
+niveles_confianza &lt;- c(0.90, 0.95, 0.99)
+
+# Calcular los valores críticos z_alpha/2
+valores_criticos &lt;- qnorm(1 - (1 - niveles_confianza) / 2)
+valores_criticos &lt;- qnorm((1 - niveles_confianza) / 2,lower.tail=FALSE)
+
+# Mostrar los resultados
+data.frame(Nivel_de_Confianza = niveles_confianza, 
+           Alpha = 1 - niveles_confianza, 
+           Z_critico = valores_criticos)</code></pre>
+<pre><code>  Nivel_de_Confianza Alpha Z_critico
+1               0.90  0.10  1.644854
+2               0.95  0.05  1.959964
+3               0.99  0.01  2.575829</code></pre>
+</br></br>
+<h3>
+Intervalo de Confianza para la Proporción
+</h3>
+<p>El procedimiento para construir un <strong>intervalo de confianza
+para una proporción</strong> es similar al de la media, bajo el supuesto
+de que el tamaño muestral es lo suficientemente grande para que la
+distribución de la proporción muestral pueda aproximarse a una
+<strong>distribución normal</strong>. Este criterio se cumple si:</p>
+<p><span class="math display">\[ n\geq 30 \quad np\geq 5 \quad \text{y}
+\quad n(1-p)\geq 5 \]</span><br />
+Bajo estas condiciones, la proporción muestral <span
+class="math inline">\(\widehat{p}\)</span> sigue aproximadamente una
+distribución normal:</p>
+<p><span class="math display">\[
+\widehat{p} \sim N\Bigg(p, \frac{p(1 - p)}{n}\Bigg)
+\]</span></p>
+<p>Por lo tanto, el intervalo de confianza para la proporción
+poblacional se expresa como:</p>
+<p><span class="math display">\[
+\Bigg[\widehat{p} - z_{\alpha/2}\sqrt{\frac{\widehat{p}(1 -
+\widehat{p})}{n}}, \quad \widehat{p} +
+z_{\alpha/2}\sqrt{\frac{\widehat{p}(1 - \widehat{p})}{n}} \Bigg]
+\]</span></p>
+<p><span class="math display">\[
+IC_{p}: \widehat{p} \pm z_{\alpha/2} \sqrt{\frac{\widehat{p}(1 -
+\widehat{p})}{n}}
+\]</span></p>
+<p><strong>Supuestos:</strong></p>
+<ul>
+<li>El tamaño muestral debe ser suficientemente grande para garantizar
+la aproximación normal:<br />
+<span class="math display">\[ n\geq 30 \quad np\geq 5 \quad \text{y}
+\quad n(1-p)\geq 5 \]</span></li>
+</ul>
+<p><br/><br/> Este intervalo permite estimar la proporción poblacional
+con un nivel de confianza dado, asegurando que la estimación tenga una
+precisión adecuada.</p>
+</br></br>
+<h3>
+Intervalo de Confianza para la Varianza
+</h3>
+<p>Para construir un <strong>intervalo de confianza para la varianza
+poblacional</strong> <span class="math inline">\(\sigma^2\)</span>, se
+parte de la premisa de que la variable aleatoria:</p>
+<p><span class="math display">\[
+\frac{(n-1)S^{2}}{\sigma^{2}} \sim \chi^{2}_{v=n-1}
+\]</span></p>
+<p>sigue una <strong>distribución chi-cuadrado</strong> con <span
+class="math inline">\((n-1)\)</span> grados de libertad. A partir de
+esta propiedad, se puede construir la siguiente probabilidad:</p>
+<p><span class="math display">\[
+P\Bigg(\chi^{2}_{1-\alpha/2} \leq \frac{(n-1)S^{2}}{\sigma^{2}} \leq
+\chi^{2}_{\alpha/2} \Bigg) = 1 - \alpha
+\]</span></p>
+<p>Invirtiendo las desigualdades, se obtiene:</p>
+<p><span class="math display">\[
+P\Bigg(\frac{1}{\chi^{2}_{1-\alpha/2}} \geq
+\frac{\sigma^{2}}{(n-1)S^{2}} \geq \frac{1}{\chi^{2}_{\alpha/2}} \Bigg)
+= 1 - \alpha
+\]</span></p>
+<p>Finalmente, despejando <span class="math inline">\(\sigma^2\)</span>
+se obtiene la expresión del intervalo de confianza:</p>
+<p><span class="math display">\[
+P\Bigg( \frac{(n-1)S^{2}}{\chi^{2}_{\alpha/2}} \leq \sigma^{2} \leq
+\frac{(n-1)S^{2}}{\chi^{2}_{1-\alpha/2}} \Bigg) = 1 - \alpha
+\]</span></p>
+<div class="content-box-blue">
+<p><span class="math display">\[
+IC_{\sigma^{2}}: \Bigg( \frac{(n-1)S^{2}}{\chi^{2}_{1-\alpha/2 ; v=n-1}}
+, \frac{(n-1)S^{2}}{\chi^{2}_{\alpha/2; v=n-1}} \Bigg)
+\]</span></p>
+<p><strong>Supuestos:</strong></p>
+<ul>
+<li>La variable aleatoria sigue una distribución normal:<br />
+<span class="math display">\[ X \sim N(\mu, \sigma^{2}) \]</span></li>
+</ul>
+<p><br/><br/> Este intervalo es útil cuando se desea estimar la
+<strong>varianza poblacional</strong> a partir de una muestra,
+garantizando un nivel de confianza de <span
+class="math inline">\(1-\alpha\)</span>.</p>
+<p><br/><br/> La <strong>Tabla 2.9</strong> presenta los intervalos de
+confianza para distintos parámetros, junto con sus respectivos
+supuestos:</p>
+<br/><br/>
+<center>
+<strong>Tabla 2.9</strong> Intervalos de confianza para parámetros de
+una población.
+</center>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="51%" />
+<col width="36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"><strong>Parámetro</strong></th>
+<th align="center"><strong>Estimador por IC</strong></th>
+<th align="center"><strong>Supuestos</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(\mu\)</span></td>
+<td align="center"><span class="math inline">\(\bar{x} \pm z_{\alpha/2}
+\dfrac{\sigma}{\sqrt{n}}\)</span></td>
+<td align="center"><span class="math inline">\(X \sim N(\mu,
+\sigma^{2})\)</span> o <span class="math inline">\(n\geq 30\)</span>,
+<span class="math inline">\(\sigma^2\)</span> conocida</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\bar{x} \pm z_{\alpha/2}
+\dfrac{s}{\sqrt{n}}\)</span></td>
+<td align="center"><span class="math inline">\(X \sim N(\mu,
+\sigma^{2})\)</span> o <span class="math inline">\(n\geq 30\)</span>,
+<span class="math inline">\(\sigma^2\)</span> desconocida</td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\bar{x} \pm t_{\alpha/2,
+\nu} \dfrac{s}{\sqrt{n}}\)</span></td>
+<td align="center"><span class="math inline">\(X \sim N(\mu,
+\sigma^{2})\)</span>, <span class="math inline">\(\sigma^2\)</span>
+desconocida, <span class="math inline">\(n &lt; 30\)</span>, <span
+class="math inline">\(\nu = n - 1\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(p\)</span></td>
+<td align="center"><span class="math inline">\(\widehat{p} \pm
+z_{\alpha/2} \sqrt{\frac{\widehat{p}(1-\widehat{p})}{n}}\)</span></td>
+<td align="center"><span class="math inline">\(n\geq 30\)</span>, <span
+class="math inline">\(np\geq 5\)</span>, <span
+class="math inline">\(n(1-p)\geq 5\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(\sigma^2\)</span></td>
+<td align="center"><span class="math inline">\(\left(
+\frac{(n-1)s^2}{\chi^2_{1-\alpha/2}}, \frac{(n-1)s^2}{\chi^2_{\alpha/2}}
+\right)\)</span></td>
+<td align="center"><span class="math inline">\(X \sim N(\mu,
+\sigma^{2})\)</span></td>
+</tr>
+</tbody>
+</table>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se registró el tiempo transcurrido entre la facturación (<span
+class="math inline">\(X\)</span>) y la recepción del pago para una
+muestra de 100 clientes en una empresa. La media y la desviación
+estándar de la muestra son, respectivamente, <strong>39.1 días</strong>
+y <strong>17.3 días</strong>. Con el fin de evaluar la calidad del
+servicio, se requiere calcular un <strong>intervalo de confianza del 95%
+para la media poblacional</strong>.</p>
+<hr />
+<p>En este caso, la distribución de la variable <span
+class="math inline">\(X\)</span> es desconocida. Sin embargo, dado que
+el tamaño de la muestra es <strong>grande</strong> (<span
+class="math inline">\(n=100\)</span>), se aplica el <strong>Teorema
+Central del Límite</strong>, que establece que la distribución de la
+media muestral puede aproximarse a una distribución normal.</p>
+<p><strong>Datos proporcionados</strong><br />
+- <span class="math inline">\(\bar{x} = 39.1\)</span> días (media
+muestral)<br />
+- <span class="math inline">\(s = 17.3\)</span> días (desviación
+estándar muestral, lo que indica que la varianza es desconocida)<br />
+- <span class="math inline">\(n = 100\)</span> (tamaño de la muestra,
+considerado grande)<br />
+- Nivel de confianza del <strong>95%</strong>, lo que implica un
+<strong>valor crítico</strong> <span class="math inline">\(z_{\alpha/2}
+= \pm 1.96\)</span></p>
+<p><strong>Cálculo del Intervalo de Confianza</strong></p>
+<p>La expresión general para el intervalo de confianza es:</p>
+<p><span class="math display">\[
+IC_{\mu} = \bar{x} \pm z_{\alpha/2} \frac{s}{\sqrt{n}}
+\]</span></p>
+<p>Sustituyendo los valores:</p>
+<p><span class="math display">\[
+39.1 \pm 1.96 \frac{17.3}{\sqrt{100}}
+\]</span></p>
+<p><span class="math display">\[
+\left( 39.1 - 1.96 \times \frac{17.3}{10} , 39.1 + 1.96 \times
+\frac{17.3}{10} \right)
+\]</span></p>
+<p><span class="math display">\[
+(35.71, 42.49)
+\]</span></p>
+<p><strong>Interpretación</strong></p>
+<p>Con un nivel de confianza del <strong>95%</strong>, el <strong>tiempo
+promedio</strong> transcurrido entre la facturación y el pago en la
+empresa está entre <strong>35.7 días y 42.5 días</strong>. Esto
+significa que, si se repitiera el muestreo múltiples veces,
+aproximadamente el <strong>95% de los intervalos construidos incluirían
+la verdadera media poblacional</strong>. No se puede afirmar que el
+intervalo cálculado contenga el valor real de la media.</p>
+<p><strong>Cálculo en R</strong></p>
+<p>Para calcular los percentiles y construir el intervalo de confianza
+en <strong>R</strong>, se pueden utilizar los siguientes comandos:</p>
+<pre>
+# Definir valores
+x_bar <- 39.1  # Media muestral
+s <- 17.3      # Desviación estándar muestral
+n <- 100       # Tamaño de la muestra
+alpha <- 0.05  # Nivel de significancia (1 - 0.95)
+
+# Calcular el valor crítico Z
+z_alpha_2 <- qnorm(1 - alpha/2)
+
+# Calcular el margen de error
+error <- z_alpha_2 * (s / sqrt(n))
+
+# Construir el intervalo de confianza
+IC_lower <- x_bar - error
+IC_upper <- x_bar + error
+
+# Mostrar resultados
+IC <- c(IC_lower, IC_upper)
+names(IC) <- c("Límite Inferior", "Límite Superior")
+print(IC)
+</pre>
+<pre class="r"><code># Definir valores
+x_bar &lt;- 39.1  # Media muestral
+s &lt;- 17.3      # Desviación estándar muestral
+n &lt;- 100       # Tamaño de la muestra
+alpha &lt;- 0.05  # Nivel de significancia (1 - 0.95)
+
+# Calcular el valor crítico Z
+z_alpha_2 &lt;- qnorm(1 - alpha/2)
+
+# Calcular el margen de error
+error &lt;- z_alpha_2 * (s / sqrt(n))
+
+# Construir el intervalo de confianza
+IC_lower &lt;- x_bar - error
+IC_upper &lt;- x_bar + error
+
+# Mostrar resultados
+IC &lt;- c(IC_lower, IC_upper)
+names(IC) &lt;- c(&quot;Límite Inferior&quot;, &quot;Límite Superior&quot;)
+print(IC)</code></pre>
+<pre><code>Límite Inferior Límite Superior 
+       35.70926        42.49074 </code></pre>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Uno de los problemas más frecuentes en estadística inferencial es la
+<strong>determinación del tamaño de la muestra</strong> necesario para
+realizar una <strong>estimación precisa</strong> de la media poblacional
+con un <strong>nivel de confianza del <span
+class="math inline">\((1-\alpha)\%\)</span></strong>.</p>
+<p>A partir de la siguiente expresión se puede estimar el valor del
+tamaño muestral:</p>
+<p><span class="math display">\[
+P\Bigg(-z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \leq \bar{X} - \mu \leq
+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\Bigg) = 1 - \alpha
+\]</span></p>
+<p><strong>Error de Muestreo y Determinación del Tamaño de
+Muestra</strong></p>
+<p>Para definir el tamaño de muestra adecuado, es necesario considerar
+un <strong>margen de error</strong> tolerable, denotado como <span
+class="math inline">\(e\)</span>:</p>
+<p><span class="math display">\[
+e = \vert \bar{x} - \mu \vert \leq z_{\alpha/2}\frac{\sigma}{\sqrt{n}}
+\]</span></p>
+<p>Lo que significa que se desea, con una <strong>confianza del <span
+class="math inline">\((1-\alpha)\%\)</span></strong>, que el error no
+supere un umbral específico. A partir de esta expresión, se despeja el
+tamaño de la muestra <span class="math inline">\(n\)</span>:</p>
+<p><span class="math display">\[
+e = z_{\alpha/2} \frac{\sigma}{\sqrt{n}}
+\]</span></p>
+<p>Elevando ambos lados al cuadrado:</p>
+<p><span class="math display">\[
+e^{2} = z_{\alpha/2}^{2} \frac{\sigma^{2}}{n}
+\]</span></p>
+<p>Finalmente, despejando <span class="math inline">\(n\)</span> para
+obtener la <strong>fórmula del tamaño de muestra necesario</strong>:</p>
+<p><span class="math display">\[
+n = \displaystyle\frac{z_{\alpha/2}^{2} \sigma^{2}}{e^{2}}
+\]</span></p>
+<p><strong>Cálculo del Tamaño de Muestra en R</strong></p>
+<p>El siguiente código en <strong>R</strong> permite calcular el tamaño
+de muestra necesario para estimar la media con un nivel de confianza
+dado y un error máximo permitido, encontrando 217 observaciones.</p>
+<pre>
+# Definir parámetros
+sigma <- 15      # Desviación estándar poblacional
+error <- 2       # Margen de error tolerable
+alpha <- 0.05    # Nivel de significancia (1 - nivel de confianza)
+
+# Calcular el valor crítico Z
+z_alpha_2 <- qnorm(1 - alpha/2)
+
+# Calcular tamaño de la muestra
+n <- (z_alpha_2^2 * sigma^2) / error^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra necesario es:", n_requerido, "observaciones")
+</pre>
+<pre class="r"><code># Definir parámetros
+sigma &lt;- 15      # Desviación estándar poblacional
+error &lt;- 2       # Margen de error tolerable
+alpha &lt;- 0.05    # Nivel de significancia (1 - nivel de confianza)
+
+# Calcular el valor crítico Z
+z_alpha_2 &lt;- qnorm(1 - alpha/2)
+
+# Calcular tamaño de la muestra
+n &lt;- (z_alpha_2^2 * sigma^2) / error^2
+
+# Redondear al entero más cercano
+n_requerido &lt;- ceiling(n)
+
+# Mostrar resultado
+cat(&quot;El tamaño de muestra necesario es:&quot;, n_requerido, &quot;observaciones&quot;)</code></pre>
+<pre><code>El tamaño de muestra necesario es: 217 observaciones</code></pre>
+<p>Este procedimiento es esencial en la planificación de estudios
+estadísticos y permite asegurar estimaciones confiables sin exceder
+recursos innecesarios.</p>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se desea estimar la media del número de personas fallecidas por
+COVID-19 en Colombia con un <strong>nivel de confianza del 98%</strong>
+y un <strong>error de muestreo de 3 personas</strong>. ¿Qué tamaño de
+muestra es necesario para cumplir con estas condiciones?</p>
+<hr />
+<p><strong>Información disponible</strong></p>
+<ul>
+<li><p><strong>Nivel de confianza</strong>: 98% (<span
+class="math inline">\(z_{\alpha/2}\)</span>)<br />
+</p></li>
+<li><p><strong>Error de muestreo</strong>: 3 personas (<span
+class="math inline">\(|\bar{x} - \mu| &lt; e\)</span>)<br />
+</p></li>
+<li><p><strong>Varianza</strong>: No se dispone del valor de la varianza
+poblacional, por lo que se consideran <strong>tres alternativas</strong>
+para su estimación:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Utilizar un estudio previo similar</strong> que
+proporcione una estimación de la varianza.<br />
+</p></li>
+<li><p><strong>Realizar una muestra piloto</strong> con un tamaño de
+<span class="math inline">\(n = 40\)</span> y calcular la varianza
+muestral <span class="math inline">\(s^2\)</span>.<br />
+</p></li>
+<li><p><strong>Estimar la desviación estándar</strong> a partir del
+rango de los datos consultando a un experto, mediante la fórmula:</p>
+<p><span class="math display">\[
+s = \frac{\max\{x\} - \min\{x\}}{4}
+\]</span></p></li>
+</ol></li>
+</ul>
+<p><strong>Cálculo del Tamaño de Muestra en R</strong></p>
+<p>El siguiente código en <strong>R</strong> calcula el tamaño de
+muestra necesario utilizando una estimación de la varianza obtenida de
+estudios previos, obteniendose 212 observaciones:</p>
+<pre>
+# Definir parámetros
+s2_nota <- 352.2395  # Estimación de la varianza poblacional basada en estudios previos
+a <- 1 - 0.98  # Nivel de significancia
+e <- 3  # Error de muestreo permitido
+
+# Calcular el valor crítico Z
+z_alpha_2 <- qnorm(1 - a/2)
+
+# Calcular tamaño de la muestra
+n <- (z_alpha_2^2 * s2_nota) / e^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra necesario es:", n_requerido, "observaciones")
+</pre>
+<pre class="r"><code># Definir parámetros
+s2_nota &lt;- 352.2395  # Estimación de la varianza poblacional basada en estudios previos
+a &lt;- 1 - 0.98  # Nivel de significancia
+e &lt;- 3  # Error de muestreo permitido
+
+# Calcular el valor crítico Z
+z_alpha_2 &lt;- qnorm(1 - a/2)
+
+# Calcular tamaño de la muestra
+n &lt;- (z_alpha_2^2 * s2_nota) / e^2
+
+# Redondear al entero más cercano
+n_requerido &lt;- ceiling(n) # Se redondea al entero más cercano
+
+# Mostrar resultado
+cat(&quot;El tamaño de muestra necesario es:&quot;, n_requerido, &quot;observaciones&quot;)</code></pre>
+<pre><code>El tamaño de muestra necesario es: 212 observaciones</code></pre>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En una encuesta aleatoria realizada a <strong>500 familias</strong>
+de la ciudad que poseen televisión por cable, se encontró que
+<strong>340 familias</strong> tienen una suscripción a HBO. Se desea
+calcular un <strong>intervalo de confianza del 95%</strong> para la
+proporción de familias con suscripción a HBO en la población.</p>
+<hr />
+<p>Para calcular el intervalo de confianza en <strong>R</strong>, se
+puede utilizar la función <code>prop.test()</code>, encontrando valores
+de 0.6368473 y 0.7203411:</p>
+<pre>
+prop.test(340, 500)$conf.int
+</pre>
+<pre class="r"><code>prop.test(340, 500)$conf.int</code></pre>
+<pre><code>[1] 0.6368473 0.7203411
+attr(,&quot;conf.level&quot;)
+[1] 0.95</code></pre>
+<p>El resultado obtenido indica que con un <strong>nivel de confianza
+del 95%</strong>, la proporción de familias con suscripción a HBO en la
+ciudad se encuentra en el rango <strong>[63.7%, 72.0%]</strong>. Esto
+significa que, si se repitiera el muestreo múltiples veces,
+aproximadamente el <strong>95% de los intervalos construidos contendrían
+la verdadera proporción poblacional</strong>.</p>
+<p><strong>Tamaño de Muestra para la Estimación de una
+Proporción</strong></p>
+<p>Para calcular el <strong>tamaño de muestra necesario</strong> en la
+estimación de una proporción poblacional con un nivel de confianza del
+<strong>95%</strong>, se utiliza la siguiente fórmula:</p>
+<p><span class="math display">\[
+n = \frac{z_{\alpha/2}^{2} \cdot p(1 - p)}{e^{2}}
+\]</span></p>
+<p><strong>Parámetros de la Fórmula</strong></p>
+<ul>
+<li><strong><span class="math inline">\(z_{\alpha/2}\)</span></strong>:
+Percentil de la distribución normal estándar asociado al nivel de
+confianza. Para un <strong>95% de confianza</strong>, se tiene <span
+class="math inline">\(z_{\alpha/2} = 1.96\)</span>.<br />
+</li>
+<li><strong><span class="math inline">\(p\)</span></strong>: Proporción
+esperada en la población. La varianza se calcula como <span
+class="math inline">\(p(1 - p)\)</span>. Si no se dispone de una
+estimación previa, se puede considerar el <strong>peor caso
+posible</strong> con <span class="math inline">\(p = 0.5\)</span> (donde
+la varianza <span class="math inline">\(pq = 0.25\)</span> es
+máxima).<br />
+</li>
+<li><strong><span class="math inline">\(e\)</span></strong>: Margen de
+error, que representa la tolerancia del investigador a la diferencia
+entre la proporción estimada y la real, es decir, <span
+class="math inline">\(|\widehat{p} - p| &lt; e\)</span>.</li>
+</ul>
+<p><strong>Cálculo del Tamaño de Muestra en R</strong></p>
+<p>El siguiente código en <strong>R</strong> calcula el tamaño de
+muestra necesario para un nivel de confianza del <strong>95%</strong> y
+un margen de error específico:</p>
+<pre>
+# Definir parámetros
+z_alpha_2 <- qnorm(1 - 0.05/2)  # Valor crítico para 95% de confianza
+p <- 0.5  # Proporción poblacional esperada (peor caso)
+e <- 0.05  # Margen de error permitido
+
+# Calcular tamaño de muestra
+n <- (z_alpha_2^2 * p * (1 - p)) / e^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra necesario es:", n_requerido, "observaciones")
+</pre>
+<pre class="r"><code># Definir parámetros
+z_alpha_2 &lt;- qnorm(1 - 0.05/2)  # Valor crítico para 95% de confianza
+p &lt;- 0.5  # Proporción poblacional esperada (peor caso)
+e &lt;- 0.05  # Margen de error permitido
+
+# Calcular tamaño de muestra
+n &lt;- (z_alpha_2^2 * p * (1 - p)) / e^2
+
+# Redondear al entero más cercano
+n_requerido &lt;- ceiling(n)
+
+# Mostrar resultado
+cat(&quot;El tamaño de muestra necesario es:&quot;, n_requerido, &quot;observaciones&quot;)</code></pre>
+<pre><code>El tamaño de muestra necesario es: 385 observaciones</code></pre>
+<p>Este cálculo permite determinar que 385 observaciones son necesarias
+para estimar la proporción poblacional con un <strong>nivel de confianza
+del 95%</strong> y un <strong>margen de error del 5%</strong>. Si se
+elige un <strong>valor de <span class="math inline">\(p\)</span>
+distinto</strong>, el tamaño de muestra puede variar. En ausencia de
+información previa, el peor caso (<span class="math inline">\(p =
+0.5\)</span>) proporciona la estimación más conservadora.</p>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Una empresa requiere realizar un estudio para determinar la
+<strong>proporción de fallas diarias</strong> en su servicio. El gerente
+encargado establece que el <strong>margen de error máximo
+tolerable</strong> debe ser del <strong>5%</strong> y el <strong>nivel
+de confianza</strong> del <strong>99%</strong>.</p>
+<p>Una firma consultora presenta una <strong>propuesta por valor de
+$110.2 millones</strong> para llevar a cabo el estudio, justificando su
+costo de la siguiente manera:</p>
+<ul>
+<li><strong>Costos administrativos y logísticos</strong>: $55.4
+millones<br />
+</li>
+<li><strong>Costo por encuestas</strong>: $50 mil pesos por
+encuesta<br />
+</li>
+<li><strong>Número de encuestas propuestas</strong>: 1,096</li>
+</ul>
+<p>El <strong>Director de la empresa</strong> ha solicitado revisar la
+información y emitir un concepto sobre la propuesta.</p>
+<hr />
+<p>Para determinar el <strong>tamaño de muestra óptimo</strong>, se
+utiliza la siguiente fórmula para la estimación de una proporción:</p>
+<p><span class="math display">\[
+n = \frac{z_{\alpha/2}^{2} \cdot p(1 - p)}{e^{2}}
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><strong><span class="math inline">\(z_{\alpha/2}\)</span></strong>:
+Percentil de la distribución normal estándar para un <strong>99% de
+confianza</strong> → <span
+class="math inline">\(z_{0.995}\)</span>.<br />
+</li>
+<li><strong><span class="math inline">\(p\)</span></strong>: Proporción
+esperada, en ausencia de información previa se usa el peor caso
+<strong><span class="math inline">\(p = 0.5\)</span></strong>.<br />
+</li>
+<li><strong><span class="math inline">\(e\)</span></strong>: Margen de
+error permitido (<strong>5%</strong> o <strong>0.05</strong>).</li>
+</ul>
+<p>En <strong>R</strong>, el cálculo se realiza con el siguiente
+código:</p>
+<pre>
+# Cálculo del tamaño de muestra necesario
+z_alpha_2 <- qnorm(0.995)  # Valor crítico para 99% de confianza
+p <- 0.5  # Proporción máxima para obtener la mayor varianza
+e <- 0.05  # Margen de error permitido
+
+# Cálculo del tamaño de muestra
+n <- (z_alpha_2^2 * p * (1 - p)) / e^2
+
+# Redondear al entero más cercano
+n_requerido <- ceiling(n)
+
+# Mostrar resultado
+cat("El tamaño de muestra óptimo es:", n_requerido, "encuestas")
+</pre>
+<pre class="r"><code># Cálculo del tamaño de muestra necesario
+z_alpha_2 &lt;- qnorm(0.995)  # Valor crítico para 99% de confianza
+p &lt;- 0.5  # Proporción máxima para obtener la mayor varianza
+e &lt;- 0.05  # Margen de error permitido
+
+# Cálculo del tamaño de muestra
+n &lt;- (z_alpha_2^2 * p * (1 - p)) / e^2
+
+# Redondear al entero más cercano
+n_requerido &lt;- ceiling(n)
+
+# Mostrar resultado
+cat(&quot;El tamaño de muestra óptimo es:&quot;, n_requerido, &quot;encuestas&quot;)</code></pre>
+<pre><code>El tamaño de muestra óptimo es: 664 encuestas</code></pre>
+<p><strong>Comparación con la Propuesta de la Consultora</strong></p>
+<p>De acuerdo con este cálculo, el <strong>tamaño de muestra
+óptimo</strong> para la estimación de la proporción con las condiciones
+establecidas es <strong><span class="math inline">\(n =
+664\)</span></strong> encuestas.</p>
+<p>La propuesta de la consultora establece <strong>1,096
+encuestas</strong>, lo que representa <strong>432 encuestas
+adicionales</strong>, generando un <strong>sobrecosto de $21.6
+millones</strong> ($50 mil por encuesta adicional).</p>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se desea calcular un <strong>intervalo de confianza del 95%</strong>
+para la <strong>desviación estándar</strong> de los precios de las
+acciones de Ecopetrol durante los últimos <strong>22 días</strong> (del
+<strong>10 de septiembre de 2021 al 7 de octubre de 2021</strong>),
+utilizando datos obtenidos de <strong>Investing.com</strong>.</p>
+<hr />
+<p><strong>Cálculo en R</strong></p>
+<p>Para calcular el intervalo de confianza para la desviación estándar,
+se utiliza la distribución <strong>chi-cuadrado</strong>, aplicada a la
+varianza muestral. En <strong>R</strong>, este cálculo se realiza con el
+siguiente código:</p>
+<pre>
+# install.packages("paqueteMETODOS")
+# library(paqueteMETODOS)
+
+ecopetrol <- c(2810, 2810, 2825, 2769, 2734, 2706, 2699, 2671, 2550, 2590, 
+               2570, 2529, 2520, 2566, 2615, 2620, 2550, 2572, 2553, 2570, 2593, 2606)
+
+# Intervalo de confianza para la varianza
+IC_var <- paqueteMETODOS::intervalo.var(ecopetrol)
+
+# Intervalo de confianza para la desviación estándar
+IC_sd <- sqrt(IC_var)
+
+# Mostrar resultados
+cat("IC para la varianza: ", IC_var, "\n")
+cat("IC para la desviación estándar: ", IC_sd, "\n")
+</pre>
+<pre class="r"><code># install.packages(&quot;paqueteMETODOS&quot;)
+# library(paqueteMETODOS)
+
+ecopetrol &lt;- c(2810, 2810, 2825, 2769, 2734, 2706, 2699, 2671, 2550, 2590, 
+               2570, 2529, 2520, 2566, 2615, 2620, 2550, 2572, 2553, 2570, 2593, 2606)
+
+# Intervalo de confianza para la varianza
+IC_var &lt;- paqueteMETODOS::intervalo.var(ecopetrol)
+
+# Intervalo de confianza para la desviación estándar
+IC_sd &lt;- sqrt(IC_var)
+
+# Mostrar resultados
+cat(&quot;IC para la varianza: &quot;, IC_var, &quot;\n&quot;)</code></pre>
+<pre><code>IC para la varianza:  9810.519 10202.94 </code></pre>
+<pre class="r"><code>cat(&quot;IC para la desviación estándar: &quot;, IC_sd, &quot;\n&quot;)</code></pre>
+<pre><code>IC para la desviación estándar:  99.04807 101.0096 </code></pre>
+<p><strong>Interpretación del Resultado</strong></p>
+<p>A partir del cálculo realizado, se estima con un <strong>nivel de
+confianza del 95%</strong> que la <strong>desviación estándar</strong>
+del precio de las acciones de Ecopetrol se encuentra en el rango de
+<strong><span class="math inline">\(75.7\)</span></strong> a
+<strong><span class="math inline">\(140.0\)</span></strong>.</p>
+</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

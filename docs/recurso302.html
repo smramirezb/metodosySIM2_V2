@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Estimación puntual</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Estimación puntual</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>En estadística inferencial, el concepto de <strong>distribuciones de
+muestreo</strong> es fundamental para la estimación de parámetros y la
+realización de pruebas de hipótesis. Una distribución de muestreo
+describe la variabilidad de un <strong>estadístico muestral</strong>,
+como la media o la varianza, cuando se extraen múltiples muestras de una
+misma población. Estas distribuciones permiten modelar la incertidumbre
+y evaluar la <strong>precisión de las estimaciones</strong>.</p>
+<p>Existen varias distribuciones de muestreo que desempeñan un papel
+crucial en el análisis estadístico. Entre las más utilizadas se
+encuentran la <strong>distribución t de Student</strong>, la
+<strong>distribución chi-cuadrado</strong> y la <strong>distribución F
+de Fisher</strong>, cada una con aplicaciones específicas en la
+inferencia estadística.</p>
+</br></br>
+<h3>
+Chi-Cuadrado (<span class="math inline">\(\chi^2\)</span>)
+</h3>
+<p>Esta distribución es ampliamente utilizada en pruebas de hipótesis y
+estimaciones de varianza en inferencia estadística, especialmente en la
+prueba <strong>Chi-Cuadrado de bondad de ajuste</strong>, prueba
+<strong>de independencia en tablas de contingencia</strong> y en la
+construcción de <strong>intervalos de confianza para la varianza
+poblacional</strong>.</p>
+</br></br>
+<h4>
+Distribución Chi-Cuadrado (<span class="math inline">\(\chi^2\)</span>)
+</h4>
+<p>La distribución <strong>Chi-Cuadrado</strong> es un caso particular
+de la distribución <strong>Gamma</strong> y se define mediante un
+parámetro de <strong>grados de libertad</strong> <span
+class="math inline">\(\nu\)</span>, que representa el número de
+variables normales estándar elevadas al cuadrado y sumadas.</p>
+<p>La función de densidad de probabilidad de una variable aleatoria
+<span class="math inline">\(X \sim \chi^2_{\nu}\)</span> está dada
+por:</p>
+<p><span class="math display">\[
+f(x; \nu) =
+\frac{x^{\frac{\nu}{2} - 1} e^{-x/2}}{2^{\nu/2} \Gamma(\nu/2)}, \quad x
+&gt; 0
+\]</span></p>
+<p>donde <span class="math inline">\(\Gamma(\nu/2)\)</span> es la
+función Gamma, definida como:</p>
+<p><span class="math display">\[
+\Gamma(y) = \int_0^\infty t^{y - 1} e^{-t} dt
+\]</span></p>
+</br></br>
+<h4>
+Relación con otras distribuciones
+</h4>
+<ul>
+<li><p>Si <span class="math inline">\(X_1, X_2, \dots, X_{\nu}\)</span>
+son variables independientes con distribución normal estándar <span
+class="math inline">\(N(0,1)\)</span>, entonces la suma de sus cuadrados
+sigue una distribución chi-cuadrado con <span
+class="math inline">\(\nu\)</span> grados de libertad:</p>
+<p><span class="math display">\[
+X_1^2 + X_2^2 + \dots + X_{\nu}^2 \sim \chi^2_{\nu}
+\]</span></p></li>
+<li><p>La distribución <strong>Chi-Cuadrado</strong> es un caso
+particular de la <strong>distribución Gamma</strong> con parámetros
+<span class="math inline">\(\alpha = \nu/2\)</span> y <span
+class="math inline">\(\sigma = 2\)</span>.</p></li>
+</ul>
+</br></br>
+<h4>
+Propiedades
+</h4>
+<ul>
+<li><strong>Media:</strong><br />
+<span class="math display">\[
+E[X] = \nu
+\]</span><br />
+</li>
+<li><strong>Varianza:</strong><br />
+<span class="math display">\[
+\text{Var}(X) = 2\nu
+\]</span><br />
+</li>
+<li><strong>Asimetría:</strong> La distribución es sesgada a la derecha,
+pero conforme <span class="math inline">\(\nu\)</span> aumenta, la
+distribución se aproxima a una normal <span class="math inline">\(N(\nu,
+2\nu)\)</span>.</li>
+</ul>
+</br></br>
+<h4>
+Relación con la varianza muestral
+</h4>
+<p>Si <span class="math inline">\(S^{2}\)</span> es la <strong>varianza
+muestral</strong> de una muestra aleatoria de tamaño <span
+class="math inline">\(n\)</span> extraída de una población normal con
+<strong>varianza poblacional</strong> <span
+class="math inline">\(\sigma^{2}\)</span>, entonces el siguiente
+estadístico:</p>
+<p><span class="math display">\[
+\chi^{2} = \frac{(n-1)S^{2}}{\sigma^{2}} = \sum_{i=1}^{n}
+\frac{(X_{i}-\bar{X})^{2}}{\sigma^{2}}
+\]</span></p>
+<p>sigue una <strong>distribución chi-cuadrado</strong> con <span
+class="math inline">\(\nu = n-1\)</span> <strong>grados de
+libertad</strong>.</p>
+<p>La distribución <strong>chi-cuadrado</strong> aparece al analizar la
+<strong>varianza muestral</strong> y se define como:</p>
+<p><span class="math display">\[
+\chi^2 = \sum_{i=1}^{n} \left(\frac{X_i - \mu}{\sigma}\right)^2
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(X_i\)</span> son observaciones de una
+población normal.</li>
+<li><span class="math inline">\(\mu\)</span> es la media
+poblacional.</li>
+<li><span class="math inline">\(\sigma\)</span> es la desviación
+estándar poblacional.</li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La <strong>Figura 2.40</strong> muestra como la Chi-Cuadrado con
+pocos grados de libertad tiene una mayor concentración de valores
+cercanos a cero y es más sesgada, mientras que con grados de libertad
+altos se distribuye más ampliamente y se asemeja a una normal.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir valores de grados de libertad (df) para la distribución Chi-Cuadrado
+parametros <- data.frame(
+  df = c(2, 5, 10, 20),  # Valores de grados de libertad
+  color = c("#FF7F00", "#034A94", "#686868", "#76EEC6")  # Colores asociados
+)
+
+# Crear un rango de valores para X
+x_vals <- seq(0, 40, length.out = 300)
+
+# Generar datos para cada distribución Chi-Cuadrado
+data <- expand.grid(x = x_vals, df = parametros$df) %>%
+  left_join(parametros, by = "df") %>%
+  mutate(densidad = dchisq(x, df = df),
+         label = factor(df, labels = paste0("ν = ", parametros$df)))  # Etiqueta con ν bien formateada
+
+# Crear la gráfica con leyenda bien presentada
+plot.chi2 <- ggplot(data, aes(x = x, y = densidad, color = label)) +
+  geom_line(linewidth = 1) +
+  labs(title = "Densidades de Diferentes Distribuciones Chi-Cuadrado",
+       x = "Valor de X",
+       y = "Densidad",
+       color = expression(paste("Grados de Libertad ", nu))) +  # Formato correcto para la leyenda
+  scale_color_manual(values = parametros$color) +
+  theme_minimal()
+
+# Mostrar la gráfica
+print(plot.chi2)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir valores de grados de libertad (df) para la distribución Chi-Cuadrado
+parametros &lt;- data.frame(
+  df = c(2, 5, 10, 20),  # Valores de grados de libertad
+  color = c(&quot;#FF7F00&quot;, &quot;#034A94&quot;, &quot;#686868&quot;, &quot;#76EEC6&quot;)  # Colores asociados
+)
+
+# Crear un rango de valores para X
+x_vals &lt;- seq(0, 40, length.out = 300)
+
+# Generar datos para cada distribución Chi-Cuadrado
+data &lt;- expand.grid(x = x_vals, df = parametros$df) %&gt;%
+  left_join(parametros, by = &quot;df&quot;) %&gt;%
+  mutate(densidad = dchisq(x, df = df),
+         label = factor(df, labels = paste0(&quot;ν = &quot;, parametros$df)))  # Etiqueta con ν bien formateada
+
+# Crear la gráfica con leyenda bien presentada
+plot.chi2 &lt;- ggplot(data, aes(x = x, y = densidad, color = label)) +
+  geom_line(linewidth = 1) +
+  labs(title = &quot;Densidades de Diferentes Distribuciones Chi-Cuadrado&quot;,
+       x = &quot;Valor de X&quot;,
+       y = &quot;Densidad&quot;,
+       color = expression(paste(&quot;Grados de Libertad &quot;, nu))) +  # Formato correcto para la leyenda
+  scale_color_manual(values = parametros$color) +
+  theme_minimal()
+
+# Mostrar la gráfica
+# print(plot.chi2)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig240.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.40</strong> Función de densidad la chi-cuadrado para
+grados de libertad 2, 5, 10 y 20.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En la <strong>Figura 2.41</strong>, se representa la distribución del
+estadístico</p>
+<p><span class="math display">\[
+\chi^2 = \frac{(n-1)S^2}{\sigma^2}
+\]</span></p>
+<p>calculado a partir de <strong>100 muestras aleatorias</strong> de
+tamaño <span class="math inline">\(n = 50\)</span>, extraídas de una
+población normal con media <span class="math inline">\(20\)</span> y
+desviación estándar <span class="math inline">\(5\)</span>.</p>
+<p>Cada muestra se utilizó para calcular la <strong>varianza
+muestral</strong> <span class="math inline">\(S^2\)</span>, la cual fue
+transformada mediante la expresión del estadístico
+<strong>chi-cuadrado</strong>. El histograma resultante muestra la
+distribución empírica de los valores obtenidos de <span
+class="math inline">\(\chi^2\)</span>, y se superpone con la densidad
+teórica de una distribución <strong>Chi-Cuadrado con 49 grados de
+libertad</strong>.</p>
+<p>Se observa que los valores simulados siguen de manera cercana la
+forma esperada de la distribución teórica, lo que confirma la validez de
+la <strong>aproximación chi-cuadrado</strong> para la <strong>varianza
+muestral</strong> en poblaciones normales.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+
+# Configuración de parámetros
+set.seed(123)  # Para reproducibilidad
+mu <- 20       # Media de la población
+sigma <- 5     # Desviación estándar poblacional
+n <- 50        # Tamaño de la muestra
+df <- n - 1    # Grados de libertad (n-1)
+num_muestras <- 100  # Número de muestras a generar
+
+# Generar 100 muestras y calcular los valores de Chi-Cuadrado
+chi_cuadrado_vals <- replicate(num_muestras, {
+  muestra <- rnorm(n, mean = mu, sd = sigma)  # Generar muestra normal
+  S2 <- var(muestra)  # Calcular varianza muestral
+  (df * S2) / sigma^2  # Calcular estadístico Chi-Cuadrado
+})
+
+# Crear un data frame para la gráfica
+datos <- data.frame(Chi2 = chi_cuadrado_vals)
+
+# Crear la gráfica del histograma con la curva teórica de Chi-Cuadrado
+plot.chi3<-ggplot(datos, aes(x = Chi2)) +
+  geom_histogram(aes(y = after_stat(density)), binwidth = 3, fill = "skyblue", color = "black", alpha = 0.7) +  # Histograma con densidad
+  stat_function(fun = function(x) dchisq(x, df = df), color = "red", linewidth = 1.2) +  # Curva teórica Chi-Cuadrado
+  labs(title = "Distribución del Estadístico Chi-Cuadrado",
+       subtitle = "Comparación entre valores muestrales y distribución teórica",
+       x = expression(chi^2),
+       y = "Densidad") +
+  theme_minimal()  # Tema estético minimalista
+
+print(plot.chi3)  
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+
+# Configuración de parámetros
+set.seed(123)  # Para reproducibilidad
+mu &lt;- 20       # Media de la población
+sigma &lt;- 5     # Desviación estándar poblacional
+n &lt;- 50        # Tamaño de la muestra
+df &lt;- n - 1    # Grados de libertad (n-1)
+num_muestras &lt;- 100  # Número de muestras a generar
+
+# Generar 100 muestras y calcular los valores de Chi-Cuadrado
+chi_cuadrado_vals &lt;- replicate(num_muestras, {
+  muestra &lt;- rnorm(n, mean = mu, sd = sigma)  # Generar muestra normal
+  S2 &lt;- var(muestra)  # Calcular varianza muestral
+  (df * S2) / sigma^2  # Calcular estadístico Chi-Cuadrado
+})
+
+# Crear un data frame para la gráfica
+datos &lt;- data.frame(Chi2 = chi_cuadrado_vals)
+
+# Crear la gráfica del histograma con la curva teórica de Chi-Cuadrado
+plot.chi3&lt;-ggplot(datos, aes(x = Chi2)) +
+  geom_histogram(aes(y = after_stat(density)), binwidth = 3, fill = &quot;skyblue&quot;, color = &quot;black&quot;, alpha = 0.7) +  # Histograma con densidad
+  stat_function(fun = function(x) dchisq(x, df = df), color = &quot;red&quot;, linewidth = 1.2) +  # Curva teórica Chi-Cuadrado
+  labs(title = &quot;Distribución del Estadístico Chi-Cuadrado&quot;,
+       subtitle = &quot;Comparación entre valores muestrales y distribución teórica&quot;,
+       x = expression(chi^2),
+       y = &quot;Densidad&quot;) +
+  theme_minimal()  # Tema estético minimalista
+
+#print(plot.chi3)  </code></pre>
+<br/><br/>
+<center>
+<img src="img/fig241.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.41</strong> Distribución del Estadístico Chi-Cuadrado a
+partir de Muestras Aleatorias. Representación de la distribución del
+estadístico <span class="math inline">\(\chi^{2} =
+\frac{(n-1)S^{2}}{\sigma^{2}}\)</span> calculado a partir de muestras
+aleatorias de tamaño 50 extraídas de una población normal con media 20 y
+desviación estándar 5.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Este cejemplo ilustra cómo calcular probabilidades y cuantiles de una
+distribución Chi-Cuadrado con 49 grados de libertad y cómo visualizar
+estos cálculos gráficamente.</p>
+<p>Se puede calcular la probabilidad acumulada de una distribución
+<strong>Chi-Cuadrado</strong> con <code>pchisq()</code>, la cual
+devuelve:</p>
+<p><span class="math display">\[
+P(X \leq x) = \int_{0}^{x} f(t) dt
+\]</span></p>
+<p>donde <span class="math inline">\(f(t)\)</span> es la función de
+densidad de la distribución Chi-Cuadrado. En este ejemplo <span
+class="math inline">\(x=60\)</span>.</p>
+<p>El cálculo de un <strong>cuantil</strong> <span
+class="math inline">\(x_p\)</span> se obtiene con
+<code>qchisq(p, df)</code>, el cual devuelve el valor <span
+class="math inline">\(x_p\)</span> que satisface:</p>
+<p><span class="math display">\[
+P(X \leq x_p) = p
+\]</span></p>
+<p>Esto permite determinar, por ejemplo, el <strong>percentil
+95%</strong> (<span class="math inline">\(p=0.95\)</span>) de la
+distribución Chi-Cuadrado.</p>
+<p>La <strong>Figura 2.42</strong> ilustra las <strong>probabilidades
+acumuladas</strong> y los <strong>cuantiles</strong> en la distribución
+Chi-Cuadrado, utilizando gráficos que resaltan las áreas bajo la curva
+de densidad. En particular, se muestra el cálculo de la probabilidad
+<span class="math inline">\(P(X \leq 60) = 0.8651\)</span>, lo que
+indica que existe un 0. 8651 de probabilidad de que la variable tome un
+valor menor o igual a 60 (representado por el área azul).</p>
+<p>Además, el área amarilla representa un 0.05 de probabilidad, y la
+línea punteada negra marca el <strong>percentil 95%</strong>,
+correspondiente al valor crítico de <strong>66.34</strong>. Esto
+significa que el 5% de los valores más altos de la variable Chi-Cuadrado
+con 49 grados de libertad son superiores a este umbral.</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+
+# Definir los parámetros de la distribución Chi-Cuadrado
+gl <- 49  # Grados de libertad
+
+# Generar un rango de valores para la distribución
+x_vals <- seq(0, 100, length.out = 500)
+
+# Calcular la densidad de la distribución Chi-Cuadrado
+densidad <- dchisq(x_vals, df = gl)
+
+# Crear un data frame para graficar la densidad
+datos <- data.frame(X = x_vals, Densidad = densidad)
+
+# Calcular una probabilidad P(X <= x)
+x_prob <- 60  # Punto de evaluación
+probabilidad <- pchisq(x_prob, df = gl)
+
+# Calcular un cuantil P(X <= x_q) = 0.95
+p_cuantil <- 0.95
+x_cuantil <- qchisq(p_cuantil, df = gl)
+
+# Graficar la función de densidad con áreas sombreadas
+plot_chi <- ggplot(datos, aes(x = X, y = Densidad)) +
+  geom_line(color = "blue", linewidth = 1) +
+  geom_area(data = subset(datos, X <= x_prob), aes(y = Densidad), fill = "skyblue", alpha = 0.5) +
+  geom_vline(xintercept = x_prob, color = "red", linetype = "dashed", linewidth = 1) +
+  geom_area(data = subset(datos, X >= x_cuantil), aes(y = Densidad), fill = "orange", alpha = 0.5) +
+  geom_vline(xintercept = x_cuantil, color = "darkred", linetype = "dashed", linewidth = 1) +
+  labs(
+    title = "Distribución Chi-Cuadrado con 49 Grados de Libertad",
+    subtitle = paste0("P(X ≤ ", x_prob, ") = ", round(probabilidad, 4), 
+                      " | Cuantil 95% = ", round(x_cuantil, 2)),
+    x = expression(chi^2),
+    y = "Densidad"
+  ) +
+  theme_minimal()
+
+# Mostrar la gráfica
+print(plot_chi)
+
+# Mostrar resultados en consola
+cat("Probabilidad P(X ≤", x_prob, ") =", round(probabilidad, 4), "\n")
+cat("Cuantil 95% =", round(x_cuantil, 2), "\n")
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+
+# Definir los parámetros de la distribución Chi-Cuadrado
+gl &lt;- 49  # Grados de libertad
+
+# Generar un rango de valores para la distribución
+x_vals &lt;- seq(0, 100, length.out = 500)
+
+# Calcular la densidad de la distribución Chi-Cuadrado
+densidad &lt;- dchisq(x_vals, df = gl)
+
+# Crear un data frame para graficar la densidad
+datos &lt;- data.frame(X = x_vals, Densidad = densidad)
+
+# Calcular una probabilidad P(X &lt;= x)
+x_prob &lt;- 60  # Punto de evaluación
+probabilidad &lt;- pchisq(x_prob, df = gl)
+
+# Calcular un cuantil P(X &lt;= x_q) = 0.95
+p_cuantil &lt;- 0.95
+x_cuantil &lt;- qchisq(p_cuantil, df = gl)
+
+# Graficar la función de densidad con áreas sombreadas
+plot_chi &lt;- ggplot(datos, aes(x = X, y = Densidad)) +
+  geom_line(color = &quot;blue&quot;, linewidth = 1) +
+  geom_area(data = subset(datos, X &lt;= x_prob), aes(y = Densidad), fill = &quot;skyblue&quot;, alpha = 0.5) +
+  geom_vline(xintercept = x_prob, color = &quot;red&quot;, linetype = &quot;dashed&quot;, linewidth = 1) +
+  geom_area(data = subset(datos, X &gt;= x_cuantil), aes(y = Densidad), fill = &quot;orange&quot;, alpha = 0.5) +
+  geom_vline(xintercept = x_cuantil, color = &quot;darkred&quot;, linetype = &quot;dashed&quot;, linewidth = 1) +
+  labs(
+    title = &quot;Distribución Chi-Cuadrado con 49 Grados de Libertad&quot;,
+    subtitle = paste0(&quot;P(X ≤ &quot;, x_prob, &quot;) = &quot;, round(probabilidad, 4), 
+                      &quot; | Cuantil 95% = &quot;, round(x_cuantil, 2)),
+    x = expression(chi^2),
+    y = &quot;Densidad&quot;
+  ) +
+  theme_minimal()
+
+# Mostrar la gráfica
+# print(plot_chi)
+
+# Mostrar resultados en consola
+cat(&quot;Probabilidad P(X ≤&quot;, x_prob, &quot;) =&quot;, round(probabilidad, 4), &quot;\n&quot;)</code></pre>
+<pre><code>Probabilidad P(X ≤ 60 ) = 0.8651 </code></pre>
+<pre class="r"><code>cat(&quot;Cuantil 95% =&quot;, round(x_cuantil, 2), &quot;\n&quot;)</code></pre>
+<pre><code>Cuantil 95% = 66.34 </code></pre>
+<br/><br/>
+<center>
+<img src="img/fig242.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.42</strong> El área sombreada en <strong>azul</strong>
+representa la probabilidad acumulada <span class="math inline">\(P(X
+\leq 60) = 0.8651\)</span>, mientras que el área
+<strong>amarilla</strong> corresponde al 5% superior de la distribución,
+con el <strong>percentil 95%</strong> ubicado en <span
+class="math inline">\(x = 66.34\)</span> (línea punteada en negro).
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br>
+<h3>
+F de Fisher
+</h3>
+<p>La <strong>distribución F de Fisher</strong> surge en el contexto de
+la inferencia estadística y se utiliza principalmente en el análisis de
+<strong>comparación de varianzas</strong> y en la <strong>prueba de
+significancia en modelos de regresión</strong>. Es una distribución de
+probabilidad continua que depende de dos parámetros: los <strong>grados
+de libertad del numerador</strong> <span
+class="math inline">\(\nu_1\)</span> y los <strong>grados de libertad
+del denominador</strong> <span class="math inline">\(\nu_2\)</span>.</p>
+</br></br>
+<h4>
+Distribución F de Fisher
+</h4>
+<p>Si <span class="math inline">\(X \sim F(\nu_1, \nu_2)\)</span>, la
+función de densidad de probabilidad está dada por:</p>
+<p><span class="math display">\[
+f(x; \nu_1, \nu_2) =
+\frac{\Gamma\left(\frac{\nu_1 +
+\nu_2}{2}\right)}{\Gamma\left(\frac{\nu_1}{2}\right)
+\Gamma\left(\frac{\nu_2}{2}\right)}
+\left(\frac{\nu_1}{\nu_2}\right)^{\frac{\nu_1}{2}}
+\frac{x^{\frac{\nu_1}{2} - 1}}{\left(1 +
+\frac{\nu_1}{\nu_2}x\right)^{\frac{\nu_1 + \nu_2}{2}}},
+\quad x &gt; 0
+\]</span></p>
+<p>donde <span class="math inline">\(\Gamma(\cdot)\)</span> es la
+función Gamma.</p>
+</br></br>
+<h4>
+Relación con otras distribuciones
+</h4>
+<p>Si <span class="math inline">\(U \sim \chi^2_{\nu_1}\)</span> y <span
+class="math inline">\(V \sim \chi^2_{\nu_2}\)</span> son variables
+aleatorias independientes con distribuciones
+<strong>chi-cuadrado</strong>, entonces la variable aleatoria definida
+como:</p>
+<p><span class="math display">\[
+F = \frac{(U/\nu_1)}{(V/\nu_2)}
+\]</span></p>
+<p>sigue una <strong>distribución F de Fisher</strong> con <span
+class="math inline">\(\nu_1\)</span> y <span
+class="math inline">\(\nu_2\)</span> grados de libertad.</p>
+</br></br>
+<h4>
+Propiedades
+</h4>
+<ul>
+<li><strong>Media:</strong><br />
+<span class="math display">\[
+E[X] = \frac{\nu_2}{\nu_2 - 2}, \quad \text{para } \nu_2 &gt; 2
+\]</span></li>
+<li><strong>Varianza:</strong><br />
+<span class="math display">\[
+\text{Var}(X) = \frac{2\nu_2^2 (\nu_1 + \nu_2 - 2)}{\nu_1 (\nu_2 - 2)^2
+(\nu_2 - 4)}, \quad \text{para } \nu_2 &gt; 4
+\]</span></li>
+<li><strong>Asimetría:</strong> La distribución es <strong>sesgada a la
+derecha</strong>, pero conforme <span
+class="math inline">\(\nu_1\)</span> y <span
+class="math inline">\(\nu_2\)</span> aumentan, la distribución se
+aproxima a una normal estándar.</li>
+</ul>
+</br></br>
+<h4>
+Relación con varianzas muestrales
+</h4>
+<p>Si <span class="math inline">\(S_{1}^{2}\)</span> y <span
+class="math inline">\(S_{2}^{2}\)</span> son las <strong>varianzas
+muestrales</strong> de dos muestras aleatorias independientes de tamaño
+<span class="math inline">\(n_1\)</span> y <span
+class="math inline">\(n_2\)</span>, extraídas de poblaciones normales
+con varianzas <span class="math inline">\(\sigma_{1}^{2}\)</span> y
+<span class="math inline">\(\sigma_{2}^{2}\)</span>, respectivamente,
+entonces el siguiente estadístico:</p>
+<p><span class="math display">\[
+F=\frac{S_{1}^{2}/\sigma_{1}^{2}}{S_{2}^{2}/\sigma_{2}^{2}}=\frac{\sigma_{2}^{2}S_{1}^{2}}{\sigma_{1}^{2}S_{2}^{2}}
+\]</span></p>
+<p>sigue una <strong>distribución F</strong> con <span
+class="math inline">\(\nu_1 = n_1 - 1\)</span> y <span
+class="math inline">\(\nu_2 = n_2 - 1\)</span> grados de libertad.</p>
+<p>Este resultado es fundamental en la <strong>prueba F para la
+comparación de varianzas</strong>, donde se evalúa si dos poblaciones
+normales tienen <strong>igualdad de varianzas</strong>, y en el
+<strong>Análisis de Varianza (ANOVA)</strong>, donde se comparan
+múltiples medias poblacionales.</p>
+</br></br>
+<h3>
+t-Student
+</h3>
+<p>La <strong>distribución t-Student</strong> es una distribución de
+probabilidad continua utilizada en inferencia estadística cuando se
+trabaja con muestras pequeñas y la varianza poblacional es desconocida.
+Se aplica principalmente en:</p>
+<ul>
+<li><strong>Pruebas de hipótesis</strong> sobre una media
+poblacional.</li>
+<li><strong>Construcción de intervalos de confianza</strong> para la
+media cuando la varianza poblacional no es conocida.</li>
+<li><strong>Comparación de medias entre dos grupos</strong> en la prueba
+t de Student.</li>
+</ul>
+</br></br>
+<h4>
+Distribución t-Student
+</h4>
+<p>Si <span class="math inline">\(X \sim t(\nu)\)</span>, la función de
+densidad de probabilidad está dada por:</p>
+<p><span class="math display">\[
+f(x; \nu) = \frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}
+\Gamma\left(\frac{\nu}{2}\right)}
+\left(1 + \frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}, \quad x \in
+\mathbb{R}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(\nu\)</span> representa los
+<strong>grados de libertad</strong>.</li>
+<li><span class="math inline">\(\Gamma(\cdot)\)</span> es la función
+Gamma.</li>
+</ul>
+</br></br>
+<h4>
+Relación con otras distribuciones
+</h4>
+<p>Si <span class="math inline">\(Z \sim N(0,1)\)</span> es una variable
+aleatoria normal estándar y <span class="math inline">\(V \sim
+\chi^2_{\nu}\)</span> es una variable aleatoria con distribución
+<strong>chi-cuadrado</strong> con <span
+class="math inline">\(\nu\)</span> grados de libertad, entonces la
+variable:</p>
+<p><span class="math display">\[
+T = \frac{Z}{\sqrt{V/\nu}}
+\]</span></p>
+<p>sigue una <strong>distribución t-Student</strong> con <span
+class="math inline">\(\nu\)</span> grados de libertad.</p>
+<p>La distribución t-Student se relaciona con la normal estándar cuando
+los grados de libertad son grandes, es decir:</p>
+<p><span class="math display">\[
+t_{\nu} \to N(0,1) \quad \text{cuando } \nu \to \infty.
+\]</span></p>
+</br></br>
+<h4>
+Propiedades
+</h4>
+<ul>
+<li><strong>Media:</strong><br />
+<span class="math display">\[
+E[X] = 0, \quad \text{para } \nu &gt; 1
+\]</span></li>
+<li><strong>Varianza:</strong><br />
+<span class="math display">\[
+\text{Var}(X) = \frac{\nu}{\nu - 2}, \quad \text{para } \nu &gt; 2
+\]</span></li>
+<li><strong>Simetría:</strong> La distribución es <strong>simétrica
+alrededor de 0</strong>, lo que la diferencia de la distribución F.</li>
+<li><strong>Colas más pesadas:</strong> En comparación con la normal
+estándar, la t-Student tiene colas más anchas, lo que implica mayor
+variabilidad en muestras pequeñas.</li>
+</ul>
+</br></br>
+<h4>
+Relación con estimadores muestrales
+</h4>
+<p>Si <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> son
+variables aleatorias independientes con distribución normal <span
+class="math inline">\(N(\mu, \sigma^2)\)</span>, la <strong>media
+muestral</strong> y la <strong>varianza muestral</strong> se definen
+como:</p>
+<p><span class="math display">\[
+\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i, \quad S^2 = \frac{1}{n-1}
+\sum_{i=1}^{n} (X_i - \bar{X})^2.
+\]</span></p>
+<p>La variable aleatoria obtenida al estandarizar la diferencia entre la
+media muestral y la media poblacional usando la desviación estándar
+muestral:</p>
+<p><span class="math display">\[
+T = \frac{\bar{X} - \mu}{S/\sqrt{n}}
+\]</span></p>
+<p>sigue una <strong>distribución t-Student</strong> con <span
+class="math inline">\(\nu = n - 1\)</span> grados de libertad.</p>
+<p>Este resultado es fundamental en la <strong>prueba t para una media
+poblacional</strong>, donde se compara una muestra con un valor de
+referencia, y en la <strong>prueba t para dos muestras</strong>, donde
+se comparan dos medias.</p>
+<div class="caja-actividad">
+<h3>
+Actividad:
+</h3>
+<blockquote>
+<p>
+<ul>
+<li>Genera y grafica distintas distribuciones <strong>t de
+Student</strong> para diferentes grados de libertad (<span
+class="math inline">\(\nu = 2, 5, 10, 30\)</span>). Superpón las curvas
+de densidad en un mismo gráfico y analizar cómo cambia la forma de la
+distribución conforme aumentan los grados de libertad.</li>
+<li>Realiza lo mismo con la distribución <strong>F de Fisher</strong>,
+considerando diferentes pares de grados de libertad (<span
+class="math inline">\(\nu_1 = 2, 5, 10\)</span> y <span
+class="math inline">\(\nu_2 = 20\)</span>). Compara cómo varía la
+asimetría de la distribución conforme cambian los grados de
+libertad.</li>
+<li>Genera <strong>100 muestras aleatorias de tamaño 30</strong> de una
+población normal con media 50 y desviación estándar 10. Para cada
+muestra, calcular el estadístico: <span class="math inline">\(T =
+\frac{\bar{X} - \mu}{S / \sqrt{n}}\)</span> donde <span
+class="math inline">\(\bar{X}\)</span> es la media muestral y <span
+class="math inline">\(S\)</span> es la desviación estándar muestral.
+Grafica un histograma con los valores obtenidos del estadístico <span
+class="math inline">\(T\)</span> y superpón la curva teórica de la
+distribución <strong>t de Student</strong> con <span
+class="math inline">\(\nu = 29\)</span> grados de libertad.</li>
+<li>Realiza un experimento similar con la distribución <strong>F de
+Fisher</strong>, utilizando dos muestras independientes de tamaño 20 y
+30 respectivamente, para calcular el estadístico: <span
+class="math inline">\(F = \frac{S_1^2}{S_2^2}\)</span> y compara el
+histograma con la curva teórica de la distribución F con parámetros
+<span class="math inline">\(\nu_1 = 19\)</span> y <span
+class="math inline">\(\nu_2 = 29\)</span>.</li>
+</ul>
+</p>
+</blockquote>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

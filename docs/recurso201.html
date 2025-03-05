@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Variable aleatoria</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Variable aleatoria</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>El concepto de variable aleatoria constituye uno de los pilares
+fundamentales de la probabilidad y la estadística. Según J.A. Alberth y
+B. Ruiz (2013), este concepto se asocia con dos paradigmas históricos de
+evolución. El primero se basa en los resultados de fenómenos aleatorios,
+mientras que el segundo se centra en el proceso que relaciona los
+conjuntos del espacio muestral con sus respectivas probabilidades,
+definiendo así la variable aleatoria como una función de números reales
+que proporciona el sustento matemático al concepto.</p>
+<p>Este concepto se aplica en diversos contextos donde es necesario
+responder preguntas sobre la ocurrencia de fenómenos aleatorios que
+pueden presentarse en el futuro. Por ejemplo:</p>
+<ul>
+<li><p>¿Cuánto tiempo tarda un estudiante en llegar desde su casa a la
+universidad?</p></li>
+<li><p>¿Cuál será el resultado de mi próximo examen de
+estadística?</p></li>
+<li><p>¿Cuántas botellas de agua se venderán esta semana en la
+cafetería?</p></li>
+<li><p>¿Cuánto tiempo tomará la entrega de un paquete por parte de una
+empresa de mensajería?</p></li>
+<li><p>¿Cuánto tiempo durará la bombilla de un vehículo?</p></li>
+<li><p>¿Qué diámetro tendrá la perforación realizada por una máquina en
+una lámina de acero destinada a una puerta de vehículo?</p></li>
+<li><p>¿Cuántos mensajes recibiré hoy por WhatsApp?</p></li>
+</ul>
+<p>En todos estos casos, las preguntas planteadas pueden tener múltiples
+respuestas, es decir, no existe un único valor como resultado. En este
+documento se estudiará el concepto de variable aleatoria mediante la
+definición de una función matemática que permita caracterizar su
+comportamiento, realizando diversos cálculos de probabilidades de
+interés. Para ello, será necesario retomar conceptos de cálculo
+integral, los cuales se presentarán oportunamente a través de funciones
+de fácil manejo.</p>
+<p>Esta unidad abordará primero el caso univariado discreto y
+posteriormente el caso continuo, destacando sus principales
+características y los conceptos relacionados con los tratados en el
+módulo anterior.</p>
+</br></br>
+<h3>
+Definición
+</h3>
+<p>Una variable aleatoria <span class="math inline">\(X\)</span> es una
+función que asigna a cada valor del espacio muestral <span
+class="math inline">\(S\)</span> un número real. El conjunto de estos
+valores forma un subconjunto de los números reales, denominado rango de
+la variable <span class="math inline">\(X\)</span>, representado como
+<span class="math inline">\(R_{X}\)</span>.</p>
+<p>Las variables aleatorias se clasifican según las características de
+su rango en discretas o continuas. Su distribución será univariada
+cuando se analice el comportamiento de una sola variable, y multivariada
+al estudiar el comportamiento conjunto de varias variables definidas en
+el mismo espacio muestral.</p>
+</br></br>
+<h3>
+Tipos de variables
+</h3>
+<ul>
+<li><p>Una variable <span class="math inline">\(X\)</span> se considera
+<strong>discreta</strong> si su rango <span
+class="math inline">\(R_{_{X}}\)</span> es un conjunto finito o infinito
+numerable de valores.</p></li>
+<li><p>Se considera <strong>continua</strong> si su rango <span
+class="math inline">\(R_{_{X}}\)</span> es un conjunto de valores
+infinito no numerable y generalmente corresponde a unión de
+intervalos.</p></li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Un experimento aleatorio <span class="math inline">\(E\)</span>
+consiste en lanzar una moneda balanceada tres veces y observar el orden
+de caras <span class="math inline">\((c)\)</span> y sellos <span
+class="math inline">\((s)\)</span> obtenidos. El espacio muestral <span
+class="math inline">\(S\)</span> de <span
+class="math inline">\(E\)</span> estará dado por:</p>
+<p><span class="math inline">\(S =
+\{(s,s,s),(s,s,c),(s,c,s),(s,c,c),(c,s,s),(c,s,c),(c,c,s),(c,c,c)\}\)</span></p>
+<!-- <center> -->
+<!-- ![](img/Figura301.png){width=60%}<br/> -->
+<!-- **Figura 2.10** Relación espacio muestral, rango, variable aleatoria -->
+<!-- </center> -->
+<!-- <br/> -->
+<br/><br/>
+<center>
+<img src="img/Figura301.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.10</strong> Relación espacio muestral, rango, variable
+aleatoria.
+</center>
+<p><br/><br/></p>
+<p>La <strong>Figura 2.10</strong> ilustra de manera esquemática el
+concepto de <strong>variable aleatoria</strong>, destacando la relación
+entre el <strong>espacio muestral</strong>, el <strong>conjunto de
+números reales</strong> y la <strong>función de probabilidad</strong>.
+En este contexto, la variable aleatoria <span
+class="math inline">\(X\)</span> es una función que asocia a cada
+resultado del espacio muestral un número real.</p>
+<p>Su rango está dado por: <span class="math inline">\(X(S) = \{0, 1, 2,
+3\}\)</span>. A cada valor del rango se le asigna una probabilidad
+mediante la función de probabilidad <span class="math inline">\(f_{X}(x)
+= P(X = x)\)</span>. Por ejemplo, <span class="math inline">\(f_{X}(1) =
+P(X = 1) = P(\{(s,s,c),(s,c,s),(c,s,s)\}) = \frac{3}{8}\)</span>.</p>
+<p>La descripción de componentes de la <strong>Figura 2.10</strong>:</p>
+<ul>
+<li><strong>Variable aleatoria <span
+class="math inline">\(X\)</span>:</strong> Asigna a cada resultado del
+espacio muestral el número de caras obtenidas en tres lanzamientos de
+una moneda.</li>
+<li><strong>Rango de la variable <span class="math inline">\(R_{X}=X(S)=
+\{0,1,2,3\}\)</span>:</strong> Definido mediante la regla de asignación,
+que consiste en contar el número de caras en cada resultado posible del
+espacio muestral <span class="math inline">\(S\)</span>.</li>
+<li><strong>Función de probabilidad <span class="math inline">\(f_{X}(x)
+= P(X = x)\)</span>:</strong> Es una función que asigna a cada valor del
+rango una probabilidad, la cual es un número en el intervalo cerrado [0,
+1]. La suma de las probabilidades de todos los valores posibles es 1,
+cumpliendo el axioma fundamental de la probabilidad: <span
+class="math inline">\(\sum_{x \in R_{X}} f_{X}(x) = 1\)</span>.</li>
+</ul>
+</br></br>
+<h4>
+Relación entre eventos y valores de la variable aleatoria
+</h4>
+<p>Al establecer la correspondencia entre los eventos del espacio
+muestral y el rango de la variable aleatoria, se obtienen las siguientes
+asociaciones y valores para la función de probabilidad:</p>
+<ul>
+<li><span class="math inline">\(X = 0 = \{(s,s,s)\}\)</span><br />
+</li>
+<li><span class="math inline">\(X = 1 =
+\{(s,s,c),(s,c,s),(c,s,s)\}\)</span><br />
+</li>
+<li><span class="math inline">\(X = 2 =
+\{(s,c,c),(c,s,c),(c,c,s)\}\)</span><br />
+</li>
+<li><span class="math inline">\(X = 3 = \{(c,c,c)\}\)</span></li>
+</ul>
+<p>Bajo el supuesto de que la moneda es balanceada, todos los resultados
+del espacio muestral <span class="math inline">\(S\)</span> son
+equiprobables. Por lo tanto, la función de probabilidad <span
+class="math inline">\(f_{X}(x) = P(X = x)\)</span> se obtiene como:</p>
+<p><span class="math inline">\(f_{X}(0) = P(X=0) =
+\frac{1}{8}\)</span><br />
+<span class="math inline">\(f_{X}(1) = P(X=1) =
+\frac{3}{8}\)</span><br />
+<span class="math inline">\(f_{X}(2) = P(X=2) =
+\frac{3}{8}\)</span><br />
+<span class="math inline">\(f_{X}(3) = P(X=3) = \frac{1}{8}\)</span></p>
+<p>La suma de todas las probabilidades es 1, cumpliendo con la propiedad
+fundamental de las distribuciones de probabilidad:</p>
+<span class="math inline">\(\sum_{x \in R_{X}} f_{X}(x) = \frac{1}{8} +
+\frac{3}{8} + \frac{3}{8} + \frac{1}{8} = 1\)</span>.
+</p>
+</div>
+</br></br>
+<h2>
+Variables discretas
+</h2>
+<p>Como se mencionó anteriormente, una <strong>variable
+aleatoria</strong> se clasifica como <strong>discreta</strong> cuando el
+conjunto de posibles valores que puede asumir es finito o infinito
+numerable. En la mayoría de los casos, dicho conjunto está formado por
+números enteros.</p>
+<p>Para caracterizar formalmente esta variable, se introduce la
+<strong>función de distribución de probabilidad</strong>, la cual modela
+la asignación de probabilidades a cada uno de los valores posibles de la
+variable.</p>
+</br></br>
+<h3>
+Función de distribución de probabilidad
+</h3>
+<p>Para una variable aleatoria discreta <span
+class="math inline">\(X\)</span>, su <strong>función de distribución de
+probabilidad</strong> <span class="math inline">\(f(x)\)</span> asigna
+las probabilidades a todos los valores de su rango <span
+class="math inline">\(R_{X}\)</span>. Esta función debe cumplir con las
+siguientes propiedades fundamentales:</p>
+<ol style="list-style-type: decimal">
+<li><strong>No negatividad:</strong> <span class="math inline">\(f(x) =
+P(X = x) \geq 0\)</span> para todo <span
+class="math inline">\(x\)</span> en <span
+class="math inline">\(R_{X}\)</span>.</li>
+<li><strong>Suma total:</strong> <span class="math inline">\(\sum_{x \in
+R_{X}} f(x) = 1\)</span>, es decir, la suma de las probabilidades de
+todos los valores posibles es igual a uno.</li>
+</ol>
+<p>Por lo general, las variables aleatorias discretas surgen a partir de
+procesos de <strong>conteo</strong>, lo que suele reflejarse en
+enunciados que comienzan con expresiones como <strong>“número
+de…”</strong>, tales como:</p>
+<ul>
+<li>Número de éxitos en un experimento binomial.</li>
+<li>Número de llamadas recibidas en una hora.</li>
+<li>Número de defectos en una muestra de producción.</li>
+</ul>
+<p>Estas variables son esenciales en el modelado y análisis de fenómenos
+aleatorios donde los resultados se cuentan y se expresan mediante
+números enteros.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>A continuación se presentan ejemplos representativos de
+<strong>variables aleatorias discretas</strong>, todas ellas derivadas
+de procesos de conteo:</p>
+<ul>
+<li><span class="math inline">\(X\)</span>: Número de llamadas recibidas
+en un conmutador durante un día.</li>
+<li><span class="math inline">\(Y\)</span>: Número de personas
+contagiadas por COVID-19 en un día.</li>
+<li><span class="math inline">\(Z\)</span>: Número de quejas registradas
+en una sucursal bancaria durante un día.</li>
+<li><span class="math inline">\(W\)</span>: Número de accidentes
+ocurridos en una ciudad.</li>
+<li><span class="math inline">\(S\)</span>: Número de huevos producidos
+diariamente en una avícola.</li>
+<li><span class="math inline">\(T\)</span>: Número de hijos en una
+familia.</li>
+<li><span class="math inline">\(M\)</span>: Número de mensajes enviados
+en un grupo de WhatsApp.</li>
+</ul>
+Estos ejemplos ilustran cómo las variables aleatorias discretas surgen
+de fenómenos que involucran recuentos, donde los posibles valores son
+números enteros finitos o infinitos numerables.
+</p>
+</div>
+</br></br>
+<h3>
+Función de distribución acumulada
+</h3>
+<p>Sea <span class="math inline">\(X\)</span> una <strong>variable
+aleatoria discreta</strong> con función de probabilidad <span
+class="math inline">\(f_{X}(x)\)</span>. La <strong>función de
+distribución acumulada</strong> <span
+class="math inline">\(F_{X}(x)\)</span> se define como la probabilidad
+de que la variable aleatoria tome un valor menor o igual que <span
+class="math inline">\(x\)</span>:</p>
+<p><span class="math inline">\(F_{X}(x) = P(X \leq x) = \sum_{t \leq x}
+f_{X}(t)\)</span></p>
+<p>Propiedades de la función de distribución acumulada:</p>
+<ul>
+<li><strong>Monotonía:</strong> <span
+class="math inline">\(F_{X}(x)\)</span> es una función no decreciente,
+es decir, si <span class="math inline">\(a &lt; b\)</span>, entonces
+<span class="math inline">\(F_{X}(a) \leq F_{X}(b)\)</span>.</li>
+<li><strong>Rangos extremos:</strong> <span
+class="math inline">\(\lim_{x \to -\infty} F_{X}(x) = 0\)</span> y <span
+class="math inline">\(\lim_{x \to \infty} F_{X}(x) = 1\)</span>.</li>
+<li><strong>Incrementos por saltos:</strong> En el caso discreto, <span
+class="math inline">\(F_{X}(x)\)</span> es una función escalonada que
+aumenta en los valores donde <span class="math inline">\(X\)</span>
+tiene probabilidad no nula.</li>
+</ul>
+<p>Esta función es fundamental para caracterizar la distribución de
+probabilidad de variables discretas y para calcular probabilidades en
+intervalos específicos.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>El restaurante <strong>“Asados y algo más”</strong> opera
+exclusivamente mediante reservas. Con base en los registros de los
+últimos diez años, se ha determinado que <strong>el 30% de las personas
+que reservan no asisten</strong>, mientras que <strong>el 70% sí
+acude</strong>. El restaurante cuenta con <strong>20 puestos</strong> y
+<strong>40 reservas</strong> son aceptadas diariamente.</p>
+<p>Dado que cada persona que reservó tiene una probabilidad
+independiente del <strong>0.7</strong> de asistir, el número de personas
+que llegan puede modelarse mediante una función de probabilidad conocida
+como <strong>distribución binomial</strong>.</p>
+<p>Función de distribución de probabilidad: Sea <span
+class="math inline">\(X\)</span> la variable aleatoria que representa el
+<strong>número de personas que efectivamente llegan al
+restaurante</strong>. Su <strong>función de distribución de
+probabilidad</strong> está dada por:</p>
+<p><span class="math display">\[ f_{X}(x) = \begin{cases} \\
+\displaystyle \binom{20}{x}(0.7)^{x}(0.3)^{20-x} &amp; \text{si } x = 0,
+1, 2, \ldots, 20 \\\
+0 &amp; \text{en otro caso} \\\
+\end{cases} \]</span></p>
+<pre>
+library(ggplot2)
+
+# Modelo binomial: Número de personas que llegan al restaurante
+dat <- data.frame(
+  x = 0:20,
+  fx = dbinom(0:20, size = 20, prob = 0.70)
+)
+
+# Ajuste para evitar pérdida de datos en el gráfico
+dat <- na.omit(dat)
+
+# Configuración para evitar errores de codificación de caracteres
+# Sys.setlocale("LC_ALL", "en_US.UTF-8")
+
+# Gráfico de barras de la distribución binomial
+plot.fx<-ggplot(dat, aes(x = x, y = fx)) + 
+  geom_bar(stat = "identity", fill = "#FF7F00", color = "black", width = 0.7, na.rm = TRUE) +
+  scale_x_continuous(
+    breaks = 0:20,
+    labels = as.character(0:20)
+  ) +
+  labs(
+    title = "",
+    x = "Numero de Personas (x)",
+    y = "f(x) - Probabilidad"
+  ) +
+  theme_minimal(base_size = 12)
+
+print(plot.fx)
+</pre>
+<pre class="r"><code>library(ggplot2)
+
+# Modelo binomial: Número de personas que llegan al restaurante
+dat &lt;- data.frame(
+  x = 0:20,
+  fx = dbinom(0:20, size = 20, prob = 0.70)
+)
+
+# Ajuste para evitar pérdida de datos en el gráfico
+dat &lt;- na.omit(dat)
+
+# Configuración para evitar errores de codificación de caracteres
+# Sys.setlocale(&quot;LC_ALL&quot;, &quot;en_US.UTF-8&quot;)
+
+# Gráfico de barras de la distribución binomial
+plot.fx&lt;-ggplot(dat, aes(x = x, y = fx)) + 
+  geom_bar(stat = &quot;identity&quot;, fill = &quot;#FF7F00&quot;, color = &quot;black&quot;, width = 0.7, na.rm = TRUE) +
+  scale_x_continuous(
+    breaks = 0:20,
+    labels = as.character(0:20)
+  ) +
+  labs(
+    title = &quot;&quot;,
+    x = &quot;Numero de Personas (x)&quot;,
+    y = &quot;f(x) - Probabilidad&quot;
+  ) +
+  theme_minimal(base_size = 12)
+
+# print(plot.fx)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig2_11.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.11</strong> Función de probabilidad de <span
+class="math inline">\(X\)</span>.
+</center>
+<p><br/><br/></p>
+<p>La <strong>Figura 2.11</strong> presenta el gráfico de la función de
+probabilidad de la variable aleatoria <span
+class="math inline">\(X\)</span>.</p>
+<ul>
+<li><p>En el <strong>eje X</strong> se representa el rango de la
+variable, que corresponde al número de personas.</p></li>
+<li><p>En el <strong>eje Y</strong> se muestran los valores de las
+probabilidades asociadas a cada valor posible de la variable.</p></li>
+</ul>
+<pre>
+library(ggplot2)
+
+# Gráfico de la función de distribución acumulada (FDA) para la distribución binomial
+plot.Fx<-ggplot() +
+  stat_function(
+    fun = function(q) pbinom(q = q, size = 20, prob = 0.7),
+    geom = "step",
+    n = 21,
+    colour = "#4271AE",
+    size = 1
+  ) +
+  scale_x_continuous(
+    n.breaks = 21,
+    limits = c(0, 20)
+  ) +
+  labs(
+    title = "",
+    x = "Número de Personas (x)",
+    y = "F(x) - Probabilidad Acumulada"
+  ) +
+  theme_minimal(base_size = 12)
+
+print(plot.Fx)
+</pre>
+<pre class="r"><code>library(ggplot2)
+
+# Gráfico de la función de distribución acumulada (FDA) para la distribución binomial
+plot.Fx&lt;-ggplot() +
+  stat_function(
+    fun = function(q) pbinom(q = q, size = 20, prob = 0.7),
+    geom = &quot;step&quot;,
+    n = 21,
+    colour = &quot;#4271AE&quot;,
+    size = 1
+  ) +
+  scale_x_continuous(
+    n.breaks = 21,
+    limits = c(0, 20)
+  ) +
+  labs(
+    title = &quot;&quot;,
+    x = &quot;Número de Personas (x)&quot;,
+    y = &quot;F(x) - Probabilidad Acumulada&quot;
+  ) +
+  theme_minimal(base_size = 12)
+
+#  print(plot.Fx)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig2_12.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.12</strong> Función de distribución acumulada de <span
+class="math inline">\(X\)</span>.
+</center>
+<p><br/><br/></p>
+<p>La <strong>Figura 2.12</strong> muestra el gráfico de la función de
+distribución acumulada (FDA) de la variable aleatoria :</p>
+<ul>
+<li><p>En el eje X se representa el rango de la variable,
+correspondiente al número de personas.</p></li>
+<li><p>En el eje Y se visualizan las probabilidades acumuladas asociadas
+a cada valor posible de la variable.</p></li>
+</ul>
+<p>Esta representación escalonada refleja la naturaleza discreta de la
+distribución y permite observar cómo se acumula la probabilidad conforme
+aumenta el número de personas. Adicionalmente se visualiza el
+cumplimiento de las propiedades de esta función:</p>
+<ul>
+<li>La FDA es una función monótonamente no decreciente, es decir, su
+valor nunca disminuye al aumentar <span
+class="math inline">\(X\)</span>. Esto se refleja en el gráfico con una
+secuencia de escalones ascendentes.</li>
+<li>La FDA siempre está definida en el intervalo [0, 1], ya que expresa
+probabilidades acumuladas.</li>
+<li>La probabilidad acumulada antes del primer valor es cero y la
+probabilidad acumulada total es uno.</li>
+<li>Cada salto en el gráfico corresponde a una probabilidad puntual
+<span class="math inline">\(f(x)\)</span>, es decir, <span
+class="math inline">\(F(x) - F(x-1) = f(x)\)</span>.</li>
+</ul>
+<p><br/><br/> A continuación se presentan algunos valores de la función
+de probabilidad <span class="math inline">\(f(x)\)</span> y la función
+de distribución acumulada <span class="math inline">\(F(x)\)</span>,
+mostrando las fórmulas y los reemplazos para evidenciar el proceso de
+cálculo:</p>
+<p>Algunos valores de la función de probabilidad <span
+class="math inline">\(f(x)\)</span>:</p>
+<ul>
+<li><p><span class="math inline">\(f(0) = \binom{20}{0} (0.7)^0
+(0.3)^{20}=1 \times 1 \times 0.000000121 = 0\)</span>.</p></li>
+<li><p><span class="math inline">\(f(14) = \binom{20}{14} (0.7)^{14}
+(0.3)^{6}= 38760 \times 0.0577 \times 0.000729 =
+0.1547\)</span>.</p></li>
+<li><p><span class="math inline">\(f(15) = \binom{20}{15} (0.7)^{15}
+(0.3)^{5}= 15504 \times 0.0477 \times 0.00243 =
+0.178863\)</span>.</p></li>
+</ul>
+<p>Algunos valores de la función de distribución acumulada <span
+class="math inline">\(F(x)\)</span>:</p>
+<ul>
+<li><p><span class="math inline">\(F(14) = \sum_{x=0}^{14} f(x) =
+0.5836\)</span>.</p></li>
+<li><p><span class="math inline">\(F(15) = F(14) + f(15)= 0.5836 +
+0.178863 = 0.762463\)</span>.</p></li>
+</ul>
+<p>Complementos de la acumulada:</p>
+<ul>
+<li><p><span class="math inline">\(P(X &gt; 14) = 1 - F(13)\)</span>,
+asi <span class="math inline">\(P(X &gt; 14) = 1 - 0.4047 =
+0.5953\)</span>.</p></li>
+<li><p><span class="math inline">\(P(X &gt; 15) = 1 - F(14)= 1 - 0.5836
+= 0.4164\)</span>.</p></li>
+</ul>
+</p>
+</div>
+</br></br>
+<h2>
+Variables continuas
+</h2>
+<p>Como se mencionó, una <strong>variable aleatoria se considera
+continua</strong> cuando el conjunto de valores que puede asumir es
+<strong>infinito</strong> y <strong>no numerable</strong>, lo que
+implica que siempre existe un valor entre dos valores cualesquiera. Este
+tipo de variable representa fenómenos que se miden, como el tiempo, la
+temperatura o la distancia.</p>
+<p>En el caso de una variable continua, la probabilidad de que tome un
+valor exacto es cero, por lo que su comportamiento se modela mediante
+una función continua conocida como <strong>función de densidad de
+probabilidad (FDP)</strong>. Esta función describe cómo se distribuyen
+las probabilidades a lo largo del rango de valores posibles.</p>
+<p>La <strong>función de densidad de probabilidad</strong> se puede
+visualizar a través de un <strong>gráfico de densidad</strong>,
+construido a partir de una muestra representativa de la variable. En
+este gráfico, el <strong>área bajo la curva</strong> entre dos puntos
+representa la <strong>probabilidad</strong> de que la variable tome un
+valor dentro de ese intervalo.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En el caso de las variables aleatorias continuas, estas generalmente
+provienen de mediciones de fenómenos continuos. A continuación se
+presentan ejemplos típicos:</p>
+<ul>
+<li><span class="math inline">\(T\)</span>: Tiempo que tarda un
+estudiante en responder un examen.</li>
+<li><span class="math inline">\(P\)</span>: Peso de un bebé recién
+nacido.</li>
+<li><span class="math inline">\(E\)</span>: Edad de una persona.</li>
+<li><span class="math inline">\(V\)</span>: Tiempo que tarda un vehículo
+en requerir una reparación de su motor.</li>
+<li><span class="math inline">\(D\)</span>: Diámetro de un agujero
+realizado en una lámina de acero.</li>
+<li><span class="math inline">\(X\)</span>: Cantidad de azúcar contenida
+en un refresco.</li>
+<li><span class="math inline">\(C\)</span>: Proporción de cemento en una
+mezcla de concreto.</li>
+</ul>
+Estos ejemplos ilustran cómo las variables aleatorias continuas pueden
+tomar cualquier valor dentro de un intervalo, reflejando la naturaleza
+continua de las mediciones.
+</p>
+</div>
+</br></br>
+<h3>
+Función de densidad de probabilidad
+</h3>
+<p>A continuación se presentan las propiedades esenciales de la
+<strong>función de densidad de probabilidad (FDP)</strong>, que describe
+la distribución de una variable aleatoria continua:</p>
+<ul>
+<li><p><strong>No negatividad</strong>: La FDP siempre es no negativa,
+<span class="math display">\[ f(x) \geq 0, \quad \text{para todo } x
+\]</span></p></li>
+<li><p><strong>Área total bajo la curva</strong>: El área total bajo la
+curva es igual a 1, lo que garantiza que la suma de todas las
+probabilidades posibles sea completa: <span class="math display">\[
+\int_{-\infty}^{\infty} f(x) \, dx = 1 \]</span></p></li>
+<li><p><strong>Probabilidad como área bajo la curva</strong>: La
+probabilidad de que la variable esté entre dos valores <span
+class="math inline">\(a\)</span> y <span
+class="math inline">\(b\)</span> es el área bajo la curva entre esos
+límites: <span class="math display">\[ P(a \leq X \leq b) = \int_{a}^{b}
+f(x) \, dx \]</span></p></li>
+</ul>
+<p>Para una variable continua, la probabilidad de que tome un valor
+exacto es cero: <span class="math display">\[ P(X = x) = 0 \]</span></p>
+</br></br>
+<h3>
+Función de distribución acumulada
+</h3>
+<p>Sea <span class="math inline">\(X\)</span> una <strong>variable
+aleatoria continua</strong> con función de densidad <span
+class="math inline">\(f_{X}(x)\)</span>. La <strong>función de
+distribución acumulada</strong> (FDA), <span
+class="math inline">\(F_{X}(x)\)</span>, se define como la probabilidad
+de que la variable aleatoria tome un valor menor o igual que <span
+class="math inline">\(x\)</span>:</p>
+<p><span class="math inline">\(F_{X}(x) = P(X \leq x) =
+\int_{-\infty}^{x} f_{X}(t) \, dt\)</span></p>
+<ul>
+<li>La función de distribución acumulada representa el área bajo la
+curva de la función de densidad desde <span
+class="math inline">\(-\infty\)</span> hasta <span
+class="math inline">\(x\)</span>.</li>
+<li><span class="math inline">\(F_{X}(x)\)</span> es una función
+<strong>monótonamente no decreciente</strong>, con valores en el
+intervalo [0, 1].</li>
+<li><span class="math inline">\(\lim_{x \to -\infty} F_{X}(x) =
+0\)</span> y <span class="math inline">\(\lim_{x \to \infty} F_{X}(x) =
+1\)</span>.</li>
+</ul>
+<p>La FDP es la derivada de la función de distribución acumulada (FDA):
+<span class="math display">\[ f(x) = \frac{d}{dx}F(x) \]</span></p>
+<p>Esta definición es fundamental para describir el comportamiento
+probabilístico de variables continuas y para calcular probabilidades
+asociadas a intervalos de valores.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Una compañía que fabrica lavadoras, basándose en datos históricos, ha
+determinado que el tiempo <span class="math inline">\(X\)</span> (en
+años) hasta que un electrodoméstico requiera una reparación mayor se
+modela mediante la siguiente <strong>función de densidad de probabilidad
+(FDP):</strong></p>
+<p><span class="math display">\[
+  f_{X}(x) = \begin{cases} \\
+    \dfrac{1}{4} e^{-x/4} &amp; \text{si } x \geq 0 \\\\
+    0 &amp; \text{en otro caso} \\\\
+  \end{cases}
+\]</span></p>
+<pre>
+library(ggplot2)
+
+# Configuración de codificación para evitar errores en etiquetas
+# Sys.setlocale("LC_ALL", "en_US.UTF-8")
+
+# Definición de la función de densidad
+fx <- function(x) {
+  (1/4) * exp(-x/4)
+}
+
+# Creación del gráfico con ggplot2
+plot213<-ggplot() +
+  xlim(c(0, 20)) +
+  geom_function(fun = fx,
+                colour = "#FF7F00",
+                lwd = 1,
+                linetype = 1) +
+  labs(
+    title = "",
+    x = "Tiempo (anos)",
+    y = "f(x) - Densidad"
+  ) +
+  theme_minimal(base_size = 12)
+
+print(plot213)
+</pre>
+<pre class="r"><code>library(ggplot2)
+
+# Configuración de codificación para evitar errores en etiquetas
+# Sys.setlocale(&quot;LC_ALL&quot;, &quot;en_US.UTF-8&quot;)
+
+# Definición de la función de densidad
+fx &lt;- function(x) {
+  (1/4) * exp(-x/4)
+}
+
+# Creación del gráfico con ggplot2
+plot213&lt;-ggplot() +
+  xlim(c(0, 20)) +
+  geom_function(fun = fx,
+                colour = &quot;#FF7F00&quot;,
+                lwd = 1,
+                linetype = 1) +
+  labs(
+    title = &quot;&quot;,
+    x = &quot;Tiempo (anos)&quot;,
+    y = &quot;f(x) - Densidad&quot;
+  ) +
+  theme_minimal(base_size = 12)
+
+# print(plot213)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig2_13.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.13</strong> Función de densidad de <span
+class="math inline">\(X\)</span>.
+</center>
+<p><br/><br/></p>
+<p>Para garantizar que <span class="math inline">\(f(x)\)</span> es una
+<strong>función de densidad de probabilidad (FDP)</strong>, se debe
+comprobar que el área total bajo la curva es igual a 1, para tal efecto
+se calcula la integral impropia desde 0 hasta infinito, donde no se
+anula la función: <span class="math display">\[
+\int_{0}^{+\infty} \frac{1}{4} e^{-x/4} \,dx=\frac{1}{4}
+\int_{0}^{+\infty} e^{-x/4} \,dx= \int e^{-x/4} \,dx = -4e^{-x/4} + C
+\]</span> Evaluamos la integral definida en los límites: <span
+class="math display">\[
+\frac{1}{4} \left[ -4e^{-x/4} \right]_{0}^{+\infty}
+\]</span></p>
+<p>Aplicamos los límites:</p>
+<ul>
+<li>Cuando <span class="math inline">\(x \to +\infty\)</span>, <span
+class="math inline">\(e^{-x/4} \to 0\)</span></li>
+<li>Cuando <span class="math inline">\(x = 0\)</span>, <span
+class="math inline">\(e^{-0} = 1\)</span></li>
+</ul>
+<p><span class="math display">\[
+\frac{1}{4} \left( 0 - (-4 \times 1) \right) = \frac{1}{4} \times 4 = 1
+\]</span></p>
+<p>La integral es igual a 1: <span class="math display">\[
+\int_{0}^{+\infty} \frac{1}{4} e^{-x/4} \,dx = 1
+\]</span></p>
+<p>El resultado se puede verificar mediante integración numérica:</p>
+<pre>
+# Definición de la función de densidad
+fy <- function(y) {
+  (1/4) * exp(-y/4)
+}
+
+# Cálculo de la integral
+resultado <- integrate(fy, lower = 0, upper = Inf)
+print(resultado)
+</pre>
+<pre class="r"><code># Definición de la función de densidad
+fy &lt;- function(y) {
+  (1/4) * exp(-y/4)
+}
+
+# Cálculo de la integral
+resultado &lt;- integrate(fy, lower = 0, upper = Inf)
+print(resultado)</code></pre>
+<pre><code>1 with absolute error &lt; 2.7e-05</code></pre>
+<p><br/><br/></p>
+<p>Para esponder a la pregunta ¿cuál es la probabilidad de que el
+electrodoméstico requiera una reparación mayor en los <strong>primeros 3
+años</strong>? se procede como sigue:</p>
+<p><span class="math display">\[
+P(0 \leq X \leq 3) = \int_{0}^{3} \frac{1}{4} e^{-x/4} \,dx
+\]</span></p>
+<p>Entonces, <span class="math display">\[
+P(0 \leq X \leq 3) = \left[ -e^{-x/4} \right]_{0}^{3} = e^{0} - e^{-3/4}
+= 1 - 0.4724 = 0.5276
+\]</span> La probabilidad de que el electrodoméstico necesite una
+reparación mayor <strong>antes de cumplir 3 años</strong> es
+aproximadamente <strong>0.5276</strong>. <br/><br/></p>
+<p>Para determinar la <strong>distribución acumulada</strong> <span
+class="math inline">\(F(x)\)</span> se obtiene integrando la función de
+densidad desde 0 hasta <span class="math inline">\(x\)</span>, para
+<span class="math inline">\(x \geq 0\)</span>, se tiene: <span
+class="math display">\[
+F(x) = \int_{0}^{x} \frac{1}{4} e^{-t/4} \,dt
+\]</span></p>
+<p>Luego, <span class="math display">\[
+F(x) = \left[-e^{-t/4}\right]_{0}^{x} = 1 - e^{-x/4}
+\]</span></p>
+<p>Puede notar en la <strong>Figura 2.14</strong> que se cumplen las
+propiedades de la FDA:</p>
+<ul>
+<li><span class="math inline">\(F(0) = 0\)</span><br />
+</li>
+<li><span class="math inline">\(\lim_{x \to +\infty} F(x) =
+1\)</span><br />
+</li>
+<li>Es una función monótonamente no decreciente.</li>
+</ul>
+<pre>
+library(ggplot2)
+
+# Definición de la FDA
+F <- function(x) {
+  1 - exp(-x/4)
+}
+
+# Gráfico de FDA
+plot214<-ggplot(data.frame(x = c(0, 20)), aes(x = x)) +
+  geom_function(fun = F, colour = "#4271AE", lwd = 1) +
+  labs(title = "",
+       x = "Tiempo (años)",
+       y = "F(x) - Probabilidad Acumulada") +
+  theme_minimal(base_size = 12)
+
+print(plot214)
+</pre>
+<pre class="r"><code>library(ggplot2)
+
+# Definición de la FDA
+F &lt;- function(x) {
+  1 - exp(-x/4)
+}
+
+# Gráfico de FDA
+plot214&lt;-ggplot(data.frame(x = c(0, 20)), aes(x = x)) +
+  geom_function(fun = F, colour = &quot;#4271AE&quot;, lwd = 1) +
+  labs(title = &quot;&quot;,
+       x = &quot;Tiempo (años)&quot;,
+       y = &quot;F(x) - Probabilidad Acumulada&quot;) +
+  theme_minimal(base_size = 12)
+
+# print(plot214)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig2_14.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.14</strong> Función de distribución acumulada de <span
+class="math inline">\(X\)</span>.
+</center>
+<p><br/><br/></p>
+<p>Usando <span class="math inline">\(F(x)\)</span> se puede responder a
+la pregunta ¿cuál es la probabilidad de que el electrodoméstico necesite
+una reparación <strong>entre 2 y 5 años</strong>?</p>
+<p><span class="math display">\[
+P(2 \leq X \leq 5) = F(5) - F(2)
+\]</span> Reemplazamos la función acumulada: <span
+class="math display">\[
+F(5) = 1 - e^{-5/4}\quad\quad F(2) = 1 - e^{-2/4}
+\]</span> <span class="math display">\[
+P(2 \leq X \leq 5) = (1 - e^{-5/4}) - (1 - e^{-2/4}) = e^{-2/4} -
+e^{-5/4}
+\]</span></p>
+<p>Esta probabilidad representa el área bajo la curva de densidad entre
+2 y 5 años. <br/><br/></p>
+</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

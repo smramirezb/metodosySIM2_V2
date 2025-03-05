@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Teorema del Límite Central</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Teorema del Límite Central</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+<p>El <strong>Teorema del Límite Central (TLC)</strong> es uno de los
+resultados fundamentales de la teoría de la probabilidad y la
+estadística inferencial. Establece que, bajo ciertas condiciones, la
+distribución de la suma (o el promedio) de un gran número de variables
+aleatorias independientes e idénticamente distribuidas (i.i.d.) tiende a
+una <strong>distribución normal</strong>, independientemente de la
+distribución original de las variables.</p>
+<p>El TLC fue formulado en su versión más general por el matemático
+francés <strong>Pierre-Simon Laplace</strong> en el siglo XIX, aunque
+versiones más tempranas fueron propuestas por <strong>Abraham de
+Moivre</strong> en 1733 y posteriormente formalizadas por <strong>Carl
+Friedrich Gauss</strong> en el contexto de la teoría de errores. Sin
+embargo, el desarrollo más riguroso del teorema fue logrado por
+<strong>Aleksandr Lyapunov</strong> en 1901, quien estableció
+condiciones más generales para su validez.</p>
+<p>El TLC es crucial en la estadística inferencial porque permite
+justificar el uso de la <strong>distribución normal</strong> en muchas
+aplicaciones prácticas. Algunas de sus aplicaciones incluyen:</p>
+<ul>
+<li><strong>Inferencia estadística:</strong> Justifica la validez de los
+intervalos de confianza y pruebas de hipótesis basadas en la
+normalidad.</li>
+<li><strong>Aproximaciones de distribuciones:</strong> Facilita el
+cálculo de probabilidades en distribuciones desconocidas.</li>
+<li><strong>Análisis de grandes datos:</strong> Esencial en el muestreo
+y estimación de parámetros poblacionales.</li>
+</ul>
+<p>Existen diversas formulaciones del TLC, dependiendo de la cantidad y
+tipo de variables aleatorias involucradas. A continuación, se presentan
+las versiones más comunes:</p>
+</br></br>
+<h3>
+Versión para la Media Muestral
+</h3>
+<p>Si <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> son
+variables aleatorias independientes e idénticamente distribuidas
+(i.i.d.) de una población <span class="math inline">\(X\)</span> con
+media <span class="math inline">\(\mu\)</span> y varianza <span
+class="math inline">\(\sigma^2\)</span>, entonces la <strong>media
+muestral</strong>:</p>
+<p><span class="math display">\[
+\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i
+\]</span></p>
+<p><strong>converge en distribución</strong> a una distribución normal a
+medida que <span class="math inline">\(n\)</span> tiende a infinito:</p>
+<p><span class="math display">\[
+\bar{X} \xrightarrow{d} N\left(\mu, \frac{\sigma^2}{n}\right).
+\]</span></p>
+<p>Esto significa que, cuando el tamaño muestral es lo suficientemente
+grande, la distribución de la media muestral se aproxima a una
+distribución normal, independientemente de la distribución original de
+los datos. Este resultado es fundamental en estadística inferencial, ya
+que justifica el uso de la normalidad en la construcción de
+<strong>intervalos de confianza</strong> y <strong>pruebas de
+hipótesis</strong>.</p>
+</br></br>
+<h3>
+Versión para la Suma de Variables Aleatorias
+</h3>
+<p>Si <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> son
+variables aleatorias independientes e idénticamente distribuidas
+(i.i.d.) de una población <span class="math inline">\(X\)</span> con
+media <span class="math inline">\(\mu\)</span> y varianza <span
+class="math inline">\(\sigma^2\)</span>, entonces la <strong>suma
+muestral</strong>:</p>
+<p><span class="math display">\[
+S_n = \sum_{i=1}^{n} X_i
+\]</span></p>
+<p><strong>converge en distribución</strong> a una distribución normal a
+medida que <span class="math inline">\(n\)</span> tiende a infinito:</p>
+<p><span class="math display">\[
+S_n \xrightarrow{d} N\left(n\mu, n\sigma^2\right).
+\]</span></p>
+<p>Esto implica que, cuando el tamaño muestral es suficientemente
+grande, la distribución de la suma de las observaciones se aproxima a
+una <strong>distribución normal</strong>, independientemente de la
+distribución original de los datos. Este resultado es fundamental en
+estadística, ya que permite aproximar distribuciones desconocidas
+mediante la normal, facilitando el cálculo de probabilidades y la
+aplicación de métodos inferenciales como <strong>pruebas de
+hipótesis</strong> y <strong>análisis de riesgos en modelos de
+acumulación de valores</strong>.</p>
+</br></br>
+<h3>
+Versión para la Diferencia de Medias Muestrales
+</h3>
+<p>Sea <span class="math inline">\(X_1, X_2, \dots, X_{n_1}\)</span> una
+muestra aleatoria de tamaño <span class="math inline">\(n_1\)</span>
+extraída de una población con media <span
+class="math inline">\(\mu_X\)</span> y varianza <span
+class="math inline">\(\sigma_X^2\)</span>, y sea <span
+class="math inline">\(Y_1, Y_2, \dots, Y_{n_2}\)</span> una muestra
+independiente de tamaño <span class="math inline">\(n_2\)</span>
+proveniente de otra población con media <span
+class="math inline">\(\mu_Y\)</span> y varianza <span
+class="math inline">\(\sigma_Y^2\)</span>. La <strong>diferencia de
+medias muestrales</strong> está dada por:</p>
+<p><span class="math display">\[
+\bar{X} - \bar{Y} = \left( \frac{1}{n_1} \sum_{i=1}^{n_1} X_i \right) -
+\left( \frac{1}{n_2} \sum_{j=1}^{n_2} Y_j \right).
+\]</span></p>
+<p>Cuando <span class="math inline">\(n_1\)</span> y <span
+class="math inline">\(n_2\)</span> son lo suficientemente grandes, la
+<strong>diferencia de medias</strong> <strong>converge en
+distribución</strong> a una distribución normal:</p>
+<p><span class="math display">\[
+\bar{X} - \bar{Y} \xrightarrow{d} N\left(\mu_X - \mu_Y,
+\frac{\sigma_X^2}{n_1} + \frac{\sigma_Y^2}{n_2} \right).
+\]</span></p>
+<p>Esto implica que, cuando los tamaños muestrales son suficientemente
+grandes, la distribución de la diferencia de las medias muestrales se
+aproxima a una <strong>distribución normal</strong>, independientemente
+de la distribución original de las poblaciones. Este resultado es
+fundamental en inferencia estadística, ya que permite aplicar
+<strong>pruebas de hipótesis sobre la diferencia de medias</strong> y
+construir <strong>intervalos de confianza</strong> en estudios
+comparativos entre dos poblaciones.</p>
+</br></br>
+<h3>
+Versión para una Proporción
+</h3>
+<p>Sea <span class="math inline">\(X\)</span> una variable aleatoria que
+representa el número de éxitos en una muestra aleatoria de tamaño <span
+class="math inline">\(n\)</span> extraída de una población con
+proporción poblacional <span class="math inline">\(p\)</span>, donde
+<span class="math inline">\(X \sim Bin(n, p)\)</span>. La
+<strong>proporción muestral</strong> está definida como:</p>
+<p><span class="math display">\[
+\hat{p} = \frac{X}{n}.
+\]</span></p>
+<p>Cuando el tamaño muestral <span class="math inline">\(n\)</span> es
+lo suficientemente grande, la <strong>proporción muestral</strong>
+<strong>converge en distribución</strong> a una distribución normal:</p>
+<p><span class="math display">\[
+\hat{p} \xrightarrow{d} N\left(p, \frac{p(1 - p)}{n} \right).
+\]</span></p>
+<p>Esto implica que, cuando el tamaño muestral es grande, la
+distribución de la proporción muestral se aproxima a una
+<strong>distribución normal</strong>, independientemente de la
+distribución original de los datos. Este resultado es fundamental en la
+estadística inferencial, ya que permite aplicar <strong>pruebas de
+hipótesis sobre una proporción poblacional</strong> y construir
+<strong>intervalos de confianza</strong> para la estimación de
+proporciones en poblaciones finitas e infinitas.</p>
+</br></br>
+<h3>
+Versión para la Diferencia de Proporciones
+</h3>
+<p>Sea <span class="math inline">\(\hat{p}_1\)</span> la proporción
+muestral de una población con proporción poblacional <span
+class="math inline">\(p_1\)</span>, basada en una muestra aleatoria de
+tamaño <span class="math inline">\(n_1\)</span>, y <span
+class="math inline">\(\hat{p}_2\)</span> la proporción muestral de una
+segunda población con proporción poblacional <span
+class="math inline">\(p_2\)</span>, basada en una muestra independiente
+de tamaño <span class="math inline">\(n_2\)</span>. La
+<strong>diferencia de proporciones muestrales</strong> está dada
+por:</p>
+<p><span class="math display">\[
+\hat{p}_1 - \hat{p}_2 = \left( \frac{X_1}{n_1} \right) - \left(
+\frac{X_2}{n_2} \right),
+\]</span></p>
+<p>donde <span class="math inline">\(X_1 \sim Bin(n_1, p_1)\)</span> y
+<span class="math inline">\(X_2 \sim Bin(n_2, p_2)\)</span> representan
+los conteos de éxitos en cada muestra.</p>
+<p>Cuando <span class="math inline">\(n_1\)</span> y <span
+class="math inline">\(n_2\)</span> son lo suficientemente grandes, la
+<strong>diferencia de proporciones</strong> <strong>converge en
+distribución</strong> a una distribución normal:</p>
+<p><span class="math display">\[
+\hat{p}_1 - \hat{p}_2 \xrightarrow{d} N\left(p_1 - p_2, \frac{p_1(1 -
+p_1)}{n_1} + \frac{p_2(1 - p_2)}{n_2} \right).
+\]</span></p>
+<p>Esto implica que, cuando los tamaños muestrales son suficientemente
+grandes, la distribución de la diferencia de las proporciones muestrales
+se aproxima a una <strong>distribución normal</strong>,
+independientemente de la distribución original de los datos. Este
+resultado es fundamental en la estadística inferencial, ya que permite
+aplicar <strong>pruebas de hipótesis sobre la diferencia de
+proporciones</strong> y construir <strong>intervalos de
+confianza</strong> en estudios de comparación de proporciones entre dos
+grupos.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La <strong>distribución exponencial</strong> es comúnmente utilizada
+para modelar <strong>tiempos de espera</strong> o <strong>tiempos hasta
+la ocurrencia de un evento</strong>, como el tiempo entre llegadas de
+clientes a un sistema de atención, la vida útil de componentes
+electrónicos o el tiempo hasta que ocurre un fallo en un sistema.</p>
+<p>Supongamos que un <strong>centro de llamadas de atención al
+cliente</strong> recibe llamadas de manera aleatoria y queremos modelar
+el <strong>tiempo que transcurre entre una llamada y la
+siguiente</strong>. Se ha determinado que, en promedio, hay <strong>una
+llamada cada 2 minutos</strong>, lo que implica que el tiempo entre
+llamadas sigue una <strong>distribución exponencial</strong> con
+parámetro <span class="math inline">\(\lambda = \frac{1}{2}\)</span>, ya
+que la media de una distribución exponencial está dada por:</p>
+<p><span class="math display">\[
+E[X] = \frac{1}{\lambda}.
+\]</span></p>
+<p>Dado que <span class="math inline">\(E[X] = 2\)</span>, se tiene que
+<span class="math inline">\(\lambda = \frac{1}{2}\)</span>.</p>
+<p>La <strong>varianza</strong> de la distribución exponencial está dada
+por:</p>
+<p><span class="math display">\[
+\text{Var}(X) = \frac{1}{\lambda^2}.
+\]</span></p>
+<p>Sustituyendo <span class="math inline">\(\lambda =
+\frac{1}{2}\)</span>, se obtiene:</p>
+<p><span class="math display">\[
+\text{Var}(X) = \frac{1}{(1/2)^2} = 4.
+\]</span></p>
+<p>La <strong>función de densidad de probabilidad</strong> de la
+variable aleatoria <span class="math inline">\(X\)</span>, que
+representa el tiempo entre llamadas (en minutos), está dada por:</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases}
+\frac{1}{2} e^{-x/2}, &amp; x &gt; 0 \\
+0, &amp; x \leq 0
+\end{cases}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(X\)</span> representa el tiempo
+transcurrido entre dos llamadas consecutivas, medido en minutos.</li>
+<li><span class="math inline">\(\lambda = \frac{1}{2}\)</span> es la
+<strong>tasa de ocurrencia</strong> de los eventos (en este caso,
+llamadas por minuto).</li>
+</ul>
+<p>Para el contexto de este problema:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Explica el Teorema del Límite Central para un <span
+class="math inline">\(n = 100\)</span>:</p>
+<ul>
+<li>Genera 1000 muestras de tamaño <span class="math inline">\(n =
+100\)</span>. Calcula la suma muestral de cada muestra. Elabora un
+histograma de las sumas muestrales.</li>
+<li>Obtén el promedio y la varianza de estas 1000 sumas muestrales.</li>
+<li>Aplica un test de normalidad (nivel de significancia <span
+class="math inline">\(\alpha = 0.05\)</span>) a las 1000 sumas e
+interpreta el resultado.</li>
+<li>Explica cómo se evidencia el Teorema del Límite Central en el
+comportamiento de las sumas muestrales.</li>
+</ul></li>
+<li><p>Explica el Teorema del Límite Central varaindo el <span
+class="math inline">\(n\)</span>:</p>
+<ul>
+<li>Repite el análisis anterior utilizando muestras 1000 muestras de
+tamaños: <span class="math inline">\(n = 5, 10, 80, 200, 500,
+2000\)</span>.</li>
+<li>Para cada tamaño de muestra:
+<ul>
+<li>Calcula el promedio y la varianza de las 1000 sumas.</li>
+<li>Elabora un histograma de las 1000 sumas muestrales.</li>
+<li>Aplica un test de normalidad (<span class="math inline">\(\alpha =
+0.05\)</span>) para las 1000 sumas.</li>
+</ul></li>
+<li>Concluye sobre la relación entre el tamaño muestral y la validez del
+Teorema del Límite Central.</li>
+</ul></li>
+</ol>
+<hr />
+<p>Respecto a la parte (a) de la simulación, a continuación se presentan
+los códigos:</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(qqplotr)  # Para el Q-Q plot con ggplot2
+library(nortest)  # Para test de Kolmogorov-Smirnov
+
+# Definir parámetros
+set.seed(123)  # Fijar semilla para reproducibilidad
+lambda <- 1/2  # Parámetro de la distribución exponencial
+n <- 100       # Tamaño de cada muestra
+num_muestras <- 1000  # Número de muestras
+
+# Generar una matriz donde cada columna es una muestra de tamaño n
+muestras <- matrix(rexp(n * num_muestras, rate = lambda), nrow = n, ncol = num_muestras)
+
+# Definir función para calcular la suma de una muestra
+suma_muestral <- function(x) {
+  sum(x)
+}
+
+# Aplicar la función a cada columna de la matriz para obtener la suma muestral
+sumas_muestrales <- apply(muestras, 2, suma_muestral)
+
+# Crear un data frame con los resultados para graficar
+datos_sumas <- data.frame(Suma = sumas_muestrales)
+
+# Graficar el histograma de las sumas muestrales con densidad
+plot.tlc1<- ggplot(datos_sumas, aes(x = Suma)) +
+  geom_histogram(binwidth = 10, fill = "skyblue", color = "black", aes(y = after_stat(density))) +
+  geom_density(color = "red", linewidth = 1) +
+  labs(title = "Distribución de las Sumas Muestrales",
+       x = "Suma de cada muestra",
+       y = "Densidad") +
+  theme_minimal()
+
+
+print(plot.tlc1)
+
+# Calcular el promedio y la varianza de las sumas muestrales
+promedio_sumas <- mean(sumas_muestrales)
+varianza_sumas <- var(sumas_muestrales)
+
+# Mostrar los resultados
+cat("Promedio de las sumas muestrales:", promedio_sumas, "\n")
+cat("Varianza de las sumas muestrales:", varianza_sumas, "\n")
+
+
+# Aplicar el test de normalidad de Shapiro-Wilk
+shapiro_test <- shapiro.test(sumas_muestrales)
+cat("Test de Shapiro-Wilk:\n")
+print(shapiro_test)
+
+# Aplicar el test de Kolmogorov-Smirnov contra una normal teórica
+ks_test <- ks.test(sumas_muestrales, "pnorm", mean = promedio_sumas, sd = sqrt(varianza_sumas))
+cat("Test de Kolmogorov-Smirnov:\n")
+print(ks_test)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(qqplotr)  # Para el Q-Q plot con ggplot2
+library(nortest)  # Para test de Kolmogorov-Smirnov
+
+# Definir parámetros
+set.seed(123)  # Fijar semilla para reproducibilidad
+lambda &lt;- 1/2  # Parámetro de la distribución exponencial
+n &lt;- 100       # Tamaño de cada muestra
+num_muestras &lt;- 1000  # Número de muestras
+
+# Generar una matriz donde cada columna es una muestra de tamaño n
+muestras &lt;- matrix(rexp(n * num_muestras, rate = lambda), nrow = n, ncol = num_muestras)
+
+# Definir función para calcular la suma de una muestra
+suma_muestral &lt;- function(x) {
+  sum(x)
+}
+
+# Aplicar la función a cada columna de la matriz para obtener la suma muestral
+sumas_muestrales &lt;- apply(muestras, 2, suma_muestral)
+
+# Crear un data frame con los resultados para graficar
+datos_sumas &lt;- data.frame(Suma = sumas_muestrales)
+
+# Graficar el histograma de las sumas muestrales con densidad
+plot.tlc1&lt;- ggplot(datos_sumas, aes(x = Suma)) +
+  geom_histogram(binwidth = 10, fill = &quot;skyblue&quot;, color = &quot;black&quot;, aes(y = after_stat(density))) +
+  geom_density(color = &quot;red&quot;, linewidth = 1) +
+  labs(title = &quot;Distribución de las Sumas Muestrales&quot;,
+       x = &quot;Suma de cada muestra&quot;,
+       y = &quot;Densidad&quot;) +
+  theme_minimal()
+
+
+# print(plot.tlc1)
+
+# Calcular el promedio y la varianza de las sumas muestrales
+promedio_sumas &lt;- mean(sumas_muestrales)
+varianza_sumas &lt;- var(sumas_muestrales)
+
+# Mostrar los resultados
+# cat(&quot;Promedio de las sumas muestrales:&quot;, promedio_sumas, &quot;\n&quot;)
+# cat(&quot;Varianza de las sumas muestrales:&quot;, varianza_sumas, &quot;\n&quot;)
+
+
+# Aplicar el test de normalidad de Shapiro-Wilk
+shapiro_test &lt;- shapiro.test(sumas_muestrales)
+cat(&quot;Test de Shapiro-Wilk:\n&quot;)</code></pre>
+<pre><code>Test de Shapiro-Wilk:</code></pre>
+<pre class="r"><code># print(shapiro_test)
+
+# Aplicar el test de Kolmogorov-Smirnov contra una normal teórica
+ks_test &lt;- ks.test(sumas_muestrales, &quot;pnorm&quot;, mean = promedio_sumas, sd = sqrt(varianza_sumas))
+cat(&quot;Test de Kolmogorov-Smirnov:\n&quot;)</code></pre>
+<pre><code>Test de Kolmogorov-Smirnov:</code></pre>
+<pre class="r"><code># (ks_test)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig243.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.43</strong> Histograma de las 1000 sumas calculadas por
+cada muestra.
+</center>
+<p><br/><br/></p>
+<p>A continuación se presentan los resultados de renderizar los
+códigos:</p>
+<pre>
+> cat("Promedio de las sumas muestrales:", promedio_sumas, "\n")
+Promedio de las sumas muestrales: 199.4924 
+> cat("Varianza de las sumas muestrales:", varianza_sumas, "\n")
+Varianza de las sumas muestrales: 382.5936 
+</pre>
+<pre>
+> print(shapiro_test)
+
+    Shapiro-Wilk normality test
+
+data:  sumas_muestrales
+W = 0.99723, p-value = 0.08331
+</pre>
+<pre>
+> print(ks_test)
+
+    Asymptotic one-sample Kolmogorov-Smirnov test
+
+data:  sumas_muestrales
+D = 0.022277, p-value = 0.7038
+alternative hypothesis: two-sided
+</pre>
+<hr />
+<p><strong>Evaluación de la normalidad en las sumas
+muestrales</strong>:</p>
+<p>La <strong>Figura 2.43</strong> muestra el histograma de las
+<strong>1000 sumas</strong> calculadas a partir de las muestras
+generadas de tamaño <span class="math inline">\(n=100\)</span>. Se
+observa que la distribución de las sumas es <strong>simétrica y
+centrada</strong> alrededor de <strong>200</strong>, lo que sugiere que
+las sumas muestrales siguen un comportamiento cercano a una
+<strong>distribución normal</strong>.</p>
+<p>Además, los valores del <strong>promedio</strong> y la
+<strong>varianza</strong> de las 1000 sumas obtenidas (<span
+class="math inline">\(\bar{S} = 199.4924\)</span> y <span
+class="math inline">\(s^2 = 382.5936\)</span>) presentan una
+<strong>gran proximidad</strong> a los valores teóricos esperados <span
+class="math inline">\(\mathbb{E}[S] = n\mu=(100)(2)=200\)</span> y <span
+class="math inline">\(\text{Var}(S) = n\sigma^2=(100)(4)=400\)</span>.
+Esto sugiere que:</p>
+<p><span class="math display">\[
+S_n \approx N(n\mu, n\sigma^2)
+\]</span></p>
+<p>Para evaluar formalmente la normalidad de las sumas muestrales, se
+aplicaron los siguientes <strong>tests de normalidad</strong>:</p>
+<p><strong>1. Test de normalidad de Shapiro-Wilk y
+Kolmogorov-Smirnov</strong></p>
+<p>Ambos tests evalúan si una muestra proviene de una población con
+<strong>distribución normal</strong>.</p>
+<ul>
+<li><p><strong>Hipótesis nula <span
+class="math inline">\(H_0\)</span></strong>:<br />
+<em>La muestra proviene de una distribución normal</em>.</p></li>
+<li><p><strong>Hipótesis alternativa <span
+class="math inline">\(H_A\)</span></strong>:<br />
+<em>La muestra no proviene de una distribución normal</em>.</p></li>
+<li><p><strong>Criterio de decisión</strong>:</p>
+<ul>
+<li>Si el <strong>p-valor <span class="math inline">\(p\)</span> es
+mayor que <span class="math inline">\(\alpha = 0.05\)</span></strong>,
+<em>no se rechaza <span class="math inline">\(H_0\)</span></em>, lo que
+sugiere que los datos <strong>podrían seguir</strong> una distribución
+normal.</li>
+<li>Si el <strong>p-valor <span class="math inline">\(p\)</span> es
+menor que <span class="math inline">\(\alpha = 0.05\)</span></strong>,
+<em>se rechaza <span class="math inline">\(H_0\)</span></em> en favor de
+<span class="math inline">\(H_A\)</span>, indicando que los datos
+<strong>no siguen</strong> una distribución normal.</li>
+</ul></li>
+</ul>
+<p>Estos tests permiten evaluar la <strong>validez del Teorema del
+Límite Central (TLC)</strong>, ya que este establece que las
+<strong>sumas muestrales de variables independientes tienden a
+distribuirse normalmente</strong> conforme el tamaño muestral
+aumenta.</p>
+<hr />
+<p><strong>Resultados de los Tests de Normalidad</strong> Los
+<strong>p-valores</strong> obtenidos en los tests fueron:</p>
+<ul>
+<li><strong>Shapiro-Wilk:</strong> <span class="math inline">\(p-valor =
+0.08331\)</span></li>
+<li><strong>Kolmogorov-Smirnov:</strong> <span
+class="math inline">\(p-valor = 0.7038\)</span></li>
+</ul>
+<p>Dado que en ambos casos el <strong>p-valor es mayor a <span
+class="math inline">\(\alpha = 0.05\)</span></strong>, <strong>no se
+rechaza la hipótesis nula</strong>, lo que indica que las sumas
+muestrales pueden considerarse como provenientes de una distribución
+normal con un nivel de significancia del <strong>5%</strong> (<span
+class="math inline">\(\alpha = 0.05\)</span>).</p>
+<p>Estos resultados proporcionan <strong>evidencia empírica</strong> que
+respalda la validez del <strong>Teorema del Límite Central</strong>,
+confirmando que la distribución de las sumas se aproxima a una normal,
+incluso cuando los datos originales provienen de una distribución
+exponencial.</p>
+<hr />
+<p>Respecto a la parte (b) de la simulación, a continuación se presentan
+los códigos:</p>
+<pre>
+# Cargar librerías necesarias
+library(ggplot2)
+library(qqplotr)   # Para Q-Q plot
+library(nortest)   # Para test de normalidad Kolmogorov-Smirnov
+library(gridExtra) # Para organizar múltiples gráficos en una ventana
+
+# Definir parámetros
+set.seed(123)  # Para reproducibilidad
+lambda <- 1/2  # Parámetro de la distribución exponencial
+tamanos_muestras <- c(5, 10, 80, 200, 500, 2000)  # Diferentes tamaños de muestra
+num_muestras <- 1000  # Número de muestras
+
+# Inicializar listas para almacenar resultados
+resultados <- list()
+graficos <- list()
+
+# Iterar sobre cada tamaño de muestra
+for (n in tamanos_muestras) {
+  
+  # Generar una matriz donde cada columna es una muestra de tamaño n
+  muestras <- matrix(rexp(n * num_muestras, rate = lambda), nrow = n, ncol = num_muestras)
+  
+  # Calcular la suma muestral para cada muestra
+  sumas_muestrales <- apply(muestras, 2, sum)
+  
+  # Calcular el promedio y la varianza de las sumas
+  promedio_sumas <- mean(sumas_muestrales)
+  varianza_sumas <- var(sumas_muestrales)
+  
+  # Guardar resultados en una lista
+  resultados[[as.character(n)]] <- list(
+    "Promedio" = promedio_sumas,
+    "Varianza" = varianza_sumas
+  )
+  
+  # Crear un data frame con los resultados para graficar
+  datos_sumas <- data.frame(Suma = sumas_muestrales)
+  
+  # Graficar el histograma con densidad
+  p <- ggplot(datos_sumas, aes(x = Suma)) +
+    geom_histogram(binwidth = 10, fill = "skyblue", color = "black", aes(y = after_stat(density))) +
+    geom_density(color = "red", linewidth = 1) +
+    labs(title = paste("n =", n),
+         x = "Suma de cada muestra",
+         y = "Densidad") +
+    theme_minimal()
+  
+  # Almacenar gráficos
+  graficos[[as.character(n)]] <- p
+  
+  # Aplicar tests de normalidad
+  shapiro_test <- shapiro.test(sumas_muestrales)
+  ks_test <- ks.test(sumas_muestrales, "pnorm", mean = promedio_sumas, sd = sqrt(varianza_sumas))
+  
+  # Mostrar resultados en consola
+  cat("\n-----------------------------------\n")
+  cat("Resultados para n =", n, "\n")
+  cat("Promedio de sumas muestrales:", promedio_sumas, "\n")
+  cat("Varianza de sumas muestrales:", varianza_sumas, "\n")
+  cat("Test de Shapiro-Wilk: p-valor =", shapiro_test$p.value, "\n")
+  cat("Test de Kolmogorov-Smirnov: p-valor =", ks_test$p.value, "\n")
+}
+
+# Organizar todos los gráficos en una sola ventana
+grid.arrange(grobs = graficos, ncol = 3)
+</pre>
+<pre class="r"><code># Cargar librerías necesarias
+library(ggplot2)
+library(qqplotr)   # Para Q-Q plot
+library(nortest)   # Para test de normalidad Kolmogorov-Smirnov
+library(gridExtra) # Para organizar múltiples gráficos en una ventana
+
+# Definir parámetros
+set.seed(123)  # Para reproducibilidad
+lambda &lt;- 1/2  # Parámetro de la distribución exponencial
+tamanos_muestras &lt;- c(5, 10, 80, 200, 500, 2000)  # Diferentes tamaños de muestra
+num_muestras &lt;- 1000  # Número de muestras
+
+# Inicializar listas para almacenar resultados
+resultados &lt;- list()
+graficos &lt;- list()
+
+# Iterar sobre cada tamaño de muestra
+for (n in tamanos_muestras) {
+  
+  # Generar una matriz donde cada columna es una muestra de tamaño n
+  muestras &lt;- matrix(rexp(n * num_muestras, rate = lambda), nrow = n, ncol = num_muestras)
+  
+  # Calcular la suma muestral para cada muestra
+  sumas_muestrales &lt;- apply(muestras, 2, sum)
+  
+  # Calcular el promedio y la varianza de las sumas
+  promedio_sumas &lt;- mean(sumas_muestrales)
+  varianza_sumas &lt;- var(sumas_muestrales)
+  
+  # Guardar resultados en una lista
+  resultados[[as.character(n)]] &lt;- list(
+    &quot;Promedio&quot; = promedio_sumas,
+    &quot;Varianza&quot; = varianza_sumas
+  )
+  
+  # Crear un data frame con los resultados para graficar
+  datos_sumas &lt;- data.frame(Suma = sumas_muestrales)
+  
+  # Graficar el histograma con densidad
+  p &lt;- ggplot(datos_sumas, aes(x = Suma)) +
+    geom_histogram(binwidth = 10, fill = &quot;skyblue&quot;, color = &quot;black&quot;, aes(y = after_stat(density))) +
+    geom_density(color = &quot;red&quot;, linewidth = 1) +
+    labs(title = paste(&quot;n =&quot;, n),
+         x = &quot;Suma de cada muestra&quot;,
+         y = &quot;Densidad&quot;) +
+    theme_minimal()
+  
+  # Almacenar gráficos
+  graficos[[as.character(n)]] &lt;- p
+  
+  # Aplicar tests de normalidad
+  shapiro_test &lt;- shapiro.test(sumas_muestrales)
+  ks_test &lt;- ks.test(sumas_muestrales, &quot;pnorm&quot;, mean = promedio_sumas, sd = sqrt(varianza_sumas))
+  
+  # Mostrar resultados en consola
+  #cat(&quot;\n-----------------------------------\n&quot;)
+  #cat(&quot;Resultados para n =&quot;, n, &quot;\n&quot;)
+  #cat(&quot;Promedio de sumas muestrales:&quot;, promedio_sumas, &quot;\n&quot;)
+  #cat(&quot;Varianza de sumas muestrales:&quot;, varianza_sumas, &quot;\n&quot;)
+  #cat(&quot;Test de Shapiro-Wilk: p-valor =&quot;, shapiro_test$p.value, &quot;\n&quot;)
+  #cat(&quot;Test de Kolmogorov-Smirnov: p-valor =&quot;, ks_test$p.value, &quot;\n&quot;)
+}
+
+# Organizar todos los gráficos en una sola ventana
+# grid.arrange(grobs = graficos, ncol = 3)</code></pre>
+<hr />
+<br/><br/>
+<center>
+<img src="img/fig244.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.44</strong> Histograma de las 1000 sumas calculadas por
+cada muestra de tamaños de <span class="math inline">\(n = 5, 10, 80,
+200, 500, 2000\)</span>.
+</center>
+<p><br/><br/></p>
+<pre>
+-----------------------------------
+Resultados para n = 5 
+Promedio de sumas muestrales: 10.0867 
+Varianza de sumas muestrales: 20.37322 
+Test de Shapiro-Wilk: p-valor = 2.780042e-16 
+Test de Kolmogorov-Smirnov: p-valor = 0.0006052599 
+
+-----------------------------------
+Resultados para n = 10 
+Promedio de sumas muestrales: 20.14694 
+Varianza de sumas muestrales: 40.20084 
+Test de Shapiro-Wilk: p-valor = 4.53899e-09 
+Test de Kolmogorov-Smirnov: p-valor = 0.08104603 
+
+-----------------------------------
+Resultados para n = 80 
+Promedio de sumas muestrales: 159.3497 
+Varianza de sumas muestrales: 312.4678 
+Test de Shapiro-Wilk: p-valor = 0.03527495 
+Test de Kolmogorov-Smirnov: p-valor = 0.2258247 
+
+-----------------------------------
+Resultados para n = 200 
+Promedio de sumas muestrales: 398.6901 
+Varianza de sumas muestrales: 787.8698 
+Test de Shapiro-Wilk: p-valor = 0.02210118 
+Test de Kolmogorov-Smirnov: p-valor = 0.4179235 
+
+-----------------------------------
+Resultados para n = 500 
+Promedio de sumas muestrales: 1001.354 
+Varianza de sumas muestrales: 1987.363 
+Test de Shapiro-Wilk: p-valor = 0.8243656 
+Test de Kolmogorov-Smirnov: p-valor = 0.9836838 
+
+-----------------------------------
+Resultados para n = 2000 
+Promedio de sumas muestrales: 3998.977 
+Varianza de sumas muestrales: 7882.959 
+Test de Shapiro-Wilk: p-valor = 0.6293026 
+Test de Kolmogorov-Smirnov: p-valor = 0.6349088 
+</pre>
+<hr />
+<p><strong>Evaluación de la normalidad en las sumas
+muestrales</strong>:</p>
+<p>La <strong>Figura 2.44</strong> presenta los histogramas de las
+<strong>1000 sumas</strong> obtenidas a partir de muestras generadas con
+tamaños <span class="math inline">\(n = 5, 10, 80, 200, 500,
+2000\)</span>. Se observa que, a medida que <span
+class="math inline">\(n\)</span> aumenta, la distribución de las sumas
+<strong>se vuelve más simétrica</strong> y está
+<strong>centrada</strong> en valores cercanos a <span
+class="math inline">\(n\mu\)</span>, lo que sugiere que las sumas
+muestrales siguen un comportamiento <strong>aproximadamente
+normal</strong> conforme lo predice el <strong>Teorema del Límite
+Central (TLC)</strong>.</p>
+<p>Los valores del <strong>promedio</strong> y la
+<strong>varianza</strong> de las 1000 sumas presentan una <strong>alta
+coincidencia</strong> con los valores teóricos esperados:</p>
+<p><span class="math display">\[
+\mathbb{E}[S] = n\mu, \quad \text{Var}(S) = n\sigma^2.
+\]</span></p>
+<p>Por ejemplo:</p>
+<ul>
+<li><p>Para <span class="math inline">\(n = 5\)</span>:<br />
+<span class="math display">\[
+\bar{S} = 10.0867, \quad s^2 = 20.3732
+\]</span> Valores esperados:<br />
+<span class="math display">\[
+\mathbb{E}[S] = 10, \quad \text{Var}(S) = 20.
+\]</span></p></li>
+<li><p>Para <span class="math inline">\(n = 2000\)</span>:<br />
+<span class="math display">\[
+\bar{S} = 3998.977, \quad s^2 = 7882.959
+\]</span> Valores esperados:<br />
+<span class="math display">\[
+\mathbb{E}[S] = 4000, \quad \text{Var}(S) = 8000.
+\]</span></p></li>
+</ul>
+<p>Comportamiento de la Varianza:</p>
+<p>Un aspecto importante es que <strong>la varianza de las sumas
+muestrales aumenta con el tamaño de la muestra</strong>. Esto es
+consistente con la relación teórica:</p>
+<p><span class="math display">\[
+\text{Var}(S) = n\sigma^2.
+\]</span></p>
+<p>A medida que <span class="math inline">\(n\)</span> crece, la
+dispersión de las sumas se incrementa, reflejando la acumulación de la
+variabilidad de cada observación individual.</p>
+<p>Estos resultados confirman que, a medida que el tamaño de muestra
+aumenta:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Las distribuciones de las sumas muestrales se asemejan más a
+una normal</strong>.</li>
+<li><strong>Las medias muestrales se aproximan a los valores esperados
+<span class="math inline">\(n\mu\)</span></strong>.</li>
+<li><strong>Las varianzas de las sumas crecen proporcionalmente a <span
+class="math inline">\(n\sigma^2\)</span>, como lo predice la
+teoría</strong>.</li>
+</ol>
+<p>Esto sugiere que:</p>
+<p><span class="math display">\[
+S_n \approx N(n\mu, n\sigma^2)
+\]</span></p>
+<p>Para evaluar formalmente la normalidad de las sumas muestrales, se
+aplicaron los siguientes <strong>tests de normalidad</strong> antes
+mencionados.</p>
+<p><strong>1. Análisis de los Resultados por Tamaño de
+Muestra</strong></p>
+<ul>
+<li><strong><span class="math inline">\(n = 5\)</span> y <span
+class="math inline">\(n = 10\)</span></strong>
+<ul>
+<li>Ambos test presentan <strong>p-valores menores a 0.05</strong>,
+indicando que las sumas <strong>no siguen una distribución
+normal</strong>.</li>
+<li>Esto era <strong>esperado</strong>, ya que con muestras pequeñas el
+Teorema del Límite Central (TLC) no garantiza normalidad.</li>
+<li>El <strong>p-valor extremadamente bajo en Shapiro-Wilk</strong>
+sugiere que la distribución de las sumas aún conserva la asimetría de la
+distribución exponencial original.</li>
+</ul></li>
+<li><strong><span class="math inline">\(n = 80\)</span></strong>
+<ul>
+<li><strong>Kolmogorov-Smirnov</strong> muestra un <strong>p-valor de
+0.2258</strong>, lo que <strong>no permite rechazar la
+normalidad</strong>.</li>
+<li><strong>Shapiro-Wilk</strong>, en cambio, presenta un
+<strong>p-valor de 0.035</strong>, lo que <strong>rechaza la normalidad
+a nivel <span class="math inline">\(\alpha =
+0.05\)</span></strong>.</li>
+<li>Aunque la distribución de sumas ya es visualmente <strong>cercana a
+una normal</strong>, el test de Shapiro-Wilk es <strong>más
+estricto</strong>, lo que sugiere que para <span class="math inline">\(n
+= 80\)</span> aún hay pequeñas desviaciones detectables.</li>
+</ul></li>
+<li><strong><span class="math inline">\(n = 200\)</span></strong>
+<ul>
+<li>Similar al caso anterior:
+<ul>
+<li><strong>Shapiro-Wilk</strong> da un <strong>p-valor de
+0.022</strong>, lo que indica <strong>rechazo de la
+normalidad</strong>.</li>
+<li><strong>Kolmogorov-Smirnov</strong> da un <strong>p-valor de
+0.4179</strong>, indicando que no hay suficiente evidencia para rechazar
+la normalidad.</li>
+</ul></li>
+<li>Este comportamiento sugiere que <strong>Shapiro-Wilk es más
+exigente</strong> cuando se aplican 1000 muestras, detectando pequeñas
+desviaciones que en otras circunstancias podrían no ser
+significativas.</li>
+</ul></li>
+<li><strong><span class="math inline">\(n = 500\)</span> y <span
+class="math inline">\(n = 2000\)</span></strong>
+<ul>
+<li>En estos casos, <strong>ambos test no rechazan la
+normalidad</strong> (<span class="math inline">\(p \gg
+0.05\)</span>).</li>
+<li>Esto confirma que la <strong>distribución de sumas se ajusta bien a
+una normal</strong>, validando el Teorema del Límite Central en estos
+tamaños muestrales.</li>
+</ul></li>
+</ul>
+<p><strong>2. Impacto de la Cantidad de Muestras en los Test de
+Normalidad</strong></p>
+<ul>
+<li>Se observa que para <span class="math inline">\(n = 80\)</span> y
+<span class="math inline">\(n = 200\)</span>, <strong>Shapiro-Wilk
+rechaza la normalidad</strong>, aunque Kolmogorov-Smirnov <strong>no lo
+hace</strong>.</li>
+<li>Esto puede deberse a que <strong>Shapiro-Wilk es más
+sensible</strong>, y al aplicarlo a <strong>1000 muestras en lugar de
+100</strong>, detecta pequeñas desviaciones de la normalidad que, en
+contextos habituales, no serían significativas.</li>
+<li>Para valores de <span class="math inline">\(n \geq 500\)</span>,
+<strong>ambos test confirman la normalidad</strong>, validando la
+aplicación del TLC.</li>
+</ul>
+<p>De lo anterior se puede decir:</p>
+<ul>
+<li><strong>Para tamaños de muestra pequeños (<span
+class="math inline">\(n = 5, 10\)</span>)</strong>, la distribución de
+sumas sigue sin ajustarse a una normal.</li>
+<li><strong>Para <span class="math inline">\(n = 80\)</span> y <span
+class="math inline">\(n = 200\)</span></strong>, aunque visualmente la
+distribución parece normal, <strong>Shapiro-Wilk sigue rechazando la
+normalidad</strong>, probablemente debido a la <strong>cantidad de
+muestras analizadas (1000 en lugar de 100)</strong>.</li>
+<li><strong>Para <span class="math inline">\(n = 500\)</span> y <span
+class="math inline">\(n = 2000\)</span></strong>, <strong>ambos test
+confirman la normalidad</strong>, validando el <strong>Teorema del
+Límite Central</strong> para la suma de variables aleatorias.</li>
+</ul>
+<p>Si se desea evaluar la <strong>normalidad</strong> en tamaños de
+muestra intermedios (<span class="math inline">\(n \approx
+80-200\)</span>), se recomienda aplicar la prueba sobre un número
+<strong>menor de muestras</strong>. Esto se debe a que, con un gran
+número de muestras, el <strong>test de Shapiro-Wilk</strong> tiende a
+<strong>rechazar la normalidad</strong> incluso cuando las desviaciones
+son insignificantes.</p>
+<p>Esta observación plantea preguntas clave sobre la aplicación de los
+<strong>tests de normalidad</strong> en diferentes escenarios:</p>
+<ul>
+<li>¿Cuándo es más adecuado utilizar <strong>Kolmogorov-Smirnov</strong>
+en lugar de <strong>Shapiro-Wilk</strong>?</li>
+<li>¿Cómo influye el <strong>tamaño de la muestra</strong> en la
+capacidad del test para detectar desviaciones de la normalidad?</li>
+<li>¿Cuál es el <strong>nivel de significancia</strong> óptimo a emplear
+en función del tamaño muestral?</li>
+<li>¿Cómo afecta el <strong>tamaño del efecto</strong> la interpretación
+del valor <span class="math inline">\(p\)</span> en estas pruebas?</li>
+</ul>
+<p>Para responder estas preguntas, es necesario profundizar en los
+conceptos de <strong>pruebas de hipótesis</strong>, analizando aspectos
+como el <strong>nivel de significancia (<span
+class="math inline">\(\alpha\)</span>)</strong>, el <strong>tamaño del
+efecto</strong> y la interpretación del <strong>valor <span
+class="math inline">\(p\)</span></strong>. Una mejor comprensión de
+estos temas permitirá optimizar el análisis de
+<strong>normalidad</strong> y, con ello, mejorar la interpretación del
+<strong>Teorema del Límite Central</strong> en diferentes contextos
+estadísticos.</p>
+</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

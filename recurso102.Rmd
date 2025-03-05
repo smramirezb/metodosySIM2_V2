@@ -1,0 +1,115 @@
+---
+title: <span style="color:#686868"> **Conceptos básicos**</span> 
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = NA)
+```
+
+<br/>
+
+Inicialmente se definen tres conceptos fundamentales sobre los cuales se construye la teoría de la probabilidad:
+
+<br/><br/>
+<h2>Experimento aleatorio</h2>
+
+Un experimento aleatorio es un procedimiento que puede repetirse bajo las mismas condiciones y cuyo resultado no se puede predecir con certeza antes de su realización. A diferencia de un experimento determinista, donde el resultado es siempre el mismo bajo las mismas condiciones, en un experimento aleatorio los posibles resultados están sujetos a la variabilidad inherente del proceso.
+
+
+<br/>
+<div class="caja-ejemplo">
+<h3>Ejemplos:</h3>
+<p> 
+A continuación, se presenta una lista de experimentos aleatorios (E):
+
+- $E_{1}$: Lanzar una moneda dos veces y observar los resultados obtenidos en sus caras superiores.
+
+- $E_{2}$: Lanzar dos dados y observar la suma de los resultados superiores.
+
+- $E_{3}$: Realizar un examen de estadística y observar el resultado obtenido.
+
+- $E_{4}$: En una salida de campo, observar si se cumple o no, totalmente, el objetivo planteado.
+
+- $E_{5}$: Observar el número total de ensayos de laboratorio exitosos en 20 intentos realizados.
+</p>
+</div>
+
+
+
+<br/><br/>
+<h2>Espacio muestral</h2>
+El espacio muestral se define como el conjunto de todos los posibles resultados que puede tomar un experimento aleatorio. Este conjunto es usualmente denotado por la letra mayúscula *S*.
+
+<br/>
+<div class="caja-ejemplo">
+<h3>Ejemplos:</h3>
+<p>
+- Supongamos un experimento en el que se lanzan dos monedas y se registran los resultados en el orden en que ocurren. Dado que cada moneda puede caer en cara (c) o sello (s), existen cuatro posibles combinaciones de resultados. Por lo tanto, el espacio muestral está dado por:  \( S_1 = \{ (cc), (cs), (sc), (ss) \} \).
+
+- Supongamos un experimento en el que se lanzan dos dados de seis caras y se registran los resultados en el orden en que ocurren. Dado que cada dado puede mostrar un número del 1 al 6, existen \( 6 \times 6 = 36 \) posibles combinaciones de resultados.  Por lo tanto, el espacio muestral está dado por:  
+\[
+S_2 =
+\left\{
+\begin{array}{cccccc}
+(1,1), (1,2), (1,3), (1,4), (1,5), (1,6) \\
+(2,1), (2,2), (2,3), (2,4), (2,5), (2,6) \\
+(3,1), (3,2), (3,3), (3,4), (3,5), (3,6) \\
+(4,1), (4,2), (4,3), (4,4), (4,5), (4,6) \\
+(5,1), (5,2), (5,3), (5,4), (5,5), (5,6) \\
+(6,1), (6,2), (6,3), (6,4), (6,5), (6,6)
+\end{array}
+\right\}
+\]
+
+- Supongamos un experimento en el que se mide el tiempo de espera (en minutos) de un cliente en la fila de un banco antes de ser atendido. El tiempo puede tomar cualquier valor real entre 0 y 20 minutos, ya que la atención puede ocurrir de inmediato o tardar hasta el límite máximo establecido. Por lo tanto, el espacio muestral está dado por:  
+
+\[
+S_3 = \{ x \in \mathbb{R} \mid 0 \leq x \leq 20 \}
+\]
+
+- Supongamos un experimento en el que se registra si un interruptor está encendido o apagado. Dado que el interruptor solo puede tomar dos estados, lo representamos con una variable \( x \) que puede asumir los valores 0 (apagado) o 1 (encendido). En consecuencia, el espacio muestral está dado por:  
+\[
+S_4 = \{0,1\}
+\]
+
+- Supongamos un experimento en el que se cuenta el número de clientes que llegan a una tienda en un intervalo de una hora. Debido a que la cantidad de clientes es un número entero no negativo y que, por restricciones operativas, el máximo posible en una hora es 20,  la variable \( x \) representa el número de clientes observados en ese periodo. Luego, el espacio muestral está dado por:  
+\[
+S_5 = \{ x \in \mathbb{N} \mid 0 \leq x \leq 20 \} = \{0,1,2,\dots,20\}
+\]
+</p>
+</div>
+
+
+
+<br/><br/>
+<h2>Evento aleatorio</h2>
+
+Un evento aleatorio se define como un subconjunto del espacio muestral que es de interés para el análisis. Al igual que cualquier conjunto, se le asigna un nombre utilizando una letra mayúscula, generalmente las primeras letras del alfabeto.
+
+<br/>
+<div class="caja-ejemplo">
+<h3>Ejemplos:</h3>
+<p>
+A continuación, se describen algunos eventos correspondientes a los espacios muestrales definidos previamente:
+
+|           | Descripción                                        | Espacio Muestral |
+|:----------|:--------------------------------------------------|:-----------------|
+| $A_1$     | Obtener dos caras en el lanzamiento de dos monedas | \( A_1 = \{ (c, c) \} \) |
+| $A_2$     | La suma de las caras superiores de dos dados sea inferior a 4 | \( A_2 = \{ (1, 1), (1, 2), (2, 1) \} \) |
+| $A_3$     | El tiempo de espera sea inferior a 5 minutos | \( A_3 = \{ x \in \mathbb{R} \mid 0 \leq x \leq 5.0 \} \) |
+| $A_4$     | El interruptor esté encendido                     | \( A_4 = \{ 1 \} \) |
+| $A_5$     | El número de clientes que lleguen sea mayor a 15   | \( A_5 = \{ x \in \mathbb{N} \mid 15 \leq x \leq 20 \} \) |
+
+</p>
+</div>
+
+
+

@@ -1,0 +1,2273 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Pruebas no paramétricas</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Pruebas sobre una muestra</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas sobre dos muestras</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de Estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Referencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso1000.html">Referencias</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Pruebas no paramétricas</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>Hasta este punto, los procedimientos estadísticos abordados han
+requerido el cumplimiento de ciertos <strong>supuestos</strong> para
+garantizar la validez de los resultados. Un ejemplo relevante es la
+<strong>prueba t de Student</strong>, que exige que la variable de
+interés siga una <strong>distribución normal en la
+población</strong>.</p>
+<p>El <strong>Teorema Central del Límite (TCL)</strong> establece que,
+si las muestras son lo suficientemente grandes, la <strong>distribución
+muestral</strong> tenderá a ser aproximadamente <strong>normal</strong>,
+lo que permite <strong>relajar</strong> el supuesto de normalidad en la
+población cuando el tamaño muestral es <strong>suficientemente
+grande</strong>. No obstante, en la práctica, <strong>no siempre es
+posible contar con muestras extensas</strong>, lo que implica que los
+supuestos de normalidad siguen siendo un aspecto crítico en el análisis
+estadístico.</p>
+<p>Todas las pruebas vistas hasta el momento requieren
+<strong>condiciones específicas</strong> sobre la población de estudio.
+Estas condiciones afectan la <strong>validez</strong> y
+<strong>precisión</strong> de los resultados obtenidos. Sin embargo, en
+la práctica:</p>
+<ul>
+<li>En algunos casos, es <strong>posible verificar
+empíricamente</strong> si los supuestos se cumplen, mediante
+<strong>pruebas de normalidad</strong> o <strong>análisis
+gráficos</strong>.</li>
+<li>En otras situaciones, solo es <strong>posible suponer</strong> que
+los datos cumplen los supuestos, lo que introduce un margen de
+<strong>incertidumbre</strong> en la inferencia estadística.</li>
+</ul>
+<p>El incumplimiento de los supuestos puede generar <strong>resultados
+imprecisos</strong> o incluso <strong>incorrectos</strong> en la toma de
+decisiones estadísticas. En particular:</p>
+<ul>
+<li><strong>Pequeñas desviaciones</strong> de los supuestos pueden
+producir <strong>estimaciones sesgadas</strong>, pero el efecto puede
+ser manejable.</li>
+<li><strong>Violaciones graves</strong> pueden comprometer completamente
+la validez de las pruebas y llevar a <strong>conclusiones
+erróneas</strong>.</li>
+</ul>
+<p>Por esta razón, es fundamental evaluar la adecuación de cada prueba
+antes de aplicarla, considerando alternativas <strong>no
+paramétricas</strong> cuando los supuestos no pueden cumplirse de manera
+satisfactoria.</p>
+<p><strong>Cuándo Utilizar Pruebas No Paramétricas</strong></p>
+<p>Las pruebas no paramétricas son una alternativa a las pruebas
+paramétricas cuando los datos no cumplen con ciertos supuestos
+fundamentales. Su aplicación es recomendable en los siguientes
+casos:</p>
+<ul>
+<li><p><strong>Cuando no se cumplen los supuestos paramétricos</strong>,
+tales como:</p>
+<ul>
+<li><strong>Normalidad</strong> en la distribución de los datos.</li>
+<li><strong>Tamaño mínimo de muestra</strong> requerido para aplicar
+pruebas paramétricas.</li>
+<li><strong>Igual número de elementos en cada muestra</strong>,
+especialmente en estudios comparativos.</li>
+<li><strong>Homogeneidad de varianzas</strong>, condición necesaria en
+pruebas como la t de Student.</li>
+</ul></li>
+<li><p><strong>Cuando se dispone de tamaños muestrales
+pequeños</strong>, generalmente menores a <strong>30
+observaciones</strong>, lo que dificulta verificar los supuestos de
+normalidad en la población.</p></li>
+<li><p><strong>Cuando se requiere convertir datos cualitativos en
+información cuantificable</strong>, por ejemplo, en estudios de mercado
+donde se transforman escalas <strong>nominales u ordinales</strong> en
+escalas de intervalo para analizar aspectos como:</p>
+<ul>
+<li>Preferencias del consumidor.</li>
+<li>Nivel de satisfacción.</li>
+<li>Necesidades del cliente.</li>
+</ul></li>
+</ul>
+<p><strong>Ventajas de Utilizar Pruebas No Paramétricas</strong></p>
+<p>Las pruebas no paramétricas presentan diversas ventajas, entre
+ellas:</p>
+<ul>
+<li>Son <strong>fáciles de aplicar</strong> (aunque en la actualidad,
+con el uso de <strong>R</strong>, tanto las pruebas paramétricas como no
+paramétricas pueden implementarse con una sola línea de código).<br />
+</li>
+<li>No requieren verificar <strong>supuestos distribucionales</strong>,
+lo que las hace más flexibles en su aplicación.<br />
+</li>
+<li>Son adecuadas para <strong>muestras pequeñas</strong>, lo que
+permite su uso en estudios con datos limitados.<br />
+</li>
+<li>Permiten el análisis de <strong>variables cualitativas</strong>,
+facilitando la toma de decisiones en contextos donde los datos no son
+numéricos.</li>
+</ul>
+<p><strong>Desventajas de las Pruebas No Paramétricas</strong></p>
+<p>A pesar de su utilidad, estas pruebas presentan ciertas
+limitaciones:</p>
+<ul>
+<li><strong>Pérdida de información</strong>: Al basarse en rangos en
+lugar de valores absolutos, pueden reducir la precisión del
+análisis.<br />
+</li>
+<li><strong>Menor eficiencia estadística</strong> en comparación con las
+pruebas paramétricas, lo que implica una menor <strong>potencia
+estadística</strong>.<br />
+</li>
+<li><strong>Mayor riesgo de cometer un error de Tipo II</strong>, es
+decir, mayor probabilidad de <strong>no rechazar una hipótesis nula
+falsa</strong>.</li>
+</ul>
+<p><strong>Principales Pruebas No Paramétricas</strong></p>
+<p>Las pruebas no paramétricas más utilizadas en estadística inferencial
+incluyen:</p>
+<ul>
+<li><strong>Prueba de Signos</strong>: Evalúa si la <strong>mediana
+poblacional (<span class="math inline">\(Me\)</span>)</strong> de una
+variable difiere significativamente de un valor de referencia o evalúa
+las diferencias en datos pareados sin asumir normalidad.<br />
+</li>
+<li><strong>Prueba Chi-Cuadrado de Bondad de Ajuste</strong>: Determina
+si una muestra sigue una distribución esperada.</li>
+<li><strong>Prueba Chi-Cuadrado de Independencia</strong>: Evalúa la
+asociación entre dos variables categóricas.<br />
+</li>
+<li><strong>Prueba de Mann-Whitney</strong>: Comparación de dos muestras
+independientes cuando no se asume normalidad.</li>
+<li><strong>Prueba de Wilcoxon</strong>: Alternativa a la prueba t para
+muestras dependientes.</li>
+<li><strong>Prueba de Kruskal-Wallis</strong>: Alternativa a ANOVA para
+comparar más de dos grupos independientes.<br />
+</li>
+<li><strong>Correlación de Rangos de Spearman</strong>: Mide la relación
+entre dos variables ordinales o no lineales.</li>
+<li><strong>Prueba de Rachas</strong>: Detecta patrones en secuencias de
+datos.</li>
+</ul>
+<hr />
+</br></br>
+<h2>
+Prueba de signos
+</h2>
+<p>La <strong>prueba de signos</strong> es un método estadístico
+<strong>no paramétrico</strong> utilizado para evaluar si la
+<strong>mediana poblacional</strong> de una variable difiere
+significativamente de un valor de referencia. También se emplea para
+comparar dos muestras <strong>pareadas</strong>, verificando si existe
+una diferencia significativa en la <strong>mediana de las
+diferencias</strong>.</p>
+<p><strong>Prueba de una sola muestra:</strong> Para una única muestra,
+se analiza si la <strong>mediana poblacional</strong> (<span
+class="math inline">\(Me\)</span>) es diferente de un valor de
+referencia (<span class="math inline">\(Me_0\)</span>). Se plantean las
+siguientes hipótesis alternativas:</p>
+<ul>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: <span
+class="math inline">\(Me \neq Me_0\)</span> (bilateral)<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: <span
+class="math inline">\(Me &gt; Me_0\)</span> (unilateral derecha)<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: <span
+class="math inline">\(Me &lt; Me_0\)</span> (unilateral izquierda)</li>
+</ul>
+<p><strong>Prueba para muestras pareadas:</strong></p>
+<p>Para <strong>muestras pareadas</strong>, se considera la
+<strong>mediana de las diferencias</strong> <span
+class="math inline">\(Me_D\)</span> entre cada par de valores <span
+class="math inline">\((X_i, Y_i)\)</span>. Se define cada diferencia
+como <span class="math inline">\(D_i = X_i - Y_i\)</span>. Las hipótesis
+alternativas pueden formularse de la siguiente manera:</p>
+<ul>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: <span
+class="math inline">\(Me_D \neq 0\)</span> (bilateral)<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: <span
+class="math inline">\(Me_D &gt; 0\)</span> (unilateral derecha)<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: <span
+class="math inline">\(Me_D &lt; 0\)</span> (unilateral izquierda)</li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>En este estudio, se analiza el impacto del <strong>deporte</strong>
+en la percepción de autoimagen de un grupo de personas. Carlos y Ángela,
+administradoras e investigadoras en una firma de artículos deportivos,
+plantean la hipótesis de que la práctica deportiva influye en la imagen
+que cada persona tiene de sí misma. Para evaluar esta premisa, se
+seleccionó <strong>aleatoriamente</strong> a un grupo de <strong>18
+participantes</strong>, quienes respondieron un <strong>cuestionario de
+autoimagen</strong> antes de iniciar un programa de ejercicios.</p>
+<p>En la escala de medición utilizada:</p>
+<ul>
+<li>Un <strong>nivel de 15 puntos</strong> indica
+<strong>indiferencia</strong> respecto a la afirmación de que el deporte
+afecta la autoimagen.</li>
+<li>Valores <strong>menores a 15</strong> sugieren un <strong>impacto
+negativo</strong> en la autoimagen.</li>
+<li>Valores <strong>mayores a 15</strong> sugieren un <strong>impacto
+positivo</strong> en la autoimagen.</li>
+</ul>
+<p>Los puntajes obtenidos en la prueba fueron los siguientes : 16, 15,
+12, 17, 18, 14, 16, 14, 16, 17, 19, 16, 14, 21, 20, 16, 16, 16 |</p>
+<p>Se plantea la siguiente <strong>prueba de signos</strong> para
+evaluar si la <strong>mediana de la autoimagen</strong> es <strong>mayor
+a 15</strong>, lo que indicaría un efecto positivo del deporte en la
+percepción personal.</p>
+<p>Las hipótesis estadísticas:</p>
+<p><span class="math display">\[
+H_0: Me \leq 15
+\]</span></p>
+<p><span class="math display">\[
+H_1: Me &gt; 15
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><strong><span class="math inline">\(H_0\)</span></strong>: La
+mediana de la autoimagen es <strong>igual o menor a 15</strong>, lo que
+sugiere que el deporte <strong>no tiene un efecto significativo</strong>
+en la autoimagen.</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: La
+mediana de la autoimagen es <strong>mayor a 15</strong>, lo que indica
+que la práctica deportiva <strong>mejora la percepción de
+autoimagen</strong> de los participantes.</li>
+</ul>
+<p>El código siguiente implementa el test de signos usando hipótesis
+alternativa unilateral derecha:</p>
+<pre>
+# Cargar la librería BSDA, que contiene la función SIGN.test()
+library(BSDA)
+
+# Definir el conjunto de datos con los valores obtenidos en la encuesta
+x.img <- c(16, 15, 12, 17, 18, 14, 16, 14, 16, 
+           17, 19, 16, 14, 21, 20, 16, 16, 16)
+
+# Aplicar la prueba de signos para contrastar H0: Me = 15 contra H1: Me > 15
+SIGN.test(x.img, md = 15, alternative = "greater")
+</pre>
+<pre class="r"><code># Cargar la librería BSDA, que contiene la función SIGN.test()
+library(BSDA)
+
+# Definir el conjunto de datos con los valores obtenidos en la encuesta
+x.img &lt;- c(16, 15, 12, 17, 18, 14, 16, 14, 16, 
+           17, 19, 16, 14, 21, 20, 16, 16, 16)
+
+# Aplicar la prueba de signos para contrastar H0: Me = 15 contra H1: Me &gt; 15
+SIGN.test(x.img, md = 15, alternative = &quot;greater&quot;)</code></pre>
+<pre><code>
+    One-sample Sign-Test
+
+data:  x.img
+s = 13, p-value = 0.02452
+alternative hypothesis: true median is greater than 15
+95 percent confidence interval:
+  16 Inf
+sample estimates:
+median of x 
+         16 
+
+Achieved and Interpolated Confidence Intervals: 
+
+                  Conf.Level L.E.pt U.E.pt
+Lower Achieved CI     0.8811     16    Inf
+Interpolated CI       0.9500     16    Inf
+Upper Achieved CI     0.9519     16    Inf</code></pre>
+<p>Los resultados del test se muestran a continuación:</p>
+<pre>
+One-sample Sign-Test
+
+data:  x.img
+s = 13, p-value = 0.02452
+alternative hypothesis: true median is greater than 15
+95 percent confidence interval:
+  16 Inf
+sample estimates:
+median of x 
+         16 
+
+Achieved and Interpolated Confidence Intervals: 
+
+                  Conf.Level L.E.pt U.E.pt
+Lower Achieved CI     0.8811     16    Inf
+Interpolated CI       0.9500     16    Inf
+Upper Achieved CI     0.9519     16    Inf
+</pre>
+<p>El valor-p = 0.02452 por tanto con una significancia del 5% se acepta
+que la mediana de la autoimagen es <strong>mayor a 15</strong>, lo que
+indica que la práctica deportiva <strong>mejora la percepción de
+autoimagen</strong> de los participantes.</p>
+</p>
+</div>
+</br></br>
+<h2>
+Prueba Chi-cuadrado de bondad de ajuste
+</h2>
+<p>La <strong>prueba Chi-cuadrado de bondad de ajuste</strong> es un
+procedimiento estadístico <strong>no paramétrico</strong> que permite
+evaluar si la <strong>distribución de datos observados</strong> sigue
+una <strong>distribución teórica esperada</strong>. Se emplea
+frecuentemente para comprobar si los datos siguen una
+<strong>distribución normal, uniforme, de Poisson, entre
+otras</strong>.</p>
+<p>Las hipótesis estadísticas:</p>
+<ul>
+<li><p><strong><span class="math inline">\(H_0\)</span></strong>: La
+distribución de los datos <strong>coincide</strong> con la distribución
+teórica esperada..</p></li>
+<li><p><strong><span class="math inline">\(H_1\)</span></strong>: Al
+menos una de las <strong>frecuencias observadas</strong> difiere
+significativamente de la distribución teórica esperada..</p></li>
+</ul>
+<p><strong>Supuestos de la prueba:</strong></p>
+<ul>
+<li><p>Las observaciones son <strong>independientes</strong>.</p></li>
+<li><p>El tamaño muestral es <strong>suficientemente grande</strong>,
+asegurando que las <strong>frecuencias esperadas sean al menos
+5</strong> en cada categoría.</p></li>
+<li><p>Los datos analizados corresponden a una <strong>variable
+categórica</strong> o han sido agrupados en clases adecuadas.</p></li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>El dueño de una <strong>panadería</strong> busca establecer políticas
+de inventario basadas en la demanda de cuatro <strong>marcas de
+leche</strong>. Para ello, es necesario determinar si las <strong>ventas
+diarias</strong> de cada marca siguen una <strong>distribución
+uniforme</strong>.</p>
+<p>Para evaluar esto, se empleará la <strong>prueba de bondad de ajuste
+de Chi-cuadrado</strong>, la cual permite comparar las
+<strong>frecuencias observadas</strong> con las <strong>frecuencias
+esperadas</strong> bajo la suposición de que todas las marcas tienen
+<strong>demanda similar</strong>.</p>
+<p>Las hipótesis estadísticas:</p>
+<p><span class="math inline">\(H_0\)</span>: La <strong>demanda se
+distribuye uniformemente</strong> entre todas las marcas.</p>
+<p><span class="math inline">\(H_1\)</span>: La <strong>demanda no sigue
+una distribución uniforme</strong>, es decir, al menos una marca tiene
+una demanda diferente a las demás.</p>
+<p>donde:</p>
+<ul>
+<li><strong>Hipótesis nula <span
+class="math inline">\(H_0\)</span></strong>: La <strong>demanda es
+igual</strong> para todas las marcas.<br />
+</li>
+<li><strong>Hipótesis alternativa <span
+class="math inline">\(H_1\)</span></strong>: La demanda varía entre las
+marcas.</li>
+</ul>
+<p>Las ventas registradas en un día para cada marca de leche fueron las
+siguientes:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><strong>Marca</strong></th>
+<th align="center"><strong>Ventas observadas</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Marca 1</strong></td>
+<td align="center">33</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Marca 2</strong></td>
+<td align="center">22</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>Marca 3</strong></td>
+<td align="center">21</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Marca 4</strong></td>
+<td align="center">24</td>
+</tr>
+</tbody>
+</table>
+<p>El siguiente código ejecuta la prueba de
+<strong>Chi-cuadrado</strong> en <strong>R</strong> indicando en el
+código las proporciones esperadas bajo la <strong>hipótesis
+nula</strong>. Para una distribución uniforme, la proporción de valores
+por cada marca debe ser la misma.</p>
+<pre>
+# Cargar librería (opcional, base R ya incluye chisq.test)
+# library(stats)
+
+# Definir las frecuencias observadas de ventas por marca
+ventas_observadas <- c(33, 22, 21, 24)
+
+# Definir las proporciones esperadas bajo la hipótesis nula
+# En este caso, especificamos que todas las marcas tienen la misma probabilidad (distribución uniforme)
+proporciones_esperadas <- c(0.25, 0.25, 0.25, 0.25)
+
+# Aplicar la prueba de bondad de ajuste de Chi-cuadrado
+resultado_chi <- chisq.test(ventas_observadas, p = proporciones_esperadas)
+
+# Mostrar los resultados del test
+print(resultado_chi)
+
+# Verificar las frecuencias esperadas calculadas por R
+print(resultado_chi$expected)
+
+</pre>
+<pre class="r"><code># Cargar librería (opcional, base R ya incluye chisq.test)
+# library(stats)
+
+# Definir las frecuencias observadas de ventas por marca
+ventas_observadas &lt;- c(33, 22, 21, 24)
+
+# Definir las proporciones esperadas bajo la hipótesis nula
+# En este caso, especificamos que todas las marcas tienen la misma probabilidad (distribución uniforme)
+proporciones_esperadas &lt;- c(0.25, 0.25, 0.25, 0.25)
+
+# Aplicar la prueba de bondad de ajuste de Chi-cuadrado
+resultado_chi &lt;- chisq.test(ventas_observadas, p = proporciones_esperadas)
+
+# Mostrar los resultados del test
+print(resultado_chi)</code></pre>
+<pre><code>
+    Chi-squared test for given probabilities
+
+data:  ventas_observadas
+X-squared = 3.6, df = 3, p-value = 0.308</code></pre>
+<pre class="r"><code># Verificar las frecuencias esperadas calculadas por R
+print(resultado_chi$expected)</code></pre>
+<pre><code>[1] 25 25 25 25</code></pre>
+<p>Los resultados del test corresponde a lo siguiente:</p>
+<pre>
+Chi-squared test for given probabilities
+
+data:  ventas_observadas
+X-squared = 3.6, df = 3, p-value = 0.308
+</pre>
+<p>Dado que el <strong>valor-p</strong> obtenido es
+<strong>0.308</strong>, el cual es mayor que 0.05, no se rechaza la
+hipótesis nula. Por lo tanto, no hay evidencia suficiente en la muestra
+para inferir que la demanda de las marcas es diferente, por lo que se
+asume que la demanda es igual para todas las marcas con una
+significancia del 5%</p>
+</p>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se desea determinar si los resultados dr las calificaciones obtenidos
+por un grupo de estudiantes <strong>siguen una distribución
+normal</strong> con <strong>media 3.5</strong> y <strong>desviación
+estándar 0.7</strong>.</p>
+<p>Las hipótesis estadísticas:</p>
+<p><span class="math inline">\(H_0\)</span>: Las notas se distribuyen
+Normal.</p>
+<p><span class="math inline">\(H_1\)</span>: Las notas no se distribuyen
+Normal.</p>
+<p>Los datos corresponde a:</p>
+<p>4.1, 2.7, 3.1, 3.2, 3.0, 3.2, 2.0, 2.4, 1.6, 3.2, 3.1, 2.6, 2.0, 2.4,
+2.8, 3.3, 4.0, 3.4, 3.0, 3.1, 2.7, 2.7, 3.0, 3.8, 3.2, 2.2, 3.5, 3.5,
+3.8, 3.5, 3.9, 4.2, 4.3, 3.9, 3.2, 3.5, 3.5, 3.7, 4.1, 3.7, 3.5, 3.6,
+3.2, 3.1, 3.4, 3.0, 3.0, 3.0, 2.7, 1.7, 3.6, 2.1, 2.4, 3.0, 3.1, 2.5,
+2.5, 3.6, 2.2, 2.4, 3.1, 3.3, 2.7, 3.7, 3.0, 2.7, 3.0, 3.2, 3.1, 2.4,
+3.0, 2.7, 2.5, 3.0, 3.0, 3.0, 3.2, 3.1, 3.8, 4.1, 3.7, 3.5, 3.0, 3.7,
+3.7, 4.1, 3.7, 3.9, 3.7, 2.0</p>
+<p>El código siguiente implementa el test de bondad de ajuste:</p>
+<pre>
+# Definir un conjunto de datos llamado 'nf' con valores numéricos
+nf <- c(4.1, 2.7, 3.1, 3.2, 3.0, 3.2, 2.0, 2.4, 1.6, 3.2, 3.1, 2.6, 2.0, 2.4, 2.8, 
+        3.3, 4.0, 3.4, 3.0, 3.1, 2.7, 2.7, 3.0, 3.8, 3.2, 2.2, 3.5, 3.5, 3.8, 3.5, 
+        3.9, 4.2, 4.3, 3.9, 3.2, 3.5, 3.5, 3.7, 4.1, 3.7, 3.5, 3.6, 3.2, 3.1, 3.4, 
+        3.0, 3.0, 3.0, 2.7, 1.7, 3.6, 2.1, 2.4, 3.0, 3.1, 2.5, 2.5, 3.6, 2.2, 2.4, 
+        3.1, 3.3, 2.7, 3.7, 3.0, 2.7, 3.0, 3.2, 3.1, 2.4, 3.0, 2.7, 2.5, 3.0, 3.0, 
+        3.0, 3.2, 3.1, 3.8, 4.1, 3.7, 3.5, 3.0, 3.7, 3.7, 4.1, 3.7, 3.9, 3.7, 2.0)
+
+# Crear un histograma de los datos
+h <- hist(nf, plot = FALSE)
+
+# Obtener los límites de los intervalos usados en el histograma
+lim.nf <- h$breaks  
+
+# Obtener las frecuencias observadas en cada intervalo
+obs.nf <- h$counts  
+
+# Calcular la media de los datos
+mx <- mean(nf)  
+
+# Calcular la desviación estándar de los datos
+sdx <- sd(nf)  
+
+# Calcular las probabilidades acumuladas en los cortes del histograma
+# suponiendo que los datos siguen una distribución normal bajo la hipótesis nula (H0)
+Fx.nf <- pnorm(lim.nf, mx, sdx)  
+
+# Calcular las probabilidades esperadas en cada intervalo restando valores acumulados consecutivos
+prob.nf <- Fx.nf[-1] - Fx.nf[-length(Fx.nf)]   
+
+  
+# Ajuste de las probabilidades esperadas para que su suma sea exactamente 1
+prob.nf <- prob.nf / sum(prob.nf)
+
+# Verificar la suma de probabilidades esperadas
+sum(prob.nf) 
+
+# Realizar la prueba de bondad de ajuste de chi-cuadrado
+chisq.test(x = obs.nf, p = prob.nf)   
+</pre>
+<pre class="r"><code># Definir un conjunto de datos llamado &#39;nf&#39; con valores numéricos
+nf &lt;- c(4.1, 2.7, 3.1, 3.2, 3.0, 3.2, 2.0, 2.4, 1.6, 3.2, 3.1, 2.6, 2.0, 2.4, 2.8, 
+        3.3, 4.0, 3.4, 3.0, 3.1, 2.7, 2.7, 3.0, 3.8, 3.2, 2.2, 3.5, 3.5, 3.8, 3.5, 
+        3.9, 4.2, 4.3, 3.9, 3.2, 3.5, 3.5, 3.7, 4.1, 3.7, 3.5, 3.6, 3.2, 3.1, 3.4, 
+        3.0, 3.0, 3.0, 2.7, 1.7, 3.6, 2.1, 2.4, 3.0, 3.1, 2.5, 2.5, 3.6, 2.2, 2.4, 
+        3.1, 3.3, 2.7, 3.7, 3.0, 2.7, 3.0, 3.2, 3.1, 2.4, 3.0, 2.7, 2.5, 3.0, 3.0, 
+        3.0, 3.2, 3.1, 3.8, 4.1, 3.7, 3.5, 3.0, 3.7, 3.7, 4.1, 3.7, 3.9, 3.7, 2.0)
+
+# Crear un histograma de los datos
+h &lt;- hist(nf, plot = FALSE)
+
+# Obtener los límites de los intervalos usados en el histograma
+lim.nf &lt;- h$breaks  
+
+# Obtener las frecuencias observadas en cada intervalo
+obs.nf &lt;- h$counts  
+
+# Calcular la media de los datos
+mx &lt;- mean(nf)  
+
+# Calcular la desviación estándar de los datos
+sdx &lt;- sd(nf)  
+
+# Calcular las probabilidades acumuladas en los cortes del histograma
+# suponiendo que los datos siguen una distribución normal bajo la hipótesis nula (H0)
+Fx.nf &lt;- pnorm(lim.nf, mx, sdx)  
+
+# Calcular las probabilidades esperadas en cada intervalo restando valores acumulados consecutivos
+prob.nf &lt;- Fx.nf[-1] - Fx.nf[-length(Fx.nf)]   
+
+  
+# Ajuste de las probabilidades esperadas para que su suma sea exactamente 1
+prob.nf &lt;- prob.nf / sum(prob.nf)
+
+# Verificar la suma de probabilidades esperadas
+sum(prob.nf) </code></pre>
+<pre><code>[1] 1</code></pre>
+<pre class="r"><code># Realizar la prueba de bondad de ajuste de chi-cuadrado
+chisq.test(x = obs.nf, p = prob.nf) </code></pre>
+<pre><code>
+    Chi-squared test for given probabilities
+
+data:  obs.nf
+X-squared = 3.572, df = 5, p-value = 0.6125</code></pre>
+<p>Los resultados obtenidos fueron los siguientes:</p>
+<pre>
+Chi-squared test for given probabilities
+
+data:  obs.nf
+X-squared = 3.572, df = 5, p-value = 0.6125
+</pre>
+<p>Como el valor-p= 0.6125, con una significancia del 5% no se rechaza
+la normalidad de las notas de los estudiantes.</p>
+<p>Una de las clases presenta una <strong>probabilidad esperada inferior
+al 5%</strong> (<span class="math inline">\(0.0277\)</span>), con las
+siguientes probabilidades estimadas para cada intervalo:</p>
+<p><span class="math display">\[
+0.0277, 0.3816, 0.5184, 0.0723
+\]</span></p>
+<p>Debido a esto, <strong>no se recomienda</strong> aplicar la prueba de
+<strong>Chi-cuadrado de bondad de ajuste</strong> en estas condiciones,
+ya que la aproximación del estadístico <strong>puede ser
+inexacta</strong> cuando algunas frecuencias esperadas son demasiado
+bajas.</p>
+<p>Una <strong>alternativa adecuada</strong> consiste en <strong>reducir
+el número de clases</strong>, de manera que todas las frecuencias
+esperadas sean mayores a 5, asegurando la validez del test.</p>
+<p>El método utilizado en este análisis se basa en la
+<strong>distribución de los datos en intervalos del histograma</strong>,
+permitiendo comparar las <strong>frecuencias observadas</strong> con las
+<strong>frecuencias esperadas</strong> bajo la suposición de
+normalidad.</p>
+<p>Para validar los resultados, se recomienda complementar el análisis
+con otras pruebas de normalidad, tales como:</p>
+<ul>
+<li><strong>Test de Shapiro-Wilk</strong>: Adecuado para muestras
+pequeñas.</li>
+<li><strong>Test de Kolmogorov-Smirnov</strong>: Compara la distribución
+empírica con una teórica.</li>
+</ul>
+<p>Estos métodos permiten contrastar de manera más robusta la hipótesis
+de normalidad de los datos.</p>
+</p>
+</div>
+</br></br>
+<h2>
+Prueba Chi-cuadrado de Independencia
+</h2>
+<p>La <strong>prueba Chi-cuadrado de independencia</strong> es un
+procedimiento estadístico <strong>no paramétrico</strong> utilizado para
+evaluar si existe <strong>una relación significativa entre dos variables
+categóricas</strong>. Se aplica cuando los datos se organizan en una
+<strong>tabla de contingencia</strong>, permitiendo determinar si las
+variables analizadas son <strong>independientes o están
+asociadas</strong>.</p>
+<p><strong>Hipótesis estadísticas:</strong></p>
+<ul>
+<li><p><strong><span class="math inline">\(H_0\)</span></strong>: Las
+variables son <strong>independientes</strong>, es decir, no existe una
+relación entre ellas.</p></li>
+<li><p><strong><span class="math inline">\(H_1\)</span></strong>: Existe
+una <strong>asociación significativa</strong> entre las variables, por
+lo que no son independientes.</p></li>
+</ul>
+<p><strong>Supuestos de la prueba:</strong></p>
+<ul>
+<li><p><strong>Las observaciones deben ser independientes</strong>, es
+decir, cada individuo o unidad solo puede contribuir a una celda en la
+tabla de contingencia.</p></li>
+<li><p><strong>El tamaño muestral debe ser suficientemente
+grande</strong>, garantizando que las <strong>frecuencias esperadas sean
+al menos 5</strong> en cada celda de la tabla.</p></li>
+<li><p><strong>Las variables deben ser categóricas</strong>, aunque
+también pueden agruparse datos cuantitativos en categorías para aplicar
+la prueba.</p></li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Se desea analizar si la <strong>calificación de un producto</strong>
+dada por los consumidores está relacionada con su <strong>ubicación de
+residencia</strong> (urbano o rural). Para ello, se empleará la
+<strong>prueba de independencia de Chi-cuadrado</strong>, la cual
+permite evaluar si dos <strong>variables categóricas</strong> presentan
+una asociación estadísticamente significativa.</p>
+<center>
+<strong>Tabla 2.23</strong> Distribución de la calificación por
+residencia
+</center>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Urbano</th>
+<th align="right">Rural</th>
+<th align="right">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Calificación</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr class="even">
+<td align="left">Bueno</td>
+<td align="right">20</td>
+<td align="right">11</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">Regular</td>
+<td align="right">40</td>
+<td align="right">8</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">Malo</td>
+<td align="right">15</td>
+<td align="right">6</td>
+<td align="right">21</td>
+</tr>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="right">75</td>
+<td align="right">25</td>
+<td align="right">100</td>
+</tr>
+</tbody>
+</table>
+<p>Las hipótesis estadísticas:</p>
+<ul>
+<li><strong><span class="math inline">\(H_0\)</span></strong>: No existe
+relación entre la calificación del producto y la ubicación de residencia
+del consumidor (las variables son independientes).</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: Existe
+relación entre la calificación del producto y la ubicación de residencia
+del consumidor (las variables no son independientes).</li>
+</ul>
+<p>El siguiente código implementa contraste de las hipótesis:</p>
+<pre>
+# Crear una tabla de contingencia con las frecuencias observadas
+m <- matrix(c(20, 11,40,8,15,6), nrow = 3, byrow = TRUE)
+
+# Asignar nombres a filas y columnas
+rownames(m) <- c("Bueno", "Regular", "Malo") # Categorías de calificación
+colnames(m) <- c("Urbano", "Rural")          # Ubicación de residencia
+
+# Convertir en tabla
+m <- as.table(m)
+
+# Mostrar la tabla de contingencia
+print(m)
+
+# Aplicar la prueba Chi-cuadrado de independencia
+resultado_chi <- chisq.test(m)
+
+# Mostrar los resultados
+print(resultado_chi)
+
+</pre>
+<pre class="r"><code># Crear una tabla de contingencia con las frecuencias observadas
+m &lt;- matrix(c(20, 11,40,8,15,6), nrow = 3, byrow = TRUE)
+
+# Asignar nombres a filas y columnas
+rownames(m) &lt;- c(&quot;Bueno&quot;, &quot;Regular&quot;, &quot;Malo&quot;) # Categorías de calificación
+colnames(m) &lt;- c(&quot;Urbano&quot;, &quot;Rural&quot;)          # Ubicación de residencia
+
+# Convertir en tabla
+m &lt;- as.table(m)
+
+# Mostrar la tabla de contingencia
+print(m)</code></pre>
+<pre><code>        Urbano Rural
+Bueno       20    11
+Regular     40     8
+Malo        15     6</code></pre>
+<pre class="r"><code># Aplicar la prueba Chi-cuadrado de independencia
+resultado_chi &lt;- chisq.test(m)
+
+# Mostrar los resultados
+print(resultado_chi)</code></pre>
+<pre><code>
+    Pearson&#39;s Chi-squared test
+
+data:  m
+X-squared = 3.7378, df = 2, p-value = 0.1543</code></pre>
+<p>Los resultados de la implementación son:</p>
+<pre>
+Pearson's Chi-squared test
+
+data:  m
+X-squared = 3.7378, df = 2, p-value = 0.1543
+</pre>
+<p>Dado que el valor-p = 0.1543 es mayor que el nivel de significancia
+establecido 0.05, no se rechaza la hipótesis nula. Esto indica que no
+existe evidencia suficiente para concluir que la calificación del
+producto y la ubicación de residencia del consumidor estén relacionadas.
+En otras palabras, no se observa una asociación estadísticamente
+significativa entre estas variables.</p>
+</p>
+</div>
+</br></br>
+<h2>
+Prueba de Wilcoxon
+</h2>
+<p>La <strong>prueba de Wilcoxon</strong> es un procedimiento
+estadístico <strong>no paramétrico</strong> utilizado para evaluar si
+existen diferencias significativas entre dos <strong>muestras pareadas o
+dependientes</strong>, cuando no se puede asumir la normalidad de la
+distribución de las diferencias. Se considera una alternativa a la
+<strong>prueba t para muestras pareadas</strong>, ya que no requiere el
+supuesto de normalidad en los datos.</p>
+<p>Este test se emplea en situaciones donde se mide la misma variable en
+dos momentos diferentes (antes y después de un tratamiento), o cuando se
+comparan dos condiciones dentro de los mismos sujetos, evaluando si las
+diferencias en las mediciones son significativas.</p>
+<p><strong>Hipótesis estadísticas:</strong></p>
+<p><strong><span class="math inline">\(H_0\)</span></strong>:<span
+class="math inline">\(Me_D = 0\)</span></p>
+<p><strong><span class="math inline">\(H_1\)</span></strong>: <span
+class="math inline">\(Me_D \neq 0\)</span></p>
+<p>donde:</p>
+<ul>
+<li><strong><span class="math inline">\(H_0\)</span></strong>: No existe
+diferencia significativa en la mediana de las diferencias entre ambos
+grupos.<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: La
+mediana de las diferencias es distinta de cero, lo que sugiere un cambio
+significativo entre las mediciones.</li>
+</ul>
+<p><strong>Supuestos de la prueba</strong></p>
+<ul>
+<li><strong>Los datos son pareados</strong>, es decir, provienen de
+mediciones repetidas sobre los mismos sujetos o de observaciones
+relacionadas.<br />
+</li>
+<li><strong>Las observaciones son independientes dentro de cada
+grupo.</strong><br />
+</li>
+<li><strong>La escala de medición es al menos ordinal</strong>,
+permitiendo comparar rangos.<br />
+</li>
+<li><strong>La distribución de las diferencias es simétrica</strong>,
+aunque no necesariamente normal.</li>
+</ul>
+<p><strong>Diferencias con la prueba de signos</strong></p>
+<p>La <strong>prueba de Wilcoxon</strong> es similar a la <strong>prueba
+de signos</strong>, pero en lugar de solo evaluar la dirección de los
+cambios (signos positivos o negativos), también <strong>considera la
+magnitud de las diferencias</strong> a través de los rangos, lo que la
+hace más poderosa estadísticamente.</p>
+</br></br>
+<h2>
+Prueba de Mann-Whitney
+</h2>
+<p>La <strong>prueba de Mann-Whitney</strong>, también conocida como
+<strong>prueba U de Mann-Whitney-Wilcoxon</strong>, es un procedimiento
+estadístico <strong>no paramétrico</strong> utilizado para comparar si
+dos <strong>muestras independientes</strong> provienen de la misma
+distribución. Se emplea cuando no se puede asumir la normalidad en los
+datos y se considera una alternativa a la <strong>prueba t para muestras
+independientes</strong>.</p>
+<p>Este test es adecuado cuando se desea evaluar si los valores de una
+variable en un grupo <strong>tienden a ser mayores o menores</strong>
+que en otro grupo, sin asumir que las diferencias siguen una
+distribución normal.</p>
+<p><strong>Hipótesis estadísticas:</strong></p>
+<p><span class="math display">\[
+H_0: Me_1 = Me_2
+\]</span></p>
+<p><span class="math display">\[
+H_1: Me_1 \neq Me_2
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><strong><span class="math inline">\(H_0\)</span></strong>: No hay
+diferencia significativa entre las <strong>medianas</strong> de los dos
+grupos.<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: La
+mediana de al menos un grupo es significativamente diferente, lo que
+sugiere que las muestras provienen de distribuciones distintas.</li>
+</ul>
+<p><strong>Supuestos de la prueba:</strong></p>
+<ul>
+<li><strong>Los datos son independientes</strong> en cada grupo, es
+decir, cada observación en un grupo no está relacionada con las
+observaciones del otro grupo.<br />
+</li>
+<li><strong>La variable de interés es al menos ordinal</strong>,
+permitiendo ordenar los valores en rangos.<br />
+</li>
+<li><strong>Las distribuciones de los dos grupos tienen una forma
+similar</strong>, aunque pueden diferir en ubicación (mediana).<br />
+</li>
+<li><strong>No se requiere normalidad en los datos</strong>, lo que hace
+que esta prueba sea robusta ante distribuciones no normales.</li>
+</ul>
+<p><strong>Diferencias con la prueba de Wilcoxon para muestras
+pareadas:</strong></p>
+<p>La <strong>prueba de Mann-Whitney</strong> es la versión <strong>para
+muestras independientes</strong>, mientras que la <strong>prueba de
+Wilcoxon</strong> se aplica a <strong>muestras pareadas o
+dependientes</strong>. Mientras que la prueba de Wilcoxon evalúa
+<strong>diferencias dentro de los mismos sujetos</strong> o en datos
+relacionados, la prueba de Mann-Whitney <strong>compara dos grupos
+independientes</strong> sin necesidad de correspondencia entre las
+observaciones.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Este análisis tiene como objetivo comparar el <strong>consumo diario
+de calorías</strong> entre dos grupos de adolescentes:</p>
+<ul>
+<li><strong>Grupo 1 (G1)</strong>: Adolescentes <strong>sanos</strong>
+(<span class="math inline">\(n = 15\)</span>)<br />
+</li>
+<li><strong>Grupo 2 (G2)</strong>: Adolescentes <strong>con
+bulimia</strong> (<span class="math inline">\(n = 14\)</span>)</li>
+</ul>
+<p>Antes de realizar la prueba de hipótesis sobre la <strong>diferencia
+de medianas</strong>, es necesario verificar si los datos presentan una
+<strong>distribución normal</strong>. Para ello, se aplica la
+<strong>prueba de normalidad de Shapiro-Wilk</strong>. Si se encuentra
+que los datos no siguen una distribución normal, se optará por una
+<strong>prueba no paramétrica</strong>.</p>
+<p>El objetivo es determinar si el consumo calórico en adolescentes
+sanos <strong>es significativamente mayor</strong> que en adolescentes
+con bulimia. Se formulan las siguientes hipótesis:</p>
+<p><span class="math display">\[
+H_0: Me_{G1} \leq Me_{G2}
+\]</span></p>
+<p><span class="math display">\[
+H_1: Me_{G1} &gt; Me_{G2}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><strong><span class="math inline">\(H_0\)</span></strong>: La
+mediana del consumo calórico en adolescentes sanos <strong>no es
+mayor</strong> que en adolescentes con bulimia.</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: La
+mediana del consumo calórico en adolescentes sanos <strong>es
+mayor</strong> que en adolescentes con bulimia.</li>
+</ul>
+<p>Los tests se implementan con los siguientes códigos:</p>
+<pre>
+# Definir los datos de los dos grupos
+g1 <- c(68, 32, 58, 16, 23, 53, 55, 32, 61, 29, 50, 64, 67, 37) # Grupo 1 (sanos)
+g2 <- c(39, 10, 21, 29, 11, 26, 7, 12, 28, 32, 30, 27, 50, 19, 24) # Grupo 2 (bulimia)
+
+# Prueba de normalidad de Shapiro-Wilk para cada grupo
+shapiro_g1 <- shapiro.test(g1)
+shapiro_g2 <- shapiro.test(g2)
+
+# Mostrar resultados de las pruebas de normalidad
+shapiro_g1
+shapiro_g2
+
+# Prueba U de Mann-Whitney para comparación de medianas entre dos grupos independientes
+mann_whitney <- wilcox.test(g1, g2, paired = FALSE, alternative = "greater", exact = FALSE)
+
+# Mostrar resultados de la prueba U de Mann-Whitney
+mann_whitney
+
+</pre>
+<pre class="r"><code># Definir los datos de los dos grupos
+g1 &lt;- c(68, 32, 58, 16, 23, 53, 55, 32, 61, 29, 50, 64, 67, 37) # Grupo 1 (sanos)
+g2 &lt;- c(39, 10, 21, 29, 11, 26, 7, 12, 28, 32, 30, 27, 50, 19, 24) # Grupo 2 (bulimia)
+
+# Prueba de normalidad de Shapiro-Wilk para cada grupo
+shapiro_g1 &lt;- shapiro.test(g1)
+shapiro_g2 &lt;- shapiro.test(g2)
+
+# Mostrar resultados de las pruebas de normalidad
+shapiro_g1</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  g1
+W = 0.92079, p-value = 0.2257</code></pre>
+<pre class="r"><code>shapiro_g2</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  g2
+W = 0.95592, p-value = 0.6219</code></pre>
+<pre class="r"><code># Prueba U de Mann-Whitney para comparación de medianas entre dos grupos independientes
+mann_whitney &lt;- wilcox.test(g1, g2, paired = FALSE, alternative = &quot;greater&quot;, exact = FALSE)
+
+# Mostrar resultados de la prueba U de Mann-Whitney
+mann_whitney</code></pre>
+<pre><code>
+    Wilcoxon rank sum test with continuity correction
+
+data:  g1 and g2
+W = 178, p-value = 0.0007714
+alternative hypothesis: true location shift is greater than 0</code></pre>
+<p>Los resultados de la prueba de <strong>Shapiro-Wilk</strong> muestran
+que no se rechaza la <strong>hipótesis nula de normalidad</strong> en
+ambos grupos, dado que los valores-p son mayores a 0.05.</p>
+<pre>
+    Shapiro-Wilk normality test
+
+data:  g1
+W = 0.92079, p-value = 0.2257
+</pre>
+<pre>
+Shapiro-Wilk normality test
+
+data:  g2
+W = 0.95592, p-value = 0.6219
+</pre>
+<p>El resultado de la <strong>prueba U de Mann-Whitney</strong> arroja
+un <strong>valor-p de 0.0007714</strong>, lo que indica que con un nivel
+de significancia del 5%, se rechaza la hipótesis nula en favor de la
+alternativa. Esto sugiere que la mediana del consumo calórico en
+adolescentes sanos es significativamente mayor que en adolescentes con
+bulimia.</p>
+<pre>
+Wilcoxon rank sum test with continuity correction
+
+data:  g1 and g2
+W = 178, p-value = 0.0007714
+alternative hypothesis: true location shift is greater than 0
+</pre>
+<p>Los datos siguen una distribución normal, la <strong>prueba t de
+Student</strong> para muestras independientes sería más eficiente que la
+prueba de Mann-Whitney. Sin embargo, dado que la prueba de Mann-Whitney
+no requiere normalidad y es más robusta ante valores atípicos o
+distribuciones sesgadas, se prefiere su uso para evaluar diferencias en
+las medianas.</p>
+</p>
+</div>
+</br></br>
+<h2>
+Prueba ANOVA de una vía
+</h2>
+<p></br></br></p>
+<p>La <strong>prueba ANOVA de una vía</strong> es una técnica
+<strong>paramétrica</strong> utilizada para comparar las
+<strong>medias</strong> de tres o más grupos independientes. Evalúa si
+al menos un grupo presenta una media significativamente diferente, bajo
+el supuesto de <strong>normalidad y homogeneidad de
+varianzas</strong>.</p>
+<p><strong>Hipótesis estadísticas:</strong></p>
+<p><span class="math display">\[
+H_0: \mu_1 = \mu_2 = \dots = \mu_k
+\]</span></p>
+<p><span class="math display">\[
+H_1: \text{Al menos una media es diferente.}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><strong><span class="math inline">\(H_0\)</span></strong>: No hay
+diferencias significativas entre las <strong>medias</strong> de los
+grupos.<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: Al menos
+un grupo tiene una media diferente.</li>
+</ul>
+<p><strong>Supuestos del ANOVA de una vía</strong></p>
+<ul>
+<li><strong>Las observaciones son independientes</strong> dentro y entre
+los grupos.</li>
+<li><strong>Las variables deben seguir una distribución normal</strong>
+en cada grupo.</li>
+<li><strong>Las varianzas deben ser homogéneas</strong>
+(homocedasticidad).</li>
+</ul>
+<p>Si los datos no cumplen con estos supuestos, se recomienda utilizar
+la <strong>prueba de Kruskal-Wallis</strong>, una alternativa <strong>no
+paramétrica</strong>.</p>
+</br></br>
+<h2>
+Prueba de Kruskal-Wallis
+</h2>
+<p>La <strong>prueba de Kruskal-Wallis</strong> es una alternativa
+<strong>no paramétrica</strong> al <strong>ANOVA de una vía</strong>,
+utilizada cuando los datos no cumplen con los supuestos de normalidad o
+homogeneidad de varianzas. En lugar de comparar <strong>medias</strong>,
+compara <strong>rangos</strong> de los valores observados en cada
+grupo.</p>
+<p><strong>Hipótesis estadísticas:</strong></p>
+<p><span class="math display">\[
+H_0: Me_1 = Me_2 = \dots = Me_k
+\]</span></p>
+<p><span class="math display">\[
+H_1: \text{Al menos una de las medianas es diferente.}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><strong><span class="math inline">\(H_0\)</span></strong>: No hay
+diferencias significativas entre las <strong>medianas</strong> de los
+grupos.<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: Al menos
+un grupo tiene una mediana diferente.</li>
+</ul>
+<p>A diferencia del ANOVA, la <strong>prueba de Kruskal-Wallis no asume
+normalidad</strong> y se basa en la comparación de los <strong>rangos
+medianos</strong> en lugar de las <strong>medias</strong>.</p>
+<p><strong>Supuestos de la prueba de Kruskal-Wallis:</strong></p>
+<ul>
+<li><strong>Las observaciones son independientes</strong> dentro y entre
+los grupos.</li>
+<li><strong>Las variables deben estar en una escala al menos
+ordinal</strong>, permitiendo la comparación de rangos.</li>
+<li><strong>Las distribuciones de los grupos deben tener formas
+similares</strong> para que la comparación de medianas sea válida.</li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Este estudio tiene como objetivo <strong>determinar si la capacidad
+de memoria varía con la edad</strong>. Para ello, se han conformado
+<strong>tres grupos de personas</strong> según su edad:</p>
+<ul>
+<li><strong>Grupo 1</strong>: Personas de <strong>60 años</strong><br />
+</li>
+<li><strong>Grupo 2</strong>: Personas de <strong>50 años</strong><br />
+</li>
+<li><strong>Grupo 3</strong>: Personas de <strong>40 años</strong></li>
+</ul>
+<p>A cada persona se le presenta una <strong>serie de palabras dos
+veces</strong> y se <strong>cuenta el número de palabras
+recordadas</strong>. Se desea analizar si existen diferencias
+significativas en la <strong>capacidad de memoria</strong> entre los
+tres grupos etarios.</p>
+<p>Se plantean las siguientes hipótesis para el análisis:</p>
+<ul>
+<li><strong><span class="math inline">\(H_0\)</span></strong>: No hay
+diferencias significativas en la capacidad de memoria entre los grupos
+etarios.<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: Al menos
+un grupo presenta una <strong>mediana diferente</strong>, lo que sugiere
+una posible variación en la memoria con la edad.</li>
+</ul>
+<p>Los datos observados son los siguientes:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="center">Grupo 1</td>
+<td align="center">28</td>
+<td align="center">19</td>
+<td align="center">13</td>
+<td align="center">28</td>
+<td align="center">29</td>
+<td align="center">22</td>
+<td align="center">21</td>
+</tr>
+<tr class="even">
+<td align="center">Grupo 2</td>
+<td align="center">26</td>
+<td align="center">20</td>
+<td align="center">11</td>
+<td align="center">14</td>
+<td align="center">22</td>
+<td align="center">21</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">Grupo 3</td>
+<td align="center">37</td>
+<td align="center">28</td>
+<td align="center">26</td>
+<td align="center">35</td>
+<td align="center">31</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>Se plantean las siguientes hipótesis para el test ANOVA en caso de
+cumplirse los supuestos de independencia, normalidad e igualdad de
+varianzas:</p>
+<p><span class="math display">\[
+H_0: \mu_1 = \mu_2 = \mu_3
+\]</span></p>
+<p><span class="math display">\[
+H_1: \text{Al menos una de las medias es diferente.}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><strong><span class="math inline">\(H_0\)</span></strong>: No hay
+diferencias significativas en la capacidad de memoria entre los grupos
+etarios.<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: Al menos
+un grupo presenta una <strong>media diferente</strong>, lo que sugiere
+una posible variación en la memoria con la edad.</li>
+</ul>
+<p>Los códigos para la implementación son:</p>
+<pre>
+# Definir los datos de los tres grupos
+g1 <- c(28, 19, 13, 28, 29, 21)  # Grupo 1 (60 años)
+g2 <- c(26, 20, 11, 14, 22, 21)  # Grupo 2 (50 años)
+g3 <- c(37, 28, 26, 35, 31)      # Grupo 3 (40 años)
+
+# Crear un data frame para análisis conjunto
+datos <- data.frame(
+  memoria = c(g1, g2, g3),
+  grupo = factor(rep(c("G1_60", "G2_50", "G3_40"), c(length(g1), length(g2), length(g3))))
+)
+
+# Prueba de normalidad de Shapiro-Wilk para cada grupo
+shapiro.test(g1) # Grupo 1 (60 años)
+shapiro.test(g2) # Grupo 2 (50 años)
+shapiro.test(g3) # Grupo 3 (40 años)
+
+# Prueba de Levene (alternativa más robusta que Bartlett)
+library(car)
+leveneTest(memoria ~ grupo, data = datos)
+
+# Aplicar ANOVA de una vía
+anova_result <- aov(memoria ~ grupo, data = datos)
+
+# Resumen de ANOVA
+summary(anova_result)
+
+
+# Aplicar prueba de Kruskal-Wallis para comparar las medianas
+kruskal.test(memoria ~ grupo, data = datos)
+</pre>
+<pre class="r"><code># Definir los datos de los tres grupos
+g1 &lt;- c(28, 19, 13, 28, 29, 21)  # Grupo 1 (60 años)
+g2 &lt;- c(26, 20, 11, 14, 22, 21)  # Grupo 2 (50 años)
+g3 &lt;- c(37, 28, 26, 35, 31)      # Grupo 3 (40 años)
+
+# Crear un data frame para análisis conjunto
+datos &lt;- data.frame(
+  memoria = c(g1, g2, g3),
+  grupo = factor(rep(c(&quot;G1_60&quot;, &quot;G2_50&quot;, &quot;G3_40&quot;), c(length(g1), length(g2), length(g3))))
+)
+
+# Prueba de normalidad de Shapiro-Wilk para cada grupo
+shapiro.test(g1) # Grupo 1 (60 años)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  g1
+W = 0.87578, p-value = 0.2502</code></pre>
+<pre class="r"><code>shapiro.test(g2) # Grupo 2 (50 años)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  g2
+W = 0.94398, p-value = 0.6914</code></pre>
+<pre class="r"><code>shapiro.test(g3) # Grupo 3 (40 años)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  g3
+W = 0.95082, p-value = 0.7431</code></pre>
+<pre class="r"><code># Prueba de Levene (alternativa más robusta que Bartlett)
+library(car)
+leveneTest(memoria ~ grupo, data = datos)</code></pre>
+<pre><code>Levene&#39;s Test for Homogeneity of Variance (center = median)
+      Df F value Pr(&gt;F)
+group  2   0.469 0.6351
+      14               </code></pre>
+<pre class="r"><code># Aplicar ANOVA de una vía
+anova_result &lt;- aov(memoria ~ grupo, data = datos)
+
+# Resumen de ANOVA
+summary(anova_result)</code></pre>
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)   
+grupo        2  429.7  214.87   6.787 0.0087 **
+Residuals   14  443.2   31.66                  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Aplicar prueba de Kruskal-Wallis para comparar las medianas
+kruskal.test(memoria ~ grupo, data = datos)</code></pre>
+<pre><code>
+    Kruskal-Wallis rank sum test
+
+data:  memoria by grupo
+Kruskal-Wallis chi-squared = 7.7271, df = 2, p-value = 0.02099</code></pre>
+<p>La aplicación de los test de normalidad
+(<strong>Shapiro-Wilk</strong>) para cada grupo permite no rechazar el
+supuesto de <strong>normalidad</strong> de las 3 poblaciones evaluadas,
+con una significancia del 5%.</p>
+<pre>
+Shapiro-Wilk normality test
+
+data:  g1
+W = 0.87578, p-value = 0.2502
+</pre>
+<pre>
+    Shapiro-Wilk normality test
+
+data:  g2
+W = 0.94398, p-value = 0.6914
+</pre>
+<pre>
+Shapiro-Wilk normality test
+
+data:  g3
+W = 0.95082, p-value = 0.7431
+</pre>
+<p>El <strong>test de Levene</strong> de <strong>comparación de
+varianzas</strong>, con un <strong>valor-p=0.6351</strong>, permite
+concluir que no hay evidencia en los datos para rechazar la
+<strong>igualdad de varianzas</strong>, con una significancia del
+5%.</p>
+<pre>
+Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(>F)
+group  2   0.469 0.6351
+      14  
+</pre>
+<p>Dado que los datos cumplen con los supuestos de normalidad y
+homogeneidad de varianzas, y asumiendo independencia, se justifica la
+aplicación de ANOVA. Se aplica también la prueba de Kruskal-Wallis para
+comparar los resultados.</p>
+<pre>
+            Df Sum Sq Mean Sq F value Pr(>F)   
+grupo        2  429.7  214.87   6.787 0.0087 **
+Residuals   14  443.2   31.66                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+</pre>
+<p>El resultado de <strong>ANOVA</strong> muestra un <strong>valor-p =
+0.0087</strong>, lo que indica que <strong>al menos un grupo presenta
+una media significativamente diferente</strong>.</p>
+<pre>
+Kruskal-Wallis rank sum test
+
+data:  memoria by grupo
+Kruskal-Wallis chi-squared = 7.7271, df = 2, p-value = 0.02099
+</pre>
+<p>El resultado de <strong>Kruskal-Wallis</strong> muestra un
+<strong>valor-p = 0.02099</strong>, lo que respalda la conclusión de que
+<strong>existen diferencias en la capacidad de memoria</strong>.</p>
+<p>Ambos métodos (ANOVA y Kruskal-Wallis) han mostrado que existen
+diferencias significativas entre los grupos.</p>
+<p>Dado que ANOVA es más potente bajo supuestos normales y de varianza
+homogénea, se considera la prueba principal en este análisis.</p>
+<p>Kruskal-Wallis confirma la robustez de los resultados, al no depender
+de los supuestos de normalidad y homogeneidad de varianza.</p>
+</p>
+</div>
+</br></br>
+<h2>
+Correlación de Pearson
+</h2>
+<p>La <strong>correlación de Pearson</strong> es una medida estadística
+que cuantifica la <strong>fuerza y dirección de la relación
+lineal</strong> entre dos variables <strong>cuantitativas</strong>. Se
+denota con el coeficiente <strong><span
+class="math inline">\(\rho\)</span></strong> y toma valores entre
+<strong>-1 y 1</strong>. Esta es una técnica estadística
+<strong>paramétrica</strong>.</p>
+<p><strong>Hipótesis estadísticas:</strong></p>
+<p><span class="math display">\[
+H_0: \rho = 0
+\]</span></p>
+<p><span class="math display">\[
+H_1: \rho \neq 0
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><p><strong><span class="math inline">\(H_0\)</span></strong>: No
+existe correlación lineal significativa entre las variables (<span
+class="math inline">\(\rho = 0\)</span>).</p></li>
+<li><p><strong><span class="math inline">\(H_1\)</span></strong>: Existe
+una correlación lineal significativa entre las variables (<span
+class="math inline">\(\rho \neq 0\)</span>).</p></li>
+</ul>
+<p><strong>Supuestos de la prueba:</strong></p>
+<ul>
+<li><p><strong>Las variables son cuantitativas</strong> y están medidas
+en una escala continua.</p></li>
+<li><p><strong>La relación entre las variables es lineal</strong>, es
+decir, los puntos en un gráfico de dispersión siguen aproximadamente una
+recta.</p></li>
+<li><p><strong>Los datos siguen una distribución
+normal</strong>.</p></li>
+<li><p><strong>No hay valores atípicos extremos</strong>, ya que estos
+pueden distorsionar el coeficiente de correlación.</p></li>
+</ul>
+</br></br>
+<h2>
+Correlación de Spearman
+</h2>
+<p>La <strong>correlación de Spearman</strong> es una técnica
+estadística <strong>no paramétrica</strong> utilizada para medir la
+<strong>fuerza y dirección de la asociación monotónica</strong> entre
+dos <strong>variables ordinales o cuantitativas</strong>. Se emplea
+cuando los datos no cumplen con los supuestos de normalidad requeridos
+para la <strong>correlación de Pearson</strong> o cuando la relación
+entre las variables no es estrictamente lineal.</p>
+<p><strong>Hipótesis estadísticas:</strong></p>
+<p><span class="math display">\[
+H_0: \rho = 0
+\]</span></p>
+<p><span class="math display">\[
+H_1: \rho \neq 0
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><p><strong><span class="math inline">\(H_0\)</span></strong>: No hay
+relación monotónica entre las variables.</p></li>
+<li><p><strong><span class="math inline">\(H_1\)</span></strong>: Existe
+una relación monotónica significativa entre las variables.</p></li>
+</ul>
+<p><strong>Supuestos de la prueba:</strong></p>
+<ul>
+<li><p><strong>Las observaciones son independientes</strong> entre
+sí.</p></li>
+<li><p><strong>Las variables deben ser al menos ordinales</strong>,
+permitiendo ordenar los valores de menor a mayor.</p></li>
+<li><p><strong>No requiere normalidad en los datos</strong>, lo que la
+hace útil para distribuciones sesgadas.</p></li>
+<li><p><strong>La relación entre las variables debe ser
+monotónica</strong>, lo que significa que a medida que una variable
+aumenta, la otra también aumenta o disminuye de manera consistente (pero
+no necesariamente lineal).</p></li>
+</ul>
+<p>La correlación de <strong>Spearman no mide solo la asociación
+lineal</strong>. A diferencia de la correlación de
+<strong>Pearson</strong>, que evalúa <strong>relaciones
+lineales</strong>, Spearman mide la asociación monotónica entre dos
+variables.</p>
+<p>La correlación de <strong>Spearman</strong> puede detectar
+<strong>relaciones no lineales</strong>, siempre que sean monotónicas.
+Si la relación entre dos variables no es ni lineal ni monotónica,
+entonces ni Pearson ni Spearman serán adecuados. En estos casos, se
+recomienda explorar métodos como correlaciones no paramétricas más
+avanzadas o modelos de regresión no lineal</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>El objetivo de este análisis es determinar si existe una relación
+entre el tiempo de estudio (en horas) y la nota obtenida en una
+evaluación. Para evaluar la asociación entre estas variables, se
+verifica si los datos cumplen con los supuestos necesarios para aplicar
+la correlación de Pearson o si es más adecuado utilizar la correlación
+de Spearman.</p>
+<p>Los datos corresponden a una muestra de 10 estudiantes:</p>
+<table>
+<colgroup>
+<col width="10%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="10%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">Tiempo</td>
+<td align="right">21</td>
+<td align="right">18</td>
+<td align="right">15</td>
+<td align="right">17</td>
+<td align="right">18</td>
+<td align="right">25</td>
+<td align="right">18</td>
+<td align="right">4</td>
+<td align="right">6</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Nota</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+<p>Para determinar qué tipo de correlación es más adecuada, se revisa la
+normalidad de las variables: Se aplica la prueba de Shapiro-Wilk para
+evaluar si el tiempo de estudio y las notas siguen una distribución
+normal.</p>
+<p>Se utiliza la prueba de Shapiro-Wilk para evaluar si ambas variables
+siguen una distribución normal, lo cual es un requisito para la
+correlación de Pearson. Además, se genera un diagrama de dispersión para
+evaluar la relación entre las variables y observar si es lineal o
+monotónica.</p>
+<p>El siguiente código implementa las pruebas estadísticas:</p>
+<pre>
+# Definir los datos de las dos variables
+tiempo_estudio <- c(21, 18, 15, 17, 18, 25, 18, 4, 6, 5)  
+nota_obtenida <- c(4, 4, 4, 3, 3, 5, 3, 1, 1, 2)         
+
+# Evaluación de normalidad con Shapiro-Wilk
+shapiro.test(tiempo_estudio) 
+shapiro.test(nota_obtenida)
+
+# Gráfico de dispersión
+plot(tiempo_estudio, nota_obtenida, main = "Relación entre tiempo de estudio y nota obtenida",
+     xlab = "Tiempo de estudio (horas)", ylab = "Nota obtenida",
+     pch = 19, col = "blue")
+
+# Prueba de correlación de Pearson
+cor.test(tiempo_estudio, nota_obtenida, method = "pearson")
+
+# Prueba de correlación de Spearman con corrección para valores repetidos (ties)
+cor.test(tiempo_estudio, nota_obtenida, method = "spearman", exact = FALSE, continuity = FALSE, conf.level = 0.95)
+
+</pre>
+<pre class="r"><code># Definir los datos de las dos variables
+tiempo_estudio &lt;- c(21, 18, 15, 17, 18, 25, 18, 4, 6, 5)  
+nota_obtenida &lt;- c(4, 4, 4, 3, 3, 5, 3, 1, 1, 2)         
+
+# Evaluación de normalidad con Shapiro-Wilk
+shapiro.test(tiempo_estudio) </code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  tiempo_estudio
+W = 0.87967, p-value = 0.1294</code></pre>
+<pre class="r"><code>shapiro.test(nota_obtenida)</code></pre>
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  nota_obtenida
+W = 0.91837, p-value = 0.3435</code></pre>
+<pre class="r"><code># Gráfico de dispersión
+plot(tiempo_estudio, nota_obtenida, main = &quot;Relación entre tiempo de estudio y nota obtenida&quot;,
+     xlab = &quot;Tiempo de estudio (horas)&quot;, ylab = &quot;Nota obtenida&quot;,
+     pch = 19, col = &quot;blue&quot;)</code></pre>
+<p><img src="recurso504_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code># Prueba de correlación de Pearson
+cor.test(tiempo_estudio, nota_obtenida, method = &quot;pearson&quot;)</code></pre>
+<pre><code>
+    Pearson&#39;s product-moment correlation
+
+data:  tiempo_estudio and nota_obtenida
+t = 6.3235, df = 8, p-value = 0.000227
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.6660123 0.9795020
+sample estimates:
+      cor 
+0.9128466 </code></pre>
+<pre class="r"><code># Prueba de correlación de Spearman con corrección para valores repetidos (ties)
+cor.test(tiempo_estudio, nota_obtenida, method = &quot;spearman&quot;, exact = FALSE, continuity = FALSE, conf.level = 0.95)</code></pre>
+<pre><code>
+    Spearman&#39;s rank correlation rho
+
+data:  tiempo_estudio and nota_obtenida
+S = 30.693, p-value = 0.004157
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.8139814 </code></pre>
+<p>Ambas variables fueron sometidas a la prueba de Shapiro-Wilk para
+verificar si siguen una distribución normal:</p>
+<pre>
+Shapiro-Wilk normality test
+
+data:  tiempo_estudio
+W = 0.87967, p-value = 0.1294
+</pre>
+<pre>
+
+    Shapiro-Wilk normality test
+
+data:  nota_obtenida
+W = 0.91837, p-value = 0.3435
+</pre>
+<p>Dado que ambos p-valores son mayores a 0.05, no se rechaza la
+normalidad en las dos variables con una significancia del 5%. Esto
+indica que se pueden utilizar métodos paramétricos como la correlación
+de Pearson.</p>
+<p>Dado que ambos p-valores son mayores a 0.05, no se rechaza la
+normalidad en las dos variables. Esto indica que se pueden utilizar
+métodos paramétricos como la correlación de Pearson.</p>
+<pre>
+Pearson's product-moment correlation
+
+data:  tiempo_estudio and nota_obtenida
+t = 6.3235, df = 8, p-value = 0.000227
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.6660123 0.9795020
+sample estimates:
+      cor 
+0.9128466 
+</pre>
+<p>El coeficiente de correlación de <strong>Pearson</strong> es 0.9128,
+lo que indica una asociación lineal positiva fuerte entre el tiempo de
+estudio y la nota obtenida. Dado que el <strong>valor-p =
+0.000227</strong> es menor a 0.01, se concluye con una significancia del
+1% que <strong>existe una correlación lineal significativa entre ambas
+variables</strong>.</p>
+<p>Para contrastar, se aplica la correlación de Spearman, que evalúa
+relaciones monotónicas sin requerir normalidad.</p>
+<pre>
+Spearman's rank correlation rho
+
+data:  tiempo_estudio and nota_obtenida
+S = 30.693, p-value = 0.004157
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.8139814
+</pre>
+<p>El coeficiente de correlación de <strong>Spearman</strong> es 0.814,
+lo que indica una relación monotónica positiva fuerte. El
+<strong>valor-p = 0.0041</strong> confirma que <strong>existe una
+asociación significativa entre el tiempo de estudio y la nota
+obtenida</strong> con un nivel de significancia del 1%.</p>
+<p>Dado que Pearson y Spearman presentan valores de correlación altos y
+significativos, se concluye que a mayor tiempo de estudio, mayor es la
+nota obtenida.</p>
+</p>
+</div>
+</br></br>
+<h2>
+Prueba de Rachas
+</h2>
+<p>La <strong>prueba de rachas</strong> es un procedimiento estadístico
+<strong>no paramétrico</strong> utilizado para evaluar si una
+<strong>secuencia de datos</strong> sigue un <strong>patrón
+aleatorio</strong> o si presenta <strong>tendencias o
+agrupaciones</strong> que sugieren una estructura subyacente. Se aplica
+en <strong>datos ordinales o binarios</strong>, y es particularmente
+útil para analizar la independencia de observaciones en series
+temporales o en secuencias categóricas.</p>
+<p><strong>Hipótesis Estadísticas</strong>:</p>
+<ul>
+<li><strong><span class="math inline">\(H_0\)</span></strong>: La
+secuencia de datos es <strong>aleatoria</strong> (no hay patrones
+sistemáticos).<br />
+</li>
+<li><strong><span class="math inline">\(H_1\)</span></strong>: La
+secuencia de datos <strong>no es aleatoria</strong> y presenta
+<strong>tendencias o agrupaciones</strong> significativas.</li>
+</ul>
+<p><strong>Supuestos de la Prueba:</strong></p>
+<ul>
+<li>Los datos deben representar una <strong>secuencia ordenada</strong>
+de observaciones.</li>
+<li>Las observaciones deben ser <strong>independientes</strong>.</li>
+<li>Se requiere que los datos sean <strong>binarios</strong> (dos
+categorías) o puedan transformarse en una secuencia dicotómica.</li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Para verificar si los números generados en <strong>R</strong>
+mediante la función <code>runif</code> pueden considerarse
+<strong>aleatorios</strong>, se aplicará la <strong>prueba de bondad de
+ajuste de Chi-cuadrado</strong> y la <strong>prueba de corridas (Runs
+Test)</strong>.</p>
+<p>La prueba de <strong>bondad de ajuste de Chi-cuadrado</strong>
+permite comparar la <strong>distribución observada</strong> de los datos
+con la <strong>distribución teórica esperada</strong>, en este caso, una
+<strong>distribución uniforme <span
+class="math inline">\(U(0,1)\)</span></strong>.</p>
+<p>Adicionalmente, se utiliza la <strong>prueba de rachas</strong>, que
+analiza la aleatoriedad en una secuencia de valores, evaluando si los
+números generados presentan <strong>patrones o tendencias</strong>.</p>
+<p>Para la <strong>prueba de bondad de ajuste</strong>:</p>
+<ul>
+<li><p><strong><span class="math inline">\(H_0\)</span></strong>: Los
+números generados siguen una <strong>distribución uniforme</strong> en
+el intervalo <span class="math inline">\((0,1)\)</span>, por lo que
+pueden considerarse <strong>aleatorios</strong>.</p></li>
+<li><p><strong><span class="math inline">\(H_1\)</span></strong>: Los
+números generados <strong>no siguen</strong> una distribución uniforme,
+lo que sugiere que <strong>no son aleatorios</strong>.</p></li>
+</ul>
+<p>Para la <strong>prueba de rachas (Runs Test)</strong>:</p>
+<ul>
+<li><p><strong><span class="math inline">\(H_0\)</span></strong>: La
+secuencia es <strong>aleatoria</strong> y no presenta patrones
+sistemáticos.</p></li>
+<li><p><strong><span class="math inline">\(H_1\)</span></strong>: La
+secuencia <strong>no es aleatoria</strong>, lo que indica la presencia
+de <strong>tendencias o agrupaciones</strong>.</p></li>
+</ul>
+<p>Los códigos para la implementación del test son:</p>
+<pre>
+# Cargar la librería necesaria para la prueba de corridas
+library("randtests")
+
+# Generar 100 valores aleatorios con distribución uniforme en (0,1)
+set.seed(123)  # Fijar semilla para reproducibilidad
+y <- runif(100, 0,1)
+
+# Crear un histograma para visualizar la distribución de los datos
+hist(y, col = "lightblue", main = "Distribución de los Números Generados",
+     xlab = "Valores Generados", ylab = "Frecuencia", border = "black")
+
+# Aplicar la prueba de bondad de ajuste de Chi-cuadrado
+# Dividir el intervalo (0,1) en 10 clases para calcular frecuencias esperadas
+breaks <- seq(0, 1, length.out = 11)  # Definir los cortes de los intervalos
+observed <- hist(y, breaks = breaks, plot = FALSE)$counts  # Frecuencias observadas
+expected <- rep(length(y)/length(observed), length(observed))  # Frecuencias esperadas uniformes
+
+# Realizar la prueba de bondad de ajuste de Chi-cuadrado
+chisq_test <- chisq.test(observed, p = rep(1/length(observed), length(observed)))
+
+# Mostrar resultados
+print(chisq_test)
+
+# Aplicar la prueba de corridas para evaluar la aleatoriedad en la serie
+runs_test <- runs.test(y)
+
+# Mostrar resultados
+print(runs_test)
+</pre>
+<pre class="r"><code>#Sys.setlocale(&quot;LC_ALL&quot;, &quot;en_US.UTF-8&quot;)  # Configurar en inglés con UTF-8
+
+# Cargar la librería necesaria para la prueba de corridas
+library(&quot;randtests&quot;)
+
+# Generar 100 valores aleatorios con distribución uniforme en (0,1)
+set.seed(123)  # Fijar semilla para reproducibilidad
+y &lt;- runif(100, 0,1)
+
+# Crear un histograma para visualizar la distribución de los datos
+hist(y, col = &quot;lightblue&quot;, main = &quot;Distribución de los Números Generados&quot;,
+     xlab = &quot;Valores Generados&quot;, ylab = &quot;Frecuencia&quot;, border = &quot;black&quot;)</code></pre>
+<p><img src="recurso504_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code># Aplicar la prueba de bondad de ajuste de Chi-cuadrado
+# Dividir el intervalo (0,1) en 10 clases para calcular frecuencias esperadas
+breaks &lt;- seq(0, 1, length.out = 11)  # Definir los cortes de los intervalos
+observed &lt;- hist(y, breaks = breaks, plot = FALSE)$counts  # Frecuencias observadas
+expected &lt;- rep(length(y)/length(observed), length(observed))  # Frecuencias esperadas uniformes
+
+# Realizar la prueba de bondad de ajuste de Chi-cuadrado
+chisq_test &lt;- chisq.test(observed, p = rep(1/length(observed), length(observed)))
+
+# Mostrar resultados
+print(chisq_test)</code></pre>
+<pre><code>
+    Chi-squared test for given probabilities
+
+data:  observed
+X-squared = 5.2, df = 9, p-value = 0.8165</code></pre>
+<pre class="r"><code># Aplicar la prueba de corridas para evaluar la aleatoriedad en la serie
+runs_test &lt;- runs.test(y)
+
+# Mostrar resultados
+print(runs_test)</code></pre>
+<pre><code>
+    Runs Test
+
+data:  y
+statistic = 0.20102, runs = 52, n1 = 50, n2 = 50, n = 100, p-value =
+0.8407
+alternative hypothesis: nonrandomness</code></pre>
+<p>Según los resultados de la <strong>prueba de Chi-cuadrado</strong>,
+el <strong>valor-p</strong> obtenido es <strong>0.8165</strong>. Dado
+que este valor es mayor que el nivel de significancia del 5%, no se
+rechaza la hipótesis nula. Esto indica que <strong>no hay suficiente
+evidencia para concluir que la muestra no proviene de una distribución
+uniforme</strong>.</p>
+<pre>
+Chi-squared test for given probabilities
+
+data:  observed
+X-squared = 5.2, df = 9, p-value = 0.8165
+</pre>
+<p>Según los resultados de la <strong>prueba de rachas</strong>, el
+<strong>valor-p</strong> obtenido es <strong>0.8407</strong>. Dado que
+este valor es mayor que el nivel de significancia del 5%, no se rechaza
+la hipótesis nula. Esto indica que <strong>no hay suficiente evidencia
+para concluir que la secuencia no es aleatoria</strong>, por lo que se
+asume que no presenta patrones sistemáticos.</p>
+<pre>
+    Runs Test
+
+data:  y
+statistic = 0.20102, runs = 52, n1 = 50, n2 = 50, n = 100, p-value = 0.8407
+alternative hypothesis: nonrandomness
+</pre>
+<p>Ambas pruebas aplicadas no rechazan la hipótesis nula, lo que indica
+que los números generados con ´runif´ en <strong>R</strong> se pueden
+considerar aleatorios, ya que siguen una distribución uniforme y no
+presentan patrones sistemáticos en la secuencia.</p>
+</p>
+</div>
+<!-- --- -->
+<!-- **Prueba de normalidad** -->
+<!-- Uno de los procedimientos mas utilizados en estadística es la relacionada con la verificación de normalidad de una variable.  -->
+<!-- |        |                                 | -->
+<!-- |-------:|:--------------------------------| -->
+<!-- | $H_o$:  |$X$ tiene distribución Normal    | -->
+<!-- | $H_a$:  |$X$ no tiene distribución Normal | -->
+<!-- Existen muchas pruebas que nos ayudan en este propósito, a continuación relacionamos algunas de ellas  -->
+<!-- ```{r} -->
+<!-- # Se genera una variable aleatoria normal -->
+<!-- x=rnorm(200,1000,50) -->
+<!-- plot(density(x), main=" ", las=1, xlab = " ", ylab=" ", col=c3, lwd=4) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- shapiro.test(x) -->
+<!-- ``` -->
+<!-- Esta prueba no requiere la instalación de paquetes adicionales, pues está disponible en la configuración básica de R -->
+<!-- Como el valor-p es superior al nivel de significancia $\alpha$, no se rechaza $Ho$, se asume que la distribución de la variable es normal. -->
+<!-- --- -->
+<!-- **Otras pruebas de normalidad utilizadas** -->
+<!-- ```{r} -->
+<!-- # install.packages("normtets") -->
+<!-- # library(normtest) -->
+<!-- # jb.norm.test(x)   # Test de normalidad de Jarque-Bera -->
+<!-- # kurtosis.norm.test(x) -->
+<!-- # skewness.norm.test(x)     -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # install.packages("nortets") -->
+<!-- library(nortest) -->
+<!-- lillie.test(x) # Kolmogorov-Smirnov -->
+<!-- pearson.test(x) # chi-cuadrado de Pearson -->
+<!-- ``` -->
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+---
+title: <span style="color:#686868"> **Caso 3**</span>
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+
+
+</br></br>
+<div class="caja-ejemplo">
+<h3>Caso 3:</h3>
+<p>
+
+ggggg
+
+
+
+</p>
+</div>

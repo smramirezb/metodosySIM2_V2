@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Métodos y Simulación Estadística" />
+
+
+<title> Modelos discretos</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Inicio
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Probabilidad
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso101.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso102.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso103.html">Enfoque</a>
+    </li>
+    <li>
+      <a href="recurso103b.html">Axiomas</a>
+    </li>
+    <li>
+      <a href="recurso104.html">Tipos de probabilidad</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Variable Aleatoria
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso201.html">Definición</a>
+    </li>
+    <li>
+      <a href="recurso202.html">Valor esperado y varianza</a>
+    </li>
+    <li>
+      <a href="recurso203.html">Variables conjuntas</a>
+    </li>
+    <li>
+      <a href="recurso204.html">Modelos discretos</a>
+    </li>
+    <li>
+      <a href="recurso205.html">Modelos continuos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Inferencia Estadística
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso301.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso302.html">Estimación puntual</a>
+    </li>
+    <li>
+      <a href="recurso305.html">Teorema del Límite Central</a>
+    </li>
+    <li>
+      <a href="recurso303.html">Propiedades de los estimadores</a>
+    </li>
+    <li>
+      <a href="recurso304.html">Métodos de estimación</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Intervalos de Confianza
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso401.html">Para una población</a>
+    </li>
+    <li>
+      <a href="recurso402.html">Para dos poblaciones</a>
+    </li>
+    <li>
+      <a href="recurso403.html">Estimación no paramétrica</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Pruebas de Hipótesis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso501.html">Introducción</a>
+    </li>
+    <li>
+      <a href="recurso502.html">Conceptos básicos</a>
+    </li>
+    <li>
+      <a href="recurso503.html">Pruebas paramétricas</a>
+    </li>
+    <li>
+      <a href="recurso504.html">Pruebas no paramétricas</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Casos de estudio
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso404.html">Caso 1</a>
+    </li>
+    <li>
+      <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore"><span style="color:#686868">
+<strong>Modelos discretos</strong></span></h1>
+<h4 class="author">Métodos y Simulación Estadística</h4>
+
+</div>
+
+
+<p><br/><br/><br/></p>
+<p>Los modelos probabilísticos discretos, como la distribución de
+<strong>Poisson</strong> y la <strong>hipergeométrica</strong>, permiten
+describir situaciones donde las variables aleatorias toman valores
+enteros en contextos específicos. Mientras que una función de
+probabilidad simple asigna una probabilidad a cada resultado posible,
+los modelos probabilísticos establecen estructuras que reflejan patrones
+subyacentes en los datos. Por ejemplo, la distribución de
+<strong>Poisson</strong> modela la ocurrencia de eventos raros en un
+intervalo de tiempo o espacio, mientras que la distribución
+<strong>hipergeométrica</strong> es útil en contextos de muestreo sin
+reemplazo, donde la probabilidad de éxito cambia con cada extracción.
+Estos modelos proporcionan herramientas esenciales para el análisis de
+datos en áreas como la gestión de recursos, el control de calidad y la
+toma de decisiones basada en datos probabilísticos.</p>
+</br></br>
+<h2>
+Introducción
+</h2>
+<p>Toda variable aleatoria se caracteriza por su <strong>función de
+distribución de probabilidad</strong> <span
+class="math inline">\(f(x)\)</span>, que describe la probabilidad de
+cada posible valor, y su <strong>función de distribución
+acumulada</strong> <span class="math inline">\(F(x)\)</span>, que
+representa la probabilidad de que la variable tome un valor menor o
+igual a <span class="math inline">\(x\)</span>, es decir, <span
+class="math inline">\(P(X \leq x)\)</span>. Además, posee medidas clave
+como el <strong>valor esperado</strong> <span
+class="math inline">\(E[X]\)</span>, que indica su promedio teórico, y
+la <strong>varianza</strong> <span
+class="math inline">\(\text{Var}(X)\)</span>, que mide su
+dispersión.</p>
+<p>Cuando se trabaja con <strong>variables aleatorias
+conjuntas</strong>, se utiliza la <strong>función de distribución
+conjunta</strong> <span class="math inline">\(f_{XY}(x,y)\)</span>, que
+describe la probabilidad de que ambas variables tomen ciertos valores
+simultáneamente. También se consideran métricas importantes como el
+<strong>valor esperado conjunto</strong> <span
+class="math inline">\(E[XY]\)</span>, la <strong>covarianza</strong>
+<span class="math inline">\(\text{Cov}(X, Y)\)</span>, que mide la
+relación lineal entre ellas, y el <strong>coeficiente de
+correlación</strong> <span class="math inline">\(\rho_{XY}\)</span>, que
+cuantifica la intensidad y dirección de esa relación.</p>
+<p><br/></p>
+<p>A continuación, se presentan los modelos de probabilidad discreta más
+comunes junto con sus principales características:</p>
+<table>
+<colgroup>
+<col width="60%" />
+<col width="40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Modelo</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Bernoulli</strong></td>
+<td>Modela experimentos con dos posibles resultados (éxito o
+fracaso).</td>
+</tr>
+<tr class="even">
+<td><strong>Binomial</strong></td>
+<td>Representa el número de éxitos en una secuencia de ensayos de
+Bernoulli independientes.</td>
+</tr>
+<tr class="odd">
+<td><strong>Poisson</strong></td>
+<td>Modela la ocurrencia de eventos raros en un intervalo de tiempo o
+espacio.</td>
+</tr>
+<tr class="even">
+<td><strong>Hipergeométrico</strong></td>
+<td>Describe el número de éxitos en muestras extraídas sin reemplazo de
+una población finita.</td>
+</tr>
+<tr class="odd">
+<td><strong>Geométrico/Pascal</strong></td>
+<td>Modela el número de ensayos hasta el primer éxito en experimentos de
+Bernoulli repetidos.</td>
+</tr>
+<tr class="even">
+<td><strong>Binomial Negativa</strong></td>
+<td>Generaliza el modelo geométrico para contar el número de ensayos
+hasta alcanzar un número determinado de éxitos.</td>
+</tr>
+</tbody>
+</table>
+</br></br>
+<h2>
+Bernoulli
+</h2>
+<p>Comenzaremos con el modelo <strong>Bernoulli</strong>, que, aunque
+algunos autores no lo consideran un modelo en sí mismo, es fundamental
+para comprender otros modelos de probabilidad discreta. Su nombre
+proviene del matemático <strong>Jacob Bernoulli</strong> y describe
+experimentos que cumplen las siguientes condiciones:</p>
+<ul>
+<li>Se realiza un <strong>único ensayo</strong>.</li>
+<li>El resultado del ensayo puede ser uno de dos posibles valores:
+<strong>éxito</strong> (E) o <strong>fracaso</strong> (F).</li>
+<li>La <strong>probabilidad de éxito</strong> es <span
+class="math inline">\(p\)</span>, mientras que la <strong>probabilidad
+de fracaso</strong> es <span class="math inline">\(1 - p =
+q\)</span>.</li>
+</ul>
+</br>
+<h3>
+Distribución Bernoulli
+</h3>
+<p>La variable aleatoria de interés, <span
+class="math inline">\(X\)</span>, toma únicamente los valores
+<strong>0</strong> o <strong>1</strong>, donde:</p>
+<ul>
+<li><span class="math inline">\(X = 1\)</span> indica que el resultado
+del ensayo es un <strong>éxito</strong>.</li>
+<li><span class="math inline">\(X = 0\)</span> indica que el resultado
+del ensayo es un <strong>fracaso</strong>.</li>
+</ul>
+<p>Sus principales características son:</p>
+<ul>
+<li><p><strong>Rango</strong>: <span class="math inline">\(R_{X} =
+\{0,1\}\)</span>.</p></li>
+<li><p><strong>Función de distribución de probabilidad</strong>:</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases}
+p, &amp; \text{si } x=1 \\  
+q, &amp; \text{si } x=0  
+\end{cases}
+\]</span></p></li>
+<li><p><strong>Valor esperado</strong>:</p>
+<p><span class="math display">\[
+E[X] = p
+\]</span></p></li>
+<li><p><strong>Varianza</strong>:</p>
+<p><span class="math display">\[
+\text{Var}(X) = pq
+\]</span></p></li>
+</ul>
+<p>Este modelo es la base de distribuciones más complejas, como la
+<strong>Binomial</strong>, y se aplica en diversas áreas, incluyendo
+pruebas de calidad, estudios médicos y procesos de decisión binaria.</p>
+</br></br>
+<h2>
+Binomial
+</h2>
+<p>El modelo <strong>Binomial</strong> puede considerarse una
+generalización del modelo de Bernoulli, extendiendo el análisis de un
+único ensayo a <span class="math inline">\(n\)</span> ensayos
+independientes. Este modelo fue estudiado y analizado por <strong>Jacob
+Bernoulli</strong> en el contexto de problemas en juegos de azar, y su
+trabajo fue publicado en 1713.</p>
+<p>En un <strong>experimento binomial</strong>:</p>
+<ul>
+<li>Se realizan <span class="math inline">\(n\)</span> ensayos idénticos
+e independientes.</li>
+<li>Cada ensayo tiene dos posibles resultados: <strong>éxito</strong>
+(E) o <strong>fracaso</strong> (F).</li>
+<li>La probabilidad de éxito en cada ensayo es <span
+class="math inline">\(p\)</span>, y la probabilidad de fracaso es <span
+class="math inline">\(q = 1 - p\)</span>.</li>
+<li>La variable aleatoria de interés, <span
+class="math inline">\(X\)</span>, representa el número total de éxitos
+en los <span class="math inline">\(n\)</span> ensayos.</li>
+</ul>
+<p>Este modelo es ampliamente utilizado en situaciones donde se cuentan
+ocurrencias de un evento en un número fijo de intentos, como estudios de
+calidad, ensayos clínicos y encuestas de opinión.</p>
+</br></br>
+<h3>
+Distribución Binomial
+</h3>
+<p>La función de distribución de probabilidad del modelo Binomial que
+indica que <span class="math inline">\(X \sim Binom(x,n,p)\)</span> está
+dada por:</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases}
+\displaystyle\binom{n}{x} p^{x} (1-p)^{n-x}, &amp; x=0,1,2, \dots, n  \\
+0, &amp; \text{en otro caso}
+\end{cases}
+\]</span></p>
+<p>Las principales propiedades de la distribución Binomial son:</p>
+<ul>
+<li><p><strong>Valor esperado</strong>: <span class="math display">\[
+E[X] = np
+\]</span></p></li>
+<li><p><strong>Varianza</strong>: <span class="math display">\[
+\text{Var}(X) = np(1 - p)
+\]</span></p></li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La <strong>Figura 2.20</strong> muestra la distribución de una
+variable aleatoria que sigue una distribución <strong>Binomial</strong>,
+con parámetros <span class="math inline">\(X \sim Binom(n=10,
+p=0.30)\)</span>. Esta figura permite visualizar cómo se distribuyen las
+probabilidades de los distintos valores posibles de <span
+class="math inline">\(X\)</span>.</p>
+<pre>
+# Cargar la librería ggplot2
+library(ggplot2)
+
+# Definir los valores de la variable x (número de éxitos en 10 ensayos)
+x <- 0:10
+
+# Calcular la función de masa de probabilidad de la distribución binomial
+# con parámetros n = 10 y p = 0.30
+fx <- dbinom(x, 10, 0.30)
+
+# Crear un data frame con los valores de x y sus respectivas probabilidades fx
+dat <- data.frame(x, fx)
+
+# Crear el gráfico usando ggplot2
+plotBin1<-ggplot(dat, aes(x = x, y = fx)) + 
+  # Agregar líneas verticales desde el eje x hasta cada punto para mayor claridad
+  geom_segment(aes(x = x, xend = x, y = 0, yend = fx), 
+               color = "#FF7F00", linetype = "dashed") + 
+  # Agregar los puntos representando la función de probabilidad
+  geom_point(color = "#FF7F00", size = 3) +
+  # Configurar el eje x para mostrar solo los valores enteros de 0 a 10
+  scale_x_continuous(breaks = 0:10) +
+  # Agregar etiquetas descriptivas a los ejes y un título al gráfico
+  labs(title = "Distribución Binomial (n=10, p=0.30)", 
+       x = "Número de éxitos (x)", 
+       y = "Probabilidad P(X = x)") +
+  # Aplicar un tema minimalista para una mejor presentación del gráfico
+  theme_minimal()
+
+print(plotBin1)
+</pre>
+<pre class="r"><code># Cargar la librería ggplot2
+library(ggplot2)
+
+# Definir los valores de la variable x (número de éxitos en 10 ensayos)
+x &lt;- 0:10
+
+# Calcular la función de masa de probabilidad de la distribución binomial
+# con parámetros n = 10 y p = 0.30
+fx &lt;- dbinom(x, 10, 0.30)
+
+# Crear un data frame con los valores de x y sus respectivas probabilidades fx
+dat &lt;- data.frame(x, fx)
+
+# Crear el gráfico usando ggplot2
+plotBin1&lt;-ggplot(dat, aes(x = x, y = fx)) + 
+  # Agregar líneas verticales desde el eje x hasta cada punto para mayor claridad
+  geom_segment(aes(x = x, xend = x, y = 0, yend = fx), 
+               color = &quot;#FF7F00&quot;, linetype = &quot;dashed&quot;) + 
+  # Agregar los puntos representando la función de probabilidad
+  geom_point(color = &quot;#FF7F00&quot;, size = 3) +
+  # Configurar el eje x para mostrar solo los valores enteros de 0 a 10
+  scale_x_continuous(breaks = 0:10) +
+  # Agregar etiquetas descriptivas a los ejes y un título al gráfico
+  labs(title = &quot;Distribución Binomial (n=10, p=0.30)&quot;, 
+       x = &quot;Número de éxitos (x)&quot;, 
+       y = &quot;Probabilidad P(X = x)&quot;) +
+  # Aplicar un tema minimalista para una mejor presentación del gráfico
+  theme_minimal()
+
+# print(plotBin1)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig220.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.20</strong> Distribución <span class="math inline">\(X
+\sim Binom(x,n=10, p=0.30)\)</span>
+</center>
+<p><br/><br/></p>
+<p>Por otro lado, la <strong>Figura 2.21</strong> representa la
+distribución de 12 muestras aleatorias (1000 grupos de <span
+class="math inline">\(n\)</span>=10) extraídas de una distribución
+binomial con los mismos parámetros. Se puede notar que las formas de las
+muestras no siempre coinciden exactamente con la distribución original,
+lo que refleja la variabilidad natural inherente al muestreo.</p>
+<pre>
+# Cargar las librerías necesarias
+library(ggplot2)
+
+# Definir los parámetros de la distribución binomial
+n <- 10   # Número de ensayos
+p <- 0.30 # Probabilidad de éxito
+muestras <- 12  # Número de muestras
+numero.grupos.n<-1000
+
+# Generar 12 muestras aleatorias de tamaño n=10
+set.seed(123)  # Fijar semilla para reproducibilidad
+data_list <- lapply(1:muestras, function(i) {
+  x <- rbinom(numero.grupos.n, n, p)  # Generar una muestra de 10 valores
+  data.frame(x = x, sample = paste("Muestra", i))
+})
+
+# Unir todas las muestras en un solo data frame
+data <- do.call(rbind, data_list)
+
+# Crear el gráfico con facet_wrap() para organizar en 4x3
+plot_muestras<-ggplot(data, aes(x = x)) +
+  geom_bar(fill = "#FF7F00", color = "black") +  # Graficos de cada muestra
+  facet_wrap(~sample, nrow = 4, ncol = 3) +  # Organizar en una cuadrícula de 4x3
+  labs(title = "Muestras aleatorias de la Distribución Binomial (n=10, p=0.30)",
+       x = "Número de éxitos",
+       y = "Frecuencia") +
+  theme_minimal()  # Estilo limpio para mejor presentación
+
+print(plot_muestras)
+</pre>
+<pre class="r"><code># Cargar las librerías necesarias
+library(ggplot2)
+
+# Definir los parámetros de la distribución binomial
+n &lt;- 10   # Número de ensayos
+p &lt;- 0.30 # Probabilidad de éxito
+muestras &lt;- 12  # Número de muestras
+numero.grupos.n&lt;-1000
+
+# Generar 12 muestras aleatorias de tamaño n=10
+set.seed(123)  # Fijar semilla para reproducibilidad
+data_list &lt;- lapply(1:muestras, function(i) {
+  x &lt;- rbinom(numero.grupos.n, n, p)  # Generar una muestra de 10 valores
+  data.frame(x = x, sample = paste(&quot;Muestra&quot;, i))
+})
+
+# Unir todas las muestras en un solo data frame
+data &lt;- do.call(rbind, data_list)
+
+# Crear el gráfico con facet_wrap() para organizar en 4x3
+plot_muestras&lt;-ggplot(data, aes(x = x)) +
+  geom_bar(fill = &quot;#FF7F00&quot;, color = &quot;black&quot;) +  # Graficos de cada muestra
+  facet_wrap(~sample, nrow = 4, ncol = 3) +  # Organizar en una cuadrícula de 4x3
+  labs(title = &quot;Muestras aleatorias de la Distribución Binomial (n=10, p=0.30)&quot;,
+       x = &quot;Número de éxitos&quot;,
+       y = &quot;Frecuencia&quot;) +
+  theme_minimal()  # Estilo limpio para mejor presentación
+
+# print(plot_muestras)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig221.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.21</strong> Distribución de 12 muestras aleatorias
+(tamaño 1000) extraídas de una distribución binomial <span
+class="math inline">\(X \sim Binom(x,n=10, p=0.30)\)</span>.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br></br>
+<h2>
+Poisson
+</h2>
+<p>El modelo de <strong>Poisson</strong> fue propuesto por el físico y
+matemático francés <strong>Siméon-Denis</strong> Poisson en un trabajo
+publicado en 1838, en el cual abordó aplicaciones relacionadas con
+procesos judiciales en ámbitos criminales y civiles. Este modelo es
+ampliamente utilizado para describir la ocurrencia de eventos en un
+intervalo de tiempo o espacio, particularmente cuando estos suceden de
+manera aleatoria e independiente. Algunos ejemplos de su aplicación
+incluyen:</p>
+<ul>
+<li>El número de llamadas recibidas por un conmutador en el transcurso
+de una hora.<br />
+</li>
+<li>La cantidad de plaquetas por <span
+class="math inline">\(mm^{3}\)</span> de sangre.<br />
+</li>
+<li>El número de solicitudes de servicio técnico registradas
+diariamente.<br />
+</li>
+<li>La cantidad de imperfecciones por <span
+class="math inline">\(m^{2}\)</span> de carretera.</li>
+</ul>
+</br></br>
+<h3>
+Proceso de Poisson
+</h3>
+<p>Un <strong>proceso de Poisson</strong> es un modelo matemático
+utilizado para describir la ocurrencia de eventos en el tiempo o en el
+espacio de manera aleatoria, pero con una tasa promedio constante. Es
+ampliamente empleado en disciplinas como la estadística, la ingeniería,
+la física y la biología, entre otras.</p>
+<p>Formalmente, un proceso de Poisson <span
+class="math inline">\(\{N(t), t \geq 0\}\)</span> es un proceso
+estocástico que cumple con las siguientes propiedades:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Incrementos independientes:</strong> El número de eventos
+ocurridos en intervalos de tiempo disjuntos es independiente entre
+sí.<br />
+</li>
+<li><strong>Incrementos estacionarios:</strong> La probabilidad de que
+un número específico de eventos ocurra en un intervalo de tiempo depende
+solo de la longitud del intervalo y no de su ubicación en la línea
+temporal.<br />
+</li>
+<li><strong>Distribución de Poisson:</strong> El número de eventos en un
+intervalo de longitud <span class="math inline">\(t\)</span> sigue una
+distribución de Poisson con parámetro <span
+class="math inline">\(\lambda t\)</span>, donde <span
+class="math inline">\(\lambda\)</span> es la tasa promedio de ocurrencia
+de eventos por unidad de tiempo:<br />
+<span class="math display">\[
+P(N(t) = k) = \frac{(\lambda t)^k e^{-\lambda t}}{k!}, \quad k = 0, 1,
+2, \dots
+\]</span><br />
+</li>
+<li><strong>Ausencia de eventos simultáneos:</strong> La probabilidad de
+que más de un evento ocurra en un intervalo infinitesimal es
+despreciable.</li>
+</ol>
+<p>El <strong>proceso de Poisson homogéneo</strong> se caracteriza por
+una tasa de ocurrencia constante (<span
+class="math inline">\(\lambda\)</span>), mientras que en un
+<strong>proceso de Poisson no homogéneo</strong>, esta tasa varía en el
+tiempo, es decir, <span class="math inline">\(\lambda(t)\)</span>.</p>
+</br></br>
+<h3>
+Distribución Poisson
+</h3>
+<p>La <strong>función de masa de probabilidad</strong> de una variable
+aleatoria <span class="math inline">\(X\)</span> que sigue una
+distribución de Poisson, denotada como <span class="math inline">\(X
+\sim \text{Poisson}(\lambda)\)</span>, está dada por la siguiente
+expresión:</p>
+<p><span class="math display">\[
+f(x) = \begin{cases}
+\frac{\lambda^x}{x!} e^{-\lambda}, &amp; x \geq 0, \quad x \in
+\mathbb{N} \\
+0, &amp; \text{en otro caso}
+\end{cases}
+\]</span></p>
+<p>donde <span class="math inline">\(\lambda &gt; 0\)</span> representa
+el número promedio de ocurrencias en el intervalo de interés.</p>
+<p>La variable objeto de estudio <span class="math inline">\(X\)</span>
+es el <strong>número de eventos que ocurren por unidad de tiempo,
+longitud, superficie o volumen</strong>, dependiendo del contexto de
+aplicación.</p>
+<p>Las propiedades fundamentales de esta distribución son:</p>
+<ul>
+<li><strong>Valor esperado:</strong><br />
+<span class="math display">\[
+E[X] = \lambda
+\]</span><br />
+</li>
+<li><strong>Varianza:</strong><br />
+<span class="math display">\[
+\text{Var}(X) = \lambda
+\]</span></li>
+</ul>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La <strong>Figura 2.22</strong> muestra la distribución de una
+variable aleatoria que sigue una <strong>distribución de
+Poisson</strong> con parámetro <span class="math inline">\(X \sim
+Poiss(\lambda=2)\)</span>. Esta figura permite visualizar cómo se
+distribuyen las probabilidades de los distintos valores posibles de
+<span class="math inline">\(X\)</span>, reflejando la naturaleza
+discreta de este modelo.</p>
+<pre>
+# Cargar la librería ggplot2
+library(ggplot2)
+
+# Definir valores para la distribución de Poisson con lambda = 2
+x <- 0:10                 # Valores posibles de la variable aleatoria
+fx <- dpois(x, lambda = 2) # Calcular la función de masa de probabilidad
+
+# Crear un data frame con los valores de x y sus respectivas probabilidades fx
+dat <- data.frame(x, fx)
+
+# Crear el gráfico usando ggplot2
+plot_poiss1<-ggplot(dat, aes(x = x, y = fx)) + 
+  # Agregar líneas verticales para representar la función de probabilidad
+  geom_segment(aes(x = x, xend = x, y = 0, yend = fx), 
+               color = "#FF7F00", linetype = "dashed") + 
+  # Agregar los puntos de la función de probabilidad
+  geom_point(color = "#FF7F00", size = 3) +
+  # Configurar el eje x para mostrar valores enteros de 0 a 10
+  scale_x_continuous(breaks = 0:10) +
+  # Agregar etiquetas y título descriptivo
+  labs(title = "Distribución de Poisson (λ = 2)", 
+       x = "Número de eventos (x)", 
+       y = "Probabilidad P(X = x)") +
+  # Aplicar un tema minimalista para mejor presentación
+  theme_minimal()
+
+print(plot_poiss1)
+</pre>
+<pre class="r"><code># Cargar la librería ggplot2
+library(ggplot2)
+
+# Definir valores para la distribución de Poisson con lambda = 2
+x &lt;- 0:10                 # Valores posibles de la variable aleatoria
+fx &lt;- dpois(x, lambda = 2) # Calcular la función de masa de probabilidad
+
+# Crear un data frame con los valores de x y sus respectivas probabilidades fx
+dat &lt;- data.frame(x, fx)
+
+# Crear el gráfico usando ggplot2
+plot_poiss1&lt;-ggplot(dat, aes(x = x, y = fx)) + 
+  # Agregar líneas verticales para representar la función de probabilidad
+  geom_segment(aes(x = x, xend = x, y = 0, yend = fx), 
+               color = &quot;#FF7F00&quot;, linetype = &quot;dashed&quot;) + 
+  # Agregar los puntos de la función de probabilidad
+  geom_point(color = &quot;#FF7F00&quot;, size = 3) +
+  # Configurar el eje x para mostrar valores enteros de 0 a 10
+  scale_x_continuous(breaks = 0:10) +
+  # Agregar etiquetas y título descriptivo
+  labs(title = &quot;Distribución de Poisson (λ = 2)&quot;, 
+       x = &quot;Número de eventos (x)&quot;, 
+       y = &quot;Probabilidad P(X = x)&quot;) +
+  # Aplicar un tema minimalista para mejor presentación
+  theme_minimal()
+
+# print(plot_poiss1)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig222.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.22</strong> Función de distribución Poisson <span
+class="math inline">\(X \sim Poiss(x,\lambda=2)\)</span>
+</center>
+<p><br/><br/></p>
+<p>Por otro lado, la <strong>Figura 2.23</strong> ilustra la
+distribución de 12 muestras aleatorias de tamaño 1000 extraídas de una
+distribución de Poisson con los mismos parámetros. Se puede observar que
+las formas de las muestras presentan variabilidad respecto a la
+distribución original, lo que es una manifestación natural del muestreo
+aleatorio. Adicionalmente, la media muestral se encuentra cercana al
+valor 2, correspondiente a la esperanza matemática de la distribución,
+aunque no coincide exactamente debido a la variabilidad inherente del
+muestreo.</p>
+<pre>
+# Cargar las librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir los parámetros de la distribución Poisson
+lambda <- 2  # Valor esperado (λ)
+muestras <- 12  # Número de muestras a generar
+n_muestra <- 1000  # Tamaño de cada muestra
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Generar 12 muestras aleatorias y calcular su media muestral
+data_list <- lapply(1:muestras, function(i) {
+  x <- rpois(n_muestra, lambda)  # Generar 10 valores desde Poisson(2)
+  media_muestral <- mean(x)  # Calcular la media muestral
+  
+  # Crear un data frame con la muestra y su identificador
+  data.frame(x = x, sample = paste("Muestra", i, "\n", "x̄ =", round(media_muestral, 2)))
+})
+
+# Unir todas las muestras en un solo data frame
+data <- do.call(rbind, data_list)
+
+# Crear el gráfico de barras con facet_wrap() en 4 filas x 3 columnas
+plot_poiss2 <- ggplot(data, aes(x = x)) +
+  geom_bar(fill = "#FF7F00", color = "black") +  # Histogramas de cada muestra
+  facet_wrap(~sample, nrow = 4, ncol = 3) +  # Organizar en 4x3
+  labs(title = "Muestras aleatorias de la Distribución de Poisson (λ = 2)",
+       x = "Numero de eventos",  # SIN TILDE para evitar errores
+       y = "Frecuencia") +
+  theme_minimal()  # Aplicar estilo limpio
+
+# Mostrar el gráfico
+print(plot_poiss2)
+</pre>
+<pre class="r"><code># Cargar las librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir los parámetros de la distribución Poisson
+lambda &lt;- 2  # Valor esperado (λ)
+muestras &lt;- 12  # Número de muestras a generar
+n_muestra &lt;- 1000  # Tamaño de cada muestra
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Generar 12 muestras aleatorias y calcular su media muestral
+data_list &lt;- lapply(1:muestras, function(i) {
+  x &lt;- rpois(n_muestra, lambda)  # Generar 10 valores desde Poisson(2)
+  media_muestral &lt;- mean(x)  # Calcular la media muestral
+  
+  # Crear un data frame con la muestra y su identificador
+  data.frame(x = x, sample = paste(&quot;Muestra&quot;, i, &quot;\n&quot;, &quot;x̄ =&quot;, round(media_muestral, 2)))
+})
+
+# Unir todas las muestras en un solo data frame
+data &lt;- do.call(rbind, data_list)
+
+# Crear el gráfico de barras con facet_wrap() en 4 filas x 3 columnas
+plot_poiss2 &lt;- ggplot(data, aes(x = x)) +
+  geom_bar(fill = &quot;#FF7F00&quot;, color = &quot;black&quot;) +  # Histogramas de cada muestra
+  facet_wrap(~sample, nrow = 4, ncol = 3) +  # Organizar en 4x3
+  labs(title = &quot;Muestras aleatorias de la Distribución de Poisson (λ = 2)&quot;,
+       x = &quot;Numero de eventos&quot;,  # SIN TILDE para evitar errores
+       y = &quot;Frecuencia&quot;) +
+  theme_minimal()  # Aplicar estilo limpio
+
+# Mostrar el gráfico
+#print(plot_poiss2)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig223.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.23</strong> Distribución de 12 muestras aleatorias (de
+tamaño 1000) extraídas de una distribución de Poisson <span
+class="math inline">\(X \sim Poiss(x,\lambda=2)\)</span>.
+</center>
+<p><br/><br/></p>
+</p>
+</div>
+</br></br>
+<h2>
+Hipergeométrico
+</h2>
+<p>El modelo <strong>hipergeométrico</strong> surge de la necesidad de
+representar eventos de Bernoulli con probabilidad variable,
+característicos de selecciones sin reemplazo. Su desarrollo se remonta a
+los trabajos de <strong>Carl Friedrich Gauss</strong>, con
+contribuciones posteriores de <strong>Pierre-Simon Laplace</strong> y
+<strong>Siméon Denis Poisson</strong> en el estudio de probabilidades en
+poblaciones finitas. Esta distribución es fundamental en aplicaciones
+como el control de calidad, el muestreo estadístico y la genética de
+poblaciones, donde es crucial estimar la probabilidad de obtener ciertos
+elementos dentro de una muestra finita.</p>
+</br></br>
+<h3>
+Distribución Hipergeométrica
+</h3>
+<p>La distribución <strong>Hipergeométrica</strong> se utiliza para
+modelar el muestreo sin reemplazo. Se define con los parámetros:</p>
+<ul>
+<li><span class="math inline">\(m\)</span>: Número de elementos
+clasificados como éxitos en la población.</li>
+<li><span class="math inline">\(n\)</span>: Número de elementos
+clasificados como fracasos en la población.</li>
+<li><span class="math inline">\(k\)</span>: Tamaño de la muestra
+extraída.</li>
+</ul>
+<p>En esta parametrización, el tamaño total de la población es <span
+class="math inline">\(N = m + n\)</span>. La variable aleatoria <span
+class="math inline">\(X\)</span> representa el número de éxitos en la
+muestra extraída.</p>
+<p>La <strong>función de masa de probabilidad</strong> para $X Hiper(x,
+m, n, k) está dada por:</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases}
+\dfrac{\binom{m}{x} \binom{n}{k-x}}{\binom{m+n}{k}}, &amp; \text{si }
+\max(0, k-n) \leq x \leq \min(k, m)  \\
+0, &amp; \text{en otro caso}
+\end{cases}
+\]</span></p>
+<p>Las principales propiedades de esta distribución son:</p>
+<ul>
+<li><p><strong>Valor esperado (media):</strong> <span
+class="math display">\[
+E[X] = k \cdot p, \quad \text{donde } p = \frac{m}{m+n}.
+\]</span></p></li>
+<li><p><strong>Varianza:</strong> <span class="math display">\[
+\text{Var}(X) = k p (1 - p) \cdot \frac{m+n-k}{m+n-1}.
+\]</span></p></li>
+</ul>
+<p>Esta expresión muestra la relación entre la distribución
+hipergeométrica y la binomial <span class="math inline">\(B(k,
+p)\)</span>, siendo la hipergeométrica más concentrada (menor varianza)
+cuando <span class="math inline">\(k &gt; 1\)</span>. La distribución
+hipergeométrica es útil en contextos donde la población es finita y el
+muestreo se realiza sin reemplazo, como en controles de calidad,
+estudios ecológicos y auditorías de muestreo.</p>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>La <strong>Figura 2.24</strong> representa la distribución de una
+variable aleatoria que sigue una <strong>distribución
+hipergeométrica</strong>, denotada como <span class="math inline">\(X
+\sim \text{Hiper}(x, m=95, n=5, k=10)\)</span>. Esta visualización
+ilustra la asignación de probabilidades a los distintos valores posibles
+de <span class="math inline">\(X\)</span>, destacando la naturaleza
+discreta de este modelo probabilístico.</p>
+<pre>
+# Cargar la librería ggplot2
+library(ggplot2)
+
+# Definir los parámetros de la distribución hipergeométrica
+m <- 95  # Tamaño de la población
+n <- 5   # Número de éxitos en la población
+k <- 10  # Tamaño de la muestra
+
+# Valores posibles de la variable aleatoria X (de 0 a min(n, k))
+x <- 0:min(n, k)
+
+# Calcular la función de masa de probabilidad (FMP) para la distribución hipergeométrica
+fx <- dhyper(x, n, m - n, k)
+
+# Crear un data frame con los valores de x y sus respectivas probabilidades fx
+dat <- data.frame(x, fx)
+
+# Crear el gráfico usando ggplot2
+plot_hip1<-ggplot(dat, aes(x = x, y = fx)) + 
+  # Agregar líneas verticales para representar la función de probabilidad
+  geom_segment(aes(x = x, xend = x, y = 0, yend = fx), 
+               color = "#FF7F00", linetype = "dashed") + 
+  # Agregar los puntos de la función de probabilidad
+  geom_point(color = "#FF7F00", size = 3) +
+  # Configurar el eje x para mostrar solo los valores discretos posibles
+  scale_x_continuous(breaks = x) +
+  # Agregar etiquetas y título descriptivo con notación matemática
+  labs(title = expression("Distribución Hipergeométrica"),
+       x = expression("Número de éxitos en la muestra (X)"),
+       y = expression(P(X == x)),
+       caption = expression(X %~% Hipergeometrica(95, 5, 10))) +
+  # Aplicar un tema minimalista para mejor presentación
+  theme_minimal()
+
+print(plot_hip1)
+</pre>
+<pre class="r"><code># Cargar la librería ggplot2
+library(ggplot2)
+
+# Definir los parámetros de la distribución hipergeométrica
+m &lt;- 95  # Tamaño de la población
+n &lt;- 5   # Número de éxitos en la población
+k &lt;- 10  # Tamaño de la muestra
+
+# Valores posibles de la variable aleatoria X (de 0 a min(n, k))
+x &lt;- 0:min(n, k)
+
+# Calcular la función de masa de probabilidad (FMP) para la distribución hipergeométrica
+fx &lt;- dhyper(x, n, m - n, k)
+
+# Crear un data frame con los valores de x y sus respectivas probabilidades fx
+dat &lt;- data.frame(x, fx)
+
+# Crear el gráfico usando ggplot2
+plot_hip1&lt;-ggplot(dat, aes(x = x, y = fx)) + 
+  # Agregar líneas verticales para representar la función de probabilidad
+  geom_segment(aes(x = x, xend = x, y = 0, yend = fx), 
+               color = &quot;#FF7F00&quot;, linetype = &quot;dashed&quot;) + 
+  # Agregar los puntos de la función de probabilidad
+  geom_point(color = &quot;#FF7F00&quot;, size = 3) +
+  # Configurar el eje x para mostrar solo los valores discretos posibles
+  scale_x_continuous(breaks = x) +
+  # Agregar etiquetas y título descriptivo con notación matemática
+  labs(title = expression(&quot;Distribución Hipergeométrica&quot;),
+       x = expression(&quot;Número de éxitos en la muestra (X)&quot;),
+       y = expression(P(X == x)),
+       caption = expression(X %~% Hipergeometrica(95, 5, 10))) +
+  # Aplicar un tema minimalista para mejor presentación
+  theme_minimal()
+
+# print(plot_hip1)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig224.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.24</strong> Función de distribución hipergeométrica
+<span class="math inline">\(X \sim Hiper(x, m=95, n=5, k=10)\)</span>.
+</center>
+<p><br/><br/></p>
+<p>Por otra parte, la <strong>Figura 2.25</strong> ilustra la
+distribución de 12 muestras aleatorias de tamaño 1000 (100 grupos de
+<span class="math inline">\(n\)</span> observaciones) extraídas de una
+distribución <strong>hipergeométrica</strong> con los mismos parámetros.
+Se puede observar que las formas de las muestras presentan variabilidad
+respecto a la distribución original, lo que es una manifestación natural
+del muestreo aleatorio. Adicionalmente, la media muestral se encuentra
+cercana en algunos casos al valor 0.526, correspondiente a la esperanza
+matemática de la distribución, aunque no coincide exactamente debido a
+la variabilidad inherente del muestreo.</p>
+<pre>
+# Cargar las librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir los parámetros de la distribución hipergeométrica
+m <- 95  # Tamaño de la población
+n <- 5   # Número de éxitos en la población
+k <- 10  # Tamaño de la muestra
+muestras <- 12  # Número de muestras a generar
+n.muestras<-1000 # Número de grupos de tamaño n
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Generar 12 muestras aleatorias y calcular su media muestral
+data_list <- lapply(1:muestras, function(i) {
+  x <- rhyper(n.muestras, n, m - n, k)  # Generar 10 valores desde la distribución hipergeométrica
+  media_muestral <- mean(x)  # Calcular la media muestral
+  
+  # Crear un data frame con la muestra y su identificador
+  data.frame(x = x, sample = paste("Muestra", i, "\n", "x̄ =", round(media_muestral, 2)))
+})
+
+# Unir todas las muestras en un solo data frame
+data <- do.call(rbind, data_list)
+
+# Crear el gráfico de barras con facet_wrap() en 4 filas x 3 columnas
+plot_hyper <- ggplot(data, aes(x = x)) +
+  geom_bar(fill = "#FF7F00", color = "black") +  # Histogramas de cada muestra
+  facet_wrap(~sample, nrow = 4, ncol = 3) +  # Organizar en 4x3
+  labs(title = "Muestras aleatorias de la Distribución Hipergeométrica",
+       x = "Número de éxitos en la muestra (X)",
+       y = "Frecuencia") +
+  theme_minimal()  # Aplicar estilo limpio
+
+# Mostrar el gráfico
+print(plot_hyper)
+</pre>
+<pre class="r"><code># Cargar las librerías necesarias
+library(ggplot2)
+library(dplyr)
+
+# Definir los parámetros de la distribución hipergeométrica
+m &lt;- 95  # Tamaño de la población
+n &lt;- 5   # Número de éxitos en la población
+k &lt;- 10  # Tamaño de la muestra
+muestras &lt;- 12  # Número de muestras a generar
+n.muestras&lt;-1000 # Número de grupos de tamaño n
+
+# Fijar semilla para reproducibilidad
+set.seed(123)
+
+# Generar 12 muestras aleatorias y calcular su media muestral
+data_list &lt;- lapply(1:muestras, function(i) {
+  x &lt;- rhyper(n.muestras, n, m - n, k)  # Generar 10 valores desde la distribución hipergeométrica
+  media_muestral &lt;- mean(x)  # Calcular la media muestral
+  
+  # Crear un data frame con la muestra y su identificador
+  data.frame(x = x, sample = paste(&quot;Muestra&quot;, i, &quot;\n&quot;, &quot;x̄ =&quot;, round(media_muestral, 2)))
+})
+
+# Unir todas las muestras en un solo data frame
+data &lt;- do.call(rbind, data_list)
+
+# Crear el gráfico de barras con facet_wrap() en 4 filas x 3 columnas
+plot_hyper &lt;- ggplot(data, aes(x = x)) +
+  geom_bar(fill = &quot;#FF7F00&quot;, color = &quot;black&quot;) +  # Histogramas de cada muestra
+  facet_wrap(~sample, nrow = 4, ncol = 3) +  # Organizar en 4x3
+  labs(title = &quot;Muestras aleatorias de la Distribución Hipergeométrica&quot;,
+       x = &quot;Número de éxitos en la muestra (X)&quot;,
+       y = &quot;Frecuencia&quot;) +
+  theme_minimal()  # Aplicar estilo limpio
+
+# Mostrar el gráfico
+#print(plot_hyper)</code></pre>
+<br/><br/>
+<center>
+<img src="img/fig225.png" width="80%" style="display: block; margin: auto;" />
+<strong>Figura 2.25</strong> Distribución de 12 muestras aleatorias
+extraídas de una distribución <span class="math inline">\(X \sim
+Hiper(x, m=95, n=5, k=10)\)</span>.
+</center>
+<p><br/><br/></p>
+<p>El valor esperado de una variable aleatoria <span
+class="math inline">\(X\)</span> con distribución hipergeométrica <span
+class="math inline">\(X \sim \text{Hiper}(x, m=95, n=5, k=10)\)</span>
+se calcula como:</p>
+<span class="math display">\[
+E[X] = k \times \frac{n}{m} = 0.526
+\]</span>
+<pre>
+# Parámetros de la distribución hipergeométrica
+m <- 95  # Tamaño de la población
+n <- 5   # Número de éxitos en la población
+k <- 10  # Tamaño de la muestra
+
+# Cálculo del valor esperado
+E_X <- k * (n / m)
+E_X
+</pre>
+<pre class="r"><code># Parámetros de la distribución hipergeométrica
+m &lt;- 95  # Tamaño de la población
+n &lt;- 5   # Número de éxitos en la población
+k &lt;- 10  # Tamaño de la muestra
+
+# Cálculo del valor esperado
+E_X &lt;- k * (n / m)
+E_X</code></pre>
+<pre><code>[1] 0.5263158</code></pre>
+</p>
+</div>
+</br></br>
+<h2>
+Geométrica o de Pascal
+</h2>
+<p>La <strong>distribución geométrica</strong>, también conocida como
+<strong>distribución de Pascal</strong>, fue introducida por
+<strong>Jacob Bernoulli</strong> en su obra <em>Ars Conjectandi</em>
+(<em>El arte de la conjetura</em>), publicada póstumamente en
+<strong>1713</strong>. Esta distribución modela el número de ensayos de
+Bernoulli necesarios hasta la ocurrencia del primer éxito en una
+secuencia de ensayos independientes con probabilidad de éxito <span
+class="math inline">\(p\)</span>.</p>
+<p>Algunas de las aplicaciones más relevantes de la distribución
+geométrica incluyen:</p>
+<ul>
+<li><strong>Modelado del tiempo de espera hasta el primer evento de
+interés</strong>, como el número de intentos requeridos para obtener un
+resultado exitoso en un experimento o proceso.<br />
+</li>
+<li><strong>Sistemas de fiabilidad y mantenimiento</strong>, donde
+representa el número de ciclos hasta la primera falla de un
+componente.<br />
+</li>
+<li><strong>Procesos de servicio y atención al cliente</strong>, como el
+número de llamadas hasta obtener una respuesta positiva en un centro de
+soporte.<br />
+</li>
+<li><strong>Modelos de supervivencia</strong>, aplicados en biomedicina
+para representar el número de tratamientos hasta la primera remisión de
+una enfermedad.</li>
+</ul>
+<p>Los valores que puede tomar esta variable aleatoria <span
+class="math inline">\(X\)</span> se detallan en la siguiente tabla:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><span class="math inline">\(x\)</span></th>
+<th align="left">Eventos</th>
+<th align="left"><span class="math inline">\(f(x)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(1\)</span></td>
+<td align="left"><span class="math inline">\(E\)</span></td>
+<td align="left"><span class="math inline">\(p\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(2\)</span></td>
+<td align="left"><span class="math inline">\(FE\)</span></td>
+<td align="left"><span class="math inline">\(p(1-p)\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(3\)</span></td>
+<td align="left"><span class="math inline">\(FFE\)</span></td>
+<td align="left"><span class="math inline">\(p(1-p)^{2}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(4\)</span></td>
+<td align="left"><span class="math inline">\(FFFE\)</span></td>
+<td align="left"><span class="math inline">\(p(1-p)^{3}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(5\)</span></td>
+<td align="left"><span class="math inline">\(FFFFE\)</span></td>
+<td align="left"><span class="math inline">\(p(1-p)^{4}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\vdots\)</span></td>
+<td align="left"><span class="math inline">\(\vdots\)</span></td>
+<td align="left"><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(x\)</span></td>
+<td align="left"><span class="math inline">\(FFFF \ldots
+FE\)</span></td>
+<td align="left"><span class="math inline">\(p(1-p)^{x-1}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>La variable aleatoria <span class="math inline">\(X\)</span> toma el
+valor <span class="math inline">\(1\)</span> si el éxito ocurre en el
+primer intento. Si el primer éxito ocurre en el segundo ensayo, entonces
+<span class="math inline">\(X = 2\)</span>, y así sucesivamente. En
+términos generales, la variable geométrica representa <strong>el número
+de ensayos necesarios hasta la ocurrencia del primer éxito</strong>.</p>
+</br></br>
+<h3>
+Distribución Geométrica
+</h3>
+<p>La función de masa de probabilidad de una variable aleatoria <span
+class="math inline">\(X\)</span> que sigue una distribución
+<strong>geométrica</strong>, denotada como <span class="math inline">\(X
+\sim \text{Geom}(p)\)</span>, está dada por:</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases}
+(1 - p)^{x} p, &amp; x \geq 0, \quad x \in \mathbb{N} \\
+0, &amp; \text{en otro caso}
+\end{cases}
+\]</span></p>
+<p>donde <span class="math inline">\(p\)</span> es la probabilidad de
+éxito en cada ensayo independiente.</p>
+<p>Las principales propiedades de esta distribución son:</p>
+<ul>
+<li><strong>Valor esperado:</strong><br />
+<span class="math display">\[
+E[X] = \frac{1 - p}{p}
+\]</span><br />
+</li>
+<li><strong>Varianza:</strong><br />
+<span class="math display">\[
+\text{Var}(X) = \frac{1 - p}{p^2}
+\]</span></li>
+</ul>
+<p>En la <strong>parametrización de la distribución geométrica en el
+software R</strong>, que es la que se prsenta en esta sección, la
+variable aleatoria <span class="math inline">\(X\)</span> representa
+<strong>el número de fracasos antes de observar el primer éxito</strong>
+en una secuencia de ensayos de Bernoulli independientes con probabilidad
+de éxito <span class="math inline">\(p\)</span>.</p>
+<p>Esto significa que:</p>
+<ul>
+<li>Si <span class="math inline">\(X = 0\)</span>, el éxito ocurre en el
+primer ensayo.<br />
+</li>
+<li>Si <span class="math inline">\(X = 1\)</span>, hubo un fracaso antes
+de que ocurriera el éxito en el segundo ensayo.<br />
+</li>
+<li>Si <span class="math inline">\(X = 2\)</span>, hubo dos fracasos
+antes de que ocurriera el éxito en el tercer ensayo.<br />
+</li>
+<li>Y así sucesivamente.</li>
+</ul>
+<p>En términos de su función de masa de probabilidad, la probabilidad de
+que haya exactamente <span class="math inline">\(x\)</span> fracasos
+antes del primer éxito es:</p>
+<p><span class="math display">\[
+P(X = x) = (1 - p)^x p, \quad x = 0, 1, 2, \dots
+\]</span></p>
+<p><strong>Diferencia con la parametrización clásica</strong></p>
+<p>En algunos textos y aplicaciones matemáticas, la distribución
+geométrica se define como el <strong>número total de ensayos hasta el
+primer éxito</strong>, es decir, contando también el éxito. En este
+caso, la variable <span class="math inline">\(X\)</span> toma valores
+<span class="math inline">\(x \geq 1\)</span> y la función de masa de
+probabilidad se expresa como:</p>
+<p><span class="math display">\[
+P(X = x) = p(1 - p)^{x - 1}, \quad x = 1, 2, 3, \dots
+\]</span></p>
+<p>Sin embargo, <strong>R utiliza la primera parametrización</strong>
+(número de fracasos antes del éxito), lo cual es importante tener en
+cuenta al utilizar funciones como <code>dgeom(x, p)</code>,
+<code>pgeom(x, p)</code>, etc.</p>
+<p><br/><br/></p>
+</br></br>
+<h2>
+Binomial Negativa
+</h2>
+<p>La <strong>distribución binomial negativa</strong> modela el número
+de ensayos requeridos hasta alcanzar un número fijo de éxitos en un
+experimento de Bernoulli. A diferencia de la binomial, que cuenta el
+número de éxitos en un número fijo de ensayos, la binomial negativa
+cuenta el número de intentos necesarios para obtener un número
+determinado de éxitos.</p>
+<p>Este modelo probabilístico fue introducido en el siglo XIX y ha sido
+ampliamente utilizado en diversas disciplinas. Se ha desarrollado en el
+contexto de los juegos de azar y el análisis de conteos de eventos
+raros. Su nombre proviene de su relación con la distribución binomial,
+ya que puede derivarse utilizando combinatoria y probabilidades
+condicionales.</p>
+<p>Entre las aplicaciones principales se tiene:</p>
+<ul>
+<li><strong>Biología y epidemiología:</strong> Modela la cantidad de
+intentos hasta que un individuo contrae una enfermedad o hasta que un
+cierto número de células muten.</li>
+<li><strong>Economía y finanzas:</strong> Se emplea para describir la
+duración de períodos de crisis financieras o la cantidad de intentos
+hasta alcanzar un objetivo financiero.</li>
+<li><strong>Calidad y confiabilidad:</strong> Se usa en procesos
+industriales para modelar el número de unidades inspeccionadas hasta
+encontrar un número determinado de defectuosas.</li>
+<li><strong>Modelado de conteos en datos dispersos:</strong> Es útil en
+el análisis de datos donde la varianza es mayor que la media, lo que la
+hace una alternativa flexible a la distribución de Poisson.</li>
+</ul>
+<p>Debido a su versatilidad, la distribución binomial negativa es una
+herramienta clave en el análisis de datos de conteo y en la modelización
+de eventos en distintas disciplinas.</p>
+</br></br>
+<h3>
+Distribución binomial negativa
+</h3>
+<p>El modelo <strong>binomial negativo</strong> describe el número de
+fracasos antes de obtener <span class="math inline">\(r\)</span> éxitos
+en una secuencia de ensayos de Bernoulli independientes con probabilidad
+de éxito <span class="math inline">\(p\)</span>. Es ampliamente
+utilizada en situaciones donde se estudian eventos repetidos hasta
+alcanzar un número específico de éxitos.</p>
+<p>En la parametrización utilizada en el software <strong>R</strong>, la
+función de masa de probabilidad está dada por:</p>
+<p><span class="math display">\[
+f(x) =
+\begin{cases}
+\dfrac{\Gamma(x+r)}{\Gamma(r) x!} p^r (1-p)^{x}, &amp; \text{si } x=0,
+1, 2, \dots  \\
+0, &amp; \text{en otro caso}
+\end{cases}
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(r\)</span> es el número de éxitos
+deseados.</li>
+<li><span class="math inline">\(p\)</span> es la probabilidad de éxito
+en cada ensayo.</li>
+<li><span class="math inline">\(X\)</span> es el número de fracasos
+antes de alcanzar <span class="math inline">\(r\)</span> éxitos.</li>
+</ul>
+<p>En <strong>R</strong>, la función para calcular la probabilidad de la
+distribución binomial negativa es
+<code>dnbinom(x, size = r, prob = p)</code>, donde:</p>
+<ul>
+<li><code>x</code> es el número de fracasos antes de los <span
+class="math inline">\(r\)</span> éxitos.</li>
+<li><code>size = r</code> es el número de éxitos requeridos.</li>
+<li><code>prob = p</code> es la probabilidad de éxito en cada
+ensayo.</li>
+</ul>
+<p>Las principales propiedades de esta distribución son:</p>
+<ul>
+<li><p><strong>Valor esperado (media):</strong> <span
+class="math display">\[
+E[X] = \frac{r(1-p)}{p}
+\]</span></p></li>
+<li><p><strong>Varianza:</strong> <span class="math display">\[
+\text{Var}(X) = \frac{r(1-p)}{p^2}
+\]</span></p></li>
+</ul>
+<div class="caja-actividad">
+<h3>
+Actividad:
+</h3>
+<blockquote>
+<p>
+<ul>
+<li>Grafica la distribución de una variable aleatoria <span
+class="math inline">\(X\)</span> que sigue una distribución geométrica,
+eligiendo los valores de los parámetros según tu criterio. Luego,
+selecciona 12 muestras aleatorias y calcula el promedio y la varianza de
+cada una. Finalmente, compara los promedios y varianzas muestrales con
+el valor esperado y la varianza teórica de <span
+class="math inline">\(X\)</span>.</li>
+<li>Grafica la distribución de una variable aleatoria <span
+class="math inline">\(X\)</span> que sigue una distribución binomial
+negativa, eligiendo los valores de los parámetros de interés. Luego,
+selecciona 12 muestras aleatorias y calcula el promedio y la varianza
+muestral. Compara estos valores con la media y la varianza teórica de
+<span class="math inline">\(X\)</span>.</li>
+</ul>
+</p>
+</blockquote>
+</div>
+</br></br>
+<div class="caja-ejemplo">
+<h3>
+Ejemplo:
+</h3>
+<p>
+<p>Una fábrica de dispositivos electrónicos realiza <strong>pruebas de
+calidad</strong> a cada lote de producción. Se sabe que, en promedio, el
+<strong>10% de los productos presentan defectos</strong>. Suponiendo que
+la cantidad de productos defectuosos en un lote sigue una
+<strong>distribución Binomial</strong>, se realizarán varios análisis de
+simulación.</p>
+<ul>
+<li>Cada lote contiene <strong>50 productos</strong>.</li>
+<li>Cada producto puede estar <strong>defectuoso</strong> (<span
+class="math inline">\(X=1\)</span>) o <strong>no defectuoso</strong>
+(<span class="math inline">\(X=0\)</span>).</li>
+<li>La probabilidad de que un producto sea defectuoso es <strong><span
+class="math inline">\(p = 0.10\)</span></strong>.</li>
+<li>Si se selecciona un lote de <strong>50 productos</strong>, el número
+de productos defectuosos sigue una distribución binomial: <span
+class="math display">\[ X \sim Bin(50, 0.10) \]</span></li>
+</ul>
+<p>donde <span class="math inline">\(X\)</span> representa la cantidad
+de productos defectuosos en un lote de 50 productos.</p>
+<p>Realiza las siguientes actividades:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Cálculo de probabilidad teórica: Calcula la probabilidad de que en
+un lote de <strong>50 productos</strong> haya exactamente <strong>5
+defectuosos</strong> usando la distribución binomial.</li>
+</ol>
+<p>La función de probabilidad de la distribución
+<strong>Binomial</strong> se define como:</p>
+<p><span class="math display">\[ P(X = k) = \binom{n}{k} p^k (1 - p)^{n
+- k} \]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(n = 50\)</span> es el número total de
+ensayos (productos en un lote).</li>
+<li><span class="math inline">\(k = 5\)</span> es el número de éxitos
+(productos defectuosos).</li>
+<li><span class="math inline">\(p = 0.10\)</span> es la probabilidad de
+éxito (que un producto sea defectuoso).</li>
+<li><span class="math inline">\(\binom{n}{k}\)</span> es el coeficiente
+binomial, que se calcula como:</li>
+</ul>
+<p><span class="math display">\[ \binom{n}{k} = \frac{n!}{k!(n-k)!}
+\]</span></p>
+<p>Ahora, reemplazamos los valores en la fórmula:</p>
+<p><strong>Paso 1: Calcular el coeficiente binomial</strong></p>
+<pre>
+bin_coeff <- choose(50, 5)
+bin_coeff
+</pre>
+<pre class="r"><code>bin_coeff &lt;- choose(50, 5)
+bin_coeff</code></pre>
+<pre><code>[1] 2118760</code></pre>
+<p><strong>Paso 2: Calcular la probabilidad</strong></p>
+<pre>
+prob_x_5 <- bin_coeff * (0.10^5) * (0.90^(50 - 5))
+prob_x_5
+</pre>
+<pre class="r"><code>prob_x_5 &lt;- bin_coeff * (0.10^5) * (0.90^(50 - 5))
+prob_x_5</code></pre>
+<pre><code>[1] 0.1849246</code></pre>
+<p>La solución en <strong>R</strong> se puede calcular directamente con
+la función, como se muestra acontinuación:</p>
+<pre>
+size <- 50  # Tamaño del lote
+prob <- 0.10  # Probabilidad de defecto
+x <- 5  # Número de defectuosos
+
+p_x5 <- dbinom(x, size, prob)
+p_x5
+</pre>
+<pre class="r"><code>size &lt;- 50  # Tamaño del lote
+prob &lt;- 0.10  # Probabilidad de defecto
+x &lt;- 5  # Número de defectuosos
+
+p_x5 &lt;- dbinom(x, size, prob)
+p_x5</code></pre>
+<pre><code>[1] 0.1849246</code></pre>
+<p>La probabilidad de que 5 dispositivos sean defectuosos en un lote de
+50 dispositivos es 0.1849. En términos prácticos, esto significa que, si
+se selecciona un gran número de lotes de 50 dispositivos (por ejemplo
+1000 lotes), aproximadamente el 18.5% de esos lotes contendrán
+exactamente 5 dispositivos defectuosos.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Simulación con una muestra grande: Genera <strong>una muestra
+aleatoria</strong> de <strong>1000 lotes</strong>, cada uno con
+<strong>50 productos</strong>. Calcula la frecuencia relativa para <span
+class="math inline">\(X=5\)</span>, esto es <span
+class="math inline">\(f_n(X=5)\)</span>. Compara e interpreta el
+resultado frente a la probabilidad teórica.</li>
+</ol>
+<pre>
+set.seed(123)
+n <- 1000  # Número de lotes
+sim_data <- rbinom(n, size, prob)
+
+# Frecuencia relativa de X = 5
+f_x5 <- sum(sim_data == x) / n
+f_x5
+</pre>
+<pre class="r"><code>set.seed(123)
+n &lt;- 1000  # Número de lotes
+sim_data &lt;- rbinom(n, size, prob)
+
+# Frecuencia relativa de X = 5
+f_x5 &lt;- sum(sim_data == x) / n
+f_x5</code></pre>
+<pre><code>[1] 0.173</code></pre>
+<p>La frecuencia relativa obtenida es 0.173, asegurando reproducibilidad
+al fijar la semilla con <code>set.seed(123)</code>, lo que permite
+generar la misma muestra cada vez que se ejecuta el código. Se observa
+que este valor se aproxima a la probabilidad teórica de 0.1849, lo cual
+es esperable dado que se seleccionó un gran número de lotes (en este
+caso, 1000 lotes). A medida que el número de lotes aumenta, la
+frecuencia relativa tiende a converger hacia la probabilidad teórica, en
+concordancia con la Ley de los Grandes Números.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Análisis de la variabilidad entre múltiples muestras: Genera
+<strong>100 muestras independientes</strong>, cada una con <strong>1000
+lotes</strong>, y analiza la variabilidad de la estimación de la
+probabilidad. Construye un gráfico de dispersión que relacione la
+muestra y su frecuencia relativa, como también el valor de la
+probabilidad teórica.</li>
+</ol>
+<pre>
+muestras <- 100
+freq_rel_x5 <- numeric(muestras)
+
+for (i in 1:muestras) {
+  sim_data <- rbinom(n, size, prob)
+  freq_rel_x5[i] <- sum(sim_data == x) / n
+}
+
+plot(1:muestras, freq_rel_x5, xlab = "Número de muestra", ylab = "Frecuencia relativa de X=5", main = "Variabilidad de la frecuencia relativa", pch = 19)
+abline(h = p_x5, col = "red", lwd = 2)
+</pre>
+<pre class="r"><code>muestras &lt;- 100
+freq_rel_x5 &lt;- numeric(muestras)
+
+for (i in 1:muestras) {
+  sim_data &lt;- rbinom(n, size, prob)
+  freq_rel_x5[i] &lt;- sum(sim_data == x) / n
+}
+
+plot(1:muestras, freq_rel_x5, xlab = &quot;Número de muestra&quot;, ylab = &quot;Frecuencia relativa de X=5&quot;, main = &quot;Variabilidad de la frecuencia relativa&quot;, pch = 19)
+abline(h = p_x5, col = &quot;red&quot;, lwd = 2)</code></pre>
+<p><img src="recurso204_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>La gráfica muestra la variabilidad de la frecuencia relativa de <span
+class="math inline">\(X=5\)</span> a lo largo de 100 repeticiones del
+experimento, donde en cada repetición se extrajeron 1000 lotes de tamaño
+50. Los puntos representan la frecuencia relativa obtenida en cada
+repetición del experimento, mientras que la línea roja indica el valor
+de la probabilidad teórica de 0.1849.</p>
+<p>Se observa que las frecuencias relativas fluctúan en torno al valor
+teórico de 0.1849, lo que refleja la variabilidad del muestreo. Aunque
+hay dispersión en las observaciones, la mayoría de los valores se
+concentran en un rango cercano a la probabilidad teórica. Este
+comportamiento es consistente con la Ley de los Grandes Números, que
+establece que conforme aumenta el número de repeticiones (mayor cantidad
+de lotes), la frecuencia relativa tiende a acercarse a la probabilidad
+teórica.</p>
+<p>En conclusión, esta simulación ilustra cómo la frecuencia relativa se
+estabiliza cerca del valor esperado teórico, pero puede presentar
+fluctuaciones debido al muestreo aleatorio en cada repetición del
+experimento.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Impacto del tamaño muestral en la estimación de la probabilidad:
+Analiza cómo cambia la frecuencia relativa de <span
+class="math inline">\(X=5\)</span> al aumentar el tamaño de la
+muestra.</li>
+</ol>
+<pre>
+tamanos_muestra <- c(5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)
+freq_tamanos <- numeric(length(tamanos_muestra))
+
+for (i in seq_along(tamanos_muestra)) {
+  sim_data <- rbinom(tamanos_muestra[i], size, prob)
+  freq_tamanos[i] <- sum(sim_data == x) / tamanos_muestra[i]
+}
+
+plot(tamanos_muestra, freq_tamanos, type = "b", xlab = "Tamaño de muestra (número de lotes)", ylab = "Frecuencia relativa de X=5", main = "Impacto del tamaño muestral")
+abline(h = p_x5, col = "red", lwd = 2)
+</pre>
+<pre class="r"><code>tamanos_muestra &lt;- c(5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)
+freq_tamanos &lt;- numeric(length(tamanos_muestra))
+
+for (i in seq_along(tamanos_muestra)) {
+  sim_data &lt;- rbinom(tamanos_muestra[i], size, prob)
+  freq_tamanos[i] &lt;- sum(sim_data == x) / tamanos_muestra[i]
+}
+
+plot(tamanos_muestra, freq_tamanos, type = &quot;b&quot;, xlab = &quot;Tamaño de muestra (número de lotes)&quot;, ylab = &quot;Frecuencia relativa de X=5&quot;, main = &quot;Impacto del tamaño muestral&quot;)
+abline(h = p_x5, col = &quot;red&quot;, lwd = 2)</code></pre>
+<p><img src="recurso204_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>El gráfico muestra el impacto del tamaño muestral en la frecuencia
+relativa de <span class="math inline">\(X=5\)</span> a medida que
+aumenta el número de lotes (cada uno con tamaño 50). La línea roja
+representa la probabilidad teórica de 0.1849, mientras que los puntos y
+la línea negra conectada indican la frecuencia relativa obtenida en cada
+tamaño muestral.</p>
+<p>Para tamaños de muestra pequeños (pocos lotes), la frecuencia
+relativa presenta una alta variabilidad, con valores que oscilan
+ampliamente por encima y por debajo de la probabilidad teórica. A medida
+que el número de lotes aumenta, la frecuencia relativa tiende a
+estabilizarse alrededor de la probabilidad teórica. Se observa una menor
+dispersión en las estimaciones conforme aumenta el tamaño muestral.</p>
+<p>Este comportamiento es consistente con la Ley de los Grandes Números,
+que establece que, a medida que se toman más muestras, la frecuencia
+relativa de un evento tiende a aproximarse a su probabilidad
+teórica.</p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Convergencia de la media muestral: Genera <strong>100 muestras
+independientes</strong>, cada una con <strong>1000 lotes</strong>, y
+analiza la convergencia de la media muestral.</li>
+</ol>
+<pre>
+media_muestras <- numeric(muestras)
+
+for (i in 1:muestras) {
+  sim_data <- rbinom(n, size, prob)
+  media_muestras[i] <- mean(sim_data)
+}
+
+plot(1:muestras, media_muestras, xlab = "Número de muestra", ylab = "Media muestral de defectuosos", main = "Convergencia de la media muestral", pch = 19)
+abline(h = size * prob, col = "red", lwd = 2)
+</pre>
+<pre class="r"><code>media_muestras &lt;- numeric(muestras)
+
+for (i in 1:muestras) {
+  sim_data &lt;- rbinom(n, size, prob)
+  media_muestras[i] &lt;- mean(sim_data)
+}
+
+plot(1:muestras, media_muestras, xlab = &quot;Número de muestra&quot;, ylab = &quot;Media muestral de defectuosos&quot;, main = &quot;Convergencia de la media muestral&quot;, pch = 19)
+abline(h = size * prob, col = &quot;red&quot;, lwd = 2)</code></pre>
+<p><img src="recurso204_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>El gráfico representa la media muestral del número de dispositivos
+defectuosos en 100 muestras, donde cada muestra está compuesta por 1000
+lotes de tamaño 50. La línea roja indica la media teórica esperada de
+5.</p>
+<p>Cada punto en el gráfico representa la media de defectuosos en una de
+las 100 muestras de 1000 lotes. Se observa que las medias muestrales
+fluctúan en torno a 5, pero con variaciones ligeras entre muestras. La
+dispersión de los puntos es reducida y las medias tienden a agruparse
+muy cerca del valor teórico de 5. Este comportamiento es esperado, dado
+que la Ley de los Grandes Números garantiza que la media muestral
+converge a la media teórica conforme aumenta el tamaño de cada
+muestra.</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Impacto del tamaño muestral en la media estimada: Analiza cómo la
+media muestral se estabiliza al aumentar el tamaño de la muestra.</li>
+</ol>
+<pre>
+media_tamanos <- numeric(length(tamanos_muestra))
+
+for (i in seq_along(tamanos_muestra)) {
+  sim_data <- rbinom(tamanos_muestra[i], size, prob)
+  media_tamanos[i] <- mean(sim_data)
+}
+
+plot(tamanos_muestra, media_tamanos, type = "b", xlab = "Tamaño de muestra (número de lotes)", ylab = "Media de defectuosos", main = "Impacto del tamaño muestral en la media")
+abline(h = size * prob, col = "red", lwd = 2)
+</pre>
+<pre class="r"><code>media_tamanos &lt;- numeric(length(tamanos_muestra))
+
+for (i in seq_along(tamanos_muestra)) {
+  sim_data &lt;- rbinom(tamanos_muestra[i], size, prob)
+  media_tamanos[i] &lt;- mean(sim_data)
+}
+
+plot(tamanos_muestra, media_tamanos, type = &quot;b&quot;, xlab = &quot;Tamaño de muestra (número de lotes)&quot;, ylab = &quot;Media de defectuosos&quot;, main = &quot;Impacto del tamaño muestral en la media&quot;)
+abline(h = size * prob, col = &quot;red&quot;, lwd = 2)</code></pre>
+<p><img src="recurso204_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>El gráfico muestra el impacto del tamaño muestral en la media, donde
+el eje X representa el número de lotes considerados y el eje Y la media
+de defectuosos observada en cada tamaño muestral. La línea roja indica
+la media teórica esperada de 5.</p>
+<p>Para tamaños de muestra pequeños (pocos lotes), la media muestral
+fluctúa significativamente alrededor del valor teórico. Se observan
+desviaciones grandes, con valores que pueden estar muy por debajo o por
+encima de la media esperada. A medida que el número de lotes
+considerados aumenta, la media muestral se acerca progresivamente al
+valor esperado de 5 defectuosos por lote. La variabilidad disminuye y
+las oscilaciones se reducen, indicando una mayor estabilidad en la
+estimación de la media. Esto confirma el efecto de la Ley de los Grandes
+Números, que establece que la media muestral converge a la media teórica
+cuando el tamaño muestral aumenta.</p>
+</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
