@@ -24,14 +24,16 @@ El TLC fue formulado en su versión más general por el matemático francés **P
 El TLC es crucial en la estadística inferencial porque permite justificar el uso de la **distribución normal** en muchas aplicaciones prácticas. Algunas de sus aplicaciones incluyen:
 
 - **Inferencia estadística:** Justifica la validez de los intervalos de confianza y pruebas de hipótesis basadas en la normalidad.
+
 - **Aproximaciones de distribuciones:** Facilita el cálculo de probabilidades en distribuciones desconocidas.
+
 - **Análisis de grandes datos:** Esencial en el muestreo y estimación de parámetros poblacionales.
 
 Existen diversas formulaciones del TLC, dependiendo de la cantidad y tipo de variables aleatorias involucradas. A continuación, se presentan las versiones más comunes:
 
 
 </br></br>
-<h3>Versión para la Media Muestral</h3>
+<h3>Versión para la media muestral</h3>
 
 
 Si \( X_1, X_2, \dots, X_n \) son variables aleatorias independientes e idénticamente distribuidas (i.i.d.) de una población \( X \) con media \( \mu \) y varianza \( \sigma^2 \), entonces la **media muestral**:
@@ -55,7 +57,7 @@ Esto significa que, cuando el tamaño muestral es lo suficientemente grande, la 
 
 
 </br></br>
-<h3>Versión para la Suma de Variables Aleatorias</h3>
+<h3>Versión para la suma de variables aleatorias</h3>
 
 Si \( X_1, X_2, \dots, X_n \) son variables aleatorias independientes e idénticamente distribuidas (i.i.d.) de una población \( X \) con media \( \mu \) y varianza \( \sigma^2 \), entonces la **suma muestral**:
 
@@ -79,7 +81,7 @@ Esto implica que, cuando el tamaño muestral es suficientemente grande, la distr
 
 
 </br></br>
-<h3>Versión para la Diferencia de Medias Muestrales</h3>
+<h3>Versión para la diferencia de medias muestrales</h3>
 
 
 Sea \( X_1, X_2, \dots, X_{n_1} \) una muestra aleatoria de tamaño \( n_1 \) extraída de una población con media \( \mu_X \) y varianza \( \sigma_X^2 \), y sea \( Y_1, Y_2, \dots, Y_{n_2} \) una muestra independiente de tamaño \( n_2 \) proveniente de otra población con media \( \mu_Y \) y varianza \( \sigma_Y^2 \). La **diferencia de medias muestrales** está dada por:
@@ -103,7 +105,7 @@ Esto implica que, cuando los tamaños muestrales son suficientemente grandes, la
 
 
 </br></br>
-<h3>Versión para una Proporción</h3>
+<h3>Versión para una proporción</h3>
 
 
 Sea \( X \) una variable aleatoria que representa el número de éxitos en una muestra aleatoria de tamaño \( n \) extraída de una población con proporción poblacional \( p \), donde \( X \sim Bin(n, p) \). La **proporción muestral** está definida como:
@@ -128,7 +130,7 @@ Esto implica que, cuando el tamaño muestral es grande, la distribución de la p
 
 
 </br></br>
-<h3>Versión para la Diferencia de Proporciones</h3>
+<h3>Versión para la diferencia de proporciones</h3>
 
 Sea \( \hat{p}_1 \) la proporción muestral de una población con proporción poblacional \( p_1 \), basada en una muestra aleatoria de tamaño \( n_1 \), y \( \hat{p}_2 \) la proporción muestral de una segunda población con proporción poblacional \( p_2 \), basada en una muestra independiente de tamaño \( n_2 \). La **diferencia de proporciones muestrales** está dada por:
 
@@ -195,6 +197,7 @@ f(x) =
 donde:
 
 - \( X \) representa el tiempo transcurrido entre dos llamadas consecutivas, medido en minutos.
+
 - \( \lambda = \frac{1}{2} \) es la **tasa de ocurrencia** de los eventos (en este caso, llamadas por minuto).
 
 Para el contexto de este problema:
@@ -202,17 +205,25 @@ Para el contexto de este problema:
  a. Explica el Teorema del Límite Central para un $n = 100$:
     
     - Genera 1000 muestras de tamaño $n = 100$. Calcula la suma muestral de cada muestra. Elabora un histograma de las sumas muestrales.
+    
     - Obtén el promedio y la varianza de estas 1000 sumas muestrales.
+    
     - Aplica un test de normalidad (nivel de significancia $\alpha = 0.05$) a las 1000 sumas e interpreta el resultado.
+    
     - Explica cómo se evidencia el Teorema del Límite Central en el comportamiento de las sumas muestrales.
 
 b. Explica el Teorema del Límite Central varaindo el $n$:
     
     - Repite el análisis anterior utilizando muestras 1000 muestras de tamaños: $n = 5, 10, 80, 200, 500, 2000$.
+    
     - Para cada tamaño de muestra:
+    
       - Calcula el promedio y la varianza de las 1000 sumas.
+      
       - Elabora un histograma de las 1000 sumas muestrales.
+      
       - Aplica un test de normalidad ($\alpha = 0.05$) para las 1000 sumas.
+      
     - Concluye sobre la relación entre el tamaño muestral y la validez del Teorema del Límite Central.
 
 
@@ -392,7 +403,7 @@ alternative hypothesis: two-sided
 
 La **Figura 2.43** muestra el histograma de las **1000 sumas** calculadas a partir de las muestras generadas de tamaño $n=100$. Se observa que la distribución de las sumas es **simétrica y centrada** alrededor de **200**, lo que sugiere que las sumas muestrales siguen un comportamiento cercano a una **distribución normal**.
 
-Además, los valores del **promedio** y la **varianza** de las 1000 sumas obtenidas (\(\bar{S} = 199.4924\) y \(s^2 = 382.5936\)) presentan una **gran proximidad** a los valores teóricos esperados \(\mathbb{E}[S] = n\mu=(100)(2)=200\) y \(\text{Var}(S) = n\sigma^2=(100)(4)=400\). Esto sugiere que:
+Además, los valores del **promedio** y la **varianza** de las 1000 sumas obtenidas (\(\bar{S} = 199.4924\) y \(s^2 = 382.5936\)) presentan una **gran proximidad** a los valores teóricos esperados \(E[S] = n\mu=(100)(2)=200\) y \(\text{Var}(S) = n\sigma^2=(100)(4)=400\). Esto sugiere que:
 
 \[
 S_n \approx N(n\mu, n\sigma^2)
@@ -407,24 +418,27 @@ Ambos tests evalúan si una muestra proviene de una población con **distribuci�
 - **Hipótesis nula \(H_0\)**:  
   *La muestra proviene de una distribución normal*.
 
-- **Hipótesis alternativa \(H_A\)**:  
+- **Hipótesis alternativa \(H_1\)**:  
   *La muestra no proviene de una distribución normal*.
 
 - **Criterio de decisión**:
-  - Si el **p-valor \( p \) es mayor que $\alpha = 0.05$**, *no se rechaza \( H_0 \)*, lo que sugiere que los datos **podrían seguir** una distribución normal.
-  - Si el **p-valor \( p \) es menor que $\alpha = 0.05$**, *se rechaza \( H_0 \)* en favor de \( H_A \), indicando que los datos **no siguen** una distribución normal.
+
+  - Si el **\( valor-p \) es mayor que $\alpha = 0.05$**, *no se rechaza \( H_0 \)*, lo que sugiere que los datos **podrían seguir** una distribución normal.
+  
+  - Si el **\( valor-p \) es menor que $\alpha = 0.05$**, *se rechaza \( H_0 \)* en favor de \( H_A \), indicando que los datos **no siguen** una distribución normal.
 
 Estos tests permiten evaluar la **validez del Teorema del Límite Central (TLC)**, ya que este establece que las **sumas muestrales de variables independientes tienden a distribuirse normalmente** conforme el tamaño muestral aumenta.
 
 ---
 
-**Resultados de los Tests de Normalidad**
-Los **p-valores** obtenidos en los tests fueron:
+**Resultados de los tests de normalidad**
+Los $valores-p$ obtenidos en los tests fueron:
 
-- **Shapiro-Wilk:** \( p-valor = 0.08331 \)
-- **Kolmogorov-Smirnov:** \( p-valor = 0.7038 \)
+- **Shapiro-Wilk:** \( valor-p = 0.08331 \)
 
-Dado que en ambos casos el **p-valor es mayor a \(\alpha = 0.05\)**, **no se rechaza la hipótesis nula**, lo que indica que las sumas muestrales pueden considerarse como provenientes de una distribución normal con un nivel de significancia del **5%** ($\alpha = 0.05$).
+- **Kolmogorov-Smirnov:** \( valor-p = 0.7038 \)
+
+Dado que en ambos casos el **\( valor-p \) es mayor a \(\alpha = 0.05\)**, **no se rechaza la hipótesis nula**, lo que indica que las sumas muestrales pueden considerarse como provenientes de una distribución normal con un nivel de significancia del **5%** ($\alpha = 0.05$).
 
 Estos resultados proporcionan **evidencia empírica** que respalda la validez del **Teorema del Límite Central**, confirmando que la distribución de las sumas se aproxima a una normal, incluso cuando los datos originales provienen de una distribución exponencial.
 
@@ -494,8 +508,8 @@ for (n in tamanos_muestras) {
   cat("Resultados para n =", n, "\n")
   cat("Promedio de sumas muestrales:", promedio_sumas, "\n")
   cat("Varianza de sumas muestrales:", varianza_sumas, "\n")
-  cat("Test de Shapiro-Wilk: p-valor =", shapiro_test$p.value, "\n")
-  cat("Test de Kolmogorov-Smirnov: p-valor =", ks_test$p.value, "\n")
+  cat("Test de Shapiro-Wilk: valor-p =", shapiro_test$p.value, "\n")
+  cat("Test de Kolmogorov-Smirnov: valor-p =", ks_test$p.value, "\n")
 }
 
 # Organizar todos los gráficos en una sola ventana
@@ -563,8 +577,8 @@ for (n in tamanos_muestras) {
   #cat("Resultados para n =", n, "\n")
   #cat("Promedio de sumas muestrales:", promedio_sumas, "\n")
   #cat("Varianza de sumas muestrales:", varianza_sumas, "\n")
-  #cat("Test de Shapiro-Wilk: p-valor =", shapiro_test$p.value, "\n")
-  #cat("Test de Kolmogorov-Smirnov: p-valor =", ks_test$p.value, "\n")
+  #cat("Test de Shapiro-Wilk: valor-p =", shapiro_test$p.value, "\n")
+  #cat("Test de Kolmogorov-Smirnov: valor-p =", ks_test$p.value, "\n")
 }
 
 # Organizar todos los gráficos en una sola ventana
@@ -589,43 +603,43 @@ knitr::include_graphics("img/fig244.png")
 Resultados para n = 5 
 Promedio de sumas muestrales: 10.0867 
 Varianza de sumas muestrales: 20.37322 
-Test de Shapiro-Wilk: p-valor = 2.780042e-16 
-Test de Kolmogorov-Smirnov: p-valor = 0.0006052599 
+Test de Shapiro-Wilk: valor-p = 2.780042e-16 
+Test de Kolmogorov-Smirnov: valor-p = 0.0006052599 
 
 -----------------------------------
 Resultados para n = 10 
 Promedio de sumas muestrales: 20.14694 
 Varianza de sumas muestrales: 40.20084 
-Test de Shapiro-Wilk: p-valor = 4.53899e-09 
-Test de Kolmogorov-Smirnov: p-valor = 0.08104603 
+Test de Shapiro-Wilk: valor-p = 4.53899e-09 
+Test de Kolmogorov-Smirnov: valor-p = 0.08104603 
 
 -----------------------------------
 Resultados para n = 80 
 Promedio de sumas muestrales: 159.3497 
 Varianza de sumas muestrales: 312.4678 
-Test de Shapiro-Wilk: p-valor = 0.03527495 
-Test de Kolmogorov-Smirnov: p-valor = 0.2258247 
+Test de Shapiro-Wilk: valor-p = 0.03527495 
+Test de Kolmogorov-Smirnov: valor-p = 0.2258247 
 
 -----------------------------------
 Resultados para n = 200 
 Promedio de sumas muestrales: 398.6901 
 Varianza de sumas muestrales: 787.8698 
-Test de Shapiro-Wilk: p-valor = 0.02210118 
-Test de Kolmogorov-Smirnov: p-valor = 0.4179235 
+Test de Shapiro-Wilk: valor-p = 0.02210118 
+Test de Kolmogorov-Smirnov: valor-p = 0.4179235 
 
 -----------------------------------
 Resultados para n = 500 
 Promedio de sumas muestrales: 1001.354 
 Varianza de sumas muestrales: 1987.363 
-Test de Shapiro-Wilk: p-valor = 0.8243656 
-Test de Kolmogorov-Smirnov: p-valor = 0.9836838 
+Test de Shapiro-Wilk: valor-p = 0.8243656 
+Test de Kolmogorov-Smirnov: valor-p = 0.9836838 
 
 -----------------------------------
 Resultados para n = 2000 
 Promedio de sumas muestrales: 3998.977 
 Varianza de sumas muestrales: 7882.959 
-Test de Shapiro-Wilk: p-valor = 0.6293026 
-Test de Kolmogorov-Smirnov: p-valor = 0.6349088 
+Test de Shapiro-Wilk: valor-p = 0.6293026 
+Test de Kolmogorov-Smirnov: valor-p = 0.6349088 
 </pre>
 ---
 
@@ -638,7 +652,7 @@ La **Figura 2.44** presenta los histogramas de las **1000 sumas** obtenidas a pa
 Los valores del **promedio** y la **varianza** de las 1000 sumas presentan una **alta coincidencia** con los valores teóricos esperados:
 
 \[
-\mathbb{E}[S] = n\mu, \quad \text{Var}(S) = n\sigma^2.
+E[S] = n\mu, \quad \text{Var}(S) = n\sigma^2.
 \]
 
 Por ejemplo:
@@ -649,7 +663,7 @@ Por ejemplo:
   \]
   Valores esperados:  
   \[
-  \mathbb{E}[S] = 10, \quad \text{Var}(S) = 20.
+  E[S] = 10, \quad \text{Var}(S) = 20.
   \]
 
 - Para \( n = 2000 \):  
@@ -658,10 +672,10 @@ Por ejemplo:
   \]
   Valores esperados:  
   \[
-  \mathbb{E}[S] = 4000, \quad \text{Var}(S) = 8000.
+  E[S] = 4000, \quad \text{Var}(S) = 8000.
   \]
 
-Comportamiento de la Varianza:
+Comportamiento de la varianza:
 
 Un aspecto importante es que **la varianza de las sumas muestrales aumenta con el tamaño de la muestra**. Esto es consistente con la relación teórica:
 
@@ -674,7 +688,9 @@ A medida que \( n \) crece, la dispersión de las sumas se incrementa, reflejand
 Estos resultados confirman que, a medida que el tamaño de muestra aumenta:
 
 1. **Las distribuciones de las sumas muestrales se asemejan más a una normal**.
+
 2. **Las medias muestrales se aproximan a los valores esperados \( n\mu \)**.
+
 3. **Las varianzas de las sumas crecen proporcionalmente a \( n\sigma^2 \), como lo predice la teoría**.
 
 
@@ -687,38 +703,53 @@ S_n \approx N(n\mu, n\sigma^2)
 Para evaluar formalmente la normalidad de las sumas muestrales, se aplicaron los siguientes **tests de normalidad** antes mencionados.
 
 
-**1. Análisis de los Resultados por Tamaño de Muestra**
+**1. Análisis de los resultados por tamaño de muestra**
 
 - **\( n = 5 \) y \( n = 10 \)**
-  - Ambos test presentan **p-valores menores a 0.05**, indicando que las sumas **no siguen una distribución normal**.
+
+  - Ambos test presentan **valores-p menores a 0.05**, indicando que las sumas **no siguen una distribución normal**.
+  
   - Esto era **esperado**, ya que con muestras pequeñas el Teorema del Límite Central (TLC) no garantiza normalidad.
-  - El **p-valor extremadamente bajo en Shapiro-Wilk** sugiere que la distribución de las sumas aún conserva la asimetría de la distribución exponencial original.
+  
+  - El **\( valor-p \) extremadamente bajo en Shapiro-Wilk** sugiere que la distribución de las sumas aún conserva la asimetría de la distribución exponencial original.
 
 - **\( n = 80 \)**
-  - **Kolmogorov-Smirnov** muestra un **p-valor de 0.2258**, lo que **no permite rechazar la normalidad**.
-  - **Shapiro-Wilk**, en cambio, presenta un **p-valor de 0.035**, lo que **rechaza la normalidad a nivel \( \alpha = 0.05 \)**.
+  - **Kolmogorov-Smirnov** muestra un **\( valor-p \) de 0.2258**, lo que **no permite rechazar la normalidad**.
+  
+  - **Shapiro-Wilk**, en cambio, presenta un **\( valor-p \) de 0.035**, lo que **rechaza la normalidad a nivel \( \alpha = 0.05 \)**.
+  
   - Aunque la distribución de sumas ya es visualmente **cercana a una normal**, el test de Shapiro-Wilk es **más estricto**, lo que sugiere que para \( n = 80 \) aún hay pequeñas desviaciones detectables.
 
 - **\( n = 200 \)**
+
   - Similar al caso anterior:
-    - **Shapiro-Wilk** da un **p-valor de 0.022**, lo que indica **rechazo de la normalidad**.
-    - **Kolmogorov-Smirnov** da un **p-valor de 0.4179**, indicando que no hay suficiente evidencia para rechazar la normalidad.
+  
+    - **Shapiro-Wilk** da un **\( valor-p \) de 0.022**, lo que indica **rechazo de la normalidad**.
+    
+    - **Kolmogorov-Smirnov** da un **\( valor-p \) de 0.4179**, indicando que no hay suficiente evidencia para rechazar la normalidad.
+    
   - Este comportamiento sugiere que **Shapiro-Wilk es más exigente** cuando se aplican 1000 muestras, detectando pequeñas desviaciones que en otras circunstancias podrían no ser significativas.
 
 - **\( n = 500 \) y \( n = 2000 \)**
-  - En estos casos, **ambos test no rechazan la normalidad** (\( p \gg 0.05 \)).
+
+  - En estos casos, **ambos test no rechazan la normalidad** (\( valor-p \gg 0.05 \)).
+  
   - Esto confirma que la **distribución de sumas se ajusta bien a una normal**, validando el Teorema del Límite Central en estos tamaños muestrales.
 
 **2. Impacto de la Cantidad de Muestras en los Test de Normalidad**
 
 - Se observa que para \( n = 80 \) y \( n = 200 \), **Shapiro-Wilk rechaza la normalidad**, aunque Kolmogorov-Smirnov **no lo hace**.
+
 - Esto puede deberse a que **Shapiro-Wilk es más sensible**, y al aplicarlo a **1000 muestras en lugar de 100**, detecta pequeñas desviaciones de la normalidad que, en contextos habituales, no serían significativas.
+
 - Para valores de \( n \geq 500 \), **ambos test confirman la normalidad**, validando la aplicación del TLC.
 
 De lo anterior se puede decir: 
 
 - **Para tamaños de muestra pequeños (\( n = 5, 10 \))**, la distribución de sumas sigue sin ajustarse a una normal.
+
 - **Para \( n = 80 \) y \( n = 200 \)**, aunque visualmente la distribución parece normal, **Shapiro-Wilk sigue rechazando la normalidad**, probablemente debido a la **cantidad de muestras analizadas (1000 en lugar de 100)**.
+
 - **Para \( n = 500 \) y \( n = 2000 \)**, **ambos test confirman la normalidad**, validando el **Teorema del Límite Central** para la suma de variables aleatorias.
 
 Si se desea evaluar la **normalidad** en tamaños de muestra intermedios (\( n \approx 80-200 \)), se recomienda aplicar la prueba sobre un número **menor de muestras**. Esto se debe a que, con un gran número de muestras, el **test de Shapiro-Wilk** tiende a **rechazar la normalidad** incluso cuando las desviaciones son insignificantes.
@@ -726,11 +757,14 @@ Si se desea evaluar la **normalidad** en tamaños de muestra intermedios (\( n \
 Esta observación plantea preguntas clave sobre la aplicación de los **tests de normalidad** en diferentes escenarios:
 
 - ¿Cuándo es más adecuado utilizar **Kolmogorov-Smirnov** en lugar de **Shapiro-Wilk**?
-- ¿Cómo influye el **tamaño de la muestra** en la capacidad del test para detectar desviaciones de la normalidad?
-- ¿Cuál es el **nivel de significancia** óptimo a emplear en función del tamaño muestral?
-- ¿Cómo afecta el **tamaño del efecto** la interpretación del valor \( p \) en estas pruebas?
 
-Para responder estas preguntas, es necesario profundizar en los conceptos de **pruebas de hipótesis**, analizando aspectos como el **nivel de significancia (\(\alpha\))**, el **tamaño del efecto** y la interpretación del **valor \( p \)**. Una mejor comprensión de estos temas permitirá optimizar el análisis de **normalidad** y, con ello, mejorar la interpretación del **Teorema del Límite Central** en diferentes contextos estadísticos.
+- ¿Cómo influye el **tamaño de la muestra** en la capacidad del test para detectar desviaciones de la normalidad?
+
+- ¿Cuál es el **nivel de significancia** óptimo a emplear en función del tamaño muestral?
+
+- ¿Cómo afecta el **tamaño del efecto** la interpretación del  \( valor-p \) en estas pruebas?
+
+Para responder estas preguntas, es necesario profundizar en los conceptos de **pruebas de hipótesis**, analizando aspectos como el **nivel de significancia (\(\alpha\))**, el **tamaño del efecto** y la interpretación del **\( valor-p \)**. Una mejor comprensión de estos temas permitirá optimizar el análisis de **normalidad** y, con ello, mejorar la interpretación del **Teorema del Límite Central** en diferentes contextos estadísticos.
 
 </p>
 </div>

@@ -12,7 +12,7 @@
 <meta name="author" content="Métodos y Simulación Estadística" />
 
 
-<title> Axiomas</title>
+<title>Independencia</title>
 
 <script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -246,7 +246,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+      <a class="navbar-brand" href="index.html"> </a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -268,16 +268,19 @@ $(document).ready(function () {
       <a href="recurso101.html">Introducción</a>
     </li>
     <li>
-      <a href="recurso102.html">Conceptos básicos</a>
+      <a href="recurso102.html">Conceptos Básicos</a>
     </li>
     <li>
-      <a href="recurso103.html">Enfoque</a>
+      <a href="recurso103.html">Enfoques y Postulados</a>
     </li>
     <li>
-      <a href="recurso103b.html">Axiomas</a>
+      <a href="recurso104.html">Tipos de Probabilidad</a>
     </li>
     <li>
-      <a href="recurso104.html">Tipos de probabilidad</a>
+      <a href="recurso104b.html">Independencia</a>
+    </li>
+    <li>
+      <a href="recurso104c.html">Teorema de Bayes</a>
     </li>
   </ul>
 </li>
@@ -289,19 +292,19 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso201.html">Definición</a>
+      <a href="recurso201.html">Variable Aleatoria: Univariado</a>
     </li>
     <li>
-      <a href="recurso202.html">Valor esperado y varianza</a>
+      <a href="recurso202.html">Valor Esperado</a>
     </li>
     <li>
-      <a href="recurso203.html">Variables conjuntas</a>
+      <a href="recurso203.html">Variables Conjuntas</a>
     </li>
     <li>
-      <a href="recurso204.html">Modelos discretos</a>
+      <a href="recurso204.html">Modelos Discretos: Univariado</a>
     </li>
     <li>
-      <a href="recurso205.html">Modelos continuos</a>
+      <a href="recurso205.html">Modelos Continuos: Univariado</a>
     </li>
   </ul>
 </li>
@@ -313,19 +316,19 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso301.html">Conceptos básicos</a>
+      <a href="recurso301.html">Conceptos Básicos</a>
     </li>
     <li>
-      <a href="recurso302.html">Estimación puntual</a>
+      <a href="recurso302.html">Estimación Puntual</a>
     </li>
     <li>
       <a href="recurso305.html">Teorema del Límite Central</a>
     </li>
     <li>
-      <a href="recurso303.html">Propiedades de los estimadores</a>
+      <a href="recurso303.html">Propiedades de los Estimadores</a>
     </li>
     <li>
-      <a href="recurso304.html">Métodos de estimación</a>
+      <a href="recurso304.html">Métodos de Estimación</a>
     </li>
   </ul>
 </li>
@@ -337,13 +340,13 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso401.html">Para una población</a>
+      <a href="recurso401.html">Paramétrico: Una Población</a>
     </li>
     <li>
-      <a href="recurso402.html">Para dos poblaciones</a>
+      <a href="recurso402.html">Paramétrico: Dos Poblaciones</a>
     </li>
     <li>
-      <a href="recurso403.html">Estimación no paramétrica</a>
+      <a href="recurso403.html">Estimación no Paramétrica</a>
     </li>
   </ul>
 </li>
@@ -358,19 +361,19 @@ $(document).ready(function () {
       <a href="recurso501.html">Introducción</a>
     </li>
     <li>
-      <a href="recurso502.html">Conceptos básicos</a>
+      <a href="recurso502.html">Paramétrico: Una Población</a>
     </li>
     <li>
-      <a href="recurso503.html">Pruebas paramétricas</a>
+      <a href="recurso503.html">Paramétrico: Dos Poblaciones</a>
     </li>
     <li>
-      <a href="recurso504.html">Pruebas no paramétricas</a>
+      <a href="recurso504.html">Pruebas no Paramétricas</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Casos de estudio
+    Casos de Estudio
      
     <span class="caret"></span>
   </a>
@@ -380,6 +383,18 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Referencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso1000.html">Referencias</a>
     </li>
   </ul>
 </li>
@@ -403,70 +418,95 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore"><span style="color:#686868">
-<strong>Axiomas</strong></span></h1>
+<h1 class="title toc-ignore"><span
+style="color:#686868"><strong>Independencia</strong></span></h1>
 <h4 class="author">Métodos y Simulación Estadística</h4>
 
 </div>
 
 
+<br/><br/>
 <h2>
-Postulados de probabilidad
+Eventos independientes
 </h2>
-<br/><br/>
-<h3>
-<span class="math inline">\(A_{1}\)</span>: Probabilidad del espacio
-muestral
-</h3>
-<p>Sea <span class="math inline">\(S\)</span> un espacio muestral
-asociado a un experimento. Entonces, se cumple que:</p>
+<p>En el caso de que se desee evaluar si dos eventos son independientes,
+partiendo de la definición de probabilidad condicional, se obtiene la
+siguiente regla al despejar <span class="math inline">\(P(A \cap
+B)\)</span> de la ecuación:</p>
 <p><span class="math display">\[
-P(S) = 1
+P(A \cap B) = P(A) P(B|A)
+\]</span></p>
+<p>Si la ocurrencia del evento <span class="math inline">\(A\)</span> no
+afecta la probabilidad del evento <span
+class="math inline">\(B\)</span>, se cumple que:</p>
+<p><span class="math display">\[
+P(B|A) = P(B)
+\]</span></p>
+<p>En este caso, la probabilidad conjunta de los eventos <span
+class="math inline">\(A\)</span> y <span
+class="math inline">\(B\)</span> es igual al producto de sus
+probabilidades marginales:</p>
+<p><span class="math display">\[
+P(A \cap B) = P(A) P(B)
+\]</span></p>
+<p>Por lo tanto, <strong>dos eventos <span
+class="math inline">\(A\)</span> y <span
+class="math inline">\(B\)</span> son independientes si, y solo si, la
+probabilidad del evento <span class="math inline">\(B\)</span> no se ve
+afectada por la ocurrencia del evento <span
+class="math inline">\(A\)</span> o viceversa</strong>, es decir:</p>
+<p><span class="math display">\[
+P(A \cap B) = P(A) P(B) \quad \text{o} \quad P(B|A) = P(B)
 \]</span></p>
 <br/><br/>
+<div class="caja-ejemplo">
 <h3>
-<span class="math inline">\(A_{2}\)</span>: Probabilidad de un evento
+Ejemplo:
 </h3>
-<p>Para cualquier evento <span class="math inline">\(A\)</span>, se
-cumple que:</p>
+<p>
+<p>Se tiene un circuito formado por dos componentes <span
+class="math inline">\(A_{1}\)</span> y <span
+class="math inline">\(A_{2}\)</span>, cada uno con su respectiva
+probabilidad de funcionamiento:</p>
 <p><span class="math display">\[
-0 \leq P(A) \leq 1
+P(A_{1}) = 0.90 \quad \text{y} \quad P(A_{2}) = 0.95
 \]</span></p>
 <br/><br/>
-<h3>
-<span class="math inline">\(A_{3}\)</span>: Probabilidad de la unión de
-eventos mutuamente excluyentes
-</h3>
-<p>Si <span class="math inline">\(A\)</span> y <span
-class="math inline">\(B\)</span> son dos eventos mutuamente excluyentes,
-entonces se cumple:</p>
+<center>
+<img src="img/circuito1.png" width="50%" style="display: block; margin: auto;" />
+<strong>Figura 2.4</strong> Disposición de componentes en serie.
+</center>
+<p><br/><br/> En un circuito en serie (ver <strong>Figura 2.4</strong>),
+ambos componentes deben funcionar para que el sistema funcione.
+Asumiendo independencia, la probabilidad de funcionamiento es:</p>
 <p><span class="math display">\[
-P(A \cup B) = P(A) + P(B)
+P(\text{Serie}) = P(A_{1} \cap A_{2}) = P(A_{1}) P(A_{2})
 \]</span></p>
-<p>En el caso general, para eventos no mutuamente excluyentes:</p>
+<p>Por lo tanto:</p>
 <p><span class="math display">\[
-P(A \cup B) = P(A) + P(B) - P(A \cap B)
-\]</span></p>
-<br/><br/>
-<h3>
-<span class="math inline">\(A_{4}\)</span>: Probabilidad del complemento
-de un evento
-</h3>
-<p>Para cualquier evento <span class="math inline">\(A\)</span>, la
-probabilidad de que <span class="math inline">\(A\)</span> no ocurra
-es:</p>
-<p><span class="math display">\[
-P(A&#39;) = 1 - P(A)
+P(\text{Serie}) = 0.90 \times 0.95 = 0.855
 \]</span></p>
 <br/><br/>
-<h3>
-<span class="math inline">\(A_{5}\)</span>: Probabilidad de la
-ocurrencia nula
-</h3>
-<p>La probabilidad de que no ocurra nada (evento vacío) es:</p>
+<center>
+<img src="img/circuito2.png" width="50%" style="display: block; margin: auto;" />
+<strong>Figura 2.5</strong> Disposición de componentes en paralelo.
+</center>
+<p><br/><br/> En un circuito en paralelo (ver <strong>Figura
+2.5</strong>), basta con que funcione al menos uno de los componentes.
+La probabilidad es:</p>
 <p><span class="math display">\[
-P(\emptyset) = 0
+P(\text{Paralelo}) = 1 - P(A_{1}&#39; \cap A_{2}&#39;)
+                   = 1 - [ (1 - P(A_{1})) (1 - P(A_{2})) ]
 \]</span></p>
+<p>Como <span class="math inline">\(1 - P(A_{1})= 1 - 0.90 =
+0.10\)</span> y <span class="math inline">\(1 - P(A_{2})= 1 - 0.95
+=0.05\)</span>, entonces</p>
+<p><span class="math display">\[
+P(\text{Paralelo})  = 1 - (0.10 \times 0.05)
+                    = 1 - 0.005 = 0.995
+\]</span></p>
+</p>
+</div>
 
 
 

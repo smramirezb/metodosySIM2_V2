@@ -1,5 +1,5 @@
 ---
-title: <span style="color:#686868"> **Estimación puntual**</span>
+title: <span style="color:#686868"> **Distribución muestral**</span>
 author: "Métodos y Simulación Estadística"
 output:
   html_document:
@@ -30,12 +30,10 @@ Existen varias distribuciones de muestreo que desempeñan un papel crucial en el
 Esta distribución es ampliamente utilizada en pruebas de hipótesis y estimaciones de varianza en inferencia estadística, especialmente en la prueba **Chi-Cuadrado de bondad de ajuste**, prueba **de independencia en tablas de contingencia** y en la construcción de **intervalos de confianza para la varianza poblacional**.
 
 </br></br>
-<h4>Distribución Chi-Cuadrado (\(\chi^2\))</h4>
+<h4>Distribución chi-cuadrado (\(\chi^2\))</h4>
 
 
-La distribución **Chi-Cuadrado** es un caso particular de la distribución **Gamma** y se define mediante un parámetro de **grados de libertad** \( \nu \), que representa el número de variables normales estándar elevadas al cuadrado y sumadas. 
-
-La función de densidad de probabilidad de una variable aleatoria \( X \sim \chi^2_{\nu} \) está dada por:
+La distribución chi-cuadrado se define mediante un parámetro de **grados de libertad** \( \nu \). La función de densidad de probabilidad de una variable aleatoria que se distribuye chi-cuadrado \( X \sim \chi^2_{\nu} \) está dada por:
 
 $$
 f(x; \nu) =
@@ -50,7 +48,7 @@ $$
 
 
 </br></br>
-<h4>Relación con otras distribuciones</h4>
+<h4>Algunas relaciones con otras distribuciones son:</h4>
 
 
 - Si \( X_1, X_2, \dots, X_{\nu} \) son variables independientes con distribución normal estándar \( N(0,1) \), entonces la suma de sus cuadrados sigue una distribución chi-cuadrado con \( \nu \) grados de libertad:
@@ -59,27 +57,29 @@ $$
   X_1^2 + X_2^2 + \dots + X_{\nu}^2 \sim \chi^2_{\nu}
   $$
 
-- La distribución **Chi-Cuadrado** es un caso particular de la **distribución Gamma** con parámetros \( \alpha = \nu/2 \) y \( \sigma = 2 \).
+- La distribución **chi-cuadrado** es un caso particular de la **distribución gamma** con parámetros \( \alpha = \nu/2 \) y \( \sigma = 2 \).
 
 
 </br></br>
-<h4>Propiedades</h4>
+<h4>Algunas propiedades son las siguientes:</h4>
 
 - **Media:**  
   $$
   E[X] = \nu
-  $$  
+  $$ 
+  
 - **Varianza:**  
   $$
   \text{Var}(X) = 2\nu
   $$  
+  
 - **Asimetría:** La distribución es sesgada a la derecha, pero conforme \( \nu \) aumenta, la distribución se aproxima a una normal \( N(\nu, 2\nu) \).
 
 
 
 
 </br></br>
-<h4>Relación con la varianza muestral</h4>
+<h4>Relación con la varianza muestral:</h4>
 
 Si \( S^{2} \) es la **varianza muestral** de una muestra aleatoria de tamaño \( n \) extraída de una población normal con **varianza poblacional** \( \sigma^{2} \), entonces el siguiente estadístico:
 
@@ -89,21 +89,7 @@ Si \( S^{2} \) es la **varianza muestral** de una muestra aleatoria de tamaño \
 
 sigue una **distribución chi-cuadrado** con \( \nu = n-1 \) **grados de libertad**.
 
-
-
-
-La distribución **chi-cuadrado** aparece al analizar la **varianza muestral** y se define como:
-
-\[
-\chi^2 = \sum_{i=1}^{n} \left(\frac{X_i - \mu}{\sigma}\right)^2
-\]
-
-donde:
-
-- \(X_i\) son observaciones de una población normal.
-- \(\mu\) es la media poblacional.
-- \(\sigma\) es la desviación estándar poblacional.
-
+Esta relación es muy útil para determinar intervalos de confianza y calcular $valor-p$ en las pruebas de hipótesis de una varianza poblacional.
 
 
 </br></br>
@@ -111,7 +97,7 @@ donde:
 <h3>Ejemplo:</h3>
 <p>
 
-La **Figura 2.40** muestra como la Chi-Cuadrado con pocos grados de libertad tiene una mayor concentración de valores cercanos a cero y es más sesgada, mientras que con grados de libertad altos se distribuye más ampliamente y se asemeja a una normal.
+La **Figura 2.40** muestra como la chi-cuadrado con pocos grados de libertad tiene una mayor concentración de valores cercanos a cero y es más sesgada, mientras que con grados de libertad altos se distribuye más ampliamente y se asemeja a una normal.
 
 <pre>
 # Cargar librerías necesarias
@@ -134,22 +120,19 @@ data <- expand.grid(x = x_vals, df = parametros$df) %>%
          label = factor(df, labels = paste0("ν = ", parametros$df)))  # Etiqueta con ν bien formateada
 
 # Crear la gráfica con leyenda bien presentada
-plot.chi2 <- ggplot(data, aes(x = x, y = densidad, color = label)) +
+ggplot(data, aes(x = x, y = densidad, color = label)) +
   geom_line(linewidth = 1) +
-  labs(title = "Densidades de Diferentes Distribuciones Chi-Cuadrado",
+  labs(title = "Curvas de densidad",
        x = "Valor de X",
        y = "Densidad",
-       color = expression(paste("Grados de Libertad ", nu))) +  # Formato correcto para la leyenda
+       color = expression(paste("Grados de libertad ", nu))) +  # Formato correcto para la leyenda
   scale_color_manual(values = parametros$color) +
   theme_minimal()
-
-# Mostrar la gráfica
-print(plot.chi2)
 </pre>
 
 
 
-```{r, echo=TRUE, fig.height=3.5}
+```{r, eval=FALSE,include=FALSE}
 # Cargar librerías necesarias
 library(ggplot2)
 library(dplyr)
@@ -170,17 +153,14 @@ data <- expand.grid(x = x_vals, df = parametros$df) %>%
          label = factor(df, labels = paste0("ν = ", parametros$df)))  # Etiqueta con ν bien formateada
 
 # Crear la gráfica con leyenda bien presentada
-plot.chi2 <- ggplot(data, aes(x = x, y = densidad, color = label)) +
+ggplot(data, aes(x = x, y = densidad, color = label)) +
   geom_line(linewidth = 1) +
-  labs(title = "Densidades de Diferentes Distribuciones Chi-Cuadrado",
+  labs(title = "Curvas de densidad",
        x = "Valor de X",
        y = "Densidad",
-       color = expression(paste("Grados de Libertad ", nu))) +  # Formato correcto para la leyenda
+       color = expression(paste("Grados de libertad ", nu))) +  # Formato correcto para la leyenda
   scale_color_manual(values = parametros$color) +
   theme_minimal()
-
-# Mostrar la gráfica
-# print(plot.chi2)
 ```
 
 
@@ -217,10 +197,12 @@ calculado a partir de **100 muestras aleatorias** de tamaño \( n = 50 \), extra
 
 Cada muestra se utilizó para calcular la **varianza muestral** \( S^2 \), la cual fue transformada mediante la expresión del estadístico **chi-cuadrado**. El histograma resultante muestra la distribución empírica de los valores obtenidos de \( \chi^2 \), y se superpone con la densidad teórica de una distribución **Chi-Cuadrado con 49 grados de libertad**.
 
-Se observa que los valores simulados siguen de manera cercana la forma esperada de la distribución teórica, lo que confirma la validez de la **aproximación chi-cuadrado** para la **varianza muestral** en poblaciones normales.
+Se observa que los valores simulados siguen de manera cercana la forma esperada de la distribución teórica, lo que ilustra la validez de la **aproximación chi-cuadrado** para la **varianza muestral** en poblaciones normales.
 
 
 <pre>
+Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+
 # Cargar librerías necesarias
 library(ggplot2)
 
@@ -243,21 +225,21 @@ chi_cuadrado_vals <- replicate(num_muestras, {
 datos <- data.frame(Chi2 = chi_cuadrado_vals)
 
 # Crear la gráfica del histograma con la curva teórica de Chi-Cuadrado
-plot.chi3<-ggplot(datos, aes(x = Chi2)) +
+ggplot(datos, aes(x = Chi2)) +
   geom_histogram(aes(y = after_stat(density)), binwidth = 3, fill = "skyblue", color = "black", alpha = 0.7) +  # Histograma con densidad
   stat_function(fun = function(x) dchisq(x, df = df), color = "red", linewidth = 1.2) +  # Curva teórica Chi-Cuadrado
-  labs(title = "Distribución del Estadístico Chi-Cuadrado",
+  labs(title = "Distribución del estadístico chi-cuadrado",
        subtitle = "Comparación entre valores muestrales y distribución teórica",
        x = expression(chi^2),
        y = "Densidad") +
   theme_minimal()  # Tema estético minimalista
-
-print(plot.chi3)  
 </pre>
 
 
 
-```{r, echo=TRUE, fig.height=3.5}
+```{r, eval=FALSE,include=FALSE}
+Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+
 # Cargar librerías necesarias
 library(ggplot2)
 
@@ -280,16 +262,14 @@ chi_cuadrado_vals <- replicate(num_muestras, {
 datos <- data.frame(Chi2 = chi_cuadrado_vals)
 
 # Crear la gráfica del histograma con la curva teórica de Chi-Cuadrado
-plot.chi3<-ggplot(datos, aes(x = Chi2)) +
+ggplot(datos, aes(x = Chi2)) +
   geom_histogram(aes(y = after_stat(density)), binwidth = 3, fill = "skyblue", color = "black", alpha = 0.7) +  # Histograma con densidad
   stat_function(fun = function(x) dchisq(x, df = df), color = "red", linewidth = 1.2) +  # Curva teórica Chi-Cuadrado
-  labs(title = "Distribución del Estadístico Chi-Cuadrado",
+  labs(title = "Distribución del estadístico chi-cuadrado",
        subtitle = "Comparación entre valores muestrales y distribución teórica",
        x = expression(chi^2),
        y = "Densidad") +
   theme_minimal()  # Tema estético minimalista
-
-#print(plot.chi3)  
 ```
 
 
@@ -298,11 +278,9 @@ plot.chi3<-ggplot(datos, aes(x = Chi2)) +
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("img/fig241.png")
 ```
-**Figura 2.41** Distribución del Estadístico Chi-Cuadrado a partir de Muestras Aleatorias. 
-Representación de la distribución del estadístico \( \chi^{2} = \frac{(n-1)S^{2}}{\sigma^{2}} \) 
-calculado a partir de muestras aleatorias de tamaño 50 extraídas de una población normal con media 20 y desviación estándar 5.
 </center>
-<br/><br/>
+**Figura 2.41** Representación de la distribución del estadístico \( \chi^{2} = \frac{(n-1)S^{2}}{\sigma^{2}} \) 
+calculado a partir de muestras aleatorias de tamaño 50 extraídas de una población normal con media 20 y desviación estándar 5.
 
 </p>
 </div
@@ -314,32 +292,36 @@ calculado a partir de muestras aleatorias de tamaño 50 extraídas de una poblac
 <h3>Ejemplo:</h3>
 <p>
 
-Este cejemplo  ilustra cómo calcular probabilidades y cuantiles de una distribución Chi-Cuadrado con 49 grados de libertad y cómo visualizar estos cálculos gráficamente.
+Este ejemplo  ilustra cómo calcular probabilidades y cuantiles de una distribución chi-cuadrado con 49 grados de libertad y cómo visualizar estos cálculos gráficamente.
 
-Se puede calcular la probabilidad acumulada de una distribución **Chi-Cuadrado** con `pchisq()`, la cual devuelve:
+Se puede calcular la probabilidad acumulada de una distribución **chi-cuadrado** con la función `pchisq()`, la cual devuelve el resultado de la siguiente probabilidad:
 
 $$
 P(X \leq x) = \int_{0}^{x} f(t) dt
 $$
 
-donde \( f(t) \) es la función de densidad de la distribución Chi-Cuadrado. En este ejemplo $x=60$.
+donde \( f(t) \) es la función de densidad de la distribución chi-cuadrado. En este ejemplo $x=60$.
 
 
-El cálculo de un **cuantil** \( x_p \) se obtiene con `qchisq(p, df)`, el cual devuelve el valor \( x_p \) que satisface:
+El cálculo de un **cuantil** \( x_p \) se obtiene con la función `qchisq(p, df)`, el cual devuelve el valor \( x_p \) que satisface la siguiente igualdad:
 
 $$
 P(X \leq x_p) = p
 $$
 
-Esto permite determinar, por ejemplo, el **percentil 95%**  ($p=0.95$) de la distribución Chi-Cuadrado.
+Esto permite determinar, por ejemplo, el **percentil 95%**  ($p=0.95$) de la distribución chi-cuadrado.
 
 
-La **Figura 2.42** ilustra las **probabilidades acumuladas** y los **cuantiles** en la distribución Chi-Cuadrado, utilizando gráficos que resaltan las áreas bajo la curva de densidad. En particular, se muestra el cálculo de la probabilidad \( P(X \leq 60) = 0.8651 \), lo que indica que existe un 0. 8651 de probabilidad de que la variable tome un valor menor o igual a 60 (representado por el área azul).  
+La **Figura 2.42** ilustra las **probabilidades acumuladas** y los **cuantiles** en la distribución chi-cuadrado, utilizando gráficos que resaltan las áreas bajo la curva de densidad. 
 
-Además, el área amarilla representa un 0.05 de probabilidad, y la línea punteada negra marca el **percentil 95%**, correspondiente al valor crítico de **66.34**. Esto significa que el 5% de los valores más altos de la variable Chi-Cuadrado con 49 grados de libertad son superiores a este umbral.
+En particular, se muestra el cálculo de la probabilidad \( P(X \leq 60) = 0.8651 \), lo que indica que existe un 0. 8651 de probabilidad de que la variable tome un valor menor o igual a 60 (representado por el área azul).  
+
+Además, el área amarilla representa un 0.05 de probabilidad, y la línea punteada negra marca el **percentil 95%**, correspondiente al valor crítico de **66.34**. Esto significa que el 5% de los valores más altos de la variable chi-cuadrado con 49 grados de libertad son superiores a este umbral.
 
 
 <pre>
+Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+
 # Cargar librerías necesarias
 library(ggplot2)
 
@@ -364,23 +346,20 @@ p_cuantil <- 0.95
 x_cuantil <- qchisq(p_cuantil, df = gl)
 
 # Graficar la función de densidad con áreas sombreadas
-plot_chi <- ggplot(datos, aes(x = X, y = Densidad)) +
+ggplot(datos, aes(x = X, y = Densidad)) +
   geom_line(color = "blue", linewidth = 1) +
   geom_area(data = subset(datos, X <= x_prob), aes(y = Densidad), fill = "skyblue", alpha = 0.5) +
   geom_vline(xintercept = x_prob, color = "red", linetype = "dashed", linewidth = 1) +
   geom_area(data = subset(datos, X >= x_cuantil), aes(y = Densidad), fill = "orange", alpha = 0.5) +
-  geom_vline(xintercept = x_cuantil, color = "darkred", linetype = "dashed", linewidth = 1) +
+  geom_vline(xintercept = x_cuantil, color = "black", linetype = "dashed", linewidth = 1) +
   labs(
-    title = "Distribución Chi-Cuadrado con 49 Grados de Libertad",
+    title = "Distribución chi-cuadrado con 49 grados de libertad",
     subtitle = paste0("P(X ≤ ", x_prob, ") = ", round(probabilidad, 4), 
                       " | Cuantil 95% = ", round(x_cuantil, 2)),
     x = expression(chi^2),
     y = "Densidad"
   ) +
   theme_minimal()
-
-# Mostrar la gráfica
-print(plot_chi)
 
 # Mostrar resultados en consola
 cat("Probabilidad P(X ≤", x_prob, ") =", round(probabilidad, 4), "\n")
@@ -389,7 +368,9 @@ cat("Cuantil 95% =", round(x_cuantil, 2), "\n")
 
 
 
-```{r, echo=TRUE, fig.height=3.5}
+```{r, eval=FALSE,include=FALSE}
+Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+
 # Cargar librerías necesarias
 library(ggplot2)
 
@@ -414,23 +395,20 @@ p_cuantil <- 0.95
 x_cuantil <- qchisq(p_cuantil, df = gl)
 
 # Graficar la función de densidad con áreas sombreadas
-plot_chi <- ggplot(datos, aes(x = X, y = Densidad)) +
+ggplot(datos, aes(x = X, y = Densidad)) +
   geom_line(color = "blue", linewidth = 1) +
   geom_area(data = subset(datos, X <= x_prob), aes(y = Densidad), fill = "skyblue", alpha = 0.5) +
   geom_vline(xintercept = x_prob, color = "red", linetype = "dashed", linewidth = 1) +
   geom_area(data = subset(datos, X >= x_cuantil), aes(y = Densidad), fill = "orange", alpha = 0.5) +
   geom_vline(xintercept = x_cuantil, color = "darkred", linetype = "dashed", linewidth = 1) +
   labs(
-    title = "Distribución Chi-Cuadrado con 49 Grados de Libertad",
+    title = "Distribución chi-cuadrado con 49 grados de libertad",
     subtitle = paste0("P(X ≤ ", x_prob, ") = ", round(probabilidad, 4), 
                       " | Cuantil 95% = ", round(x_cuantil, 2)),
     x = expression(chi^2),
     y = "Densidad"
   ) +
   theme_minimal()
-
-# Mostrar la gráfica
-# print(plot_chi)
 
 # Mostrar resultados en consola
 cat("Probabilidad P(X ≤", x_prob, ") =", round(probabilidad, 4), "\n")
@@ -443,9 +421,8 @@ cat("Cuantil 95% =", round(x_cuantil, 2), "\n")
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("img/fig242.png")
 ```
-**Figura 2.42** El área sombreada en **azul** representa la probabilidad acumulada \( P(X \leq 60) = 0.8651 \), mientras que el área **amarilla** corresponde al 5% superior de la distribución, con el **percentil 95%** ubicado en \( x = 66.34 \) (línea punteada en negro).
 </center>
-<br/><br/>
+**Figura 2.42** El área sombreada en **azul** representa la probabilidad acumulada \( P(X \leq 60) = 0.8651 \), mientras que el área **amarilla** corresponde al 5% superior de la distribución, con el **percentil 95%** ubicado en \( x = 66.34 \) (línea punteada en negro).
 
 
 </p>
@@ -477,7 +454,7 @@ donde \( \Gamma(\cdot) \) es la función Gamma.
 
 
 </br></br>
-<h4>Relación con otras distribuciones</h4>
+<h4>Relación con otras distribuciones:</h4>
 
 Si \( U \sim \chi^2_{\nu_1} \) y \( V \sim \chi^2_{\nu_2} \) son variables aleatorias independientes con distribuciones **chi-cuadrado**, entonces la variable aleatoria definida como:
 
@@ -489,22 +466,24 @@ sigue una **distribución F de Fisher** con \( \nu_1 \) y \( \nu_2 \) grados de 
 
 
 </br></br>
-<h4>Propiedades</h4>
+<h4>Algunas propiedades:</h4>
 
 
 - **Media:**  
   \[
   E[X] = \frac{\nu_2}{\nu_2 - 2}, \quad \text{para } \nu_2 > 2
   \]
+  
 - **Varianza:**  
   \[
   \text{Var}(X) = \frac{2\nu_2^2 (\nu_1 + \nu_2 - 2)}{\nu_1 (\nu_2 - 2)^2 (\nu_2 - 4)}, \quad \text{para } \nu_2 > 4
   \]
+  
 - **Asimetría:** La distribución es **sesgada a la derecha**, pero conforme \( \nu_1 \) y \( \nu_2 \) aumentan, la distribución se aproxima a una normal estándar.
 
 
 </br></br>
-<h4>Relación con varianzas muestrales</h4>
+<h4>Relación con varianzas muestrales:</h4>
 
 Si \( S_{1}^{2} \) y \( S_{2}^{2} \) son las **varianzas muestrales** de dos muestras aleatorias independientes de tamaño \( n_1 \) y \( n_2 \), extraídas de poblaciones normales con varianzas \( \sigma_{1}^{2} \) y \( \sigma_{2}^{2} \), respectivamente, entonces el siguiente estadístico:
 
@@ -525,11 +504,7 @@ Este resultado es fundamental en la **prueba F para la comparación de varianzas
 </br></br>
 <h3>t-Student</h3>
 
-La **distribución t-Student** es una distribución de probabilidad continua utilizada en inferencia estadística cuando se trabaja con muestras pequeñas y la varianza poblacional es desconocida. Se aplica principalmente en:
-
-- **Pruebas de hipótesis** sobre una media poblacional.
-- **Construcción de intervalos de confianza** para la media cuando la varianza poblacional no es conocida.
-- **Comparación de medias entre dos grupos** en la prueba t de Student.
+La **distribución t-Student** es una distribución de probabilidad continua utilizada en inferencia estadística cuando se trabaja con muestras pequeñas y la varianza poblacional es desconocida. 
 
 
 </br></br>
@@ -545,12 +520,13 @@ f(x; \nu) = \frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi} \Gamma\left(
 donde:
 
 - \( \nu \) representa los **grados de libertad**.
+
 - \( \Gamma(\cdot) \) es la función Gamma.
 
 
 
 </br></br>
-<h4>Relación con otras distribuciones</h4>
+<h4>Relación con otras distribuciones:</h4>
 
 Si \( Z \sim N(0,1) \) es una variable aleatoria normal estándar y \( V \sim \chi^2_{\nu} \) es una variable aleatoria con distribución **chi-cuadrado** con \( \nu \) grados de libertad, entonces la variable:
 
@@ -569,22 +545,25 @@ t_{\nu} \to N(0,1) \quad \text{cuando } \nu \to \infty.
 
 
 </br></br>
-<h4>Propiedades</h4>
+<h4>Algunas propiedades:</h4>
 
 - **Media:**  
   \[
   E[X] = 0, \quad \text{para } \nu > 1
   \]
+  
 - **Varianza:**  
   \[
   \text{Var}(X) = \frac{\nu}{\nu - 2}, \quad \text{para } \nu > 2
   \]
-- **Simetría:** La distribución es **simétrica alrededor de 0**, lo que la diferencia de la distribución F.
+  
+- **Simetría:** La distribución es **simétrica alrededor de 0**.
+
 - **Colas más pesadas:** En comparación con la normal estándar, la t-Student tiene colas más anchas, lo que implica mayor variabilidad en muestras pequeñas.
 
 
 </br></br>
-<h4>Relación con estimadores muestrales</h4>
+<h4>Relación con estimadores muestrales:</h4>
 
 
 Si \( X_1, X_2, \dots, X_n \) son variables aleatorias independientes con distribución normal \( N(\mu, \sigma^2) \), la **media muestral** y la **varianza muestral** se definen como:
@@ -609,11 +588,11 @@ Este resultado es fundamental en la **prueba t para una media poblacional**, don
 
 >
 <p>
-- Genera y grafica distintas distribuciones **t de Student** para diferentes grados de libertad (\(\nu = 2, 5, 10, 30\)). Superpón las curvas de densidad en un mismo gráfico y analizar cómo cambia la forma de la distribución conforme aumentan los grados de libertad.
-- Realiza lo mismo con la distribución **F de Fisher**, considerando diferentes pares de grados de libertad (\(\nu_1 = 2, 5, 10\) y \(\nu_2 = 20\)). Compara cómo varía la asimetría de la distribución conforme cambian los grados de libertad.
-- Genera  **100 muestras aleatorias de tamaño 30** de una población normal con media 50 y desviación estándar 10. Para cada muestra, calcular el estadístico: \(T = \frac{\bar{X} - \mu}{S / \sqrt{n}}\) donde \(\bar{X}\) es la media muestral y \(S\) es la desviación estándar muestral. Grafica un histograma con los valores obtenidos del estadístico \(T\) y superpón la curva teórica de la distribución **t de Student** con \( \nu = 29 \) grados de libertad.
-- Realiza un experimento similar con la distribución **F de Fisher**, utilizando dos muestras independientes de tamaño 20 y 30 respectivamente, para calcular el estadístico: \(F = \frac{S_1^2}{S_2^2}\)
-y compara el histograma con la curva teórica de la distribución F con parámetros \(\nu_1 = 19\) y \(\nu_2 = 29\).
+- Genera y grafica distintas distribuciones **t de Student** para diferentes grados de libertad (\(\nu = 2, 5, 10, 30\)). Superpón las curvas de densidad en un mismo gráfico y analiza cómo cambia la forma de la distribución conforme aumentan los grados de libertad. Usa la función `dt()`.
+- Realiza lo mismo con la distribución **F de Fisher**, considerando diferentes pares de grados de libertad (\(\nu_1 = 2, 5, 10\) y \(\nu_2 = 20\)). Compara cómo varía la asimetría de la distribución conforme cambian los grados de libertad. Implementa con la función `df()`.
+- Genera  **100 muestras aleatorias de tamaño 30** de una población normal con media 50 y desviación estándar 10. Para cada muestra, calcula el estadístico: \(T = \frac{\bar{X} - \mu}{S / \sqrt{n}}\) donde \(\bar{X}\) es la media muestral y \(S\) es la desviación estándar muestral. Grafica un histograma con los valores obtenidos del estadístico \(T\) y superpón la curva teórica de la distribución **t de Student** con \( \nu = 29 \) grados de libertad. Emplea las funciones `dt()`, `rnorm()` e `hist()`.
+- Realiza un experimento similar con la distribución **F de Fisher**, utilizando dos muestras independientes de tamaño 20 y 30 respectivamente de poblaciones normales, para calcular el estadístico: \(F = \frac{S_1^2}{S_2^2}\)
+y compara el histograma con la curva teórica de la distribución F con parámetros \(\nu_1 = 19\) y \(\nu_2 = 29\). Utiliza las funciones `rnorm()`, `hist()` y `df()`.
 </p>
 >
 

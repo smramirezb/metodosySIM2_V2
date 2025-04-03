@@ -246,7 +246,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+      <a class="navbar-brand" href="index.html"> </a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -268,16 +268,19 @@ $(document).ready(function () {
       <a href="recurso101.html">Introducción</a>
     </li>
     <li>
-      <a href="recurso102.html">Conceptos básicos</a>
+      <a href="recurso102.html">Conceptos Básicos</a>
     </li>
     <li>
-      <a href="recurso103.html">Enfoque</a>
+      <a href="recurso103.html">Enfoques y Postulados</a>
     </li>
     <li>
-      <a href="recurso103b.html">Axiomas</a>
+      <a href="recurso104.html">Tipos de Probabilidad</a>
     </li>
     <li>
-      <a href="recurso104.html">Tipos de probabilidad</a>
+      <a href="recurso104b.html">Independencia</a>
+    </li>
+    <li>
+      <a href="recurso104c.html">Teorema de Bayes</a>
     </li>
   </ul>
 </li>
@@ -289,19 +292,19 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso201.html">Definición</a>
+      <a href="recurso201.html">Variable Aleatoria: Univariado</a>
     </li>
     <li>
-      <a href="recurso202.html">Valor esperado y varianza</a>
+      <a href="recurso202.html">Valor Esperado</a>
     </li>
     <li>
-      <a href="recurso203.html">Variables conjuntas</a>
+      <a href="recurso203.html">Variables Conjuntas</a>
     </li>
     <li>
-      <a href="recurso204.html">Modelos discretos</a>
+      <a href="recurso204.html">Modelos Discretos: Univariado</a>
     </li>
     <li>
-      <a href="recurso205.html">Modelos continuos</a>
+      <a href="recurso205.html">Modelos Continuos: Univariado</a>
     </li>
   </ul>
 </li>
@@ -313,19 +316,19 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso301.html">Conceptos básicos</a>
+      <a href="recurso301.html">Conceptos Básicos</a>
     </li>
     <li>
-      <a href="recurso302.html">Estimación puntual</a>
+      <a href="recurso302.html">Distribución Muestral</a>
     </li>
     <li>
       <a href="recurso305.html">Teorema del Límite Central</a>
     </li>
     <li>
-      <a href="recurso303.html">Propiedades de los estimadores</a>
+      <a href="recurso303.html">Propiedades de los Estimadores</a>
     </li>
     <li>
-      <a href="recurso304.html">Métodos de estimación</a>
+      <a href="recurso304.html">Métodos de Estimación</a>
     </li>
   </ul>
 </li>
@@ -337,13 +340,13 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso401.html">Para una población</a>
+      <a href="recurso401.html">Paramétrico: Una Población</a>
     </li>
     <li>
-      <a href="recurso402.html">Para dos poblaciones</a>
+      <a href="recurso402.html">Paramétrico: Dos Poblaciones</a>
     </li>
     <li>
-      <a href="recurso403.html">Estimación no paramétrica</a>
+      <a href="recurso403.html">Estimación no Paramétrica</a>
     </li>
   </ul>
 </li>
@@ -358,19 +361,19 @@ $(document).ready(function () {
       <a href="recurso501.html">Introducción</a>
     </li>
     <li>
-      <a href="recurso502.html">Conceptos básicos</a>
+      <a href="recurso502.html">Paramétrico: Una Población</a>
     </li>
     <li>
-      <a href="recurso503.html">Pruebas paramétricas</a>
+      <a href="recurso503.html">Paramétrico: Dos Poblaciones</a>
     </li>
     <li>
-      <a href="recurso504.html">Pruebas no paramétricas</a>
+      <a href="recurso504.html">Pruebas no Paramétricas</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Casos de estudio
+    Casos y Simulaciones
      
     <span class="caret"></span>
   </a>
@@ -380,6 +383,21 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="recurso405.html">Caso 2</a>
+    </li>
+    <li>
+      <a href="recurso406.html">Simulación 1</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Referencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso1000.html">Referencias</a>
     </li>
   </ul>
 </li>
@@ -443,43 +461,13 @@ se conoce como <strong>estimación estadística</strong>. La calidad de un
 estimador se evalúa en términos de propiedades como la
 <strong>insesgadez, eficiencia y consistencia</strong>, asegurando que
 la inferencia realizada sea lo más precisa y confiable posible.</p>
-<!-- <br/> -->
-<!-- ```{r, echo=FALSE} -->
-<!-- library("SnowballC") -->
-<!-- library("wordcloud2") -->
-<!-- library("RColorBrewer") -->
-<!-- nube <- read.csv("palabras1.csv") -->
-<!-- nube1=rep(nube$palabra,nube$replicas) -->
-<!-- t=data.frame(table(nube1)) -->
-<!-- dword=t[,1] -->
-<!-- dfreq=t[,2] -->
-<!-- set.seed(1234) -->
-<!-- # wordcloud(words = dword, freq = dfreq, min.freq = 1, -->
-<!-- #            max.words=200, random.order=FALSE, rot.per=0.35,  -->
-<!-- #            colors=brewer.pal(8, "Dark2")) -->
-<!-- library(wordcloud2) -->
-<!-- wordcloud2(data = t, size = .25, shape = 'pentagon') #"circle") -->
-<!-- ``` -->
 </br></br>
 <h3>
 Población
 </h3>
-<p>En estadística, la <strong>población</strong> es el conjunto total de
-valores posibles que puede tomar una <strong>variable</strong> dentro de
-un contexto determinado. Estos valores pueden estar asociados a
-individuos, objetos, eventos o cualquier <em>unidad de análisis</em>
-definida en el estudio.</p>
-<p><span class="math display">\[
-\text{Población} = \{x_1, x_2, x_3, \dots, x_N\},
-\]</span></p>
-<p>donde <span class="math inline">\(x_i\)</span> representa un valor
-particular de la variable para la <span
-class="math inline">\(i\)</span>-ésima <em>unidad de análisis</em>, y
-<span class="math inline">\(N\)</span> es el tamaño número de valores
-(puede ser finito o infinito).</p>
 <p>La población se define con respecto a una o varias variables
-específicas que se desean estudiar.En estadística, la
-<strong>población</strong> se define como el <strong>conjunto de todos
+específicas que se desean estudiar. En estadística, la
+<strong>población</strong> se entiende como el <strong>conjunto de todos
 los valores posibles</strong> que puede tomar una <strong>variable
 aleatoria</strong> dentro de un contexto específico. Estos valores
 pueden corresponder a individuos, objetos, eventos o cualquier otra
@@ -488,17 +476,15 @@ pueden corresponder a individuos, objetos, eventos o cualquier otra
 \text{Población} = \{x_1, x_2, x_3, \dots, x_N\}
 \]</span></p>
 <p>donde <span class="math inline">\(x_i\)</span> representa un valor
-particular de la variable para el <span
-class="math inline">\(i\)</span>-ésimo elemento de la población, y <span
+particular de la variable para la <span
+class="math inline">\(i\)</span>-ésima unidad de análisis, y <span
 class="math inline">\(N\)</span> es el tamaño de la población, el cual
 puede ser <strong>finito</strong> o <strong>infinito</strong>
 dependiendo del fenómeno en estudio.</p>
-<p>Es importante destacar que la definición de la población está
-determinada por la variable o variables de interés. En algunos casos, la
-población puede referirse a un <strong>conjunto finito de
-observaciones</strong> (por ejemplo, las alturas de los estudiantes de
-una universidad), mientras que en otros puede tratarse de un
-<strong>conjunto teóricamente infinito</strong> de valores posibles
+<p>En algunos casos, la población puede referirse a un <strong>conjunto
+finito de observaciones</strong> (por ejemplo, las alturas de los
+estudiantes de una universidad), mientras que en otros puede tratarse de
+un <strong>conjunto teóricamente infinito</strong> de valores posibles
 generados por un proceso aleatorio (como los resultados de un
 experimento repetido indefinidamente).</p>
 </br></br>
@@ -539,7 +525,7 @@ Muestra
 <p>En estadística, una <strong>muestra aleatoria</strong> es un
 subconjunto de la población, seleccionado de manera que cada elemento de
 la población tenga una probabilidad conocida y no nula de ser incluido
-en la muestra. Matemáticamente, si la población se define como:</p>
+en la muestra. Si la población se determina como:</p>
 <p><span class="math display">\[
 \text{Población} = \{x_1, x_2, x_3, \dots, x_N\},
 \]</span></p>
@@ -577,57 +563,58 @@ válidas.</p>
 Ejemplo:
 </h3>
 <p>
-<p>Supongamos que la población representa los <strong>tiempos de
-duración de las llamadas atendidas en un centro de servicio al cliente
-en Bogotá durante el año 2024</strong>. Se sabe que estos tiempos siguen
-una <strong>distribución exponencial</strong>, con un <strong>valor
-medio de duración</strong> de <strong>5 minutos</strong>.</p>
+<p>En este ejemplo se supone que la población representa los
+<strong>tiempos de duración de las llamadas atendidas en un centro de
+servicio al cliente en Bogotá durante el año 2024</strong>. Se sabe que
+estos tiempos siguen una <strong>distribución exponencial</strong>, con
+un <strong>valor medio de duración</strong> de <strong>5
+minutos</strong>.</p>
 <p>Dado que en una distribución exponencial la <strong>media</strong> y
 la <strong>varianza</strong> están dadas por:</p>
 <p><span class="math display">\[
-E[X] = \frac{1}{\lambda}, \quad V[X] = \frac{1}{\lambda^2}
+E[X] = \frac{1}{\lambda}, \quad Var[X] = \frac{1}{\lambda^2}
 \]</span></p>
-<p>podemos expresar la distribución de la población como:</p>
+<p>se puede expresar la distribución de la población como:</p>
 <p><span class="math display">\[
 X \sim \text{Exp}(\lambda = 1/5)
 \]</span></p>
 <p>De esta manera, los valores poblacionales son:</p>
 <ul>
-<li><strong>Esperanza matemática</strong>:<br />
+<li><p>Esperanza matemática:<br />
 <span class="math display">\[
 E[X] = \frac{1}{1/5} = 5 \text{ minutos}
-\]</span></li>
-<li><strong>Varianza</strong>:<br />
+\]</span></p></li>
+<li><p>Varianza:<br />
 <span class="math display">\[
 \text{Var}(X)= \frac{1}{(1/5)^2} = 25 \text{ minutos}^2
-\]</span></li>
+\]</span></p></li>
 </ul>
-<p>Ahora, extraemos una <strong>muestra aleatoria</strong> de tamaño
+<p>Ahora, se extrae una <strong>muestra aleatoria</strong> de tamaño
 <span class="math inline">\(n = 100\)</span> de esta población bajo las
 siguientes condiciones:</p>
 <ul>
-<li>Cada llamada es seleccionada de manera
-<strong>aleatoria</strong>.<br />
-</li>
-<li>Las observaciones son <strong>independientes</strong> entre
-sí.<br />
-</li>
-<li>Todas las observaciones provienen de la misma distribución
-exponencial <span class="math inline">\(\text{Exp}(1/5)\)</span>.</li>
+<li><p>Cada llamada es seleccionada de manera
+<strong>aleatoria</strong>.</p></li>
+<li><p>Las observaciones son <strong>independientes</strong> entre
+sí.</p></li>
+<li><p>Todas las observaciones provienen de la misma distribución
+exponencial de <span
+class="math inline">\(\lambda=1/5\)</span>.</p></li>
 </ul>
-<p>Podemos representar la población y la muestra de la siguiente
-manera:</p>
+<p>Con esta información es posible representar la población y la muestra
+de la siguiente manera:</p>
 <p><strong>Población</strong>:</p>
 <p><span class="math display">\[
-   X \sim \text{Exp}(1/5)
+   X \sim \text{Exp}(\lambda=1/5)
    \]</span></p>
 <p><strong>Muestra i.i.d</strong>:</p>
 <p><span class="math display">\[
-   X_1, X_2, \dots, X_{100} \overset{\text{i.i.d}}{\sim} \text{Exp}(1/5)
+   X_1, X_2, \dots, X_{100} \overset{\text{i.i.d}}{\sim}
+\text{Exp}(\lambda=1/5)
    \]</span></p>
-<p>La <strong>población</strong> corresponde a todos los tiempos de
-duración de llamadas atendidas en el centro de servicio al cliente
-durante el año, mientras que la <strong>muestra aleatoria
+<p>La <strong>población</strong> corresponde a todos los registros de
+tiempos de duración de llamadas atendidas en el centro de servicio al
+cliente durante el año, mientras que la <strong>muestra aleatoria
 i.i.d.</strong> consiste en <strong>100 registros de tiempos de duración
 de llamadas</strong>, seleccionados aleatoriamente y medidos en
 minutos.</p>
@@ -637,29 +624,12 @@ minutos.</p>
 \]</span></p>
 <p>Se puede representar esta <strong>población</strong> y simular una
 <strong>muestra aleatoria</strong> de tamaño 100 utilizando el software
-<strong>R</strong>. Los resultados generados a partir de los siguientes
-códigos se presentan en las <strong>Figuras 2.37</strong> y
-<strong>2.38</strong>.</p>
-<p>En la <strong>Figura 2.37</strong>, se muestra la <strong>curva de
-densidad</strong> que describe la distribución de la población (tiempos
-de llamadas). Por otro lado, la <strong>Figura 2.38</strong> presenta el
-<strong>histograma</strong> de los 100 registros de tiempos extraídos de
-una población con distribución <strong>Exponencial</strong>, cuya
-<strong>media poblacional</strong> es <strong>5</strong> y su
-<strong>varianza poblacional</strong> es <strong>25</strong>.</p>
-<p>La distribución de los tiempos en una muestra <span
-class="math inline">\(i.i.d.\)</span> generada presenta una
-<strong>media muestral</strong> de <span class="math inline">\(\bar{x} =
-5.228594\)</span> y una <strong>varianza muestral</strong> de <span
-class="math inline">\(s^2 = 26.9682\)</span>. Estos resultados fueron
-obtenidos utilizando <code>set.seed(123)</code>.</p>
-<p>Es importante destacar que, si se modifica el valor de la semilla
-(<code>123</code>), la muestra aleatoria seleccionada será diferente, lo
-que conllevará a cambios en los valores de la <strong>media
-muestral</strong> <span class="math inline">\(\bar{x}\)</span> y la
-<strong>varianza muestral</strong> <span
-class="math inline">\(s^2\)</span>.</p>
+<strong>R</strong>.</p>
+<p>Los resultados generados a partir de los códigos siguientes se
+presentan en la <strong>Figura 2.37</strong>.</p>
 <pre>
+Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+
 # Cargar librería ggplot2
 library(ggplot2)
 
@@ -677,58 +647,37 @@ densidad <- dexp(x, rate = lambda)
 datos <- data.frame(Tiempo = x, Densidad = densidad)
 
 # Graficar con ggplot2
-plot_pob <- ggplot(datos, aes(x = Tiempo, y = Densidad)) +
+ggplot(datos, aes(x = Tiempo, y = Densidad)) +
   geom_line(color = "blue", linewidth = 1) +  # Línea de densidad con `linewidth`
   geom_vline(xintercept = media, color = "red", linetype = "dashed") +  # Línea en la media
-  labs(title = "Distribución Exponencial de Tiempos de Llamadas",
+  labs(title = "Distribución exponencial de tiempos de llamadas",
        x = "Tiempo de duración de la llamada (minutos)",
        y = "Densidad") +
   theme_minimal() +  # Tema minimalista
   theme(plot.title = element_text(hjust = 0.5)) +  # Centrar título
   annotate("text", x = media + 1, y = max(densidad) / 2, 
            label = "Media (5 min)", color = "red", angle = 0)
-
-# Mostrar el gráfico
-print(plot_pob)
 </pre>
-<pre class="r"><code># Cargar librería ggplot2
-library(ggplot2)
-
-# Configuración de parámetros de la población
-lambda &lt;- 1/5  # Tasa de la distribución exponencial (lambda = 1/media)
-media &lt;- 1/lambda  # Media de la distribución
-
-# Crear un rango de valores para la población
-x &lt;- seq(0, media * 4, length.out = 500)  # Desde 0 hasta 4 veces la media
-
-# Calcular la densidad de la distribución exponencial
-densidad &lt;- dexp(x, rate = lambda)
-
-# Crear un data frame para ggplot
-datos &lt;- data.frame(Tiempo = x, Densidad = densidad)
-
-# Graficar con ggplot2
-plot_pob &lt;- ggplot(datos, aes(x = Tiempo, y = Densidad)) +
-  geom_line(color = &quot;blue&quot;, linewidth = 1) +  # Línea de densidad con `linewidth`
-  geom_vline(xintercept = media, color = &quot;red&quot;, linetype = &quot;dashed&quot;) +  # Línea en la media
-  labs(title = &quot;Distribución Exponencial de Tiempos de Llamadas&quot;,
-       x = &quot;Tiempo de duración de la llamada (minutos)&quot;,
-       y = &quot;Densidad&quot;) +
-  theme_minimal() +  # Tema minimalista
-  theme(plot.title = element_text(hjust = 0.5)) +  # Centrar título
-  annotate(&quot;text&quot;, x = media + 1, y = max(densidad) / 2, 
-           label = &quot;Media (5 min)&quot;, color = &quot;red&quot;, angle = 0)
-
-# Mostrar el gráfico
-# print(plot_pob)</code></pre>
+<p>En la <strong>Figura 2.37</strong>, se muestra la <strong>curva de
+densidad</strong> que describe la distribución de la población (tiempos
+de llamadas).</p>
 <br/><br/>
 <center>
 <img src="img/fig237.png" width="80%" style="display: block; margin: auto;" />
-<strong>Figura 2.37</strong> Curva de densidad de la población con <span
-class="math inline">\(X \sim \text{Exp}(\lambda = 1/5)\)</span>.
 </center>
-<p><br/><br/></p>
+<p><strong>Figura 2.37</strong> Curva de densidad de la población con
+<span class="math inline">\(X \sim \text{Exp}(\lambda = 1/5)\)</span>.
+<br/><br/></p>
+<p>Los códigos siguientes permiten generar la muestra aleatoria y
+estimar media y varianza. Los resultados se presentan en la
+<strong>Figura 2.38</strong>, la cual presenta el
+<strong>histograma</strong> de los 100 registros de tiempos extraídos de
+una población con distribución <strong>exponencial</strong>, cuya
+<strong>media poblacional</strong> es <strong>5</strong> y su
+<strong>varianza poblacional</strong> es <strong>25</strong>.</p>
 <pre>
+Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+
 # Cargar librería ggplot2
 library(ggplot2)
 
@@ -746,17 +695,14 @@ varianza<-var(muestra)
 datos <- data.frame(Tiempo = muestra)
 
 # Graficar el histograma con la curva de densidad de la distribución teórica
-plot_hist <- ggplot(datos, aes(x = Tiempo)) +
+ggplot(datos, aes(x = Tiempo)) +
   geom_histogram(aes(y = after_stat(density)), binwidth = 1, fill = "skyblue", color = "black", alpha = 0.7) +  # Histograma con frecuencia relativa
   stat_function(fun = dexp, args = list(rate = lambda), color = "red", linewidth = 1) +  # Curva de densidad teórica
   geom_vline(xintercept = promedio, color = "blue", linetype = "dashed", linewidth = 1) +  # Línea de la media muestral
-  labs(title = "Histograma de la Muestra con la Curva de Densidad Exponencial",
+  labs(title = "Muestra aleatoria",
        x = "Tiempo de duración de la llamada (minutos)",
        y = "Densidad") +
   theme_minimal()  # Estilo minimalista
-
-# Mostrar el gráfico
-print(plot_hist)
 
 # Mostrar el promedio
 print(promedio)
@@ -764,56 +710,32 @@ print(promedio)
 # Mostrar la varianza
 print(varianza)
 </pre>
-<pre class="r"><code># Cargar librería ggplot2
-library(ggplot2)
-
-# Configuración de parámetros de la población
-set.seed(123)  # Para reproducibilidad
-lambda &lt;- 1/5  # Parámetro de la distribución exponencial
-n &lt;- 100       # Tamaño de la muestra
-
-# Simulación de la muestra iid de la distribución exponencial
-muestra &lt;- rexp(n, rate = lambda)
-promedio &lt;- mean(muestra)
-varianza&lt;-var(muestra)
-
-# Crear un data frame para ggplot
-datos &lt;- data.frame(Tiempo = muestra)
-
-# Graficar el histograma con la curva de densidad de la distribución teórica
-plot_hist &lt;- ggplot(datos, aes(x = Tiempo)) +
-  geom_histogram(aes(y = after_stat(density)), binwidth = 1, fill = &quot;skyblue&quot;, color = &quot;black&quot;, alpha = 0.7) +  # Histograma con frecuencia relativa
-  stat_function(fun = dexp, args = list(rate = lambda), color = &quot;red&quot;, linewidth = 1) +  # Curva de densidad teórica
-  geom_vline(xintercept = promedio, color = &quot;blue&quot;, linetype = &quot;dashed&quot;, linewidth = 1) +  # Línea de la media muestral
-  labs(title = &quot;Histograma de la Muestra con la Curva de Densidad Exponencial&quot;,
-       x = &quot;Tiempo de duración de la llamada (minutos)&quot;,
-       y = &quot;Densidad&quot;) +
-  theme_minimal()  # Estilo minimalista
-
-# Mostrar el gráfico
-#print(plot_hist)
-
-# Mostrar el promedio
-#print(promedio)
-
-# Mostrar la varianza
-#print(varianza)</code></pre>
 <p></br></p>
+<p>La distribución de los tiempos en una muestra generada presenta una
+<strong>media muestral</strong> de <span class="math inline">\(\bar{x} =
+5.228594\)</span> y una <strong>varianza muestral</strong> de <span
+class="math inline">\(s^2 = 26.9682\)</span>. Estos resultados fueron
+obtenidos utilizando <code>set.seed(123)</code>.</p>
+<p>Es importante destacar que, si se modifica el valor de la semilla
+(<code>123</code>), la muestra aleatoria seleccionada será diferente, lo
+que conllevará a cambios en los valores de la <strong>media
+muestral</strong> <span class="math inline">\(\bar{x}\)</span> y la
+<strong>varianza muestral</strong> <span
+class="math inline">\(s^2\)</span>.</p>
 <br/><br/>
 <center>
 <img src="img/fig238.png" width="80%" style="display: block; margin: auto;" />
-<strong>Figura 2.38</strong> La distribución de los tiempos de una
-muestra <span class="math inline">\(i.i.d.\)</span> que tiene una
-<strong>media muestral</strong> <span class="math inline">\(\bar{x}
-=  5.228594\)</span> y una <strong>varianza muestral</strong> <span
-class="math inline">\(s^2 = 26.9682\)</span>. Estos resultados fueron
-obtenidos utilizando <code>set.seed(123)</code>. Si se cambia el valor
-de la semilla (<code>123</code>), la muestra aleatoria seleccionada será
-diferente, lo que resultará en valores distintos para la media <span
-class="math inline">\(\bar{x}\)</span> y la varianza <span
-class="math inline">\(s^2\)</span>.
 </center>
-<p><br/><br/></p>
+<p><strong>Figura 2.38</strong> La distribución de los tiempos de una
+muestra que tiene una <strong>media muestral</strong> <span
+class="math inline">\(\bar{x} =  5.228594\)</span> y una
+<strong>varianza muestral</strong> <span class="math inline">\(s^2 =
+26.9682\)</span>. Estos resultados fueron obtenidos utilizando
+<code>set.seed(123)</code>. Si se cambia el valor de la semilla
+(<code>123</code>), la muestra aleatoria seleccionada será diferente, lo
+que resultará en valores distintos para la media <span
+class="math inline">\(\bar{x}\)</span> y la varianza <span
+class="math inline">\(s^2\)</span>.</p>
 </p>
 </div>
 </br></br>
@@ -846,14 +768,14 @@ aleatoria:</p>
 \]</span></p>
 <p>donde:</p>
 <ul>
-<li><span class="math inline">\(\hat{\theta}\)</span> es el
+<li><p><span class="math inline">\(\hat{\theta}\)</span> es el
 <strong>estimador</strong> del parámetro <span
-class="math inline">\(\theta\)</span>.</li>
-<li><span class="math inline">\(X_1, X_2, \dots, X_n\)</span> son los
-valores observados en la muestra.<br />
-</li>
-<li><span class="math inline">\(T\)</span> es la función que define cómo
-se calcula el estimador.</li>
+class="math inline">\(\theta\)</span>.</p></li>
+<li><p><span class="math inline">\(X_1, X_2, \dots, X_n\)</span> es una
+muestra aleatoria de tamaño <span
+class="math inline">\(n\)</span>.</p></li>
+<li><p><span class="math inline">\(T\)</span> es la función que define
+cómo se calcula el estimador.</p></li>
 </ul>
 <p><br/></p>
 <div class="caja-ejemplo">
@@ -862,27 +784,25 @@ Ejemplos:
 </h3>
 <p>
 <ul>
-<li><p><strong>Media muestral (<span
-class="math inline">\(\bar{X}\)</span>)</strong>:</p>
+<li><p><strong>Media muestral denotado como <span
+class="math inline">\(\bar{X}\)</span></strong>:</p>
 <ul>
-<li>Estimador de la <strong>media poblacional</strong> (<span
-class="math inline">\(\mu\)</span>).<br />
-</li>
-<li>Fórmula:<br />
+<li><p>Estimador de la <strong>media poblacional</strong> <span
+class="math inline">\(\mu\)</span>.</p></li>
+<li><p>Fórmula:<br />
 <span class="math display">\[
 \bar{X} = \frac{1}{n} \sum_{i=1}^n X_i
-\]</span></li>
+\]</span></p></li>
 </ul></li>
-<li><p><strong>Varianza muestral (<span
-class="math inline">\(S^2\)</span>)</strong>:</p>
+<li><p><strong>Varianza muestral denotado como <span
+class="math inline">\(S^2\)</span></strong>:</p>
 <ul>
-<li>Estimador de la <strong>varianza poblacional</strong> (<span
-class="math inline">\(\sigma^2\)</span>).<br />
-</li>
-<li>Fórmula:<br />
+<li><p>Estimador de la <strong>varianza poblacional</strong> <span
+class="math inline">\(\sigma^2\)</span>.</p></li>
+<li><p>Fórmula:<br />
 <span class="math display">\[
 S^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2
-\]</span></li>
+\]</span></p></li>
 </ul></li>
 </ul>
 </p>
@@ -900,11 +820,10 @@ son las <strong>estimaciones puntuales de los parámetros</strong>. En
 este caso, las <strong>estimaciones</strong> de la media y la varianza
 poblacional son:</p>
 <ul>
-<li><strong>Media muestral</strong>: <span
-class="math inline">\(5.228594 \, \text{minutos}\)</span>,<br />
-</li>
-<li><strong>Varianza muestral</strong>: <span
-class="math inline">\(26.9682 \, \text{minutos}^2\)</span>.</li>
+<li><p><strong>Media muestral</strong>: <span
+class="math inline">\(5.228594 \, \text{minutos}\)</span>,</p></li>
+<li><p><strong>Varianza muestral</strong>: <span
+class="math inline">\(26.9682 \, \text{minutos}^2\)</span>.</p></li>
 </ul>
 </br></br>
 <div class="caja-ejemplo">
@@ -914,54 +833,53 @@ Ejemplo:
 <p>
 <p>Este ejemplo extiende el análisis previo seleccionando <strong>12
 muestras aleatorias</strong> de tamaño <strong>100</strong>, todas
-provenientes de la misma población con distribución
-<strong>Exponencial(λ = 1/5)</strong>. Para cada muestra, se construye
-un <strong>histograma</strong> que representa la distribución de los
-tiempos de duración de las llamadas, superponiendo la <strong>curva de
-densidad teórica</strong> en rojo. Además, se calculan dos estadísticas
-clave para cada muestra:</p>
+provenientes de la misma población con distribución <strong>exponencial
+con <span class="math inline">\(\lambda=1/5\)</span></strong>. Para cada
+muestra, se construye un <strong>histograma</strong> que representa la
+distribución de los tiempos de duración de las llamadas, superponiendo
+la <strong>curva de densidad teórica</strong> en rojo. Además, se
+calculan dos estadísticas clave para cada muestra:</p>
 <ul>
-<li><strong>Media muestral</strong> (<span
+<li><p><strong>Media muestral</strong> (<span
 class="math inline">\(\bar{x}\)</span>, representada por la línea azul
-discontinua).<br />
-</li>
-<li><strong>Varianza muestral</strong> (<span
+discontinua).</p></li>
+<li><p><strong>Varianza muestral</strong> (<span
 class="math inline">\(s^2\)</span>, mostrada en la parte superior de
-cada gráfico).</li>
+cada gráfico).</p></li>
 </ul>
 <p>La <strong>Figura 2.39</strong> muestra los histogramas generados
 junto con estas estimaciones. Los resultados fueron obtenidos utilizando
 <code>set.seed(42)</code>, lo que garantiza la
 <strong>reproducibilidad</strong> de la simulación. Al cambiar este
 valor, las muestras aleatorias serán distintas, lo que generará nuevas
-estimaciones de la media y la varianza.</p>
-<p><strong>Observaciones clave:</strong></p>
+estimaciones de la media y la varianza. A continuación se presentan las
+siguientes observaciones:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Variabilidad entre muestras:</strong>
+<li><p><strong>Variabilidad entre muestras:</strong></p>
 <ul>
-<li>Aunque todas las muestras provienen de la misma distribución
+<li><p>Aunque todas las muestras provienen de la misma distribución
 exponencial, la forma de los histogramas varía, reflejando la
-<strong>aleatoriedad inherente</strong> al muestreo.<br />
-</li>
-<li>Algunas muestras presentan una mayor concentración de valores bajos,
-mientras que otras incluyen tiempos más largos, lo que afecta la
-dispersión.</li>
+<strong>aleatoriedad inherente</strong> al muestreo.</p></li>
+<li><p>Algunas muestras presentan una mayor concentración de valores
+bajos, mientras que otras incluyen tiempos más largos, lo que afecta la
+dispersión.</p></li>
 </ul></li>
-<li><strong>Convergencia de las estimaciones:</strong>
+<li><p><strong>Convergencia de las estimaciones:</strong></p>
 <ul>
-<li>La mayoría de las <strong>medias muestrales</strong> (<span
+<li><p>La mayoría de las <strong>medias muestrales</strong> (<span
 class="math inline">\(\bar{x}\)</span>) oscilan en torno a
 <strong>5</strong>, lo cual es consistente con el valor esperado teórico
-<span class="math inline">\(E[X] = 1/\lambda = 5\)</span>.<br />
-</li>
-<li>Las <strong>varianzas muestrales</strong> (<span
+<span class="math inline">\(E[X] = 1/\lambda = 5\)</span>.</p></li>
+<li><p>Las <strong>varianzas muestrales</strong> (<span
 class="math inline">\(s^2\)</span>) presentan mayor dispersión, pero
 tienden a valores cercanos a <strong>25</strong>, en concordancia con la
 varianza teórica <span class="math inline">\(\text{Var}(X) = 1/\lambda^2
-= 25\)</span>.</li>
+= 25\)</span>.</p></li>
 </ul></li>
 </ol>
 <pre>
+Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+
 # Cargar librería ggplot2
 library(ggplot2)
 
@@ -996,214 +914,44 @@ x_teorico <- seq(0, max(datos_graficos$Tiempo), length.out = 100)
 densidad_teorica <- data.frame(x = x_teorico, y = dexp(x_teorico, rate = lambda))
 
 # Graficar histogramas por muestra con la curva de densidad teórica
-plot_histogramas <- ggplot(datos_graficos, aes(x = Tiempo)) +
+ggplot(datos_graficos, aes(x = Tiempo)) +
   geom_histogram(aes(y = after_stat(density)), binwidth = 1, fill = "skyblue", color = "black", alpha = 0.7) +  # Histograma con densidad
   geom_line(data = densidad_teorica, aes(x = x, y = y), color = "red", linewidth = 1) +  # Curva de densidad teórica
   geom_vline(data = medias, aes(xintercept = Media), color = "blue", linetype = "dashed", linewidth = 1) +  # Línea de la media
   geom_text(data = medias, aes(x = Media + 2, y = PosicionY, label = Etiqueta), 
             color = "blue", vjust = 0, size = 3, parse = TRUE) +  # Ajuste de posición del texto de la media
   facet_wrap(~Muestra, scales = "free_x", ncol = 4, labeller = label_parsed) +  # Formato matemático en facetas
-  labs(title = "Histogramas de las muestras simuladas con la Curva de Densidad Exponencial",
+  labs(title = "Muestras simuladas",
        x = "Tiempo de duración de la llamada (minutos)", y = "Densidad") +
   theme_minimal()
-
-# Mostrar los gráficos
-print(plot_histogramas)
 
 # Mostrar las estadísticas calculadas
 print(estadisticas)
 </pre>
-<pre class="r"><code># Cargar librería ggplot2
-library(ggplot2)
-
-# Configuración de parámetros para la distribución exponencial
-set.seed(42)  # Para reproducibilidad
-lambda &lt;- 1/5  # Parámetro de la distribución exponencial
-n &lt;- 100       # Tamaño de cada muestra
-num_muestras &lt;- 12  # Número de muestras
-
-# Generar 12 muestras de la distribución exponencial y calcular estadísticas
-muestras &lt;- replicate(num_muestras, rexp(n, rate = lambda))
-estadisticas &lt;- apply(muestras, 2, function(muestra) {
-  c(promedio = mean(muestra), varianza = var(muestra))  # Calcular media y varianza
-})
-
-# Preparar datos para gráficos con etiquetas bien formateadas
-datos_graficos &lt;- data.frame(
-  Tiempo = as.vector(muestras),
-  Muestra = rep(paste0(&quot;s^2~&#39;=&#39;~&quot;, round(estadisticas[&quot;varianza&quot;, ], 2)), each = n)  # Expresión matemática para varianza muestral
-)
-
-# Crear etiquetas con expresión matemática para el promedio muestral
-medias &lt;- data.frame(
-  Muestra = paste0(&quot;s^2~&#39;=&#39;~&quot;, round(estadisticas[&quot;varianza&quot;, ], 2)),  # Etiqueta con varianza sin la palabra &quot;Varianza&quot;
-  Media = estadisticas[&quot;promedio&quot;, ],
-  Etiqueta = paste0(&quot;bar(x) == &quot;, round(estadisticas[&quot;promedio&quot;, ], 2)),  # Expresión para promedio muestral
-  PosicionY = 0.20  # Ajuste más bajo para evitar que se corte en el gráfico
-)
-
-# Crear datos teóricos para la curva de densidad exponencial
-x_teorico &lt;- seq(0, max(datos_graficos$Tiempo), length.out = 100)
-densidad_teorica &lt;- data.frame(x = x_teorico, y = dexp(x_teorico, rate = lambda))
-
-# Graficar histogramas por muestra con la curva de densidad teórica
-plot_histogramas &lt;- ggplot(datos_graficos, aes(x = Tiempo)) +
-  geom_histogram(aes(y = after_stat(density)), binwidth = 1, fill = &quot;skyblue&quot;, color = &quot;black&quot;, alpha = 0.7) +  # Histograma con densidad
-  geom_line(data = densidad_teorica, aes(x = x, y = y), color = &quot;red&quot;, linewidth = 1) +  # Curva de densidad teórica
-  geom_vline(data = medias, aes(xintercept = Media), color = &quot;blue&quot;, linetype = &quot;dashed&quot;, linewidth = 1) +  # Línea de la media
-  geom_text(data = medias, aes(x = Media + 2, y = PosicionY, label = Etiqueta), 
-            color = &quot;blue&quot;, vjust = 0, size = 3, parse = TRUE) +  # Ajuste de posición del texto de la media
-  facet_wrap(~Muestra, scales = &quot;free_x&quot;, ncol = 4, labeller = label_parsed) +  # Formato matemático en facetas
-  labs(title = &quot;Histogramas de las muestras simuladas con la Curva de Densidad Exponencial&quot;,
-       x = &quot;Tiempo de duración de la llamada (minutos)&quot;, y = &quot;Densidad&quot;) +
-  theme_minimal()
-
-# Mostrar los gráficos
-# print(plot_histogramas)
-
-# Mostrar las estadísticas calculadas
-# print(estadisticas)</code></pre>
 <br/><br/>
 <center>
 <img src="img/fig239.png" width="80%" style="display: block; margin: auto;" />
-<strong>Figura 2.39</strong> Histograma, media y varianza de los tiempos
-por cada muestra aleatoria. Estos resultados fueron obtenidos utilizando
-<code>set.seed(42)</code>. Si se cambia el valor de la semilla
-(<code>42</code>), las muestras aleatorias seleccionadas serán
+</center>
+<p><strong>Figura 2.39</strong> Histograma, media y varianza de los
+tiempos por cada muestra aleatoria. Estos resultados fueron obtenidos
+utilizando <code>set.seed(42)</code>. Si se cambia el valor de la
+semilla (<code>42</code>), las muestras aleatorias seleccionadas serán
 diferentes, lo que resultará en valores distintos para la media <span
 class="math inline">\(\bar{x}\)</span> y la varianza <span
-class="math inline">\(s^2\)</span>.
-</center>
-<p><br/><br/></p>
+class="math inline">\(s^2\)</span>.</p>
 </p>
 </div>
-<p></br></br></p>
-<!-- <br/><br/> -->
-<!-- ## <span style="color:#034a94">**Muestreo**</span> -->
-<!-- <br/> -->
-<!-- ### <span style="color:#034a94">**Importancia del Muestreo**</span> -->
-<!-- El papel principal de la estadística está relacionado con el análisis de información que permita tomar decisiones con respecto a una población. Es posible que se pueda estudiar la totalidad de elementos  que determinan la población, en este caso estaremos realizando un censo. Sin embargo no siempre podemos estudiar la totalidad de la población por lo cual debemos seleccionar una pequeña parte de ella. A este subconjunto lo podemos llamar muestra. -->
-<!-- <br/> -->
-<!-- <center> -->
-<!-- **Tabla 2.6** Comparación Muestreo  Censo -->
-<!-- </center> -->
-<!-- |                                      | **Muestra**     | **Censo**          | -->
-<!-- |:-------------------------------------|:----------------|:-------------------| -->
-<!-- |Presupuesto                           |pequeño          | grande             | -->
-<!-- |Tiempo disponible                     |poco             | mucho              | -->
-<!-- |Tamaño de la población                |grande           | pequeña            | -->
-<!-- |Varianza de la característica         |grande           | pequeña            | -->
-<!-- |Costos de los errores de muestreo     |bajos            | altos              | -->
-<!-- |Costos de los errores que no son de muestreo            | alto   | bajo      | -->
-<!-- |Naturaleza de la prueba               |destructiva     |no destructiva       | -->
-<!-- |Atención a casos individuales         |si               |no                  | -->
-<!-- |||| -->
-<!-- <center> -->
-<!-- <font size="-1">Tomado de Malhotra(2004)</font> -->
-<!-- </center> -->
-<!-- <br/> -->
-<!-- Un diseño de muestreo es una estrategia para obtener una muestra, genera algunas preguntas asociadas al proceso de muestreo: ¿cómo seleccionar de una manera óptima la muestra?, ¿Qué característica medir en las unidades observadas? y ¿cómo estimar las características poblacionales a partir de la información muestral?. El proceso de obtención de las muestras por su parte, requiere la definición de algunos aspectos como, ¿cuál es el tamaño óptimo para el cumplimiento de los objetivos?, o  ¿mediante qué procedimiento aleatorio se  realiza el proceso de selección?, ¿qué tipo de método observacional utilizar y qué medidas tomar?. En el muestreo, uno tiene la oportunidad de seleccionar deliberadamente la  muestra, para evitar  inducir por ejemplo, a seleccionar por conveniencia algún individuo en particular, situación que pudiera conducir a sesgos en los resultados finales de la investigación. -->
-<!-- <br/> -->
-<!-- En resumen, podemos decir que el muestreo consiste en la selección, mediante procedimientos preestablecidos que nos aseguren aleatoriedad y representatividad,  de una parte de una colección finita de unidades, seguida de algunas conclusiones respecto de la población, basándonos en la parte de ella que hemos observado. Este proceso se basa en principios relacionados con la inferencia estadística, lo que implica fuentes de incertidumbre (producto de la aleatoriedad), como por ejemplo -->
-<!-- a.El método de selección de las unidades. -->
-<!-- b.El método de medición de las unidades. -->
-<!-- c.El conocimiento de los procesos que generan los verdaderos valores de las unidades medidas. -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Diseños Muestrales**</span> -->
-<!-- Un diseño muestral es una estrategia de selección de unidades muestrales, mediante un proceso de aleatorio definido previamente (plan de muestreo). De acuerdo con esta definición, son tres los elementos esenciales de un diseño muestral: -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Unidad muestral**</span> -->
-<!-- Constituye la unidad básica a partir de la cual se obtiene la información, pudiendo por tanto, ser éstas personas,  o individuos de cualquier tipo si , por ejemplo nuestro interés es estimar la talla promedio; casas, número promedio de habitaciones, o el consumo de energía; comunidades, si los que nos interesa es el número promedio de especies por comunidad, áreas o cuadrículas si deseamos estimar densidades medias o biomasa total, etc. -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Proceso de aleatorización**</span> -->
-<!-- Aun cuando la unidad muestral esté claramente definida, existen algunos elementos adicionales que pueden afectar el proceso de muestreo, alterando la calidad de la información. En este caso no es la definición, sino la selección de la unidad muestral, la que puede estar sesgada por la naturaleza de la medición, así por ejemplo, si deseamos encuestar a personas para averiguar su tendencia política o su nivel socio económico, pudiéramos sentirnos tentados a seleccionar sus nombres desde una listado de teléfonos, lo que dejaría fuera de la encuesta a todas aquellas personas  que no  se encuentran en el listado, constituyéndose ello en una fuente de sesgo.  En  otros casos, la naturaleza del muestreo tiene que ver con el entrenamiento de los encuestadores, es el caso, por ejemplo, de las muestras para identificar fallas en un equipo, en que la experiencia de la persona que recoge la información juega un papel importante en la identificación de los mismos. -->
-<!-- Lo anterior significa que, en términos prácticos, la aleatoriedad debe garantizar que **cada individuo de la población debe tener las misma posibilidad de ser seleccionado como representante de la población** (aleatoriedad). Adicionalmente, exigimos que la elección de un individuo, no esté condicionada a la selección de otro (independencia). Estas dos condiciones, en apariencia sencillas, pueden provocar algunas  dificultades. -->
-<!-- <br/><br/> -->
-<!-- ###  <span style="color:#034a94">**Tamaño muestral**</span> -->
-<!-- Una vez que las unidades muestrales han sido definidas y se ha acordado un proceso de aleatorización, debemos preguntarnos, cuántas unidades debemos seleccionar para tener una buena representación en la  muestra. -->
-<!-- Dado que cualquiera sea el proceso de selección de una muestra existe un costo asociado, el que en la mayoría de los casos constituye una exigencia ineludible, nuestro objetivo principal, será obtener el máximo de información con el menor tamaño de muestra que nos sea posible. -->
-<!-- El tamaño de la muestra $n$ es función de tres elementos que son: la varianza, la confiabilidad y el error de muestreo. Los dos últimos a criterio del investigador. -->
-<!-- $$n=\dfrac{z^{2}_{_{\alpha/2}} \sigma^{2}}{e^{2}}$$ -->
-<!-- Donde: -->
-<!-- **Varianza** ($\sigma^{2}$):  Caracteriza la variable a estimar. Entre mayor sea su valor, mayor deberá ser el tamaño de la muestra. En ocasiones es necesario realizar una prueba piloto que nos permita tener un valor para calcular $n$. Otra alternativa puede ser el conocimiento empírico de expertos sobre el rango de la variable. Con este valor podemos estimar una aproximación de la desviación estándar como: $\sigma =$ rango/4.  -->
-<!-- <br/> -->
-<!-- **Confiabilidad** ($z_{\alpha/2}$ o percentil de la distribución normal estándar)b: Este concepto está relacionado con el grado de veracidad que tienen los resultados obtenidos. Si el estudio es repetido muchas veces, ¿ cuántas de estas coinciden con los resultados obtenidos?. Su valor está relacionado con el percentil de las distribución normal estándar, por ejemplo: una confiabilidad del 95% está relacionada con un valor de $z=1.96$. -->
-<!-- <br/> -->
-<!-- **Error de muestreo** ($e$) : corresponde a la diferencia entre el valor de la característica en la población (parámetro) y el valor obtenido con la información de la muestra (estimador).Equivale al error que estamos en capacidad de tolerar en las unidades de la variable. -->
-<!-- <br/><br/> -->
-<!--  <span style="color:#FF7F00"> **Ejemplo**</span> -->
-<!-- **Caso de una media** :  -->
-<!-- Suponga que deseamos determinar el tamaño de la muestra para estimar la media de la nota del curso de Métodos, con una confianza del 95\% y un error de muestreo de 0.2 puntos. Un estudio realizado el semestre pasado arrojó una varianza de 1.6. -->
-<!-- La información necesaria para el calculo del tamaño de muestra requerido es: -->
-<!-- * percentil 97.5 de la distribución normal $z=1.96$ (Entre -1.96 y 1.96 se encuentra el 95\% de los datos) -->
-<!-- * varianza $\sigma^{2}=0.4$ -->
-<!-- * error de muestreo 0.2 -->
-<!-- $$n=\dfrac{1.96^{2} \times 1.6}{0.2^{2}}=153.6 \approxeq 154$$ -->
-<!-- En caso de que $n/N >0.05$ debemos realizar un ajuste por corrección por población finita: -->
-<!-- $$n=\dfrac{n_{0} \times N}{n_{0}+N-1}$$ -->
-<!-- Supongamos que N=200 estudiantes y por tanto $154/200 > 0.05$ El tamaño corregido será: -->
-<!-- $$n= \dfrac{154 \times 200}{154 + 200 -1} =87.2 \approxeq 88$$ -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#FF7F00"> **Ejemplo**</span> -->
-<!-- **Caso de una proporción**  -->
-<!-- Supongamos ahora que se desea calcular el tamaño de la muestra para realizar una estimación de la proporción de estudiantes que reprueban el curso de fundamentos de programación y que deseamos una confianza del 98\% y un error de muestreo de 0.1. En este caso la varianza corresponde a $pq$ donde $q=1-p$ y por tanto tendrá su valor máximo cuando $p=0.50$, es decir que si utilizamos como varianza $0.5 \times (1-0.5)=0.25$ obtendremos el valor más grande de tamaño de muestra posible. -->
-<!-- $$ n=\dfrac{2.33^2 \times 0.25}{0.1^{2}}=135.7 \approxeq 136$$ -->
-<!-- En caso de poder realizar una prueba piloto (observación de una muestra, digamos 30 unidades) y estimar en este caso su varianza, el resultado del tamaño de muestra será inferior al anteriormente calculado. -->
-<!-- <br/><br/><br/> -->
-<!-- ## <span style="color:#034a94">**Tipos de muestreo**</span>  -->
-<!-- <center>    -->
-<!-- ```{r, echo=FALSE, out.width="80%", fig.align = "center"} -->
-<!--    knitr::include_graphics("img/muestreos.png") -->
-<!-- ``` -->
-<!-- <br/> -->
-<!-- **Figura 2.31** Tipos de muestreo  -->
-<!-- </center> -->
-<!-- <br/><br/> -->
-<!-- En general pueden dividirse en dos grandes grupos: métodos de muestreo probabilísticos y métodos de muestreo no probabilísticos. -->
-<!-- Los **métodos de muestreo probabilísticos** son aquellos que se basan en el principio de equiprobabilidad. Es decir, aquellos en los que todos los individuos tienen la misma probabilidad de ser elegidos para formar parte de una muestra y, consiguientemente, todas las posibles muestras de tamaño n tienen la misma probabilidad de ser elegidas. -->
-<!-- Sólo estos métodos de muestreo probabilísticos nos aseguran la representatividad de la muestra extraída y son, por tanto, los más recomendables. Dentro de los métodos de  muestreo probabilísticos encontramos los siguientes tipos: -->
-<!-- <br/><br/> -->
-<!-- ## <span style="color:#034a94">**Muestreos probabilísticos**</span> -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Muestreo Aleatorio simple (m.a.s)**</span> -->
-<!-- Una muestra **aleatoria simple** tomada de una población finita, da a cada subconjunto de la población (muestra) de tamaño específico la misma probabilidad de ser seleccionada. -->
-<!-- El muestreo aleatorio simple es un procedimiento de selección de un conjunto de individuos de modo que toda posible muestra de $n$ unidades tiene la misma probabilidad de ser seleccionada de los $N$ individuos asociados a la  población. La muestra se selecciona en $n$ etapas, en cada una de las cuales, cada elemento que no ha sido aún seleccionado, tiene la misma probabilidad de ser seleccionado. Si el número de individuos de donde seleccionamos los $n$ individuos para determinar la muestra tiene un tamaño conocido, podemos asignar un número a cada una de las $N$ unidades y luego mediante la generación de $n$ números aleatorios entre $1$ y $N$, seleccionamos los individuos que determinarán la  muestra de tamaño $n$ correspondiente. -->
-<!-- El muestreo puede realizarse sin reemplazo o con reemplazo, o dicho de otro modo, la muestra puede elegirse de dos maneras: sin reposición de la unidad extraída o con reposición de ella. El muestreo con reemplazo es usado cuando es aceptable tener la misma unidad dos veces en la muestra. -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Muestreo Estratificado**</span>  -->
-<!-- <br/> -->
-<!-- Una **muestra estratificada** se obtiene formando estratos, de acuerdo a alguna característica de interés en la población (sexo, edad, ingresos etc.), y de cada estrato se selecciona una muestra aleatoria simple.  -->
-<!-- La subdivisión de la población en estratos tiene como objetivo reducir la variabilidad total asociada al proceso de muestreo. Por lo tanto es necesario incluir en cada estrato, individuos o unidades muestrales cuya medida de interés tengan variabilidad pequeña respecto a la media. El objetivo general es entonces lograr varianza mínima dentro del estrato y varianza máxima entre estratos. En caso de no lograr esta estratificación, en función de las varianzas, lo más probable es que el proceso de muestreo sea equivalente al que se pudiera haber realizado por muestreo aleatorio simple. -->
-<!-- La ventaja principal que puede conseguirse estratificando, es aumentar la precisión de las estimaciones al agrupar elementos con características comunes y con ello disminuir los tamaños muestrales totales y la amplitud de los intervalos de confianza. Por este tipo de muestreo, la amplitud del intervalo que estima al parámetro es menor que el dado por el m.a.s. para un mismo tamaño de muestra. -->
-<!-- Por otra parte, la estratificación procura muestras  más representativas. Exagerando, si se pudiera conseguir que cada uno de los $L$ estratos estuviese constituidos por elementos idénticos, bastaría tomar $L$ elementos, uno por estrato, y la representatividad sería perfecta. Además, puede lograrse un mejor aprovechamiento de la organización administrativa destinada a la selección de las muestras, al centrar la actividad de muestreo en áreas homogéneas. -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Muestreo Sistemático**</span>  -->
-<!-- <br/> -->
-<!-- Se forma una **muestra sistemática** seleccionando al azar una unidad y luego se seleccionan adicionalmente las unidades a intervalos igualmente espaciados (cada $k$ unidades de la población, $k>1$) hasta formar la muestra total. -->
-<!-- Supongamos que estamos interesados en una población cuyos individuos  han sido numerados desde 1 a $N$, y elegimos una muestra de tamaño $n$ como sigue: entre las $k$ primeras unidades, donde $k =N/n$ elegimos, en forma aleatoria, el elemento $i-ésimo$,entre los $k$ primeros elementos o unidades muestrales. A continuación, sistemáticamente se eligen los elementos $i+k$ que están $k$ lugares después  del $i-ésimo$, y así  sucesivamente hasta agotar los elementos disponibles de la lista, lo que ocurrirá al llegar al elemento que ocupa el lugar $i+(n-1)k$. -->
-<!-- Si existen $k$ muestras posibles de $n$ elementos cada una. Por ejemplo, de una población determinada por $N = 1000$ elementos deseamos elegir  sistemáticamente $25$ elementos, habrá $k = 1000/25 = 40$ elecciones diferentes posibles. Elegimos aleatoriamente un número comprendido entre 1 y 40 y a partir de éste, elegimos los 24 restantes de 40 en 40. Supongamos que fue sorteado el 15, entonces la observación que ocupa el $15^{\circ}$ lugar será el primer elemento de la muestra, el segundo será el $55^{\circ}(15+40)$, el tercero será el $95^{\circ}(15+80)$ y así  sucesivamente hasta que el último elemento seleccionado será la observación que ocupe el lugar 975. La muestra estará conformado por los elementos : $15^{\circ},55^{\circ}, 95^{\circ},\cdots,975^{\circ}$  -->
-<!-- Es más fácil de ejecutar este tipo de muestreo. Es también más preciso que el m.a.s. pues equivale a estratificar la población en $n$ estratos de cada uno de los cuales se extrae una observación. En general, si se desea una muestra de tamaño $n$ basta sortear una de las $k$ columnas. Este tipo de muestreo es particularmente útil en muestreos exploratorios, en los que no se conoce exactamente la distribución de la población. -->
-<!-- Este tipo de muestreo no es recomendable cuando el proceso generador de los datos tiene un comportamiento cíclico o estacional, el cuál puede hacer que las unidades seleccionadas coincidan con todos los máximos o todos los mínimos.  -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Muestreo por Conglomerados**</span> -->
-<!-- Una **muestra por conglomerados** se obtiene identificando un conjunto de conglomerados que componen la población, aleatoriamente se selecciona un subconjunto de estos conglomerados y se hace un censo en cada uno de los seleccionados. -->
-<!-- A veces, para estudios exploratorios, el muestreo probabilístico resulta excesivamente costoso y se acude a métodos no probabilísticos, aún siendo conscientes de que no sirven para realizar generalizaciones, púes no se tiene certeza de que la muestra extraída sea representativa, ya que no todos los sujetos de la población tienen la misma probabilidad de se elegidos. En general se selecciona a los sujetos siguiendo determinados criterios procurando que la muestra sea representativa. -->
-<!-- <br/><br/><br/><br/> -->
-<!-- ## <span style="color:#034a94">**Muestreos no probabilísticos**</span> -->
-<!-- <br/> -->
-<!-- En el caso de no contar con los supuestos que puedan garantizar la selección de la muestra de una manera aleatoria (no contar con un listado de la población o el no poder identificar con anticipación los elementos que conforman la población) y requerir de información para realizar análisis exploratorios, podemos utilizar otro tipo de muestreos llamados no probabilísticos. A continuación se describen algunos de ellos: -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Muestreo por Cuotas**</span>  -->
-<!-- También denominado en ocasiones **accidental**. Se asienta generalmente sobre la base de un buen conocimiento de los estratos de la población y/o de los individuos más **representativos** o **adecuados** para los fines de la investigación. Mantiene, por tanto, semejanzas con el muestreo aleatorio estratificado, pero no tiene el carácter de aleatoriedad de aquel. En este tipo de muestreo se fijan unas "cuotas" que consisten en un número de individuos que reúnen unas determinadas condiciones, por ejemplo: 20 individuos de 25 a 40 años, de sexo femenino y residentes en una determinada región. Una vez determinada la cuota se eligen los primeros que se encuentren que cumplan esas características. Este método se utiliza mucho en las encuestas de opinión. -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Muestreo Intencional**</span>  -->
-<!-- Este tipo de muestreo se caracteriza por un esfuerzo deliberado de obtener muestras "representativas mediante la inclusión en la muestra de grupos supuestamente típicos. Es muy frecuente su utilización en sondeos pre-electorales de zonas que en anteriores votaciones han marcado tendencias de voto. -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Muestreo Casual o Incidental**</span> -->
-<!-- Se trata de un proceso en el que el investigador selecciona directa e intencionadamente los individuos de la población. El caso más frecuente de este procedimiento es utilizar como muestra los individuos a los que se tiene fácil acceso (los profesores de universidad emplean con mucha frecuencia a sus  propios alumnos). Un caso particular es el de los voluntarios. -->
-<!-- <br/><br/> -->
-<!-- ### <span style="color:#034a94">**Bola de Nieve**</span>  -->
-<!-- Se localiza a algunos individuos, los cuales conducen a otros, y estos a otros, y así hasta conseguir una muestra suficiente. Este tipo se emplea muy frecuentemente cuando se hacen estudios con poblaciones "marginales", delincuentes, sectas, determinados tipos de enfermos, etc. -->
+<div class="caja-actividad">
+<h3>
+Actividad:
+</h3>
+<blockquote>
+<p>
+En el ejemplo anterior, cambia el valor de la semilla
+<code>set.seed(42)</code> y compara los resultados.
+</p>
+</blockquote>
+</div>
 
 
 

@@ -1,0 +1,316 @@
+---
+title: <span style="color:#686868">**Teorema de Bayes**</span>
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+
+
+<br/><br/>
+<h2>Probabilidad total</h2>
+
+Para explicar el teorema de la probabilidad total, es fundamental considerar que el espacio muestral está compuesto por un conjunto de eventos, el cual puede representarse mediante una partición del conjunto \(S\).
+
+Una partición del conjunto \(S\) está formada por los subconjuntos \(A_{1}, A_{2}, \dots, A_{k}\), los cuales deben cumplir las siguientes propiedades:
+
+- Cobertura total (Exhaustivos):  
+  \[
+  A_{1} \cup A_{2} \cup \dots \cup A_{k} = S
+  \]
+
+- Mutuamente excluyentes:  
+  \[
+  A_{i} \cap A_{j} = \emptyset, \quad \text{para todo } i \neq j
+  \]
+
+- No vacíos: 
+  \[
+  A_{i} \neq \emptyset
+  \]
+
+Esta definición garantiza que la partición cubre completamente el espacio muestral sin superposiciones.
+
+<br/><br/>
+<h4>Caso particular</h4>
+Si la partición está compuesta por cinco conjuntos, se puede visualizar en la **Figura 2.6**. La **Figura 2.7** ilustra un conjunto \(B\) y sus intersecciones con los conjuntos que forman la partición. Finalmente, la **Figura 2.8** muestra las probabilidades conjuntas correspondientes a cada intersección de \(B\) con los elementos de la partición.
+
+<br/><br/>
+<center>
+```{r, echo=FALSE, out.width="50%", fig.align = "center"}
+knitr::include_graphics("img/particion1_22.png")
+```
+**Figura 2.6** Partición del espacion muestral para un caso particular.
+</center>
+
+
+<br/><br/>
+<center>
+```{r, echo=FALSE, out.width="50%", fig.align = "center"}
+knitr::include_graphics("img/particion2_22.png")
+```
+**Figura 2.7** Partición del espacio muestral con evento \(B\).
+</center>
+
+<br/><br/>
+<center>
+```{r, echo=FALSE, out.width="80%", fig.align = "center"}
+knitr::include_graphics("img/particion3_22.png")
+```
+**Figura 2.8** Evento \(B\) representado por intersecciones de \(B\) con la partición de \(S\).
+</center>
+
+<br/><br/>
+
+
+El conjunto \(B\) se puede descomponer como la unión de sus intersecciones con los conjuntos de la partición:
+\[
+B = (A_{1} \cap B) \cup (A_{2} \cap B) \cup (A_{3} \cap B) \cup (A_{4} \cap B) \cup (A_{5} \cap B)
+\]
+
+En términos de probabilidad, esto se expresa como:
+\[
+P(B) = P(A_{1} \cap B) + P(A_{2} \cap B) \\
+      + P(A_{3} \cap B) + P(A_{4} \cap B) \\
+      + P(A_{5} \cap B)
+\]
+
+Aplicando la regla de la multiplicación para probabilidades conjuntas:
+\[
+P(B) = P(A_{1})P(B|A_{1}) + P(A_{2})P(B|A_{2}) \\
+     + P(A_{3})P(B|A_{3}) + P(A_{4})P(B|A_{4}) \\
+     + P(A_{5})P(B|A_{5})
+\]
+
+Esta es la formulación del teorema de la probabilidad total para un caso particular de una partición de cinco conjuntos.
+
+
+
+<br/><br/>
+<h4>Caso general</h4>
+
+El teorema de la probabilidad total establece que la probabilidad de un evento puede descomponerse mediante una partición del espacio muestral. Esta partición, representada por el conjunto \(S\), está compuesta por los subconjuntos \(A_{1}, A_{2}, \dots, A_{k}\), que cumplen las siguientes propiedades: Cobertura total (exhaustivos), exclusión mutua (mutuamente excluyentes), no vacíos, la formulación general del teorema:
+
+Si \(A_{1}, A_{2}, \dots, A_{k}\) conforman una partición del espacio muestral y \(B\) es un evento cualquiera, la probabilidad de \(B\) se expresa como:
+\[
+P(B) = \sum_{j=1}^{k} P(A_{j})P(B|A_{j})
+\]
+
+
+
+
+<br/><br/>
+<h2>Teorema de Bayes</h2>
+
+**Thomas Bayes** (Londres, Inglaterra, c. 1702 - Tunbridge Wells, 1761) fue un matemático y ministro presbiteriano británico. Es conocido principalmente por desarrollar el **Teorema de Bayes**, una herramienta fundamental en la teoría de la probabilidad que permite actualizar la probabilidad de un evento a partir de información adicional.
+
+<br/><br/>
+<center>
+```{r, echo=FALSE, out.width="40%", fig.align = "center"}
+knitr::include_graphics("img/Thomas_Bayes.gif")
+```
+**Figura 2.9** Tomas Bayes (1701-1761)
+</center>
+<br/><br/>
+
+El teorema de Bayes permite revisar las probabilidades iniciales en función de información adicional. En el ámbito financiero, se aplica para evaluar el riesgo al otorgar préstamos, ajustando la probabilidad de incumplimiento según el historial del prestatario y otros factores relevantes.
+
+
+<br/><br/>
+<h3>Teorema de Bayes</h3>
+
+Dada una serie de eventos \(A_{1}, A_{2}, \dots, A_{k}\) que conforman una partición del espacio muestral, donde estos eventos son mutuamente excluyentes y exhaustivos, con probabilidades a priori \(P(A_{1}), P(A_{2}), \dots, P(A_{k})\), el teorema de Bayes permite calcular la probabilidad a posteriori de \(A_{i}\) dado que ha ocurrido un evento \(B\):
+
+\[
+P(A_{i}|B)=\frac{P(A_{i} \cap B)}{P(B)}= \frac{P(A_{i}) P(B|A_{i})}{\sum_{j=1}^{k} P(A_{j})P(B|A_{j})}
+\]
+
+
+<br/><br/>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p> 
+
+El departamento de crédito de la universidad informa que:
+
+- El 30% de los pagos se realizan en efectivo. 
+
+- El 40% de los pagos se realizan con tarjeta de crédito.  
+
+- El 30% restante se realizan con tarjeta débito.  
+
+Todos los pagos son recibidos exclusivamente en la caja ubicada en la oficina de Registro Académico de la universidad. Además, se conoce que: 
+
+- El 20% de los pagos en efectivo corresponden a montos superiores a \$500 mil.
+
+- El 70% de los pagos con tarjeta de crédito corresponden a montos superiores a \$500 mil.  
+
+- El 80% de los pagos con tarjeta débito corresponden a montos superiores a \$500 mil.  
+
+Se definen los siguientes eventos:
+
+- \( E: \) El pago se realiza en efectivo. 
+
+- \( TC:\) El pago se realiza con tarjeta de crédito.  
+
+- \( TD:\) El pago se realiza con tarjeta débito. 
+
+- \( +5:\) El pago es por una cantidad superior a \$500 mil pesos.
+
+- \( -5:\) El pago es por una cantidad igual o inferior a \$500 mil pesos.  
+
+En la columna 2 de la **Tabla 2.4**, se presentan las probabilidades marginales, mientras que en la columna 3 se muestran las probabilidades condicionales. Las condicionales de la columna 4 se calculan considerando que la suma de las probabilidades de los eventos complementarios es igual a 1, siempre que la condición corresponda al mismo evento.
+
+
+<br/><br/>
+<center>
+**Tabla 2.4** Distribución de probabilidades.
+</center> 
+
+| Medio        | P(Medio) | \(P(+5|Medio)\) | \( P(-5|Medio)\) |
+|--------------|---------|-------------|------------|
+| E (Efectivo) |  P(E) = 0.30    | \( P(+5|E) \)= 0.20      | \(P(-5|E)  \)= 0.80       |
+| TC (Crédito) | P(TC) = 0.40    | \( P(+5|TC)\)= 0.70      | \(P(-5|TC) \)= 0.30      |
+| TD (Débito)  | P(TD) = 0.30    | \( P(+5|TD)\)= 0.80      | \(P(-5|TD) \)= 0.20      |
+
+La **Figura 2.10** ilustra la información del problema, mostrando las probabilidades marginales en las primeras ramas y las probabilidades condicionales en las segundas.
+
+<br/><br/>
+<center>
+```{r, echo=FALSE, out.width="50%", fig.align = "center"}
+knitr::include_graphics("img/diagrama6_22.png")
+```
+**Figura 2.10** Árbol de probabilidades marginales y condicionales
+</center>
+
+
+<br/><br/>
+La probabilidad de realizar un pago superior a $500 Mil se determina aplicando el **teorema de la probabilidad total**:
+\[
+     P(+5)= P(E \cap +5) + P(TC \cap +5) + P(TD \cap +5)\\
+     P(+5)= P(E)P(+5|E) + P(TC)P(+5|TC) + P(TD)P(+5|TD)\\
+     P(+5)= 0.30 \times 0.20 + 0.40 \times 0.70 + 0.30 \times 0.80\\
+     P(+5)= 0.58
+\]
+
+ 
+<br/><br/>
+Las siguientes probabilidades condicionales se calculan usando el **teorema de Bayes**:
+
+- Pago en efectivo dado que el pago es por una cantidad superior a \$500 mil pesos:  
+  \[
+  P(E|+5) = \frac{P(E \cap +5)}{P(+5)} = \frac{0.06}{0.58} \approx 0.1034 \quad (\textbf{Tercero})
+  \]
+- Pago con tarjeta de crédito si se sabe que  el pago es por una cantidad superior a \$500 mil pesos:  
+  \[
+  P(TC|+5) = \frac{P(TC \cap +5)}{P(+5)} = \frac{0.28}{0.58} \approx 0.4827 \quad (\textbf{Primero})
+  \]
+- Pago con tarjeta débito si se conoce que el pago es por una cantidad superior a \$500 mil pesos:  
+  \[
+  P(TD|+5) = \frac{P(TD \cap +5)}{P(+5)} = \frac{0.24}{0.58} \approx 0.4138 \quad (\textbf{Segundo})
+  \]
+
+  
+<br/><br/>
+<center>
+**Tabla 2.5** Comparación  de probabilidades.
+</center> 
+
+| Medio    | \(P(·|+5)\) | Posición |
+|---------|------------|----------|
+| Crédito | 0.4827     | Primero  |
+| Débito  | 0.4138     | Segundo  |
+| Efectivo| 0.1034     | Tercero  |
+
+De acuerdo con la **Tabla 2.5**, la mayor probabilidad de pagos superiores a \$500 mil es mediante tarjeta de crédito (0.4827), seguida de tarjeta débito (0.4138%) y, finalmente, efectivo (0.1034%). 
+</p>
+</div>
+
+<br/><br/>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p>
+En una fábrica de artículos de protección biodegradables, cuatro operarios colocan etiquetas de caducidad al final de la línea de producción:
+
+- **Juan** etiqueta el 40% de los paquetes y falla en uno de cada 200.
+
+- **Luis** etiqueta el 30% y falla en uno de cada 100.
+
+- **María** etiqueta el 15% y falla en uno de cada 90.
+
+- **Santiago** etiqueta el 15% y falla en uno de cada 200. ¿Cuál de los empleados es el más probable culpable de esta omisión?
+
+<br/><br/>
+Se pueden definir los eventos y la probabilidad de que falte la fecha si Juan etiquetó:
+
+- \(N\): El paquete no tiene fecha de caducidad.
+
+- \(J, L, M, S\): Juan, Luis, María y Santiago, etiquetaron respectivamente.
+
+- \(P(N|J)\): Probabilidad de que falte la fecha si Juan etiquetó.
+
+<br/><br/>
+De acuerdo con la información anterior las probabilidades a priori y condicionales
+se presentan en la **Tabla 2.6**. 
+
+<br/><br/>
+<center>
+**Tabla 2.6** Probabilidades a priori y condicionales.
+</center> 
+
+| Operario  | Probabilidad a priori | Probabilidad de fallo |
+|-----------|----------------------|---------------------|
+| Juan      | \(P(J) = 0.40\)     | \(P(N|J) = \tfrac{1}{200}\) |
+| Luis      | \(P(L) = 0.30\)     | \(P(N|L) = \tfrac{1}{100}\) |
+| María     | \(P(M) = 0.15\)     | \(P(N|M) = \tfrac{1}{90}\)  |
+| Santiago  | \(P(S) = 0.15\)     | \(P(N|S) = \tfrac{1}{200}\) |
+
+
+<br/><br/>
+La probabilidad de recibir un paquete sin etiqueta es:
+\[
+P(N) = P(J)P(N|J) + P(L)P(N|L) + P(M)P(N|M) + P(S)P(N|S)
+\]
+
+Reemplazando valores:
+\[
+P(N) = 0.40 \times \tfrac{1}{200} + 0.30 \times \tfrac{1}{100} + 0.15 \times \tfrac{1}{90} + 0.15 \times \tfrac{1}{200}
+\]
+\[
+P(N) = 0.0020 + 0.0030 + 0.0017 + 0.0008 = 0.0075
+\]
+
+La probabilidad  de recibir un paquete sin etiqueta es **0.0075**.
+
+<br/><br/>
+La probabilidad de que cada operario sea responsable si sabe que el paquete está sin etiqueta es:
+\[
+P(J|N) = \frac{P(J)P(N|J)}{P(N)}, \\
+P(L|N) = \frac{P(L)P(N|L)}{P(N)}, \\
+P(M|N) = \frac{P(M)P(N|M)}{P(N)}, \\
+P(S|N) = \frac{P(S)P(N|S)}{P(N)}
+\]
+
+Sustituimos los valores calculados:
+\[
+P(J|N) = \frac{0.40 \times \tfrac{1}{200}}{0.0075} = 0.2667
+\]
+\[
+P(L|N) = \frac{0.30 \times \tfrac{1}{100}}{0.0075} = 0.4000
+\]
+\[
+P(M|N) = \frac{0.15 \times \tfrac{1}{90}}{0.0075} = 0.3333
+\]
+\[
+P(S|N) = \frac{0.15 \times \tfrac{1}{200}}{0.0075} = 0.1333
+\]
+
+La probabilidad posterior más alta es para **Luis (0.4)**, lo que indica que es el empleado más probable responsable de la omisión.
+</p>
+</div>
+

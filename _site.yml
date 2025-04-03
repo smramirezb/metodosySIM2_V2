@@ -1,6 +1,7 @@
+name: " "
 output_dir: "docs"
 navbar:
-  title: "Métodos y Simulación"
+  title: " "
   left:
     - text: "Inicio"
       icon: fa-home
@@ -9,62 +10,66 @@ navbar:
       menu:
         - text: "Introducción"
           href: recurso101.html
-        - text: "Conceptos básicos"
+        - text: "Conceptos Básicos"
           href: recurso102.html  
-        - text: "Enfoque"
+        - text: "Enfoques y Postulados"
           href: recurso103.html
-        - text: "Axiomas"
-          href: recurso103b.html  
-        - text: "Tipos de probabilidad"
+        - text: "Tipos de Probabilidad"
           href: recurso104.html  
+        - text: "Independencia"
+          href: recurso104b.html 
+        - text: "Teorema de Bayes"
+          href: recurso104c.html  
     - text: "Variable Aleatoria"
       menu:
-        - text: "Definición"
+        - text: "Variable Aleatoria: Univariado"
           href: recurso201.html
-        - text: "Valor esperado y varianza"
+        - text: "Valor Esperado"
           href: recurso202.html            
-        - text: "Variables conjuntas"
+        - text: "Variables Conjuntas"
           href: recurso203.html            
-        - text: "Modelos discretos"
+        - text: "Modelos Discretos: Univariado"
           href: recurso204.html 
-        - text: "Modelos continuos"
+        - text: "Modelos Continuos: Univariado"
           href: recurso205.html  
     - text: "Inferencia Estadística"
       menu:
-        - text: "Conceptos básicos"
+        - text: "Conceptos Básicos"
           href: recurso301.html
-        - text: "Estimación puntual"
+        - text: "Distribución Muestral"
           href: recurso302.html  
         - text: "Teorema del Límite Central"
           href: recurso305.html              
-        - text: "Propiedades de los estimadores"
+        - text: "Propiedades de los Estimadores"
           href: recurso303.html  
-        - text: "Métodos de estimación"
+        - text: "Métodos de Estimación"
           href: recurso304.html     
     - text: "Intervalos de Confianza"
       menu:
-        - text: "Para una población"
+        - text: "Paramétrico: Una Población"
           href: recurso401.html
-        - text: "Para dos poblaciones"
+        - text: "Paramétrico: Dos Poblaciones"
           href: recurso402.html
-        - text: "Estimación no paramétrica"
+        - text: "Estimación no Paramétrica"
           href: recurso403.html
     - text: "Pruebas de Hipótesis"
       menu:
         - text: "Introducción"
           href: recurso501.html
-        - text: "Pruebas sobre una muestra"
+        - text: "Paramétrico: Una Población"
           href: recurso502.html
-        - text: "Pruebas sobre dos muestras"
+        - text: "Paramétrico: Dos Poblaciones"
           href: recurso503.html
-        - text: "Pruebas no paramétricas"
+        - text: "Pruebas no Paramétricas"
           href: recurso504.html
-    - text: "Casos de Estudio"
+    - text: "Casos y Simulaciones"
       menu:
         - text: "Caso 1"
           href: recurso404.html
         - text: "Caso 2"
           href: recurso405.html
+        - text: "Simulación 1"
+          href: recurso406.html
     - text: "Referencias"
       menu:
         - text: "Referencias"

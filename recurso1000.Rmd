@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = N
 ```
 
 <div class="caja-referencia">
-<h3>Probabilidad y aariable aleatoria:</h3>
+<h3>Probabilidad y variable aleatoria:</h3>
 <p>
 R Core Team. (2024). <em>R: A language and environment for statistical computing</em>. R Foundation for Statistical Computing, Vienna, Austria. Recuperado de <a href="https://www.R-project.org/" target="_blank">https://www.R-project.org/</a>
 </p>

@@ -1,5 +1,5 @@
 ---
-title: <span style="color:#686868"> **Variable aleatoria**</span> 
+title: <span style="color:#686868">**Caso univariado**</span>
 author: "Métodos y Simulación Estadística"
 output:
   html_document:
@@ -19,9 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = N
 </br></br>
 <h2>Introducción</h2>
 
-El concepto de variable aleatoria constituye uno de los pilares fundamentales de la probabilidad y la estadística. Según J.A. Alberth y B. Ruiz (2013), este concepto se asocia con dos paradigmas históricos de evolución. El primero se basa en los resultados de fenómenos aleatorios, mientras que el segundo se centra en el proceso que relaciona los conjuntos del espacio muestral con sus respectivas probabilidades, definiendo así la variable aleatoria como una función de números reales que proporciona el sustento matemático al concepto.
-
-Este concepto se aplica en diversos contextos donde es necesario responder preguntas sobre la ocurrencia de fenómenos aleatorios que pueden presentarse en el futuro. Por ejemplo: 
+El concepto de variable aleatoria se aplica en diversos contextos donde es necesario responder preguntas sobre la ocurrencia de fenómenos aleatorios que pueden presentarse en el futuro. Por ejemplo: 
 
 - ¿Cuánto tiempo tarda un estudiante en llegar desde su casa a la universidad?
 
@@ -45,9 +43,9 @@ Esta unidad abordará primero el caso univariado discreto y posteriormente el ca
 </br></br>
 <h3>Definición</h3>
 
-Una variable aleatoria \( X\) es una función que asigna a cada valor del espacio muestral $S$ un número real. El conjunto de estos valores forma un subconjunto de los números reales, denominado rango de la variable $X$, representado como $R_{X}$.
+Una variable aleatoria \( X\) es una función que asigna a cada valor del espacio muestral $S$ un número real. El conjunto de estos valores forma un subconjunto de los números reales, denominado **rango de la variable** $X$, representado como $R_{X}$.
 
-Las variables aleatorias se clasifican según las características de su rango en discretas o continuas. Su distribución será univariada cuando se analice el comportamiento de una sola variable, y multivariada al estudiar el comportamiento conjunto de varias variables definidas en el mismo espacio muestral.
+Las variables aleatorias se clasifican según las características de su rango en **discretas** o **continuas**. Su distribución será **univariada** cuando se analice el comportamiento de una sola variable, y **multivariada** al estudiar el comportamiento conjunto de varias variables definidas en el mismo espacio muestral.
 
 
 
@@ -68,12 +66,6 @@ Un experimento aleatorio \(E\) consiste en lanzar una moneda balanceada tres vec
 \( S = \{(s,s,s),(s,s,c),(s,c,s),(s,c,c),(c,s,s),(c,s,c),(c,c,s),(c,c,c)\} \)
 
 
-<!-- <center> -->
-<!-- ![](img/Figura301.png){width=60%}<br/> -->
-<!-- **Figura 2.10** Relación espacio muestral, rango, variable aleatoria -->
-<!-- </center> -->
-<!-- <br/> -->
-
 
 <br/><br/>
 <center>
@@ -88,10 +80,12 @@ La **Figura 2.10** ilustra de manera esquemática el concepto de **variable alea
 
 Su rango está dado por: \(X(S) = \{0, 1, 2, 3\}\). A cada valor del rango se le asigna una probabilidad mediante la función de probabilidad \(f_{X}(x) = P(X = x)\). Por ejemplo, \(f_{X}(1) = P(X = 1) = P(\{(s,s,c),(s,c,s),(c,s,s)\}) = \frac{3}{8}\).
 
-La descripción de componentes de la **Figura 2.10**:
+La descripción de la **Figura 2.10** es la siguiente:
 
 - **Variable aleatoria \(X\):** Asigna a cada resultado del espacio muestral el número de caras obtenidas en tres lanzamientos de una moneda.
+
 - **Rango de la variable \(R_{X}=X(S)= \{0,1,2,3\}\):** Definido mediante la regla de asignación, que consiste en contar el número de caras en cada resultado posible del espacio muestral \(S\).
+
 - **Función de probabilidad \(f_{X}(x) = P(X = x)\):** Es una función que asigna a cada valor del rango una probabilidad, la cual es un número en el intervalo cerrado [0, 1]. La suma de las probabilidades de todos los valores posibles es 1, cumpliendo el axioma fundamental de la probabilidad: \( \sum_{x \in R_{X}} f_{X}(x) = 1\).
 
 
@@ -101,8 +95,11 @@ La descripción de componentes de la **Figura 2.10**:
 Al establecer la correspondencia entre los eventos del espacio muestral y el rango de la variable aleatoria, se obtienen las siguientes asociaciones y valores para la función de probabilidad:
 
 - \(X = 0 = \{(s,s,s)\}\)  
+
 - \(X = 1 = \{(s,s,c),(s,c,s),(c,s,s)\}\)  
-- \(X = 2 = \{(s,c,c),(c,s,c),(c,c,s)\}\)  
+
+- \(X = 2 = \{(s,c,c),(c,s,c),(c,c,s)\}\) 
+
 - \(X = 3 = \{(c,c,c)\}\)  
 
 Bajo el supuesto de que la moneda es balanceada, todos los resultados del espacio muestral \(S\) son equiprobables. Por lo tanto, la función de probabilidad \(f_{X}(x) = P(X = x)\) se obtiene como:
@@ -112,9 +109,7 @@ Bajo el supuesto de que la moneda es balanceada, todos los resultados del espaci
 \(f_{X}(2) = P(X=2) = \frac{3}{8}\)  
 \(f_{X}(3) = P(X=3) = \frac{1}{8}\) 
 
-La suma de todas las probabilidades es 1, cumpliendo con la propiedad fundamental de las distribuciones de probabilidad:
-  
-\(\sum_{x \in R_{X}} f_{X}(x) = \frac{1}{8} + \frac{3}{8} + \frac{3}{8} + \frac{1}{8} = 1\).  
+Todos los resultados anteriores son no negativos y la suma de todas las probabilidades es 1, \(\sum_{x \in R_{X}} f_{X}(x) = \frac{1}{8} + \frac{3}{8} + \frac{3}{8} + \frac{1}{8} = 1\).  Con esto cumple con dos condiciones fundamentales de las distribuciones de probabilidad.
 </p>
 </div>
 
@@ -125,27 +120,31 @@ La suma de todas las probabilidades es 1, cumpliendo con la propiedad fundamenta
 </br></br>
 <h2>Variables discretas</h2>
 
-Como se mencionó anteriormente, una **variable aleatoria** se clasifica como **discreta** cuando el conjunto de posibles valores que puede asumir es finito o infinito numerable. En la mayoría de los casos, dicho conjunto está formado por números enteros.
+Como se mencionó anteriormente, una **variable aleatoria** se clasifica como **discreta** cuando el conjunto de posibles valores que puede asumir es finito o infinito numerable. 
 
 Para caracterizar formalmente esta variable, se introduce la **función de distribución de probabilidad**, la cual modela la asignación de probabilidades a cada uno de los valores posibles de la variable. 
 
 
 
 </br></br>
-<h3>Función de distribución de probabilidad</h3>
+<h3>Función de distribución de probabilidad (fdp)</h3>
 
 Para una variable aleatoria discreta \(X\), su **función de distribución de probabilidad** \(f(x)\) asigna las probabilidades a todos los valores de su rango \(R_{X}\). Esta función debe cumplir con las siguientes propiedades fundamentales:
 
 1. **No negatividad:** \(f(x) = P(X = x) \geq 0\) para todo \(x\) en \(R_{X}\).
+
 2. **Suma total:** \(\sum_{x \in R_{X}} f(x) = 1\), es decir, la suma de las probabilidades de todos los valores posibles es igual a uno.
 
 Por lo general, las variables aleatorias discretas surgen a partir de procesos de **conteo**, lo que suele reflejarse en enunciados que comienzan con expresiones como **“número de...”**, tales como:
 
 - Número de éxitos en un experimento binomial.
+
 - Número de llamadas recibidas en una hora.
+
 - Número de defectos en una muestra de producción.
 
-Estas variables son esenciales en el modelado y análisis de fenómenos aleatorios donde los resultados se cuentan y se expresan mediante números enteros. 
+
+ 
 
 
 </br></br>
@@ -155,20 +154,26 @@ Estas variables son esenciales en el modelado y análisis de fenómenos aleatori
 A continuación se presentan ejemplos representativos de **variables aleatorias discretas**, todas ellas derivadas de procesos de conteo:
 
 - \(X\): Número de llamadas recibidas en un conmutador durante un día.
+
 - \(Y\): Número de personas contagiadas por COVID-19 en un día.
+
 - \(Z\): Número de quejas registradas en una sucursal bancaria durante un día.
+
 - \(W\): Número de accidentes ocurridos en una ciudad.
+
 - \(S\): Número de huevos producidos diariamente en una avícola.
+
 - \(T\): Número de hijos en una familia.
+
 - \(M\): Número de mensajes enviados en un grupo de WhatsApp.
 
-Estos ejemplos ilustran cómo las variables aleatorias discretas surgen de fenómenos que involucran recuentos, donde los posibles valores son números enteros finitos o infinitos numerables.
+
 </p>
 </div>
 
 
 </br></br>
-<h3>Función de distribución acumulada</h3>
+<h3>Función de distribución acumulada (fda)</h3>
 
 Sea \(X\) una **variable aleatoria discreta** con función de probabilidad \(f_{X}(x)\). La **función de distribución acumulada** \(F_{X}(x)\) se define como la probabilidad de que la variable aleatoria tome un valor menor o igual que \(x\):
 
@@ -177,7 +182,9 @@ Sea \(X\) una **variable aleatoria discreta** con función de probabilidad \(f_{
 Propiedades de la función de distribución acumulada:
 
 - **Monotonía:** \(F_{X}(x)\) es una función no decreciente, es decir, si \(a < b\), entonces \(F_{X}(a) \leq F_{X}(b)\).
+
 - **Rangos extremos:** \(\lim_{x \to -\infty} F_{X}(x) = 0\) y \(\lim_{x \to \infty} F_{X}(x) = 1\).
+
 - **Incrementos por saltos:** En el caso discreto, \(F_{X}(x)\) es una función escalonada que aumenta en los valores donde \(X\) tiene probabilidad no nula.
 
 Esta función es fundamental para caracterizar la distribución de probabilidad de variables discretas y para calcular probabilidades en intervalos específicos.
@@ -194,7 +201,7 @@ El restaurante **"Asados y algo más"** opera exclusivamente mediante reservas. 
 Dado que cada persona que reservó tiene una probabilidad independiente del **0.7** de asistir, el número de personas que llegan puede modelarse mediante una función de probabilidad conocida como **distribución binomial**.
 
 
-Función de distribución de probabilidad: Sea \(X\) la variable aleatoria que representa el **número de personas que efectivamente llegan al restaurante**. Su **función de distribución de probabilidad** está dada por:
+Sea \(X\) la variable aleatoria que representa el **número de personas que efectivamente llegan al restaurante**. Su **función de de probabilidad** está definida como:
 
 \[ f_{X}(x) = \begin{cases} \\
 \displaystyle \binom{20}{x}(0.7)^{x}(0.3)^{20-x} & \text{si } x = 0, 1, 2, \ldots, 20 \\\
@@ -284,7 +291,7 @@ La  **Figura 2.11** presenta el gráfico de la función de probabilidad de la va
 <pre>
 library(ggplot2)
 
-# Gráfico de la función de distribución acumulada (FDA) para la distribución binomial
+# Gráfico de la función de distribución acumulada (fda) para la distribución binomial
 plot.Fx<-ggplot() +
   stat_function(
     fun = function(q) pbinom(q = q, size = 20, prob = 0.7),
@@ -310,7 +317,7 @@ print(plot.Fx)
 ```{r, echo=TRUE, fig.height=3.5}
 library(ggplot2)
 
-# Gráfico de la función de distribución acumulada (FDA) para la distribución binomial
+# Gráfico de la función de distribución acumulada (fda) para la distribución binomial
 plot.Fx<-ggplot() +
   stat_function(
     fun = function(q) pbinom(q = q, size = 20, prob = 0.7),
@@ -343,7 +350,7 @@ knitr::include_graphics("img/fig2_12.png")
 <br/><br/>
 
 
-La  **Figura 2.12** muestra el gráfico de la función de distribución acumulada (FDA) de la variable aleatoria :
+La  **Figura 2.12** muestra el gráfico de la función de distribución acumulada  de la variable aleatoria :
 
 - En el eje X se representa el rango de la variable, correspondiente al número de personas.
 
@@ -351,38 +358,40 @@ La  **Figura 2.12** muestra el gráfico de la función de distribución acumulad
 
 Esta representación escalonada refleja la naturaleza discreta de la distribución y permite observar cómo se acumula la probabilidad conforme aumenta el número de personas. Adicionalmente se visualiza el cumplimiento de las propiedades de esta función:
 
-- La FDA es una función monótonamente no decreciente, es decir, su valor nunca disminuye al aumentar \(X\). Esto se refleja en el gráfico con una secuencia de escalones ascendentes.
-- La FDA siempre está definida en el intervalo [0, 1], ya que expresa probabilidades acumuladas.
+- La fda es una función monótonamente no decreciente, es decir, su valor nunca disminuye al aumentar \(X\). Esto se refleja en el gráfico con una secuencia de escalones ascendentes.
+
+- La fda toma valores  en el intervalo [0, 1], ya que expresa probabilidades acumuladas.
+
 - La probabilidad acumulada antes del primer valor es cero y la probabilidad acumulada total es uno.
+
 - Cada salto en el gráfico corresponde a una probabilidad puntual \(f(x)\), es decir, \(F(x) - F(x-1) = f(x)\).
 
 
 <br/><br/>
-A continuación se presentan algunos valores de la función de probabilidad $f(x)$ y la función de distribución acumulada $F(x)$, mostrando las fórmulas y los reemplazos para evidenciar el proceso de cálculo:
+A continuación, se presentan algunos valores de la función de probabilidad \( f(x) \) y la función de distribución acumulada \( F(x) \), incluyendo los cálculos detallados:  
 
-
-Algunos valores de la función de probabilidad $f(x)$:
+Valores de \( f(x) \) para \( x = 0, 14, 15 \):
  
-- $f(0) = \binom{20}{0} (0.7)^0 (0.3)^{20}=1 \times 1 \times 0.000000121 = 0$. 
+- \( f(0) = \binom{20}{0} (0.7)^0 (0.3)^{20} = 1 \times 1 \times 3.49 \times 10^{-11} = 3.49 \times 10^{-11}\).
 
 
-- $f(14) = \binom{20}{14} (0.7)^{14} (0.3)^{6}= 38760 \times 0.0577 \times 0.000729 = 0.1547$. 
+- \( f(14) = \binom{20}{14} (0.7)^{14} (0.3)^{6} = 38760 \times 0.0577 \times 0.000729 = 0.1916 \). 
 
 
-- $f(15) = \binom{20}{15} (0.7)^{15} (0.3)^{5}= 15504 \times 0.0477 \times 0.00243 = 0.178863$. 
+- \( f(15) = \binom{20}{15} (0.7)^{15} (0.3)^{5} = 15504 \times 0.0477 \times 0.00243 = 0.1789 \).
 
-Algunos valores de  la función de distribución acumulada $F(x)$:
+Valores de \( F(x) \) para \( x =  14, 15 \):
 
-- $F(14) = \sum_{x=0}^{14} f(x) = 0.5836$.
+- \( F(14) = \sum_{x=0}^{14} f(x) = 0.5836 \).
 
-- $F(15) = F(14) + f(15)= 0.5836 + 0.178863 = 0.762463$. 
+- \( F(15) = F(14) + f(15) = 0.5836 + 0.1789 = 0.7625 \). 
 
 
-Complementos de la acumulada:
+Las probabilidades pueden calcularse utilizando el complemento de un evento:
 
-- $P(X > 14) = 1 - F(13)$, asi $P(X > 14) = 1 - 0.4047 = 0.5953$.
+- \( P(X > 14) = 1 - P(X \leq 14) = 1 - F(14) = 1 - 0.5836 = 0.4164 \).
 
-- $P(X > 15) = 1 - F(14)= 1 - 0.5836 = 0.4164$.
+- \( P(X > 15) = 1 - P(X \leq 15) = 1 - F(15) = 1 - 0.7625 = 0.2375 \).
 
 </p>
 </div>
@@ -393,11 +402,12 @@ Complementos de la acumulada:
 </br></br>
 <h2>Variables continuas</h2>
 
-Como se mencionó, una **variable aleatoria se considera continua** cuando el conjunto de valores que puede asumir es **infinito** y **no numerable**, lo que implica que siempre existe un valor entre dos valores cualesquiera. Este tipo de variable representa fenómenos que se miden, como el tiempo, la temperatura o la distancia.
+Como se mencionó, una **variable aleatoria se considera continua** cuando puede tomar un número **infinito y no numerable** de valores dentro de un intervalo. Esto significa que, para cualquier par de valores posibles, siempre existe otro valor intermedio. Las variables continuas suelen representar fenómenos que se **miden**, como el tiempo, la temperatura o la distancia.
 
-En el caso de una variable continua, la probabilidad de que tome un valor exacto es cero, por lo que su comportamiento se modela mediante una función continua conocida como **función de densidad de probabilidad (FDP)**. Esta función describe cómo se distribuyen las probabilidades a lo largo del rango de valores posibles.
+La distribución de una variable continua se describe mediante una **función de densidad de probabilidad**, cuya representación gráfica es un **gráfico de densidad**. En este gráfico, el **área bajo la curva** entre dos puntos específicos indica la **probabilidad** de que la variable tome un valor dentro de dicho intervalo.
 
-La **función de densidad de probabilidad** se puede visualizar a través de un **gráfico de densidad**, construido a partir de una muestra representativa de la variable. En este gráfico, el **área bajo la curva** entre dos puntos representa la **probabilidad** de que la variable tome un valor dentro de ese intervalo.
+Una característica clave de las variables continuas es que la **probabilidad de que la variable tome un valor exacto es cero**. Esto se debe a que, en la función de densidad, la probabilidad se calcula a partir del área bajo la curva en un intervalo y, en un solo punto, dicha área es nula.
+
 
 
 
@@ -408,11 +418,17 @@ La **función de densidad de probabilidad** se puede visualizar a través de un 
 En el caso de las variables aleatorias continuas, estas generalmente provienen de mediciones de fenómenos continuos. A continuación se presentan ejemplos típicos:
 
 - \(T\): Tiempo que tarda un estudiante en responder un examen.
+
 - \(P\): Peso de un bebé recién nacido.
+
 - \(E\): Edad de una persona.
+
 - \(V\): Tiempo que tarda un vehículo en requerir una reparación de su motor.
+
 - \(D\): Diámetro de un agujero realizado en una lámina de acero.
+
 - \(X\): Cantidad de azúcar contenida en un refresco.
+
 - \(C\): Proporción de cemento en una mezcla de concreto.
 
 Estos ejemplos ilustran cómo las variables aleatorias continuas pueden tomar cualquier valor dentro de un intervalo, reflejando la naturaleza continua de las mediciones.
@@ -424,38 +440,58 @@ Estos ejemplos ilustran cómo las variables aleatorias continuas pueden tomar cu
 </br></br>
 <h3>Función de densidad de probabilidad</h3>
 
-A continuación se presentan las propiedades esenciales de la **función de densidad de probabilidad (FDP)**, que describe la distribución de una variable aleatoria continua:
+A continuación, se presentan las propiedades fundamentales de la **función de densidad de probabilidad (fdp)**, la cual describe la distribución de una variable aleatoria continua:
 
-- **No negatividad**: La FDP siempre es no negativa, 
-  \[ f(x) \geq 0, \quad \text{para todo } x \]
+- **No negatividad**: La fdp siempre toma valores no negativos, es decir:
+  \[ f(x) \geq 0, \quad \text{para todo } x. \]
 
--  **Área total bajo la curva**:  El área total bajo la curva es igual a 1, lo que garantiza que la suma de todas las probabilidades posibles sea completa:
-  \[ \int_{-\infty}^{\infty} f(x) \, dx = 1 \]
+- **Área total bajo la curva**: La integral de la fdp en todo el dominio debe ser igual a 1, lo que asegura que la probabilidad total sea completa:
+  \[ \int_{-\infty}^{\infty} f(x) \, dx = 1. \]
 
-- **Probabilidad como área bajo la curva**: La probabilidad de que la variable esté entre dos valores \(a\) y \(b\) es el área bajo la curva entre esos límites:
-  \[ P(a \leq X \leq b) = \int_{a}^{b} f(x) \, dx \]
+- **Probabilidad como área bajo la curva**: La probabilidad de que la variable aleatoria \( X \) tome un valor dentro del intervalo \([a, b]\) se obtiene mediante la integral de la fdp en dicho intervalo:
+  \[ P(a \leq X \leq b) = \int_{a}^{b} f(x) \, dx. \]
 
-Para una variable continua, la probabilidad de que tome un valor exacto es cero:
-  \[ P(X = x) = 0 \]
+
+
+
+
+
+<div class="caja-actividad">
+<h3>Nota:</h3>
+>
+<p>
+En el caso de variables continuas, la probabilidad de que \( X \) asuma un valor exacto es **cero**:
+  \[ P(X = x) = 0. \]
+</p>
+>
+</div>
 
 
 </br></br>
 <h3>Función de distribución acumulada</h3>
 
-Sea \(X\) una **variable aleatoria continua** con función de densidad \(f_{X}(x)\). La **función de distribución acumulada** (FDA),  \(F_{X}(x)\), se define como la probabilidad de que la variable aleatoria tome un valor menor o igual que \(x\):
+Sea \(X\) una **variable aleatoria continua** con función de densidad \(f_{X}(x)\). La **función de distribución acumulada** (fda),  \(F_{X}(x)\), se define como la probabilidad de que la variable aleatoria tome un valor menor o igual que \(x\):
 
 \(F_{X}(x) = P(X \leq x) = \int_{-\infty}^{x} f_{X}(t) \, dt\)
 
 
 - La función de distribución acumulada representa el área bajo la curva de la función de densidad desde \(-\infty\) hasta \(x\).
+
 - \(F_{X}(x)\) es una función **monótonamente no decreciente**, con valores en el intervalo [0, 1].
+
 - \( \lim_{x \to -\infty} F_{X}(x) = 0 \) y \( \lim_{x \to \infty} F_{X}(x) = 1 \).
 
 
-La FDP es la derivada de la función de distribución acumulada (FDA): \[ f(x) = \frac{d}{dx}F(x) \]
 
-Esta definición es fundamental para describir el comportamiento probabilístico de variables continuas y para calcular probabilidades asociadas a intervalos de valores.
-  
+
+<div class="caja-actividad">
+<h3>Nota:</h3>
+>
+<p>
+En el caso de variables continuas, La fdp es la derivada de la función de distribución acumulada (fda): \[ f(x) = \frac{d}{dx}F(x) \]
+</p>
+>
+</div>  
 
 
 
@@ -466,7 +502,7 @@ Esta definición es fundamental para describir el comportamiento probabilístico
 <h3>Ejemplo:</h3>
 <p>
 
-Una compañía que fabrica lavadoras, basándose en datos históricos, ha determinado que el tiempo $X$ (en años) hasta que un electrodoméstico requiera una reparación mayor se modela mediante la siguiente **función de densidad de probabilidad (FDP):**
+Una compañía que fabrica lavadoras, basándose en datos históricos, ha determinado que el tiempo $X$ (en años) hasta que un electrodoméstico requiera una reparación mayor se modela mediante la siguiente **función de densidad de probabilidad (fdp):**
 
 $$
   f_{X}(x) = \begin{cases} \\
@@ -544,7 +580,7 @@ knitr::include_graphics("img/fig2_13.png")
 
 
 
-Para garantizar que $f(x)$ es una **función de densidad de probabilidad (FDP)**, se debe comprobar que el área total bajo la curva es igual a 1, para tal efecto se calcula la integral impropia desde 0 hasta infinito, donde no se anula la función:
+Para garantizar que $f(x)$ es una **función de densidad de probabilidad (fdp)**, se debe comprobar que el área total bajo la curva es igual a 1, para tal efecto se calcula la integral impropia desde 0 hasta infinito, donde no se anula la función:
 $$
 \int_{0}^{+\infty} \frac{1}{4} e^{-x/4} \,dx=\frac{1}{4} \int_{0}^{+\infty} e^{-x/4} \,dx= \int e^{-x/4} \,dx = -4e^{-x/4} + C
 $$
@@ -556,6 +592,7 @@ $$
 Aplicamos los límites:
 
 - Cuando $x \to +\infty$, $e^{-x/4} \to 0$
+
 - Cuando $x = 0$, $e^{-0} = 1$
 
 $$
@@ -593,7 +630,7 @@ print(resultado)
 ```
 <br/><br/>
  
-Para esponder a la pregunta ¿cuál es la probabilidad de que el electrodoméstico requiera una reparación mayor en los **primeros 3 años**? se procede como sigue:
+Para responder a la pregunta ¿cuál es la probabilidad de que el electrodoméstico requiera una reparación mayor en los **primeros 3 años**? se procede como sigue:
 
 $$
 P(0 \leq X \leq 3) = \int_{0}^{3} \frac{1}{4} e^{-x/4} \,dx
@@ -616,7 +653,7 @@ $$
 F(x) = \left[-e^{-t/4}\right]_{0}^{x} = 1 - e^{-x/4}
 $$
 
-Puede notar en la **Figura 2.14** que se cumplen las propiedades de la FDA:
+Puede notar en la **Figura 2.14** que se cumplen las propiedades de la fda:
 
 - $F(0) = 0$  
 - $\lim_{x \to +\infty} F(x) = 1$  
@@ -625,12 +662,12 @@ Puede notar en la **Figura 2.14** que se cumplen las propiedades de la FDA:
 <pre>
 library(ggplot2)
 
-# Definición de la FDA
+# Definición de la fda
 F <- function(x) {
   1 - exp(-x/4)
 }
 
-# Gráfico de FDA
+# Gráfico de fda
 plot214<-ggplot(data.frame(x = c(0, 20)), aes(x = x)) +
   geom_function(fun = F, colour = "#4271AE", lwd = 1) +
   labs(title = "",
@@ -644,12 +681,12 @@ print(plot214)
 ```{r,echo=TRUE,message=FALSE, warning=FALSE}
 library(ggplot2)
 
-# Definición de la FDA
+# Definición de la fda
 F <- function(x) {
   1 - exp(-x/4)
 }
 
-# Gráfico de FDA
+# Gráfico de fda
 plot214<-ggplot(data.frame(x = c(0, 20)), aes(x = x)) +
   geom_function(fun = F, colour = "#4271AE", lwd = 1) +
   labs(title = "",

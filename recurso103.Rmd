@@ -1,5 +1,5 @@
 ---
-title: <span style="color:#686868">  **Enfoques de probabilidad**</span>
+title: <span style="color:#686868">  **Enfoques y axiomas**</span>
 author: "Métodos y Simulación Estadística"
 output:
   html_document:
@@ -16,6 +16,10 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = N
 
 <br/>
 
+<br/><br/>
+<h2>Enfoques de probabilidad</h2>
+
+
 La probabilidad es un número comprendido entre cero y uno que se asigna a cada resultado de un evento aleatorio, utilizando diversos enfoques. A continuación, se presentan las definiciones de los enfoques más comunes:
 
 - Clásico 
@@ -25,19 +29,26 @@ La probabilidad es un número comprendido entre cero y uno que se asigna a cada 
 
 
 <br/><br/>
-<h2>Enfoque clásico</h2>
+<h3>Enfoque clásico</h3>
 
-El enfoque clásico o a priori es el más antiguo en la teoría de la probabilidad y se basa en el supuesto de que los eventos individuales son igualmente probables. Bajo este enfoque, la probabilidad de un evento $A$ se calcula como la fracción entre el número de elementos del conjunto $A$, denotado como $n(A)$, y el número total de elementos en el espacio muestral $n(S)$, de acuerdo con la siguiente fórmula:
+El **enfoque clásico o a priori** es el más antiguo en la teoría de la probabilidad y se fundamenta en el principio de **equiprobabilidad**, es decir, se asume que todos los resultados posibles de un experimento tienen la misma probabilidad de ocurrir.  
 
-\[
+Bajo este enfoque, la **Regla de Laplace** establece que la probabilidad de un evento \( A \) se obtiene dividiendo el número de casos favorables, denotado como \( n(A) \), entre el número total de casos posibles en el espacio muestral, \( n(S) \), siempre que estos sean equiprobables. Matemáticamente, se expresa como:  
+
+$$
 P(A) = \dfrac{n(A)}{n(S)}
-\]
+$$
+
+Este enfoque es aplicable en situaciones donde es razonable suponer que todos los resultados son igualmente probables, como en el lanzamiento de un dado **balanceado** o una moneda **balanceada**.  
+
+Sin embargo, en experimentos donde los resultados no son equiprobables, es necesario recurrir a enfoques más generales de la probabilidad.
+
 
 <br/>
 <div class="caja-ejemplo">
-<h3>Ejemplos:</h3>
+<h3>Ejemplo:</h3>
 <p> 
-Considerando el evento $A_{1} = \{(c,c)\}$, su probabilidad se calcula de la siguiente manera:
+Considere el evento $A_{1} = \{(c,c)\}$, su probabilidad se calcula de la siguiente manera:
 
 \[
 P(A_{1}) = \frac{n(A_{1})}{n(S_{1})} = \frac{1}{4} = 0.25
@@ -60,7 +71,7 @@ En la mayoría de los casos, no se cumplen los supuestos del enfoque clásico (e
 
 
 <br/><br/>
-<h2>Enfoque frecuentista</h2>
+<h3>Enfoque frecuentista</h3>
 
 El enfoque frecuentista se basa en la frecuencia relativa con que ocurre un evento $A$ y el tamaño de muestra $n$, permitiendo estimar la probabilidad con la frecuencia relativa del evento. Cuanto mayor sea el tamaño de la muestra, mayor será la proximidad de la frecuencia relativa $f_n(A)$ al valor de probabilidad $P(A)$.
 
@@ -71,7 +82,7 @@ El enfoque frecuentista se basa en la frecuencia relativa con que ocurre un even
 
 <br/>
 <div class="caja-ejemplo">
-<h3>Ejemplos:</h3>
+<h3>Ejemplo:</h3>
 <p> 
 
 <center>
@@ -86,38 +97,102 @@ Tomada de iStock.com
 </center>
 
 
-Consideremos el caso de un cobrador de "penalti" en un partido de fútbol. El jugador tiene un gran número de lugares donde puede colocar el balón, pero para simplificar, podemos asumir que hay 9 posibles ubicaciones, que se enumeran como sigue:
+Considérese el caso del cobro de un **penalti** en un partido de fútbol. Existen múltiples ubicaciones en las que el balón puede ser dirigido; sin embargo, para simplificar el análisis, se asumirán **nueve posibles ubicaciones**, las cuales se enumeran de la siguiente manera:  
 
-1. Parte baja a su izquierda  
-2. Baja al centro  
-3. Baja a su derecha  
-4. Parte media a su izquierda  
-5. Media al centro  
+1. Parte baja a la izquierda  
+2. Parte baja al centro  
+3. Parte baja a la derecha  
+4. Parte media a la izquierda  
+5. Parte media al centro  
 6. Parte media a la derecha  
-7. Parte superior a su izquierda  
+7. Parte superior a la izquierda  
 8. Parte superior al centro  
-9. Parte superior a su derecha  
+9. Parte superior a la derecha  
 
-El arquero también considera estos 9 lugares para intentar evitar que el balón termine en gol. Ambos jugadores, el cobrador y el arquero, estudian las frecuencias con que cada área se convierte en gol o es defendida, para determinar las probabilidades de éxito desde su rol.
+El arquero debe considerar estas **nueve posiciones** para intentar detener el disparo. Con este propósito, se analizan los registros previos de los cobros realizados por el jugador, con el fin de identificar patrones en la colocación del balón.  
 
-Para calcular la probabilidad de que un jugador ejecute un "penalti" y convierta un gol, utilizamos el enfoque frecuentista. Este enfoque se basa en la frecuencia relativa de aciertos, calculando la probabilidad de un evento en base al número de veces que ha ocurrido en el pasado.
+Para estimar la probabilidad de que un penalti sea ejecutado en una ubicación específica, se emplea el **enfoque frecuentista**. Este método se basa en calcular la **frecuencia relativa** de los disparos en cada una de las **nueve posiciones**, permitiendo así aproximar la probabilidad de que el balón sea dirigido hacia un determinado lugar.  
 
-En este caso, si se conocen los resultados de un gran número de cobros de penalti, podemos estimar la probabilidad de que un cobro específico sea exitoso. La probabilidad se calcula dividiendo el número de goles convertidos (aciertos) por el número total de cobros realizados. Esta estimación mejora a medida que se incrementa el tamaño de la muestra (el número de cobros realizados).
+Cuando se dispone de un **gran número de cobros registrados**, la estimación de la probabilidad se vuelve más precisa. La probabilidad se calcula dividiendo el número de lanzamientos en una ubicación específica entre el **total de penaltis ejecutados**. Esta estimación mejora conforme aumenta el tamaño de la muestra (es decir, la cantidad de cobros registrados).  
 
-La probabilidad frecuentista de que el cobrador marque un gol en una determinada ubicación se puede expresar como:
+Bajo el **enfoque frecuentista**, la probabilidad de que el penalti sea dirigido a una ubicación específica se expresa como:  
 
-\[
-P(\text{gol en ubicación } A) = \lim_{n \to +\infty} \frac{\text{número de goles en ubicación } A}{n}
-\]
+$$
+P(\text{Tiro del balón en ubicación } A) = \lim_{n \to +\infty} \frac{\text{Número de tiros en la ubicación } A}{n}
+$$  
 
-Donde $n$ es el número total de intentos de penalti realizados por el cobrador, y el límite indica que, a medida que $n$ crece, la frecuencia relativa se aproxima a la probabilidad verdadera de éxito en esa ubicación.
+Donde \( n \) representa el número total de penaltis ejecutados, y el **límite** indica que, a medida que \( n \) crece, la **frecuencia relativa** se aproxima al **valor real** de la probabilidad del evento en esa ubicación.
+
 </p>
 </div>
 
 
-<br/><br/>
-<h2>Enfoque subjetivo</h2>
 
-En este caso, la probabilidad es determinada y asignada por un experto. Esto significa que el valor de la probabilidad se establece según el juicio de una persona con experiencia y conocimiento en un campo específico, como puede ser un médico, un ingeniero, un abogado, un economista, un biólogo, un científico de datos, entre otros. El experto evalúa y estima la probabilidad basándose en su formación, experiencia previa y comprensión del contexto en el que se encuentra el evento en cuestión.
+
+
+<br/><br/>
+<h3>Enfoque subjetivo</h3>
+
+En este caso, la **probabilidad** es determinada y asignada con base en el **criterio de un experto**. Esto implica que el valor de la probabilidad no se obtiene a partir de cálculos matemáticos directos ni de la frecuencia relativa de eventos pasados, sino que es **estimado** según el juicio de una persona con **amplia experiencia y conocimiento** en un área específica.  
+
+Dicho experto puede pertenecer a diversas disciplinas, como la **medicina, la ingeniería, el derecho, la economía, la biología o la ciencia de datos**, entre otras. Su estimación de la probabilidad se fundamenta en su **formación académica, experiencia previa y comprensión del contexto** en el que se desarrolla el evento analizado.  
+
+<br/>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p>
+
+Un médico epidemiólogo es consultado para evaluar la probabilidad de que un paciente desarrolle complicaciones graves debido a una infección viral. A pesar de no contar con datos exactos sobre casos similares en la población, el médico **estima** que la probabilidad es del **0.3**, basándose en su conocimiento sobre la enfermedad, la condición del paciente y su experiencia previa con casos similares.  
+
+En este caso, la probabilidad asignada **no proviene de un modelo estadístico ni de un experimento repetible**, sino del juicio experto del médico, quien integra múltiples factores subjetivos en su evaluación.  
+
+Este tipo de probabilidad es útil cuando no se dispone de suficiente información cuantitativa y se requiere tomar decisiones en entornos **inciertos o complejos**, donde la experiencia juega un papel clave en la estimación del riesgo.  
+
+
+</p>
 </div>
+
+
+
+
+<br/><br/>
+<h2>Postulados de probabilidad</h2>
+
+Los postulados de la probabilidad, también conocidos como axiomas de Kolmogorov, son tres reglas fundamentales que definen una medida de probabilidad en un espacio muestral.
+
+1. No negatividad: La probabilidad de cualquier evento \( A \) es siempre un número no negativo:
+
+$$
+P(A) \geq 0, \quad \text{para todo } A.
+$$
+
+2. Probabilidad del evento seguro: La probabilidad del espacio muestral completo \( S \) es igual a 1:
+
+$$
+P(S) = 1.
+$$
+
+3. Aditividad de eventos mutuamente excluyentes: Si \( A \) y \( B \) son eventos disjuntos (es decir, \( A \cap B = \emptyset \)), entonces la probabilidad de la unión de ambos es la suma de sus probabilidades:
+
+$$
+P(A \cup B) = P(A) + P(B).
+$$
+
+Más generalmente, si \( A_1, A_2, \dots \) son una secuencia infinita de eventos mutuamente excluyentes, se cumple que:
+
+$$
+P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i).
+$$
+<br/><br/>
+<h2>Teorema de la unión de dos eventos</h2>
+
+El teorema de la unión establece que para cualquier par de eventos \( A \) y \( B \), la probabilidad de su unión está dada por:
+
+$$
+P(A \cup B) = P(A) + P(B) - P(A \cap B).
+$$
+
+Este teorema se deduce de los axiomas de la probabilidad y tiene en cuenta que, al sumar \( P(A) \) y \( P(B) \), la intersección \( P(A \cap B) \) se cuenta dos veces, por lo que debe restarse una vez para evitar la sobreestimación.
+
+
 

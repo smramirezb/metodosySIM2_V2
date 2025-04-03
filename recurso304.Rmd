@@ -24,8 +24,11 @@ En estadística inferencial, uno de los principales objetivos es **estimar los p
 Los métodos de estimación permiten obtener valores aproximados de parámetros poblacionales desconocidos, como la **media**, la **varianza**, la **tasa de ocurrencia de eventos**, entre otros. Estos métodos son fundamentales en diversas áreas, tales como:
 
 - **Econometría y Finanzas:** Para estimar tasas de crecimiento, volatilidad o distribuciones de precios de activos.
+
 - **Ingeniería y Fiabilidad:** Para modelar la vida útil de componentes y sistemas.
+
 - **Biometría y Ciencias de la Salud:** Para estimar parámetros en modelos epidemiológicos o tasas de incidencia de enfermedades.
+
 - **Machine Learning y Ciencia de Datos:** En ajuste de modelos probabilísticos y optimización de parámetros en aprendizaje automático.
 
 
@@ -36,7 +39,7 @@ Los métodos de estimación permiten obtener valores aproximados de parámetros 
 
 
 </br></br>
-<h3>Método de Momentos</h3>
+<h3>Método de momentos</h3>
 <br/><br/>
 
 
@@ -53,13 +56,15 @@ para \( r = 1, 2, \dots, k \), donde los momentos muestrales se igualan a los mo
 Características del Método de los Momentos:
 
 - Es **fácil de calcular** en muchas distribuciones.
+
 - No requiere suposiciones fuertes sobre la distribución subyacente.
+
 - En algunos casos, puede no proporcionar estimadores óptimos en términos de **sesgo** y **varianza mínima**.
 
 ---
 
 </br></br>
-<h3>Método de Máxima Verosimilitud</h3>
+<h3>Método de máxima verosimilitud</h3>
 <br/><br/>
 
 
@@ -83,10 +88,12 @@ Para encontrar el estimador de máxima verosimilitud \( \hat{\theta} \), se resu
 \frac{d}{d\theta} \ell(\theta) = 0.
 \]
 
-Características del Método de Máxima Verosimilitud: 
+Características del método de máxima verosimilitud: 
 
 - Proporciona **estimadores asintóticamente eficientes**, lo que significa que convergen a los valores verdaderos con menor varianza posible a medida que el tamaño de la muestra aumenta.
+
 - Es ampliamente utilizado en **modelos paramétricos**, incluyendo distribuciones normales, Poisson, binomial, exponencial y muchas más.
+
 - En algunos casos, las soluciones requieren **algoritmos numéricos** debido a la complejidad de las derivadas.
 
 ---
@@ -109,7 +116,7 @@ vida_util <- c(1200, 1350, 1100, 1450, 1300, 1250, 1400, 1280, 1320, 1380)
 Se desea estimar los valores de $\alpha$ y $\beta$ utilizando el método de los momentos. 
 
 ---
-Paso 1:  Determinación de los Momentos Poblacionales
+Paso 1:  Determinación de los momentos poblacionales
 
 Para una **distribución Gamma** con parámetros \( \alpha \) (forma) y \( \beta \) (escala), los primeros momentos poblacionales están dados por:
 
@@ -149,7 +156,7 @@ Para una **distribución Gamma** con parámetros \( \alpha \) (forma) y \( \beta
   \]
 
 
-Paso 2:  Determinación de los Momentos Muestrales
+Paso 2:  Determinación de los momentos muestrales
 
 En la práctica, los momentos poblacionales son desconocidos, por lo que deben ser estimados a partir de una muestra aleatoria de tamaño \( n \). Los **momentos muestrales** son las estimaciones empíricas de los momentos poblacionales y se calculan como sigue:
 
@@ -236,7 +243,7 @@ Por lo tanto, los estimadores de los parámetros \( \alpha \) y \( \beta \) por 
 
 Estos estimadores permiten obtener aproximaciones de los parámetros poblacionales basándose en una muestra aleatoria. En la siguiente sección, se analizará su interpretación y comparación con otros métodos de estimación.
 
-Paso 4:  Cálculo Numérico 
+Paso 4:  Cálculo numérico 
 
 Con los siguientes códigos el problema se resuelve numéricamente.
 
@@ -387,7 +394,7 @@ muestra <- rexp(10, rate = 1/5000)  # Vida media esperada de 5000 horas
 ``` 
 
 
-Paso 1: Planteamiento de la Función de Verosimilitud
+Paso 1: Planteamiento de la función de verosimilitud
 
 Para estimar el parámetro \( \lambda \) de la distribución **Exponencial**, consideramos que los tiempos de vida útil de las bombillas \( X_1, X_2, \dots, X_n \) son variables aleatorias **independientes e idénticamente distribuidas (i.i.d.)** con función de densidad:
 
@@ -410,7 +417,7 @@ L(\lambda) = \lambda^n e^{-\lambda \sum X_i}
 Esta función representa la **probabilidad conjunta** de observar la muestra dada la distribución poblacional con el parámetro \( \lambda \). El siguiente paso consiste en transformar esta función en la **log-verosimilitud** para facilitar su optimización.
 
 
-Paso 2: Función Log-Verosimilitud y Estimador de Máxima Verosimilitud
+Paso 2: Función log-verosimilitud y estimador de máxima verosimilitud
 
 Para facilitar la derivación del estimador de máxima verosimilitud, aplicamos el logaritmo natural a la función de verosimilitud:
 
@@ -518,310 +525,3 @@ Se observa que el valor estimado de \( \lambda \) difiere del valor real debido 
 
 
 
-
-
-<!-- El método de momentos fue propuesto por Karl Pearson al rededor de 1895, pensado en sus inicios en contexto descriptivo, analizando las distribuciones de probabilidad y aprisionándolas al sistema de curvas que llevan su nombre. Posteriormente este concepto fue modificado por R.A. Fisher en 1920. El método consiste en estimar un parámetro de una distribución igualando sus momentos teóricos o poblacionales, si existen, con los correspondientes momentos muestrales. -->
-
-<!-- Para mostrar este método es necesario definir el concepto de momento. -->
-
-<!-- <br/> -->
-
-<!-- ## <span style="color:#034a94">**Momento Poblacional**</span>  -->
-
-<!-- | Caso discreto                           |Caso continuo                          | -->
-<!-- |:---------------------------------------:|:-------------------------------------:| -->
-<!-- |$$\mu^{k}=E\big[X^{k}\big]=\sum_{R_X} x^{k}p(x)$$ |$$\mu^{k}=E\big[X^{k}\big]=\int_{-\infty}^{\infty}x^{k}f(x) dx $$ | -->
-
-
-<!-- ###  <span style="color:#034a94">**Momentos muestrales**</span>  -->
-
-<!-- En ambos casos  -->
-
-<!-- $$m^{k}=\frac{1}{n}\sum_{i=1}^{n} x_{i}^{k} $$  -->
-
-<!-- <br/> -->
-
-<!-- El método de momentos supone que los momentos tanto poblacionales como muestrales son conocidos, y por lo tanto también la función de probabilidad.  -->
-
-<!-- A continuación se relacionan algunos de estos momentos poblacionales: -->
-
-<!-- <br/> -->
-<!-- <center> -->
-<!-- **Tabla 2.7** Valor esperado y varianza de algunos modelos de probabilidad -->
-<!-- </center> -->
-
-<!-- | Distribución | $E[X]$               | $V[X]=E[X^{2}]-E[X]^{2}$        | -->
-<!-- |:-------------|:---------------------|:--------------------------------| -->
-<!-- | bernoulli    | $p$                  | $pq$                            | -->
-<!-- | geométrica   | $\displaystyle\frac{1}{p}$ | $\displaystyle\frac{q}{p^{2}}$  | -->
-<!-- | binomial     | $np$                 | $npq$                           | -->
-<!-- | Poisson      | $\lambda$            | $\lambda$                       |  -->
-<!-- | gamma        | $\alpha\beta$        | $\alpha\beta^{2}$               | -->
-<!-- | exponencial  | $\beta$              | $\beta^{2}$                     |  -->
-<!-- | uniforme     | $\displaystyle\frac{a+b}{2}$| $\displaystyle\frac{(b-a)^{2}}{12}$ | -->
-<!-- | normal       | $\mu$                |$\sigma^{2}$                     | -->
-<!-- |              |                      |                                 | -->
-<!-- <br/> -->
-
-<!-- Nota: Existe una relación entre las distribuciones Poisson y exponencial.Se podrían dar en función de $\lambda$, haciendo $\beta=\dfrac{1}{\lambda}$   -->
-
-<!-- <br/><br/> -->
-
-<!-- ### <span style="color:#FF7F00"> **Ejemplo**</span> -->
-
-<!-- <br/> -->
-
-<!-- Encuentre los estimadores de los parámetros de la distribución normal a través del método de momentos. -->
-<!-- Previamente sabemos que los parámetros de una variable con distribución normal son $E[X]=\mu$ y $V[X]=\sigma^{2}$ y que $V[X]=E[X^{2}]-E[X]^{2}$. Dada esta información el estimador de momentos se construye de la siguiente manera:  -->
-
-<!-- $$M^{1}=m^{1}$$ -->
-
-<!-- $$M^{2}=m^{2}$$ -->
-
-<!-- Aplicando el método: -->
-
-<!-- <br/> -->
-
-<!-- |                                                    | -->
-<!-- |:---------------------------------------------------| -->
-<!-- |$$M^{1}= m^{1}$$ | -->
-<!-- |$$\mu  =  \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}$$| -->
-<!-- |$$\widehat{\mu} = \displaystyle\frac{1}{n}\sum_{i=1}^{n} x_{i}=\bar{x}$$| -->
-
-
-<!-- <br/> -->
-
-<!-- Para estimar $\sigma^{2}$, se realiza el siguiente procedimiento, usando $\mu^{1}=m^{1}$  y $\mu^{2}=m^{2}$. -->
-
-<!-- $$V[X]=E[X^{2}]-E[X]^{2} = \mu^{2}-(\mu^{1})^{2}$$ -->
-
-<!-- entonces igualamos estos dos momentos poblacionales con sus respectivos momentos muestrales quedando la igualdad -->
-
-<!-- $$\begin{eqnarray*} -->
-<!-- 	V[X]&=& \mu^{2}-(\mu^{1})^{2}\\ -->
-<!-- 	&=&m^{2}-(m^{1})^{2}\\ -->
-<!-- 	&=&\displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2} -->
-<!-- \end{eqnarray*}$$ -->
-
-<!-- podemos representar la varianza por $\sigma^{2}$ y obtenemos -->
-
-<!-- $$\widehat{\sigma^{2}}=\displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}$$ -->
-
-<!-- y obtenemos el estimador de la varianza: -->
-
-<!-- <br/> -->
-
-<!-- |                       |                                                                                                   | -->
-<!-- |----------------------:|:--------------------------------------------------------------------------------------------------| -->
-<!-- |$\widehat{\sigma^{2}}$ | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}$                                   | -->
-<!-- |$\widehat{\sigma^{2}}$ | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}-\bar{x}^{2}+\bar{x}^{2}$           | -->
-<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-2\bar{x}^{2}+\bar{x}^{2}$                      | -->
-<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\displaystyle\frac{2\bar{x}\sum x_{i}}{n}+\displaystyle\frac{n \bar{x}^{2}}{n}$ | -->
-<!-- |                       | $= \displaystyle\frac{1}{n}\Big(\sum_{i=1}^{n} x_{i}^{2}-2\bar{x}\sum_{i=1}^{n} x_{i}+\bar{x}^{2}\Big)$ | -->
-<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}\Big(x_i-\bar{x}\Big)^{2}$        | -->
-
-<!-- <br/><br/> -->
-
-<!-- En resumen los estimadores de momentos para los parámetros de la distribución normal son: -->
-
-
-<!-- $$\widehat{\mu} = \displaystyle\frac{1}{n}\sum_{i=1}^{n} x_{i}=\bar{x}$$ -->
-
-<!-- $$\widehat{\sigma^{2}} = \displaystyle\frac{1}{n}\sum_{i=1}^{n}\Big(x-\bar{x}\Big)^{2}$$  -->
-
-
-<!-- A partir de ellos y mediante la obtención de una muestra aleatoria por ejemplo :630, 650, 710, 750, 790, 820, 860 y 910 se pueden estimar los parámetros por método de momentos con los siguientes resultados: -->
-
-<!-- $$\widehat{\mu}=765$$   -->
-
-<!-- $$\widehat{\sigma^{2}}=8550$$ -->
-
-
-<!-- ## <span style="color:#034a94">**Método de Máxima Verosimilitud**</span> -->
-
-<!-- Uno de los mejores métodos para obtener un estimador puntual de un parámetro es el método de **Máxima Verosimilitud** o de máxima probabilidad. Esta técnica fue desarrollada en 1920 por el estadístico británico Sir R.A. Fisher, afirmando que el estimador será el valor del parámetro que maximice la función de verosimilitud $L(\theta)$. \\ \\ -->
-
-<!-- La función de verosimilitud $L(\theta)$ corresponde a la función de distribución conjunta de variables aleatorias independientes con igual función de distribución. Estas variables aleatorias corresponden a las variables que conforman la muestra. -->
-<!-- % -->
-<!-- $$L(\theta)=f(x_{1},\theta).f(x_{2},\theta).f(x_{3},\theta)....f(x_{n}),\theta)$$ -->
-<!-- El objetivo del método será encontrar el valor del parámetro que maximice la probabilidad conjunta, suponiendo el conocimiento de la función de distribución de probabilidad de la variable en estudio.  -->
-
-<!-- </br></br> -->
-
-<!-- ### <span style="color:#FF7F00"> **Ejemplo**</span> -->
-
-<!-- Para el caso de la distribución normal cuya función de distribución de probabilidad esta dada por : -->
-
-<!-- $$f(x_{i})=\frac{1}{\sqrt{2\pi}\sigma^{2}} \exp{\Bigg(-\frac{1}{2\sigma^{2}}\big(x_{i}-\mu\big)^{2}\Bigg)}$$ -->
-<!-- La función de verosimulitud estará dada por: -->
-
-<!-- $$L(x_{1},x_{2},..,x_{n};\mu,\sigma^{2})=f(x_{1};\mu,\sigma^{2})....f(x_{n};\mu,\sigma^{2})$$ -->
-
-<!-- Esta función se puede escribir como : -->
-
-<!-- $$L(x_{1},\cdots,x_{n};\mu,\sigma^{2})=\displaystyle\prod_{i=1}^{n} \frac{1}{\sqrt{2\pi\sigma^{2}}}\exp{\Bigg(-\frac{1}{2\sigma^{2}}\big(x_{i}-\mu\big)^{2}\Bigg)} $$ -->
-
-<!-- $$L=\displaystyle\Big(\frac{1}{2\pi \sigma^{2}}\Big)^{n/2} \exp \Bigg(\sum_{i=1}^{n}\frac{-1}{2\sigma^{2}}(x_{i}-\mu)^{2}\Bigg) $$ -->
-
-<!-- $$L=\displaystyle\Big(2\pi \sigma^{2}\Big)^{-n/2} \exp \Bigg(\frac{-1}{2\sigma^{2}}\sum_{i=1}^{n}(x_{i}-\mu)^{2}\Bigg) $$ -->
-
-<!-- El método consiste en encontrar el valor del parámetro que maximice esta función para lo cual procedemos a derivar $L$ parcialmente con respecto al parámetro objetivo, por ejemplo $\mu$. -->
-
-<!-- Este proceso presenta algunas dificultades de cálculo que son atenuadas mediante la premisa de que el *máximo de la función $L$ corresponde a los mismos máximos de la función $\ln(L)$*, la cual es más sencilla de derivar. Este procedimiento es posible debido a que la función $L$ es creciente. -->
-
-<!-- Convertimos $L$ en $ln(L)$ -->
-
-<!-- $$\ln(L)= -\displaystyle\frac{n}{2} \ln(2\pi) - \displaystyle\frac{n}{2} \ln(\sigma^{2}) -\displaystyle\frac{1}{2\sigma^{2}}\displaystyle\sum_{i=1}^{n}(x_{i}-\mu)^{2}$$ -->
-<!-- Al derivar parcialmente $\ln(L)$ con respecto a $\mu$ tenemos: -->
-
-<!-- $$\displaystyle\frac{\partial \ln(L)}{\partial \mu}= \displaystyle\frac{2}{2\sigma^{2}}  \displaystyle\sum_{i=1}^{n} (x_{i}-\mu) =0$$ -->
-
-<!-- De esta igualdad se despeja el parámetro de interés -->
-
-<!-- $$\sigma^{2} \hspace{.2cm} \frac{1}{\sigma^{2}}\sum_{i=1}^{n} (x_{i}-\mu) =0 \hspace{.2cm}  \sigma^{2} $$ -->
-<!-- $$\sum_{i=1}^{n} x_{i} - n \mu =0$$ -->
-
-<!-- $$\widehat{\mu}=\frac{1}{n}\sum_{i=1}^{n} x_{i} = \bar{x}$$ -->
-
-<!-- En el caso de la estimación de $\sigma^{2}$, se deriva $\ln(L)$ parcialmente con respecto a $\sigma^{2}$, se iguala a cero el resultado obtenido y por último se despeja $\sigma^{2}$. Verifique que el estimador de máxima verosimilitud para la varianza es igual a: -->
-
-<!-- $$\widehat{\sigma^{2}}=\frac{1}{n}\sum_{i=1}^{n} \big(x_{i}-\mu \big)^{2} $$ -->
-<!-- <br/><br/><br/> -->
-
-
-<!-- La construcción de estimadores de parámetros tiene un soporte matemático que está basado en  el valor esperado y las funciones de probabilidad revisadas anteriormente. También supone que las muestras son tomadas aleatoriamente y que valores obtenidos son independiente unos de otros.  -->
-
-<!-- A continuación se presentan el método de Momentos y el **método de Máxima Verosimilitud**: -->
-
-
-<!-- ### <span style="color:#034a94">**Método de momentos**</span> -->
-
-<!-- <br/> -->
-
-<!-- El **método de momentos** fue propuesto por Karl Pearson al rededor de 1895, pensado en sus inicios en contexto descriptivo, analizando las distribuciones de probabilidad y aproximándolas al sistema de curvas que llevan su nombre. Posteriormente este concepto fue modificado por R.A. Fisher en 1920. El método consiste en estimar un parámetro de una distribución igualando sus momentos teóricos o poblacionales, si existen, con los correspondientes momentos muestrales. -->
-
-<!-- Para mostrar este método es necesario definir el concepto de momento. -->
-
-<!-- <br/> -->
-
-<!-- <div class="content-box-blue"> -->
-<!-- ### <span style="color:#034a94">**Momento Poblacional**</span>  -->
-
-
-<!-- |  caso variable discreta                         |caso variable continua  | -->
-<!-- |:------------------------------------------------|:------------------------------------------------| -->
-<!-- |$\mu^{k}=E\big[X^{k}\big] = \displaystyle\sum_{R_X} x^{k}p(x)$ |$\mu^{k}=E\big[X^{k}\big]=\int_{-\infty}^{\infty}x^{k}f(x)\:dx$| -->
-
-<!-- </div> -->
-<!-- <br/> -->
-
-<!-- ### <span style="color:#034a94">**Momentos muestrales**</span>     -->
-
-<!-- En ambos casos -->
-
-<!-- $$m^{k}=\frac{1}{n}\sum_{i=1}^{n} x_{i}^{k} $$   -->
-
-<!-- El método de momentos supone que los momentos tanto poblacionales como muestrales son conocidos, y por lo tanto también la función de probabilidad.  -->
-
-<!-- A continuación se relacionan algunos de estos momentos poblacionales: -->
-
-<!-- <br -->
-
-<!-- <center> -->
-
-<!-- **Tabla 2.7**  Valor esperado y varianza de los principales modelos de probabilidad -->
-
-<!-- | Distribución | $E[X]$               | $V[X]=E[X^{2}]-E[X]^{2}$        | -->
-<!-- |:-------------|:---------------------|:--------------------------------| -->
-<!-- | bernoulli    | $p$                  | $pq$                            | -->
-<!-- | geométrica   | $\displaystyle\frac{1}{p}$ | $\displaystyle\frac{q}{p^{2}}$  | -->
-<!-- | binomial     | $np$                 | $npq$                           | -->
-<!-- | Poisson      | $\lambda$            | $\lambda$                       |  -->
-<!-- | gamma        | $\alpha\beta$        | $\alpha\beta^{2}$               | -->
-<!-- | exponencial  | $\beta$              | $\beta^{2}$                     |  -->
-<!-- | uniforme     | $\displaystyle\frac{a+b}{2}$| $\displaystyle\frac{(b-a)^{2}}{12}$ | -->
-<!-- | normal       | $\mu$                |$\sigma^{2}$                     | -->
-
-<!-- </center> -->
-
-<!-- <br/> -->
-
-<!-- <div class="content-box-gray"> -->
-<!-- ### <span style="color:#686868">**Nota**</span>  -->
-
-<!-- Existe una relación entre las distribuciones `Poisson` y `exponencial`. Su valores esperados son inversos y e podrían denotar en función de $\lambda$, haciendo $\beta=\dfrac{1}{\lambda}$   -->
-
-<!-- </div> -->
-
-<!-- <br/><br/> -->
-
-<!-- ### <span style="color:#FF7F00"> **Ejemplo**</span> -->
-
-<!-- <br/> -->
-
-<!-- Encuentre los estimadores de los parámetros de la distribución normal a través del método de momentos. -->
-<!-- Previamente sabemos que los parámetros de una variable con distribución normal son $E[X]=\mu$ y $V[X]=\sigma^{2}$ y que $V[X]=E[X^{2}]-E[X]^{2}$. Dada esta información el estimador de momentos se construye de la siguiente manera:  -->
-
-<!-- $$M^{1}=m^{1}$$ -->
-
-<!-- $$M^{2}=m^{2}$$ -->
-
-<!-- Aplicando el método: -->
-
-<!-- <br/> -->
-
-<!-- |                                                    | -->
-<!-- |:---------------------------------------------------| -->
-<!-- |$$M^{1}= m^{1}$$ | -->
-<!-- |$$\mu  =  \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}$$| -->
-<!-- |$$\widehat{\mu} = \displaystyle\frac{1}{n}\sum_{i=1}^{n} x_{i}=\bar{x}$$| -->
-
-
-<!-- <br/> -->
-
-<!-- Para estimar $\sigma^{2}$, se realiza el siguiente procedimiento, usando $\mu^{1}=m^{1}$  y $\mu^{2}=m^{2}$. -->
-
-<!-- $$V[X]=E[X^{2}]-E[X]^{2} = \mu^{2}-(\mu^{1})^{2}$$ -->
-
-<!-- entonces igualamos estos dos momentos poblacionales con sus respectivos momentos muestrales quedando la igualdad -->
-
-<!-- $$\begin{eqnarray*} -->
-<!-- 	V[X]&=& \mu^{2}-(\mu^{1})^{2}\\ -->
-<!-- 	&=&m^{2}-(m^{1})^{2}\\ -->
-<!-- 	&=&\displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2} -->
-<!-- \end{eqnarray*}$$ -->
-
-<!-- podemos representar la varianza por $\sigma^{2}$ y obtenemos -->
-
-<!-- $$\widehat{\sigma^{2}}=\displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}$$ -->
-
-<!-- y obtenemos el estimador de la varianza: -->
-
-<!-- <br/> -->
-
-<!-- |                       |                                                                                                   | -->
-<!-- |----------------------:|:--------------------------------------------------------------------------------------------------| -->
-<!-- |$\widehat{\sigma^{2}}$ | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}$                                   | -->
-<!-- |$\widehat{\sigma^{2}}$ | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\bar{x}^{2}-\bar{x}^{2}+\bar{x}^{2}$           | -->
-<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-2\bar{x}^{2}+\bar{x}^{2}$                      | -->
-<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}x_{i}^{2}-\displaystyle\frac{2\bar{x}\sum x_{i}}{n}+\displaystyle\frac{n \bar{x}^{2}}{n}$ | -->
-<!-- |                       | $= \displaystyle\frac{1}{n}\Big(\sum_{i=1}^{n} x_{i}^{2}-2\bar{x}\sum_{i=1}^{n} x_{i}+\bar{x}^{2}\Big)$ | -->
-<!-- |                       | $= \displaystyle\frac{1}{n}\sum_{i=1}^{n}\Big(x_i-\bar{x}\Big)^{2}$        | -->
-
-<!-- <br/><br/> -->
-
-<!-- En resumen los estimadores de momentos para los parámetros de la distribución normal son: -->
-
-
-<!-- $$\widehat{\mu} = \displaystyle\frac{1}{n}\sum_{i=1}^{n} x_{i}=\bar{x}$$ -->
-
-<!-- $$\widehat{\sigma^{2}} = \displaystyle\frac{1}{n}\sum_{i=1}^{n}\Big(x-\bar{x}\Big)^{2}$$  -->
-
-
-<!-- A partir de ellos y mediante la obtención de una muestra aleatoria por ejemplo :630, 650, 710, 750, 790, 820, 860 y 910 se pueden estimar los parámetros por método de momentos con los siguientes resultados: -->
-
-<!-- $$\widehat{\mu}=765$$   -->
-
-<!-- $$\widehat{\sigma^{2}}=8550$$ -->
-
-<!-- <br/><br/><br/><br/> -->

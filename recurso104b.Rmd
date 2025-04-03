@@ -1,0 +1,108 @@
+---
+title: <span style="color:#686868">**Independencia**</span>
+author: "Métodos y Simulación Estadística"
+output:
+  html_document:
+    toc: no
+    toc_depth: 2
+    toc_float: yes
+    code_folding: hide
+    css: style.css
+---
+
+
+
+<br/><br/>
+<h2>Eventos independientes</h2>
+
+En el caso de que se desee evaluar si dos eventos son independientes, partiendo de la definición de probabilidad condicional, se obtiene la siguiente regla al despejar \(P(A \cap B)\) de la ecuación:
+
+\[
+P(A \cap B) = P(A) P(B|A)
+\]
+
+Si la ocurrencia del evento \(A\) no afecta la probabilidad del evento \(B\), se cumple que:
+
+\[
+P(B|A) = P(B)
+\]
+
+En este caso, la probabilidad conjunta de los eventos \(A\) y \(B\) es igual al producto de sus probabilidades marginales:
+
+\[
+P(A \cap B) = P(A) P(B)
+\]
+
+Por lo tanto, **dos eventos \(A\) y \(B\) son independientes si, y solo si, la probabilidad del evento \(B\) no se ve afectada por la ocurrencia del evento \(A\) o viceversa**, es decir:
+
+\[
+P(A \cap B) = P(A) P(B) \quad \text{o} \quad P(B|A) = P(B)
+\]
+
+
+
+<br/><br/>
+<div class="caja-ejemplo">
+<h3>Ejemplo:</h3>
+<p> 
+Se tiene un circuito formado por dos componentes \(A_{1}\) y \(A_{2}\), cada uno con su respectiva probabilidad de funcionamiento:
+
+\[
+P(A_{1}) = 0.90 \quad \text{y} \quad P(A_{2}) = 0.95
+\]
+
+<br/><br/>
+<center>
+```{r, echo=FALSE, out.width="50%", fig.align = "center"}
+knitr::include_graphics("img/circuito1.png")
+```
+**Figura 2.4** Disposición de componentes en serie.
+</center>
+
+<br/><br/>
+En un circuito en serie (ver **Figura 2.4**), ambos componentes deben funcionar para que el sistema funcione. Asumiendo independencia, la probabilidad de funcionamiento es:
+
+\[
+P(\text{Serie}) = P(A_{1} \cap A_{2}) = P(A_{1}) P(A_{2})
+\]
+
+Por lo tanto:
+
+\[
+P(\text{Serie}) = 0.90 \times 0.95 = 0.855
+\]
+
+<br/><br/>
+<center>
+```{r, echo=FALSE, out.width="50%", fig.align = "center"}
+knitr::include_graphics("img/circuito2.png")
+```
+**Figura 2.5** Disposición de componentes en paralelo.
+</center>
+
+<br/><br/>
+En un circuito en paralelo (ver **Figura 2.5**), basta con que funcione al menos uno de los componentes. La probabilidad es:
+
+\[
+P(\text{Paralelo}) = 1 - P(A_{1}' \cap A_{2}') 
+                   = 1 - [ (1 - P(A_{1})) (1 - P(A_{2})) ]
+\]
+
+Como  \( 1 - P(A_{1})= 1 - 0.90 = 0.10\) y 
+\(1 - P(A_{2})= 1 - 0.95 =0.05\), entonces
+
+\[
+P(\text{Paralelo})  = 1 - (0.10 \times 0.05) 
+                    = 1 - 0.005 = 0.995
+\]
+
+</p>
+</div>
+
+
+
+
+
+
+
+

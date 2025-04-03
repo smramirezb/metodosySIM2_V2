@@ -246,7 +246,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Métodos y Simulación</a>
+      <a class="navbar-brand" href="index.html"> </a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -268,16 +268,19 @@ $(document).ready(function () {
       <a href="recurso101.html">Introducción</a>
     </li>
     <li>
-      <a href="recurso102.html">Conceptos básicos</a>
+      <a href="recurso102.html">Conceptos Básicos</a>
     </li>
     <li>
-      <a href="recurso103.html">Enfoque</a>
+      <a href="recurso103.html">Enfoques y Postulados</a>
     </li>
     <li>
-      <a href="recurso103b.html">Axiomas</a>
+      <a href="recurso104.html">Tipos de Probabilidad</a>
     </li>
     <li>
-      <a href="recurso104.html">Tipos de probabilidad</a>
+      <a href="recurso104b.html">Independencia</a>
+    </li>
+    <li>
+      <a href="recurso104c.html">Teorema de Bayes</a>
     </li>
   </ul>
 </li>
@@ -289,19 +292,19 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso201.html">Definición</a>
+      <a href="recurso201.html">Variable Aleatoria: Univariado</a>
     </li>
     <li>
-      <a href="recurso202.html">Valor esperado y varianza</a>
+      <a href="recurso202.html">Valor Esperado</a>
     </li>
     <li>
-      <a href="recurso203.html">Variables conjuntas</a>
+      <a href="recurso203.html">Variables Conjuntas</a>
     </li>
     <li>
-      <a href="recurso204.html">Modelos discretos</a>
+      <a href="recurso204.html">Modelos Discretos: Univariado</a>
     </li>
     <li>
-      <a href="recurso205.html">Modelos continuos</a>
+      <a href="recurso205.html">Modelos Continuos: Univariado</a>
     </li>
   </ul>
 </li>
@@ -313,19 +316,19 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso301.html">Conceptos básicos</a>
+      <a href="recurso301.html">Conceptos Básicos</a>
     </li>
     <li>
-      <a href="recurso302.html">Estimación puntual</a>
+      <a href="recurso302.html">Estimación Puntual</a>
     </li>
     <li>
       <a href="recurso305.html">Teorema del Límite Central</a>
     </li>
     <li>
-      <a href="recurso303.html">Propiedades de los estimadores</a>
+      <a href="recurso303.html">Propiedades de los Estimadores</a>
     </li>
     <li>
-      <a href="recurso304.html">Métodos de estimación</a>
+      <a href="recurso304.html">Métodos de Estimación</a>
     </li>
   </ul>
 </li>
@@ -337,13 +340,13 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="recurso401.html">Para una población</a>
+      <a href="recurso401.html">Paramétrico: Una Población</a>
     </li>
     <li>
-      <a href="recurso402.html">Para dos poblaciones</a>
+      <a href="recurso402.html">Paramétrico: Dos Poblaciones</a>
     </li>
     <li>
-      <a href="recurso403.html">Estimación no paramétrica</a>
+      <a href="recurso403.html">Estimación no Paramétrica</a>
     </li>
   </ul>
 </li>
@@ -358,19 +361,19 @@ $(document).ready(function () {
       <a href="recurso501.html">Introducción</a>
     </li>
     <li>
-      <a href="recurso502.html">Conceptos básicos</a>
+      <a href="recurso502.html">Paramétrico: Una Población</a>
     </li>
     <li>
-      <a href="recurso503.html">Pruebas paramétricas</a>
+      <a href="recurso503.html">Paramétrico: Dos Poblaciones</a>
     </li>
     <li>
-      <a href="recurso504.html">Pruebas no paramétricas</a>
+      <a href="recurso504.html">Pruebas no Paramétricas</a>
     </li>
   </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Casos de estudio
+    Casos de Estudio
      
     <span class="caret"></span>
   </a>
@@ -380,6 +383,18 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="recurso405.html">Caso 2</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Referencias
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="recurso1000.html">Referencias</a>
     </li>
   </ul>
 </li>
@@ -432,11 +447,12 @@ Ejemplos:
 <p>A continuación, se presenta una lista de experimentos aleatorios
 (E):</p>
 <ul>
-<li><p><span class="math inline">\(E_{1}\)</span>: Lanzar una moneda dos
-veces y observar los resultados obtenidos en sus caras
+<li><p><span class="math inline">\(E_{1}\)</span>: Lanzar una moneda
+<strong>balanceda</strong> dos veces y observar los resultados obtenidos
+en sus caras superiores.</p></li>
+<li><p><span class="math inline">\(E_{2}\)</span>: Lanzar dos dados
+<strong>balanceados</strong> y observar la suma de los resultados
 superiores.</p></li>
-<li><p><span class="math inline">\(E_{2}\)</span>: Lanzar dos dados y
-observar la suma de los resultados superiores.</p></li>
 <li><p><span class="math inline">\(E_{3}\)</span>: Realizar un examen de
 estadística y observar el resultado obtenido.</p></li>
 <li><p><span class="math inline">\(E_{4}\)</span>: En una salida de
@@ -462,17 +478,18 @@ Ejemplos:
 </h3>
 <p>
 <ul>
-<li><p>Supongamos un experimento en el que se lanzan dos monedas y se
-registran los resultados en el orden en que ocurren. Dado que cada
-moneda puede caer en cara (c) o sello (s), existen cuatro posibles
-combinaciones de resultados. Por lo tanto, el espacio muestral está dado
-por: <span class="math inline">\(S_1 = \{ (cc), (cs), (sc), (ss)
-\}\)</span>.</p></li>
-<li><p>Supongamos un experimento en el que se lanzan dos dados de seis
-caras y se registran los resultados en el orden en que ocurren. Dado que
-cada dado puede mostrar un número del 1 al 6, existen <span
-class="math inline">\(6 \times 6 = 36\)</span> posibles combinaciones de
-resultados. Por lo tanto, el espacio muestral está dado por:<br />
+<li><p>Si se supone un experimento en el que se lanzan dos monedas
+<strong>balanceadas</strong> y se registran los resultados en el orden
+en que ocurren. Dado que cada moneda puede caer en cara (c) o sello (s),
+existen cuatro posibles combinaciones de resultados. Por lo tanto, el
+espacio muestral está dado por: <span class="math inline">\(S_1 = \{
+(cc), (cs), (sc), (ss) \}\)</span>.</p></li>
+<li><p>Si se supone un experimento en el que se lanzan dos dados
+<strong>balanceados</strong> de seis caras y se registran los resultados
+en el orden en que ocurren. Dado que cada dado puede mostrar un número
+del 1 al 6, existen <span class="math inline">\(6 \times 6 = 36\)</span>
+posibles combinaciones de resultados. Por lo tanto, el espacio muestral
+está dado por:<br />
 <span class="math display">\[
 S_2 =
 \left\{
@@ -486,7 +503,7 @@ S_2 =
 \end{array}
 \right\}
 \]</span></p></li>
-<li><p>Supongamos un experimento en el que se mide el tiempo de espera
+<li><p>Si se supone un experimento en el que se mide el tiempo de espera
 (en minutos) de un cliente en la fila de un banco antes de ser atendido.
 El tiempo puede tomar cualquier valor real entre 0 y 20 minutos, ya que
 la atención puede ocurrir de inmediato o tardar hasta el límite máximo
@@ -496,16 +513,16 @@ establecido. Por lo tanto, el espacio muestral está dado por:</p></li>
 S_3 = \{ x \in \mathbb{R} \mid 0 \leq x \leq 20 \}
 \]</span></p>
 <ul>
-<li><p>Supongamos un experimento en el que se registra si un interruptor
-está encendido o apagado. Dado que el interruptor solo puede tomar dos
-estados, lo representamos con una variable <span
+<li><p>Si se supone un experimento en el que se registra si un
+interruptor está encendido o apagado. Dado que el interruptor solo puede
+tomar dos estados, lo representamos con una variable <span
 class="math inline">\(x\)</span> que puede asumir los valores 0
 (apagado) o 1 (encendido). En consecuencia, el espacio muestral está
 dado por:<br />
 <span class="math display">\[
 S_4 = \{0,1\}
 \]</span></p></li>
-<li><p>Supongamos un experimento en el que se cuenta el número de
+<li><p>Si se supone un experimento en el que se cuenta el número de
 clientes que llegan a una tienda en un intervalo de una hora. Debido a
 que la cantidad de clientes es un número entero no negativo y que, por
 restricciones operativas, el máximo posible en una hora es 20, la
@@ -550,14 +567,15 @@ espacios muestrales definidos previamente:</p>
 <tbody>
 <tr class="odd">
 <td align="left"><span class="math inline">\(A_1\)</span></td>
-<td align="left">Obtener dos caras en el lanzamiento de dos monedas</td>
+<td align="left">Obtener dos caras en el lanzamiento de dos monedas
+<strong>balancedas</strong></td>
 <td align="left"><span class="math inline">\(A_1 = \{ (c, c)
 \}\)</span></td>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(A_2\)</span></td>
-<td align="left">La suma de las caras superiores de dos dados sea
-inferior a 4</td>
+<td align="left">La suma de las caras superiores de dos dados
+<strong>balanceados</strong> sea inferior a 4</td>
 <td align="left"><span class="math inline">\(A_2 = \{ (1, 1), (1, 2),
 (2, 1) \}\)</span></td>
 </tr>

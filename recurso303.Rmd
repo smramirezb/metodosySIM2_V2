@@ -31,8 +31,11 @@ knitr::include_graphics("img/estimador.png")
 En el estudio de los **estimadores estadísticos**, es fundamental analizar sus propiedades de **sesgo** y **varianza**, ya que estas determinan su calidad y confiabilidad. Para ilustrar estos conceptos, podemos hacer una analogía con un **tiro al blanco** (ver **Figura 2.45**), donde:
 
 - El **punto central** representa el **valor real del parámetro desconocido** que intentamos estimar.
+
 - Cada **disparo** representa una **estimación basada en una muestra**.
+
 - La **dispersión de los disparos** representa la **varianza del estimador**.
+
 - La **desviación sistemática del centro** representa el **sesgo del estimador**.
 
 La siguiente figura representa diferentes combinaciones de **sesgo y varianza** en los estimadores:
@@ -127,8 +130,11 @@ Un estimador es robusto si su desempeño **no se ve afectado significativamente*
 El estudio de las propiedades de los estimadores es fundamental para:
 
 1. **Construcción de Intervalos de Confianza:** Se requiere que los estimadores sean insesgados y eficientes para obtener intervalos confiables.
+
 2. **Pruebas de Hipótesis:** Se utilizan estimadores consistentes y eficientes para tomar decisiones estadísticas rigurosas.
+
 3. **Modelos de Regresión y Predicción:** En machine learning y econometría, los estimadores juegan un papel clave en la estimación de parámetros en modelos predictivos.
+
 4. **Análisis de Riesgos y Fiabilidad:** En ingeniería y finanzas, se utilizan estimadores para evaluar la confiabilidad de sistemas y riesgos de inversión.
 
 Las **propiedades de los estimadores** garantizan la calidad de la inferencia estadística, permitiendo obtener conclusiones precisas y confiables en diversas aplicaciones del mundo real.
@@ -147,6 +153,7 @@ Se tiene una población ($X$) que sigue una **distribución Exponencial** con pa
   \[
   E[X] = \frac{1}{\lambda}
   \]
+  
 - **Varianza poblacional**:  
   \[
   \text{Var}(X) = \frac{1}{\lambda^2}
@@ -380,8 +387,11 @@ Para evaluar la **insesgadez** de los estimadores \( \widehat{\theta}_{1} \), \(
 Los resultados obtenidos fueron:
 
 - **Valor teórico de \( \theta \)**: 0.5
+
 - **Media del Estimador 1**: 1.248413
+
 - **Media del Estimador 2**: 0.2498655
+
 - **Media del Estimador 3**: 0.498731
 
 La interpretación de los resultados:
@@ -510,13 +520,17 @@ Los resultados obtenidos son los siguientes:
 - **Varianza de los Estimadores:** 
 
   - \( \text{Var}(\widehat{\theta}_{1}) = 0.1703 \)
+  
   - \( \text{Var}(\widehat{\theta}_{2}) = 0.0079 \)
+  
   - \( \text{Var}(\widehat{\theta}_{3}) = 0.0243 \)
 
 - **Coeficiente de Variación (CV):**  
 
   - \( CV(\widehat{\theta}_{1}) = 0.3306 \)
+  
   - \( CV(\widehat{\theta}_{2}) = 0.3547 \)
+  
   - \( CV(\widehat{\theta}_{3}) = 0.3128 \)
 
 ---
