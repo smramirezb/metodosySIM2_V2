@@ -129,13 +129,13 @@ Un estimador es robusto si su desempeño **no se ve afectado significativamente*
 
 El estudio de las propiedades de los estimadores es fundamental para:
 
-1. **Construcción de Intervalos de Confianza:** Se requiere que los estimadores sean insesgados y eficientes para obtener intervalos confiables.
+1. **Construcción de intervalos de confianza:** Se requiere que los estimadores sean insesgados y eficientes para obtener intervalos confiables.
 
-2. **Pruebas de Hipótesis:** Se utilizan estimadores consistentes y eficientes para tomar decisiones estadísticas rigurosas.
+2. **Pruebas de hipótesis:** Se utilizan estimadores consistentes y eficientes para tomar decisiones estadísticas rigurosas.
 
-3. **Modelos de Regresión y Predicción:** En machine learning y econometría, los estimadores juegan un papel clave en la estimación de parámetros en modelos predictivos.
+3. **Modelos de regresión y predicción:** Por ejemplo, en machine learning y econometría, los estimadores juegan un papel clave en la estimación de parámetros en modelos predictivos.
 
-4. **Análisis de Riesgos y Fiabilidad:** En ingeniería y finanzas, se utilizan estimadores para evaluar la confiabilidad de sistemas y riesgos de inversión.
+4. **Análisis de riesgos y fiabilidad:** En ingeniería y finanzas, se utilizan estimadores para evaluar la confiabilidad de sistemas y riesgos de inversión.
 
 Las **propiedades de los estimadores** garantizan la calidad de la inferencia estadística, permitiendo obtener conclusiones precisas y confiables en diversas aplicaciones del mundo real.
 
@@ -525,7 +525,7 @@ Los resultados obtenidos son los siguientes:
   
   - \( \text{Var}(\widehat{\theta}_{3}) = 0.0243 \)
 
-- **Coeficiente de Variación (CV):**  
+- **Coeficiente de variación:**  
 
   - \( CV(\widehat{\theta}_{1}) = 0.3306 \)
   
@@ -537,7 +537,7 @@ Los resultados obtenidos son los siguientes:
 
 La interpretación de los resultados:  
 
-- **Varianza y Coeficiente de Variación (CV):**  La **varianza** es un indicador clave de **eficiencia**, ya que un estimador más eficiente debe tener menor varianza. Se observa que
+- **Varianza y coeficiente de variación:**  La **varianza** es un indicador clave de **eficiencia**, ya que un estimador más eficiente debe tener menor varianza. Se observa que
   \( \widehat{\theta}_{2} \) tiene la **menor varianza**, y  \( \widehat{\theta}_{1} \) presenta la **mayor varianza**. Además,  \( \widehat{\theta}_{3} \) presenta el menor **coeficiente de variación**, lo que indica que tiene la mejor estabilidad relativa entre las estimaciones. Aunque \( \widehat{\theta}_{2} \) tiene la menor varianza, su **CV es el más alto**. Adicionalmente, \( \widehat{\theta}_{1} \)  muestra consistentemente alta variabilidad y poca eficiencia.
 
 - **Gráfico de cajas** (ver **Figura 2.46**): Se observa que el **Estimador 2** tiene la menor dispersión, lo que respalda su baja varianza, pero su distribución muestra estar **sesgada**. El **Estimador 3** muestra un **buen equilibrio entre baja varianza y centramiento en el valor verdadero**, lo que lo hace más confiable en general. El **Estimador 1** tiene **alta dispersión**, con valores extremos y una distribución más asimétrica.
@@ -592,9 +592,9 @@ cv_est3 <- sd(estimaciones3) / mean(estimaciones3)
 cat("Varianza del Estimador 1:", var_est1, "\n")
 cat("Varianza del Estimador 2:", var_est2, "\n")
 cat("Varianza del Estimador 3:", var_est3, "\n")
-cat("Coeficiente de Variación del Estimador 1:", cv_est1, "\n")
-cat("Coeficiente de Variación del Estimador 2:", cv_est2, "\n")
-cat("Coeficiente de Variación del Estimador 3:", cv_est3, "\n")
+cat("Coeficiente de variación del Estimador 1:", cv_est1, "\n")
+cat("Coeficiente de variación del Estimador 2:", cv_est2, "\n")
+cat("Coeficiente de variación del Estimador 3:", cv_est3, "\n")
 
 # Crear un data frame para los boxplots
 datos <- data.frame(
@@ -671,9 +671,9 @@ cv_est3 <- sd(estimaciones3) / mean(estimaciones3)
 #cat("Varianza del Estimador 1:", var_est1, "\n")
 #cat("Varianza del Estimador 2:", var_est2, "\n")
 #cat("Varianza del Estimador 3:", var_est3, "\n")
-#cat("Coeficiente de Variación del Estimador 1:", cv_est1, "\n")
-#cat("Coeficiente de Variación del Estimador 2:", cv_est2, "\n")
-#cat("Coeficiente de Variación del Estimador 3:", cv_est3, "\n")
+#cat("Coeficiente de variación del Estimador 1:", cv_est1, "\n")
+#cat("Coeficiente de variación del Estimador 2:", cv_est2, "\n")
+#cat("Coeficiente de variación del Estimador 3:", cv_est3, "\n")
 
 # Crear un data frame para los boxplots
 datos <- data.frame(
@@ -703,9 +703,9 @@ plot.ins.efi<-ggplot(datos, aes(x = Estimador, y = Estimaciones, fill = Estimado
 Varianza del Estimador 1: 0.1703439 
 Varianza del Estimador 2: 0.007856289 
 Varianza del Estimador 3: 0.0243361 
-Coeficiente de Variación del Estimador 1: 0.3306018
-Coeficiente de Variación del Estimador 2: 0.3547337 
-Coeficiente de Variación del Estimador 3: 0.3127945 
+Coeficiente de variación del Estimador 1: 0.3306018
+Coeficiente de variación del Estimador 2: 0.3547337 
+Coeficiente de variación del Estimador 3: 0.3127945 
 </pre>
 
 

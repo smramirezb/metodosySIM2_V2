@@ -1,5 +1,5 @@
 ---
-title: <span style="color:#686868"> **Caso 2**</span>
+title: <span style="color:#686868"> **Caso No. 2. Estimador EMV**</span>
 author: "Métodos y Simulación Estadística"
 output:
   html_document:
@@ -52,7 +52,7 @@ Despejando \( \lambda \):
 \hat{\lambda} = \frac{1}{n} \sum_{i=1}^{n} x_i
 \]
 
-Dado que el **promedio observado** es **2**, obtenemos:
+Dado que el **promedio observado** es **2**, la estimación máximo verosimil del parámetro es 2:
 
 \[
 \hat{\lambda} = 2
@@ -119,7 +119,7 @@ print(plot_log)
 
 
 
-```{r,echo=TRUE}
+```{r,echo=TRUE,include=FALSE}
 # Cargar la librería ggplot2
 library(ggplot2)
 
@@ -187,7 +187,7 @@ knitr::include_graphics("img/fig277.png")
 <br/><br/>
 
 
-El siguiente gráfico de la **Figura 2.77** muestra la **log-verosimilitud** en función del parámetro \( \lambda \), que representa el número esperado de llegadas de vehículos a la gasolinera por minuto.
+El gráfico de la **Figura 2.77** muestra la **log-verosimilitud** en función del parámetro \( \lambda \), que representa el número esperado de llegadas de vehículos a la gasolinera por minuto.
 
 - La **curva azul** representa la función de **log-verosimilitud** \( \ell(\lambda) \), la cual alcanza su máximo en el estimador de máxima verosimilitud (EMV).  La forma de la curva  indica cómo varía la log-verosimilitud con respecto a \( \lambda \).
 

@@ -27,54 +27,40 @@ c4 ="#686868"  # gris - color texto
 knitr::include_graphics("img/banner_presentacion.png")
 ```
 
-</br>
-
-El concepto de **probabilidad** es un pilar fundamental de la estadística, ya que proporciona la base para desarrollar nociones clave, como la de **variable aleatoria**, esenciales para una adecuada comprensión de la inferencia estadística.
-
-La relación entre estos conceptos y las etapas de la **Metodología Estadística** permite contextualizar y resaltar la importancia de los temas abordados en esta unidad. Si bien la probabilidad y la variable aleatoria no forman parte explícita de dicha metodología, constituyen herramientas esenciales para sustentar e interpretar los métodos de inferencia estadística, facilitando la toma de decisiones informadas a partir de los datos.
-
 
 </br></br>
 
-<div class="content-box-blue">
+El concepto de **probabilidad** es un pilar fundamental de la estadística, ya que proporciona la base para desarrollar nociones clave, como la de **variable aleatoria**, esenciales para una adecuada comprensión de la inferencia estadística. 
 
-#### 1. **Definición del problema**
-
-#### 2. **Definición de los objetivos**
-
-#### 3. **Definición de las variables de interés**
-
-#### 4. **Diseño del experimento**
-
-#### 5. **Recolección de la información**
-
-#### 6. **Procesamiento de los datos**
-
-#### 7. <span style="color:#034A94">**Análisis descriptivo o exploratorio de datos**</span>
-#### $\hspace{.5cm}$    <span style="color:#999999">**Probabilidad**</span>
-#### $\hspace{.5cm}$    <span style="color:#999999">**Variable aleatoria**</span>
-
-#### 8. <span style="color:#034A94">**Inferencia estadística**</span>
-
-#### 9. **Conclusiones y recomendaciones**
-
-</div>
+</br></br>
+<h2>Contenido</h2>
 
 </br>
+1. Probabilidad
 
-En esta unidad se abordarán conceptos fundamentales para el análisis estadístico:
+  - Conceptos básicos  
+  - Enfoques  
+  - Axiomas  
+  - Tipos de probabilidad  
 
-- **Probabilidad:** Base para la comprensión de fenómenos aleatorios y cálculo de incertidumbre.
+</br>
+2. Variable aleatoria
 
-- **Variable aleatoria:** Elemento clave para modelar resultados de experimentos aleatorios.
+  - Modelos discretos  
+  - Modelos continuos  
+  - Valor esperado  
 
-- **Inferencia estadística:** Proceso para obtener conclusiones a partir de datos, que incluye:
+</br>
+3. Distribuciones de muestreo
 
-  - **Estimación:** Tanto puntual como mediante intervalos de confianza.
-  
-  - **Pruebas de hipótesis:** Enfoques paramétricos y no paramétricos para validar suposiciones.
+  - Estimación puntual  
+  - Teorema del límite central  
+  - Propiedades de los estimadores  
+  - Métodos de estimación  
 
+</br>
+4. Inferencia estadística
 
-
-  
-
+  - Intervalos de confianza  
+  - Intervalos bootstrap  
+  - Prueba de hipótesis  

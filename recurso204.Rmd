@@ -25,7 +25,7 @@ Los modelos probabilísticos discretos, como la distribución de **Poisson** y l
 <h2>Introducción</h2>
 
 
-Toda variable aleatoria se caracteriza por su **función de distribución de probabilidad** \( f(x) \), que describe la probabilidad de cada posible valor, y su **función de distribución acumulada** \( F(x) \), que representa la probabilidad de que la variable tome un valor menor o igual a \( x \), es decir, \( P(X \leq x) \). Además, posee medidas clave como el **valor esperado** \( \mu=E[X] \), que indica su promedio teórico, y la **varianza** \( \sigma=\text{Var}(X) \), que mide su dispersión respecto a la media.
+Toda variable aleatoria se caracteriza por su **función de distribución de probabilidad** \( f(x) \), que describe la probabilidad de cada posible valor, y su **función de distribución acumulada** \( F(x) \), que representa la probabilidad de que la variable tome un valor menor o igual a \( x \), es decir, \( P(X \leq x) \). Además, posee medidas clave como el **valor esperado** \( \mu=E[X] \), que indica su promedio teórico, y la **varianza** \( \sigma^2=\text{Var}(X) \), que mide su dispersión respecto a la media.
 
 Cuando se trabaja con **variables aleatorias conjuntas**, se utiliza la **función de distribución conjunta** \( f_{XY}(x,y) \), que describe la probabilidad de que ambas variables tomen ciertos valores simultáneamente. También se consideran métricas importantes como el **valor esperado conjunto** \( E[XY] \), la **covarianza** \( \sigma_{XY}=\text{Cov}(X, Y) \), que mide la relación lineal entre ellas, y el **coeficiente de correlación** \( \rho_{XY} \), que cuantifica la intensidad y dirección de esa relación.
 
@@ -48,7 +48,7 @@ A continuación, se presentan los modelos de probabilidad discreta más comunes 
 </br></br>
 <h2>Bernoulli</h2>
 
-Esta sección se inicia con el modelo **Bernoulli**, que, aunque algunos autores no lo consideran un modelo en sí mismo, es fundamental para comprender otros modelos de probabilidad discreta. Su nombre proviene del matemático **Jacob Bernoulli** y describe experimentos que cumplen las siguientes condiciones:
+Esta sección se inicia con el modelo de **Bernoulli**, que, aunque algunos autores no lo consideran un modelo en sí mismo, es fundamental para comprender otros modelos de probabilidad discreta. Su nombre proviene del matemático **Jacob Bernoulli** y describe experimentos que cumplen las siguientes condiciones:
 
 - Se realiza un **único ensayo**.
 
@@ -57,7 +57,7 @@ Esta sección se inicia con el modelo **Bernoulli**, que, aunque algunos autores
 - La **probabilidad de éxito** es \( p \), mientras que la **probabilidad de fracaso** es \( 1 - p = q \).
 
 </br>
-<h3>Distribución Bernoulli</h3>
+<h3>Distribución de Bernoulli</h3>
 
 La variable aleatoria de interés, \( X \), toma únicamente los valores **0** o **1**, donde:
 
@@ -236,7 +236,7 @@ ggplot(dat, aes(x = x, y = fx)) +
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("img/fig220.png")
 ```
-**Figura 2.20** Distribución $X \sim Binom(x,n=10, p=0.30)$
+**Figura 2.20** Distribución $X \sim Binom(x,n=10, p=0.30)$.
 </center>
 <br/><br/>
 
@@ -452,7 +452,7 @@ El **proceso de Poisson homogéneo** se caracteriza por una tasa de ocurrencia c
 
 
 </br></br>
-<h3>Distribución Poisson</h3>
+<h3>Distribución de Poisson</h3>
 
 La función de probabilidad de una variable aleatoria $X$ que sigue una distribución de Poisson, denotada como $X \sim \text{Poisson}(\lambda)$, está dada por la siguiente expresión:
 
@@ -556,7 +556,7 @@ ggplot(dat, aes(x = x, y = fx)) +
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("img/fig222.png")
 ```
-**Figura 2.22**  Función de distribución Poisson $X \sim Poiss(x,\lambda=2)$
+**Figura 2.22**  Función de distribución de Poisson $X \sim Poiss(x,\lambda=2)$.
 </center>
 <br/><br/>
 
@@ -569,7 +569,7 @@ Sys.setlocale("LC_ALL", "es_ES.UTF-8")
 library(ggplot2)
 library(dplyr)
 
-# Definir los parámetros de la distribución Poisson
+# Definir los parámetros de la distribución de Poisson
 lambda <- 2  # Valor esperado (λ)
 muestras <- 12  # Número de muestras a generar
 n_muestra <- 1000  # Tamaño de cada muestra
@@ -606,7 +606,7 @@ Sys.setlocale("LC_ALL", "es_ES.UTF-8")
 library(ggplot2)
 library(dplyr)
 
-# Definir los parámetros de la distribución Poisson
+# Definir los parámetros de la distribución de Poisson
 lambda <- 2  # Valor esperado (λ)
 muestras <- 12  # Número de muestras a generar
 n_muestra <- 1000  # Tamaño de cada muestra

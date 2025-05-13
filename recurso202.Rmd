@@ -96,7 +96,7 @@ Esta expresión representa la esperanza del cuadrado de las desviaciones de $X$ 
 También se puede expresar como la diferencia entre el **segundo momento** y el cuadrado del **primer momento**:
 
 $$
-\text{Var}(X) = E(X^2) - [E(X)]^2
+\sigma^2_X=\text{Var}(X) = E(X^2) - [E(X)]^2
 $$
 
 

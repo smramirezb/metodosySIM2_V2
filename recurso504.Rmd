@@ -48,63 +48,84 @@ El **Teorema Central del Límite (TCL)** establece que, si las muestras son lo s
 Todas las pruebas vistas hasta el momento requieren **condiciones específicas** sobre la población de estudio. Estas condiciones afectan la **validez** y **precisión** de los resultados obtenidos. Sin embargo, en la práctica:
 
 - En algunos casos, es **posible verificar empíricamente** si los supuestos se cumplen, mediante **pruebas de normalidad** o **análisis gráficos**.
+
 - En otras situaciones, solo es **posible suponer** que los datos cumplen los supuestos, lo que introduce un margen de **incertidumbre** en la inferencia estadística.  
 
 
 El incumplimiento de los supuestos puede generar **resultados imprecisos** o incluso **incorrectos** en la toma de decisiones estadísticas. En particular:
 
 - **Pequeñas desviaciones** de los supuestos pueden producir **estimaciones sesgadas**, pero el efecto puede ser manejable.
+
 - **Violaciones graves** pueden comprometer completamente la validez de las pruebas y llevar a **conclusiones erróneas**.
 
 Por esta razón, es fundamental evaluar la adecuación de cada prueba antes de aplicarla, considerando alternativas **no paramétricas** cuando los supuestos no pueden cumplirse de manera satisfactoria.  
 
 
-**Cuándo Utilizar Pruebas No Paramétricas**  
+**Cuándo utilizar pruebas no paramétricas**  
 
 Las pruebas no paramétricas son una alternativa a las pruebas paramétricas cuando los datos no cumplen con ciertos supuestos fundamentales. Su aplicación es recomendable en los siguientes casos:  
 
 - **Cuando no se cumplen los supuestos paramétricos**, tales como:
+
   - **Normalidad** en la distribución de los datos.
+  
   - **Tamaño mínimo de muestra** requerido para aplicar pruebas paramétricas.
+  
   - **Igual número de elementos en cada muestra**, especialmente en estudios comparativos.
+  
   - **Homogeneidad de varianzas**, condición necesaria en pruebas como la t de Student.  
 
 - **Cuando se dispone de tamaños muestrales pequeños**, generalmente menores a **30 observaciones**, lo que dificulta verificar los supuestos de normalidad en la población.  
 
-- **Cuando se requiere convertir datos cualitativos en información cuantificable**, por ejemplo, en estudios de mercado donde se transforman escalas **nominales u ordinales** en escalas de intervalo para analizar aspectos como:  
+- **Cuando se requiere convertir datos cualitativos en información cuantificable**, por ejemplo, en estudios de mercado donde se transforman escalas **nominales u ordinales** en escalas de intervalo para analizar aspectos como:
+
   - Preferencias del consumidor.
+  
   - Nivel de satisfacción.
+  
   - Necesidades del cliente.  
 
-**Ventajas de Utilizar Pruebas No Paramétricas**  
+**Ventajas de utilizar pruebas no paramétricas**  
 
 Las pruebas no paramétricas presentan diversas ventajas, entre ellas:  
 
-- Son **fáciles de aplicar** (aunque en la actualidad, con el uso de **R**, tanto las pruebas paramétricas como no paramétricas pueden implementarse con una sola línea de código).  
-- No requieren verificar **supuestos distribucionales**, lo que las hace más flexibles en su aplicación.  
-- Son adecuadas para **muestras pequeñas**, lo que permite su uso en estudios con datos limitados.  
-- Permiten el análisis de **variables cualitativas**, facilitando la toma de decisiones en contextos donde los datos no son numéricos.  
+  - Son **fáciles de aplicar** (aunque en la actualidad, con el uso de **R**, tanto las pruebas paramétricas como no paramétricas pueden implementarse con una sola línea de código).  
 
-**Desventajas de las Pruebas No Paramétricas**  
+  - No requieren verificar **supuestos distribucionales**, lo que las hace más flexibles en su aplicación. 
+
+  - Son adecuadas para **muestras pequeñas**, lo que permite su uso en estudios con datos limitados.  
+
+  - Permiten el análisis de **variables cualitativas**, facilitando la toma de decisiones en contextos donde los datos no son numéricos.  
+
+**Desventajas de las pruebas no paramétricas**  
 
 A pesar de su utilidad, estas pruebas presentan ciertas limitaciones:  
 
-- **Pérdida de información**: Al basarse en rangos en lugar de valores absolutos, pueden reducir la precisión del análisis.  
-- **Menor eficiencia estadística** en comparación con las pruebas paramétricas, lo que implica una menor **potencia estadística**.  
-- **Mayor riesgo de cometer un error de Tipo II**, es decir, mayor probabilidad de **no rechazar una hipótesis nula falsa**.  
+  - **Pérdida de información**: Al basarse en rangos en lugar de valores absolutos, pueden reducir la precisión del análisis.  
 
-**Principales Pruebas No Paramétricas**  
+  - **Menor eficiencia estadística** en comparación con las pruebas paramétricas, lo que implica una menor **potencia estadística**.  
+
+  - **Mayor riesgo de cometer un error de tipo II**, es decir, mayor probabilidad de **no rechazar una hipótesis nula falsa**.  
+
+**Principales pruebas no paramétricas**  
 
 Las pruebas no paramétricas más utilizadas en estadística inferencial incluyen:  
 
-- **Prueba de Signos**: Evalúa si la **mediana poblacional (\(Me\))** de una variable difiere significativamente de un valor de referencia o evalúa las diferencias en datos pareados sin asumir normalidad.  
-- **Prueba Chi-Cuadrado de Bondad de Ajuste**: Determina si una muestra sigue una distribución esperada. 
-- **Prueba Chi-Cuadrado de Independencia**: Evalúa la asociación entre dos variables categóricas.  
-- **Prueba de Mann-Whitney**: Comparación de dos muestras independientes cuando no se asume normalidad. 
-- **Prueba de Wilcoxon**: Alternativa a la prueba t para muestras dependientes. 
-- **Prueba de Kruskal-Wallis**: Alternativa a ANOVA para comparar más de dos grupos independientes.  
-- **Correlación de Rangos de Spearman**: Mide la relación entre dos variables ordinales o no lineales.
-- **Prueba de Rachas**: Detecta patrones en secuencias de datos. 
+  - **Prueba de signos**: Evalúa si la **mediana poblacional \(Me\)** de una variable difiere significativamente de un valor de referencia o evalúa las diferencias en datos pareados sin asumir normalidad.  
+  
+  - **Prueba chi-cuadrado de bondad de ajuste**: Determina si una muestra sigue una distribución esperada. 
+  
+ - **Prueba chi-cuadrado de independencia**: Evalúa la asociación entre dos variables categóricas.
+ 
+  - **Prueba de Mann-Whitney**: Comparación de dos muestras independientes cuando no se asume normalidad. 
+  
+  - **Prueba de Wilcoxon**: Alternativa a la prueba t para muestras dependientes. 
+  
+  - **Prueba de Kruskal-Wallis**: Alternativa a ANOVA para comparar más de dos grupos independientes.  
+  
+  - **Correlación de rangos de Spearman**: Mide la relación entre dos variables ordinales o no lineales.
+  
+  - **Prueba de rachas**: Detecta patrones en secuencias de datos. 
 
 
 ---
@@ -115,18 +136,22 @@ Las pruebas no paramétricas más utilizadas en estadística inferencial incluye
 La **prueba de signos** es un método estadístico **no paramétrico** utilizado para evaluar si la **mediana poblacional** de una variable difiere significativamente de un valor de referencia. También se emplea para comparar dos muestras **pareadas**, verificando si existe una diferencia significativa en la **mediana de las diferencias**.
 
 **Prueba de una sola muestra:**
-Para una única muestra, se analiza si la **mediana poblacional** (\( Me \)) es diferente de un valor de referencia (\( Me_0 \)). Se plantean las siguientes hipótesis alternativas:
+Para una única muestra, se analiza si la **mediana poblacional** \(Me\) es diferente de un valor de referencia \( Me_0\). Se plantean las siguientes hipótesis alternativas:
 
 - **\( H_1 \)**: \( Me \neq Me_0 \) (bilateral)  
-- **\( H_1 \)**: \( Me > Me_0 \) (unilateral derecha)  
+
+- **\( H_1 \)**: \( Me > Me_0 \) (unilateral derecha) 
+
 - **\( H_1 \)**: \( Me < Me_0 \) (unilateral izquierda) 
 
 **Prueba para muestras pareadas:**
 
-Para **muestras pareadas**, se considera la **mediana de las diferencias** \( Me_D \) entre cada par de valores \( (X_i, Y_i) \). Se define cada diferencia como \( D_i = X_i - Y_i \). Las hipótesis alternativas pueden formularse de la siguiente manera:
+Para **muestras pareadas**, se considera la **mediana de las diferencias** \(Me_D\) entre cada par de valores \( (X_i, Y_i) \). Se define cada diferencia como \( D_i = X_i - Y_i \). Las hipótesis alternativas pueden formularse de la siguiente manera:
 
 - **\( H_1 \)**: \( Me_D \neq 0 \) (bilateral)  
+
 - **\( H_1 \)**: \( Me_D > 0 \) (unilateral derecha)  
+
 - **\( H_1 \)**: \( Me_D < 0 \) (unilateral izquierda)  
 
 
@@ -144,7 +169,9 @@ En este estudio, se analiza el impacto del **deporte** en la percepción de auto
 En la escala de medición utilizada:
 
 - Un **nivel de 15 puntos** indica **indiferencia** respecto a la afirmación de que el deporte afecta la autoimagen.
+
 - Valores **menores a 15** sugieren un **impacto negativo** en la autoimagen.
+
 - Valores **mayores a 15** sugieren un **impacto positivo** en la autoimagen.
 
 Los puntajes obtenidos en la prueba fueron los siguientes : 16, 15, 12, 17, 18, 14, 16, 14, 16,  17, 19, 16,  14, 21, 20, 16, 16, 16  |
@@ -165,6 +192,7 @@ H_1: Me > 15
 donde:
 
 - **\(H_0\)**: La mediana de la autoimagen es **igual o menor a 15**, lo que sugiere que el deporte **no tiene un efecto significativo** en la autoimagen.
+
 - **\(H_1\)**: La mediana de la autoimagen es **mayor a 15**, lo que indica que la práctica deportiva **mejora la percepción de autoimagen** de los participantes.
 
 
@@ -219,7 +247,7 @@ Upper Achieved CI     0.9519     16    Inf
 </pre>
 
 
-El valor-p = 0.02452 por tanto con una significancia del 5% se acepta  que la mediana de la autoimagen es **mayor a 15**, lo que indica que la práctica deportiva **mejora la percepción de autoimagen** de los participantes.
+El \(valor-p=0.02452\) por tanto con una significancia del 5% se acepta  que la mediana de la autoimagen es **mayor a 15**, lo que indica que la práctica deportiva **mejora la percepción de autoimagen** de los participantes.
 
 </p>
 </div>
@@ -266,6 +294,7 @@ Las hipótesis estadísticas:
 donde:
 
 - **Hipótesis nula \(H_0\)**: La **demanda es igual** para todas las marcas.  
+
 - **Hipótesis alternativa \(H_1\)**: La demanda varía entre las marcas.
 
 
@@ -335,7 +364,7 @@ X-squared = 3.6, df = 3, p-value = 0.308
 </pre>
 
 
-Dado que el **valor-p** obtenido es **0.308**, el cual es mayor que 0.05, no se rechaza la hipótesis nula. Por lo tanto, no hay evidencia suficiente en la muestra para inferir que la demanda de las marcas es diferente, por lo que se asume que la demanda es igual para todas las marcas con una significancia del 5%
+Dado que el \(valor-p\) obtenido es 0.308, el cual es mayor que 0.05, no se rechaza la hipótesis nula. Por lo tanto, no hay evidencia suficiente en la muestra para inferir que la demanda de las marcas es diferente, por lo que se asume que la demanda es igual para todas las marcas con una significancia del 5%
 
 </p>
 </div>
@@ -467,7 +496,7 @@ X-squared = 3.572, df = 5, p-value = 0.6125
 </pre>
 
 
-Como el valor-p= 0.6125, con una significancia del 5% no se rechaza la normalidad de las notas de los estudiantes. 
+Como el\(valor-p= 0.6125\), con una significancia del 5% no se rechaza la normalidad de las notas de los estudiantes. 
 
 
 Una de las clases presenta una **probabilidad esperada inferior al 5%** (\(0.0277\)), con las siguientes probabilidades estimadas para cada intervalo:
@@ -485,6 +514,7 @@ El método utilizado en este análisis se basa en la **distribución de los dato
 Para validar los resultados, se recomienda complementar el análisis con otras pruebas de normalidad, tales como:
 
 - **Test de Shapiro-Wilk**: Adecuado para muestras pequeñas.
+
 - **Test de Kolmogorov-Smirnov**: Compara la distribución empírica con una teórica.
 
 Estos métodos permiten contrastar de manera más robusta la hipótesis de normalidad de los datos.
@@ -495,10 +525,10 @@ Estos métodos permiten contrastar de manera más robusta la hipótesis de norma
 
 
 </br></br>
-<h2>Prueba Chi-cuadrado de Independencia</h2>
+<h2>Prueba chi-cuadrado de Independencia</h2>
 
 
-La **prueba Chi-cuadrado de independencia** es un procedimiento estadístico **no paramétrico** utilizado para evaluar si existe **una relación significativa entre dos variables categóricas**. Se aplica cuando los datos se organizan en una **tabla de contingencia**, permitiendo determinar si las variables analizadas son **independientes o están asociadas**.
+La **prueba chi-cuadrado de independencia** es un procedimiento estadístico **no paramétrico** utilizado para evaluar si existe **una relación significativa entre dos variables categóricas**. Se aplica cuando los datos se organizan en una **tabla de contingencia**, permitiendo determinar si las variables analizadas son **independientes o están asociadas**.
 
 **Hipótesis estadísticas:**
 
@@ -523,7 +553,7 @@ La **prueba Chi-cuadrado de independencia** es un procedimiento estadístico **n
 <h3>Ejemplo:</h3>
 <p>
 
-Se desea analizar si la **calificación de un producto** dada por los consumidores está relacionada con su **ubicación de residencia** (urbano o rural). Para ello, se empleará la **prueba de independencia de Chi-cuadrado**, la cual permite evaluar si dos **variables categóricas** presentan una asociación estadísticamente significativa.
+Se desea analizar si la **calificación de un producto** dada por los consumidores está relacionada con su **ubicación de residencia** (urbano o rural). Para ello, se empleará la **prueba de independencia de chi-cuadrado**, la cual permite evaluar si dos **variables categóricas** presentan una asociación estadísticamente significativa.
 
 <center>
 **Tabla 2.23** Distribución de la calificación por residencia
@@ -540,6 +570,7 @@ Se desea analizar si la **calificación de un producto** dada por los consumidor
 Las hipótesis estadísticas:
 
 - **\(H_0\)**: No existe relación entre la calificación del producto y la ubicación de residencia del consumidor (las variables son independientes).
+
 - **\(H_1\)**: Existe relación entre la calificación del producto y la ubicación de residencia del consumidor (las variables no son independientes).
 
 El siguiente código implementa contraste de las hipótesis:
@@ -599,7 +630,7 @@ X-squared = 3.7378, df = 2, p-value = 0.1543
 
 
 
-Dado que el valor-p = 0.1543 es mayor que el nivel de significancia establecido 0.05, no se rechaza la hipótesis nula. Esto indica que no existe evidencia suficiente para concluir que la calificación del producto y la ubicación de residencia del consumidor estén relacionadas. En otras palabras, no se observa una asociación estadísticamente significativa entre estas variables.
+Dado que el \(valor-p=0.1543\)  es mayor que el nivel de significancia establecido 0.05, no se rechaza la hipótesis nula. Esto indica que no existe evidencia suficiente para concluir que la calificación del producto y la ubicación de residencia del consumidor estén relacionadas. En otras palabras, no se observa una asociación estadísticamente significativa entre estas variables.
 
 
 </p>
@@ -629,15 +660,19 @@ Este test se emplea en situaciones donde se mide la misma variable en dos moment
 
 donde:
 
-- **\(H_0\)**: No existe diferencia significativa en la mediana de las diferencias entre ambos grupos.  
+- **\(H_0\)**: No existe diferencia significativa en la mediana de las diferencias entre ambos grupos. 
+
 - **\(H_1\)**: La mediana de las diferencias es distinta de cero, lo que sugiere un cambio significativo entre las mediciones.  
 
 
 **Supuestos de la prueba**
 
 - **Los datos son pareados**, es decir, provienen de mediciones repetidas sobre los mismos sujetos o de observaciones relacionadas.  
-- **Las observaciones son independientes dentro de cada grupo.**  
-- **La escala de medición es al menos ordinal**, permitiendo comparar rangos.  
+
+- **Las observaciones son independientes dentro de cada grupo.** 
+
+- **La escala de medición es al menos ordinal**, permitiendo comparar rangos. 
+
 - **La distribución de las diferencias es simétrica**, aunque no necesariamente normal.  
 
 **Diferencias con la prueba de signos**
@@ -668,13 +703,17 @@ H_1: Me_1 \neq Me_2
 donde:
 
 - **\(H_0\)**: No hay diferencia significativa entre las **medianas** de los dos grupos.  
+
 - **\(H_1\)**: La mediana de al menos un grupo es significativamente diferente, lo que sugiere que las muestras provienen de distribuciones distintas.
 
 **Supuestos de la prueba:**
 
-- **Los datos son independientes** en cada grupo, es decir, cada observación en un grupo no está relacionada con las observaciones del otro grupo.  
+- **Los datos son independientes** en cada grupo, es decir, cada observación en un grupo no está relacionada con las observaciones del otro grupo. 
+
 - **La variable de interés es al menos ordinal**, permitiendo ordenar los valores en rangos.  
-- **Las distribuciones de los dos grupos tienen una forma similar**, aunque pueden diferir en ubicación (mediana).  
+
+- **Las distribuciones de los dos grupos tienen una forma similar**, aunque pueden diferir en ubicación (mediana). 
+
 - **No se requiere normalidad en los datos**, lo que hace que esta prueba sea robusta ante distribuciones no normales.  
 
 
@@ -692,6 +731,7 @@ La **prueba de Mann-Whitney** es la versión **para muestras independientes**, m
 Este análisis tiene como objetivo comparar el **consumo diario de calorías** entre dos grupos de adolescentes:
 
 - **Grupo 1 (G1)**: Adolescentes **sanos** (\(n = 15\))  
+
 - **Grupo 2 (G2)**: Adolescentes **con bulimia** (\(n = 14\))  
 
 Antes de realizar la prueba de hipótesis sobre la **diferencia de medianas**, es necesario verificar si los datos presentan una **distribución normal**. Para ello, se aplica la **prueba de normalidad de Shapiro-Wilk**. Si se encuentra que los datos no siguen una distribución normal, se optará por una **prueba no paramétrica**.
@@ -709,6 +749,7 @@ H_1: Me_{G1} > Me_{G2}
 donde:
 
 - **\(H_0\)**: La mediana del consumo calórico en adolescentes sanos **no es mayor** que en adolescentes con bulimia.
+
 - **\(H_1\)**: La mediana del consumo calórico en adolescentes sanos **es mayor** que en adolescentes con bulimia.
 
 
@@ -757,7 +798,7 @@ mann_whitney
 ```
 
 
-Los resultados de la prueba de **Shapiro-Wilk** muestran que no se rechaza la **hipótesis nula de normalidad** en ambos grupos, dado que los valores-p son mayores a 0.05.
+Los resultados de la prueba de **Shapiro-Wilk** muestran que no se rechaza la **hipótesis nula de normalidad** en ambos grupos, dado que los \(valores-p\) son mayores a 0.05.
  
 
 <pre>
@@ -775,7 +816,7 @@ W = 0.95592, p-value = 0.6219
 </pre>
 
 
-El resultado de la **prueba U de Mann-Whitney** arroja un **valor-p de 0.0007714**, lo que indica que con un nivel de significancia del 5%, se rechaza la hipótesis nula en favor de la alternativa. Esto sugiere que la mediana del consumo calórico en adolescentes sanos es significativamente mayor que en adolescentes con bulimia.
+El resultado de la **prueba U de Mann-Whitney** arroja un \(valor-p=0.0007714\), lo que indica que con un nivel de significancia menor al 1%, se rechaza la hipótesis nula en favor de la alternativa. Esto sugiere que la mediana del consumo calórico en adolescentes sanos es significativamente mayor que en adolescentes con bulimia.
 
 <pre>
 Wilcoxon rank sum test with continuity correction
@@ -815,13 +856,16 @@ H_1: \text{Al menos una media es diferente.}
 donde:
 
 - **\(H_0\)**: No hay diferencias significativas entre las **medias** de los grupos.  
+
 - **\(H_1\)**: Al menos un grupo tiene una media diferente.  
 
 
 **Supuestos del ANOVA de una vía**  
 
 - **Las observaciones son independientes** dentro y entre los grupos.
+
 - **Las variables deben seguir una distribución normal** en cada grupo.
+
 - **Las varianzas deben ser homogéneas** (homocedasticidad).
 
 Si los datos no cumplen con estos supuestos, se recomienda utilizar la **prueba de Kruskal-Wallis**, una alternativa **no paramétrica**.
@@ -847,6 +891,7 @@ H_1: \text{Al menos una de las medianas es diferente.}
 donde:
 
 - **\(H_0\)**: No hay diferencias significativas entre las **medianas** de los grupos.  
+
 - **\(H_1\)**: Al menos un grupo tiene una mediana diferente.  
 
 A diferencia del ANOVA, la **prueba de Kruskal-Wallis no asume normalidad** y se basa en la comparación de los **rangos medianos** en lugar de las **medias**.
@@ -855,7 +900,9 @@ A diferencia del ANOVA, la **prueba de Kruskal-Wallis no asume normalidad** y se
 **Supuestos de la prueba de Kruskal-Wallis:**  
 
 - **Las observaciones son independientes** dentro y entre los grupos.
+
 - **Las variables deben estar en una escala al menos ordinal**, permitiendo la comparación de rangos.
+
 - **Las distribuciones de los grupos deben tener formas similares** para que la comparación de medianas sea válida.
 
 
@@ -867,14 +914,17 @@ A diferencia del ANOVA, la **prueba de Kruskal-Wallis no asume normalidad** y se
 Este estudio tiene como objetivo **determinar si la capacidad de memoria varía con la edad**. Para ello, se han conformado **tres grupos de personas** según su edad:
 
 - **Grupo 1**: Personas de **60 años**  
+
 - **Grupo 2**: Personas de **50 años**  
+
 - **Grupo 3**: Personas de **40 años**  
 
 A cada persona se le presenta una **serie de palabras dos veces** y se **cuenta el número de palabras recordadas**. Se desea analizar si existen diferencias significativas en la **capacidad de memoria** entre los tres grupos etarios.
 
 Se plantean las siguientes hipótesis para el análisis:
 
-- **\(H_0\)**: No hay diferencias significativas en la capacidad de memoria entre los grupos etarios.  
+- **\(H_0\)**: No hay diferencias significativas en la capacidad de memoria entre los grupos etarios.
+
 - **\(H_1\)**: Al menos un grupo presenta una **mediana diferente**, lo que sugiere una posible variación en la memoria con la edad.
 
 Los datos observados son los siguientes:
@@ -898,6 +948,7 @@ H_1: \text{Al menos una de las medias es diferente.}
 donde:
 
 - **\(H_0\)**: No hay diferencias significativas en la capacidad de memoria entre los grupos etarios.  
+
 - **\(H_1\)**: Al menos un grupo presenta una **media diferente**, lo que sugiere una posible variación en la memoria con la edad.
 
 Los códigos para la implementación son:
@@ -993,7 +1044,7 @@ data:  g3
 W = 0.95082, p-value = 0.7431
 </pre>
 
-El **test de Levene** de **comparación de varianzas**, con un **valor-p=0.6351**, permite concluir que no hay evidencia en los datos para rechazar la **igualdad de varianzas**, con una significancia del 5%.
+El **test de Levene** de **comparación de varianzas**, con un \(valor-p=0.6351\), permite concluir que no hay evidencia en los datos para rechazar la **igualdad de varianzas**, con una significancia del 5%.
 
 <pre>
 Levene's Test for Homogeneity of Variance (center = median)
@@ -1014,7 +1065,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 </pre>
 
 
-El resultado de **ANOVA** muestra un **valor-p = 0.0087**, lo que indica que **al menos un grupo presenta una media significativamente diferente**.
+El resultado de **ANOVA** muestra un \(valor-p=0.0087\), lo que indica que **al menos un grupo presenta una media significativamente diferente**.
 
 <pre>
 Kruskal-Wallis rank sum test
@@ -1023,7 +1074,7 @@ data:  memoria by grupo
 Kruskal-Wallis chi-squared = 7.7271, df = 2, p-value = 0.02099
 </pre>
 
-El resultado de **Kruskal-Wallis** muestra un **valor-p = 0.02099**, lo que respalda la conclusión de que **existen diferencias en la capacidad de memoria**.
+El resultado de **Kruskal-Wallis** muestra un \(valor-p=0.02099\), lo que respalda la conclusión de que **existen diferencias en la capacidad de memoria**.
 
 Ambos métodos (ANOVA y Kruskal-Wallis) han mostrado que existen diferencias significativas entre los grupos.
 
@@ -1194,9 +1245,9 @@ data:  nota_obtenida
 W = 0.91837, p-value = 0.3435
 </pre>
 
-Dado que ambos p-valores son mayores a 0.05, no se rechaza la normalidad en las dos variables con una significancia del 5%. Esto indica que se pueden utilizar métodos paramétricos como la correlación de Pearson.
+Dado que ambos \(valores-p\) son mayores a 0.05, no se rechaza la normalidad en las dos variables con una significancia del 5%. Esto indica que se pueden utilizar métodos paramétricos como la correlación de Pearson.
 
-Dado que ambos p-valores son mayores a 0.05, no se rechaza la normalidad en las dos variables. Esto indica que se pueden utilizar métodos paramétricos como la correlación de Pearson.
+Dado que ambos \(valores-p\) son mayores a 0.05, no se rechaza la normalidad en las dos variables. Esto indica que se pueden utilizar métodos paramétricos como la correlación de Pearson.
 
 <pre>
 Pearson's product-moment correlation
@@ -1211,7 +1262,7 @@ sample estimates:
 0.9128466 
 </pre>
 
-El coeficiente de correlación de **Pearson** es 0.9128, lo que indica una asociación lineal positiva fuerte entre el tiempo de estudio y la nota obtenida. Dado que el **valor-p = 0.000227** es menor a 0.01, se concluye con una significancia del 1% que **existe una correlación lineal significativa entre ambas variables**.
+El coeficiente de correlación de **Pearson** es 0.9128, lo que indica una asociación lineal positiva fuerte entre el tiempo de estudio y la nota obtenida. Dado que el \(valor-p=0.000227\) es menor a 0.01, se concluye con una significancia de menos del 1% que **existe una correlación lineal significativa entre ambas variables**.
 
 
 Para contrastar, se aplica la correlación de Spearman, que evalúa relaciones monotónicas sin requerir normalidad.
@@ -1228,7 +1279,7 @@ sample estimates:
 </pre>
 
 El coeficiente de correlación de **Spearman** es 0.814, lo que indica una relación monotónica positiva fuerte.
-El **valor-p = 0.0041** confirma que **existe una asociación significativa entre el tiempo de estudio y la nota obtenida** con un nivel de significancia del 1%.
+El \(valor-p=0.0041\)  confirma que **existe una asociación significativa entre el tiempo de estudio y la nota obtenida** con un nivel de significancia del 1%.
 
 Dado que Pearson y Spearman presentan valores de correlación altos y significativos, se concluye que a mayor tiempo de estudio, mayor es la nota obtenida.
 
@@ -1238,19 +1289,22 @@ Dado que Pearson y Spearman presentan valores de correlación altos y significat
 
 
 </br></br>
-<h2>Prueba de Rachas</h2>
+<h2>Prueba de rachas</h2>
 
 La **prueba de rachas** es un procedimiento estadístico **no paramétrico** utilizado para evaluar si una **secuencia de datos** sigue un **patrón aleatorio** o si presenta **tendencias o agrupaciones** que sugieren una estructura subyacente. Se aplica en **datos ordinales o binarios**, y es particularmente útil para analizar la independencia de observaciones en series temporales o en secuencias categóricas.
 
-**Hipótesis Estadísticas**:
+**Hipótesis estadísticas**:
 
 - **\(H_0\)**: La secuencia de datos es **aleatoria** (no hay patrones sistemáticos).  
+
 - **\(H_1\)**: La secuencia de datos **no es aleatoria** y presenta **tendencias o agrupaciones** significativas.
 
-**Supuestos de la Prueba:**
+**Supuestos de la prueba:**
 
 - Los datos deben representar una **secuencia ordenada** de observaciones.
+
 - Las observaciones deben ser **independientes**.
+
 - Se requiere que los datos sean **binarios** (dos categorías) o puedan transformarse en una secuencia dicotómica.
 
 
@@ -1346,7 +1400,7 @@ runs_test <- runs.test(y)
 print(runs_test)
 ```
 
-Según los resultados de la **prueba de Chi-cuadrado**, el **valor-p** obtenido es **0.8165**. Dado que este valor es mayor que el nivel de significancia del 5%, no se rechaza la hipótesis nula. Esto indica que **no hay suficiente evidencia para concluir que la muestra no proviene de una distribución uniforme**.
+Según los resultados de la **prueba de Chi-cuadrado**, el \(valor-p\) obtenido es 0.8165. Dado que este valor es mayor que el nivel de significancia del 5%, no se rechaza la hipótesis nula. Esto indica que **no hay suficiente evidencia para concluir que la muestra no proviene de una distribución uniforme**.
 
 <pre>
 Chi-squared test for given probabilities
@@ -1356,7 +1410,7 @@ X-squared = 5.2, df = 9, p-value = 0.8165
 </pre>
 
 
-Según los resultados de la **prueba de rachas**, el **valor-p** obtenido es **0.8407**. Dado que este valor es mayor que el nivel de significancia del 5%, no se rechaza la hipótesis nula. Esto indica que **no hay suficiente evidencia para concluir que la secuencia no es aleatoria**, por lo que se asume que no presenta patrones sistemáticos.
+Según los resultados de la **prueba de rachas**, el \(valor-p\) obtenido es 0.8407. Dado que este valor es mayor que el nivel de significancia del 5%, no se rechaza la hipótesis nula. Esto indica que **no hay suficiente evidencia para concluir que la secuencia no es aleatoria**, por lo que se asume que no presenta patrones sistemáticos.
 
 
 <pre>
@@ -1368,64 +1422,11 @@ alternative hypothesis: nonrandomness
 </pre>
 
 
-Ambas pruebas aplicadas no rechazan la hipótesis nula, lo que indica que los números generados con ´runif´ en **R** se pueden considerar aleatorios, ya que siguen una distribución uniforme y no presentan patrones sistemáticos en la secuencia.
+Ambas pruebas aplicadas no rechazan la hipótesis nula, lo que indica que los números generados con `runif`  en **R** se pueden considerar aleatorios, ya que siguen una distribución uniforme y no presentan patrones sistemáticos en la secuencia.
 
 </p>
 </div>
 
-
-<!-- --- -->
-
-<!-- **Prueba de normalidad** -->
-
-<!-- Uno de los procedimientos mas utilizados en estadística es la relacionada con la verificación de normalidad de una variable.  -->
-
-<!-- |        |                                 | -->
-<!-- |-------:|:--------------------------------| -->
-<!-- | $H_o$:  |$X$ tiene distribución Normal    | -->
-<!-- | $H_a$:  |$X$ no tiene distribución Normal | -->
-
-<!-- Existen muchas pruebas que nos ayudan en este propósito, a continuación relacionamos algunas de ellas  -->
-<!-- ```{r} -->
-<!-- # Se genera una variable aleatoria normal -->
-<!-- x=rnorm(200,1000,50) -->
-<!-- plot(density(x), main=" ", las=1, xlab = " ", ylab=" ", col=c3, lwd=4) -->
-<!-- ``` -->
-
-<!-- ```{r} -->
-<!-- shapiro.test(x) -->
-<!-- ``` -->
-
-<!-- Esta prueba no requiere la instalación de paquetes adicionales, pues está disponible en la configuración básica de R -->
-
-<!-- Como el valor-p es superior al nivel de significancia $\alpha$, no se rechaza $Ho$, se asume que la distribución de la variable es normal. -->
-
-
-
-
-<!-- --- -->
-
-
-<!-- **Otras pruebas de normalidad utilizadas** -->
-
-
-<!-- ```{r} -->
-<!-- # install.packages("normtets") -->
-<!-- # library(normtest) -->
-
-<!-- # jb.norm.test(x)	 # Test de normalidad de Jarque-Bera -->
-<!-- # kurtosis.norm.test(x) -->
-<!-- # skewness.norm.test(x)	 -->
-<!-- ``` -->
-
-
-<!-- ```{r} -->
-<!-- # install.packages("nortets") -->
-<!-- library(nortest) -->
-
-<!-- lillie.test(x) # Kolmogorov-Smirnov -->
-<!-- pearson.test(x) # chi-cuadrado de Pearson -->
-<!-- ``` -->
 
 
 

@@ -236,7 +236,7 @@ E_X
 ```
 
 La  **Figura 2.27** muestra la distribución de 12 muestras aleatorias de tamaño 
-$n=1000$ extraídas de una distribución uniforme con los mismos parámetros. Se observa que las formas de las muestras no siempre coinciden exactamente con la distribución original, lo que evidencia la variabilidad natural del muestreo. Sin embargo, los promedios muestrales tienden a aproximarse al valor teórico de la media de 0.5.
+$n=1,000$ extraídas de una distribución uniforme con los mismos parámetros. Se observa que las formas de las muestras no siempre coinciden exactamente con la distribución original, lo que evidencia la variabilidad natural del muestreo. Sin embargo, los promedios muestrales tienden a aproximarse al valor teórico de la media de 0.5.
 
 <pre>
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
@@ -368,7 +368,7 @@ Dado su carácter universal y sus propiedades matemáticas, la distribución nor
 La **distribución normal**,  se caracteriza por ser simétrica, con forma de campana, y completamente determinada por dos parámetros: la **media** ($\mu$), que define su centro, y la **desviación estándar** ($\sigma$), que controla su dispersión.  
 
 
-La función de densidad de probabilidad (f.d.p.) de una variable aleatoria $X$ que sigue una distribución normal, denotada como $X \sim N(\mu, \sigma^2)$, está dada por:  
+La función de densidad de probabilidad de una variable aleatoria $X$ que sigue una distribución normal, denotada como $X \sim N(\mu, \sigma^2)$, está dada por:  
 
 $$
  f(x) = \frac{1}{\sqrt{2\pi \sigma^{2}}} e^{-\left(\frac{(x - \mu)^2}{2 \sigma^2}\right)}, \quad -\infty \leq x \leq \infty
@@ -554,7 +554,7 @@ knitr::include_graphics("img/fig229.png")
 <h3>Ejemplo:</h3>
 <p>
 
-La **Figura 2.30** presenta gráficos de  los datos de 12 muestras aleatorias de tamaño 1000 extraídas de una distribución **normal** con **media 200** y **varianza 50**. Cada subgráfico contiene: Un histograma de los valores de la muestra, representando su distribución empírica. La curva de densidad ajustada (línea azul) de una distribución **normal** con **media 200** y **varianza 50**. La media muestral indicada en cada gráfico, representada por una línea punteada roja.
+La **Figura 2.30** presenta gráficos de  los datos de 12 muestras aleatorias de tamaño 1,000 extraídas de una distribución **normal** con **media 200** y **varianza 50**. Cada subgráfico contiene: Un histograma de los valores de la muestra, representando su distribución empírica. La curva de densidad ajustada (línea azul) de una distribución **normal** con **media 200** y **varianza 50**. La media muestral indicada en cada gráfico, representada por una línea punteada roja.
 
 En cada muestra, la media muestral está muy cercana a la media poblacional de 200. A pesar de la variabilidad en los datos, todas las medias muestrales oscilan en un rango muy estrecho alrededor de 200.
 
@@ -704,7 +704,7 @@ print(promedios_columnas)
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 knitr::include_graphics("img/fig230.png")
 ```
-**Figura 2.30** Distribución de 12 muestras aleatorias (tamaño 1000) de una población **normal** con media 200 y varianza 50..
+**Figura 2.30** Distribución de 12 muestras aleatorias (tamaño 1,000) de una población **normal** con media 200 y varianza 50.
 </center>
 <br/><br/>
 
@@ -1109,7 +1109,7 @@ La distribución exponencial tiene un amplio rango de aplicaciones en diversos c
 <h3>Distribución exponencial</h3>
 
 
-La función de **densidad de probabilidad (fdp)** de una variable aleatoria \(X\) con distribución **exponencial** de parámetro \(\lambda > 0\) se define como:  
+La función de **densidad de probabilidad** de una variable aleatoria \(X\) con distribución **exponencial** de parámetro \(\lambda > 0\) se define como:  
 
 $$
 f(x) =
@@ -1128,10 +1128,10 @@ donde:
 
 
 </br></br>
-<h3>Función de distribución acumulada (fda) </h3>
+<h3>Función de distribución acumulada </h3>
 
  
-La función de distribución acumulada (CDF), que describe la probabilidad de que la variable aleatoria tome un valor menor o igual a \( x \), se expresa como:
+La función de distribución acumulada, que describe la probabilidad de que la variable aleatoria tome un valor menor o igual a \( x \), se expresa como:
 
 $$
 F(x) = P(X \leq x) = 1 - e^{-\lambda x}, \quad x > 0
@@ -1206,7 +1206,7 @@ x_vals <- seq(0, 5, length.out = 300)
 data <- expand.grid(x = x_vals, lambda = lambdas) %>%
   mutate(FDP = dexp(x, rate = lambda))
 
-# Crear la gráfica de la FDP para diferentes valores de lambda
+# Crear la gráfica de la función de probabilidad para diferentes valores de lambda
 ggplot(data, aes(x = x, y = FDP, color = as.factor(lambda))) +
   geom_line(linewidth = 1) +
   labs(title = "Curvas de densidad de la distribución exponencial",
@@ -1233,7 +1233,7 @@ x_vals <- seq(0, 5, length.out = 300)
 data <- expand.grid(x = x_vals, lambda = lambdas) %>%
   mutate(FDP = dexp(x, rate = lambda))
 
-# Crear la gráfica de la FDP para diferentes valores de lambda
+# Crear la gráfica de la función de probabilidad para diferentes valores de lambda
 ggplot(data, aes(x = x, y = FDP, color = as.factor(lambda))) +
   geom_line(linewidth = 1) +
   labs(title = "Curvas de densidad de la distribución exponencial",
@@ -1271,11 +1271,11 @@ lambdas <- c(0.5, 1, 2, 3)  # Cuatro valores distintos de lambda
 # Definir el rango de valores de X
 x_vals <- seq(0, 5, length.out = 300)
 
-# Generar datos para la función de distribución acumulada (FDA) de la exponencial
+# Generar datos para la función de distribución acumulada de la exponencial
 data <- expand.grid(x = x_vals, lambda = lambdas) %>%
   mutate(FDA = pexp(x, rate = lambda))
 
-# Crear la gráfica de la FDA para diferentes valores de lambda
+# Crear la gráfica de la función de distribución acumulada para diferentes valores de lambda
 ggplot(data, aes(x = x, y = FDA, color = as.factor(lambda))) +
   geom_line(linewidth = 1) +
   labs(title = "Distribución acumulada de la distribución exponencial",
@@ -1682,9 +1682,9 @@ que corresponde a la **distribución exponencial** con parámetro de escala \( \
 </br></br>
 <h2>Weibull</h2>
 
-La **distribución weibull** es una distribución de probabilidad continua ampliamente utilizada en análisis de confiabilidad, modelado de tiempos de vida y en procesos de fatiga de materiales. Fue introducida por el matemático y físico sueco **Waloddi Weibull** en el año **1951**, cuando la presentó en un artículo sobre resistencia de materiales y análisis de vida útil de componentes mecánicos. Desde entonces, su flexibilidad y aplicabilidad han permitido su uso en diversas áreas de la ingeniería, economía y ciencias naturales.  
+La **distribución de Weibull** es una distribución de probabilidad continua ampliamente utilizada en análisis de confiabilidad, modelado de tiempos de vida y en procesos de fatiga de materiales. Fue introducida por el matemático y físico sueco **Waloddi Weibull** en el año **1951**, cuando la presentó en un artículo sobre resistencia de materiales y análisis de vida útil de componentes mecánicos. Desde entonces, su flexibilidad y aplicabilidad han permitido su uso en diversas áreas de la ingeniería, economía y ciencias naturales.  
 
-La distribución weibull es ampliamente utilizada en diversas disciplinas, incluyendo:  
+La distribución de Weibull es ampliamente utilizada en diversas disciplinas, incluyendo:  
 
 - **Confiabilidad y análisis de fallas:** Modela la vida útil de componentes y sistemas mecánicos, incluyendo piezas electrónicas y maquinaria industrial.  
 
@@ -1697,9 +1697,9 @@ La distribución weibull es ampliamente utilizada en diversas disciplinas, inclu
 
 
 </br></br>
-<h3> Distribución weibull</h3>
+<h3> Distribución de Weibull</h3>
 
-La distribución weibull se define mediante los siguientes parámetros de forma   \( a \) y de escala \( \sigma \).
+La distribución de Weibull se define mediante los siguientes parámetros de forma   \( a \) y de escala \( \sigma \).
 
 
 La función de densidad de probabilidad de una variable aleatoria \( X \sim \text{Weibull}(a, \sigma) \) está dada por:
@@ -1721,7 +1721,7 @@ F(x) = 1 - e^{-(x/\sigma)^a}, \quad x > 0
 
 donde:  
 
-- Cuando \( a = 1 \), la distribución **weibull** se reduce a la **distribución exponencial** con parámetro \( \sigma \).  
+- Cuando \( a = 1 \), la distribución de **Weibull** se reduce a la **distribución exponencial** con parámetro \( \sigma \).  
 
 - Para \( a > 1 \), la distribución tiene una **forma en campana**, similar a la normal en algunos casos. 
 
@@ -1741,7 +1741,7 @@ Algunas propiedades son:
 
 
 </br></br>
-<h3> Función de riesgo en la distribución weibull  </h3>
+<h3> Función de riesgo en la distribución de Weibull  </h3>
 
 La **función de riesgo**, también llamada **tasa de falla** o **hazard function**, describe la probabilidad instantánea de falla en un momento determinado \( t \), dado que la falla aún no ha ocurrido hasta ese instante. Se define como:  
 
@@ -1761,7 +1761,7 @@ Para una variable aleatoria \( X \sim \text{Weibull}(a, \sigma) \), la función 
 h(x) = \frac{a}{\sigma} \left( \frac{x}{\sigma} \right)^{a - 1}
 \]
 
-La función de riesgo de la distribución weibull depende del **parámetro de forma \( a \)**:
+La función de riesgo de la distribución de Weibull depende del **parámetro de forma \( a \)**:
 
 1. Si \( a < 1 \) (Distribución con tasa de falla decreciente)  
 
@@ -1789,13 +1789,13 @@ La función de riesgo de la distribución weibull depende del **parámetro de fo
 <h3>Actividad:</h3>
 >
 <p>
-En esta actividad se utilizan las funciones de **R** asociadas a la distribución **Weibull** para explorar su comportamiento mediante tres enfoques clave: 
+En esta actividad se utilizan las funciones de **R** asociadas a la distribución de **Weibull** para explorar su comportamiento mediante tres enfoques clave: 
 </p>
 - **Visualización de la función de densidad**: Grafica la curva de densidad de una variable aleatoria \( X \sim \text{Weibull}(a = 1, \sigma = \pi) \). 
 <br/>
 -  **Cálculo del área bajo la curva**: Determina la probabilidad acumulada en un intervalo específico.
 <br/>
-- **Generación de una muestra aleatoria**: Obten datos simulados a partir de la distribución Weibull y analiza sus propiedades.
+- **Generación de una muestra aleatoria**: Obten datos simulados a partir de la distribución de Weibull y analiza sus propiedades.
 <br/>
 - Usa para la solución las funciones `dweibull()`, `pweibull()` y `rweibull()`
 </p>

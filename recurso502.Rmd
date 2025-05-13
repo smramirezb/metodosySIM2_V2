@@ -41,7 +41,7 @@ CarreraLuz22_c3 = subset(CarreraLuz22, CarreraLuz22$categoria=="3. Veteranos A")
 
 
 </br></br>
-<h3>Contexto del Problema</h3>
+<h3>Contexto del problema</h3>
 
 
 Se analiza el caso de una carrera universitaria en la que, históricamente, el tiempo promedio requerido para completarla ha sido de **7.30 años**. El término *históricamente* hace referencia a que este valor ha sido estimado a partir de registros acumulados durante varios años, reflejando el desempeño de generaciones anteriores de estudiantes bajo un plan de estudios que ha sido reemplazado.  
@@ -59,7 +59,7 @@ Este procedimiento permite determinar si el cambio curricular ha tenido un efect
 
 
 </br></br>
-<h3>Formulación de Hipótesis</h3>
+<h3>Formulación de hipótesis</h3>
 
 
 En este análisis, se formulan la **hipótesis nula** y la **hipótesis alternativa** de la siguiente manera:  
@@ -72,19 +72,19 @@ H_0: \mu = 7.30
 H_1: \mu \neq 7.30
 \]
 
-La **hipótesis nula** (\( H_0 \)) establece que la media poblacional del tiempo de graduación bajo el nuevo plan de estudios es la misma que la registrada históricamente, es decir, **no se han producido cambios significativos** en la duración de la carrera.  
+La **hipótesis nula** \(\left(H_0\right)\) establece que la media poblacional del tiempo de graduación bajo el nuevo plan de estudios es la misma que la registrada históricamente, es decir, **no se han producido cambios significativos** en la duración de la carrera.  
 
-Por otro lado, la **hipótesis alternativa** (\( H_1 \)) plantea que el tiempo promedio requerido para completar la carrera **es diferente** al valor histórico de **7.30 años**, lo que indicaría que la reforma curricular ha generado un impacto en la duración de los estudios.  
+Por otro lado, la **hipótesis alternativa** \(\left(H_1\right)\) plantea que el tiempo promedio requerido para completar la carrera **es diferente** al valor histórico de **7.30 años**, lo que indicaría que la reforma curricular ha generado un impacto en la duración de los estudios.  
 
 Cabe destacar que la hipótesis alternativa no especifica si el tiempo promedio ha aumentado o disminuido, sino únicamente que **ha cambiado** con respecto al plan anterior. Por esta razón, se trata de una **prueba bilateral** o **de dos colas**, cuyo propósito es detectar cualquier desviación significativa sin realizar una suposición previa sobre la dirección del cambio.  
 
 
 
 </br></br>
-<h3>Distribución Normal y Medias Muestrales</h3>
+<h3>Distribución normal y medias muestrales</h3>
 
 
-La **Figura 2.53** presenta la distribución de las medias muestrales bajo la hipótesis nula. La curva se encuentra centrada en la media hipotética, lo que representa el escenario en el que \(H_0\) es verdadera. Esta distribución asigna probabilidades a los distintos valores de la media muestral (\(\bar{x}\)), indicando que el valor más probable se encuentra en torno a **7.30 años**. A medida que los valores se alejan de este punto central, la probabilidad de obtener medias muestrales disminuye, lo que se refleja en la reducción del área bajo la curva.
+La **Figura 2.53** presenta la distribución de las medias muestrales bajo la hipótesis nula. La curva se encuentra centrada en la media hipotética, lo que representa el escenario en el que \(\left(H_0\right)\) es verdadera. Esta distribución asigna probabilidades a los distintos valores de la media muestral (\(\bar{x}\)), indicando que el valor más probable se encuentra en torno a **7.30 años**. A medida que los valores se alejan de este punto central, la probabilidad de obtener medias muestrales disminuye, lo que se refleja en la reducción del área bajo la curva.
 
 ```{r, echo=FALSE, out.width="80%", fig.align = "center"}
 # Cargar librería para gráficos
@@ -124,7 +124,7 @@ knitr::include_graphics("img/fig253.png")
 
 
 </br></br>
-<h3> Evaluación de la Evidencia</h3>
+<h3> Evaluación de la evidencia</h3>
 
 
 Para llevar a cabo la prueba de hipótesis, se requiere una muestra. Se supone que se selecciona un grupo de **100 egresados** mediante un muestreo aleatorio simple y que el tiempo promedio de graduación observado es de **7.50 años**, con una desviación estándar de **1.30 años** (\(\bar{x} = 7.50\), \(s = 1.30\)). En este contexto, se requiere un criterio que permita determinar si este valor es compatible con la hipótesis nula (\(\mu = 7.30\)) o si constituye evidencia suficiente para rechazarla en favor de la hipótesis alternativa (\(\mu \neq 7.30\)).
@@ -132,7 +132,7 @@ Para llevar a cabo la prueba de hipótesis, se requiere una muestra. Se supone q
 El criterio de decisión se basa en evaluar la probabilidad de obtener el valor observado bajo la suposición de que la hipótesis nula es verdadera. Dado que en variables continuas no es posible calcular probabilidades exactas para valores individuales (pues la probabilidad en un valor concreto es cero), se estima la probabilidad de obtener valores iguales o más extremos que el observado (\(\bar{x} = 7.50\)).
 
 \[
-\text{¿Qué tan alejado?} \quad \Rightarrow \quad \text{¿Qué tan poco probable si $H_0$ es cierta?}
+\text{¿Qué tan alejado?} \quad \Rightarrow \quad \text{¿Qué tan poco probable si \(H_0\) es cierta?}
 \]
 
 De este modo, se establece un umbral para la probabilidad máxima de ocurrencia del valor muestral. En otras palabras, se define un límite para el área extrema en la distribución, permitiendo determinar qué tan alejado es "suficientemente alejado" para considerar que el resultado es poco probable bajo \(H_0\).
@@ -141,10 +141,10 @@ De este modo, se establece un umbral para la probabilidad máxima de ocurrencia 
 
 
 </br></br>
-<h3> La Toma de Decisión</h3>
+<h3> La toma de decisión</h3>
 
 
-La hipótesis nula (\(H_0\)) se rechaza cuando la probabilidad de obtener un valor como el observado, o uno aún más extremo, es suficientemente baja. El umbral que define esta baja probabilidad puede establecerse previamente, por ejemplo, en **0.05**. Esto implica que se consideran como altamente improbables aquellos resultados cuya probabilidad de ocurrencia sea menor a **0.05** bajo la suposición de que \(H_0\) es cierta. En estos casos, la decisión será rechazar \(H_0\).  
+La hipótesis nula \(\left(H_0\right)\) se rechaza cuando la probabilidad de obtener un valor como el observado, o uno aún más extremo, es suficientemente baja. El umbral que define esta baja probabilidad puede establecerse previamente, por ejemplo, en **0.05**. Esto implica que se consideran como altamente improbables aquellos resultados cuya probabilidad de ocurrencia sea menor a **0.05** bajo la suposición de que \(H_0\) es cierta. En estos casos, la decisión será rechazar \(H_0\).  
 
 Por el contrario, si los valores observados presentan una probabilidad superior a **0.05**, se consideran como resultados esperables dentro de la variabilidad muestral, lo que conduce a no rechazar \(H_0\).
 
@@ -330,6 +330,7 @@ z_c = \pm 2.56
 Por lo tanto, la regla de decisión se establece de la siguiente manera:  
 
 - Si el valor de \(z\) correspondiente a la media muestral observada (\(\bar{x}\)) se encuentra en el intervalo \([-2.56, 2.56]\), **no se debe rechazar \(H_0\)**.  
+
 - Si el valor de \(z\) es inferior a **-2.56** o superior a **2.56**, **se debe rechazar \(H_0\)**.
 
 La probabilidad condicional se expresa de la siguiente manera:
@@ -355,7 +356,7 @@ P(z \leq z_{\alpha/2} \cup z \geq z_{(1-\alpha/2)} \mid H_0 \text{ verdadera}) =
 Esta expresión indica que la probabilidad total de que el estadístico \(z\) se ubique en la región de rechazo de \(H_0\), bajo la suposición de que \(H_0\) es verdadera, es igual al nivel de significación \(\alpha\). Los valores críticos \(z_{\alpha/2}\) y \(z_{(1-\alpha/2)}\) se determinan a priori en función del nivel de significación seleccionado para la prueba de hipótesis.
 `
 
-Y las representaciones gráficas de las áreas de rechazo para los tres niveles de significación mencionados se pueden ver en las **Figuras** **2.55**, **2.56** y **2.57**.
+Las representaciones gráficas de las áreas de rechazo para los tres niveles de significación mencionados se pueden ver en las **Figuras** **2.55**, **2.56** y **2.57**.
 
 
 
@@ -469,9 +470,9 @@ H_0: \mu = 6.50
 H_1: \mu \neq 6.50
 \]
 
-La **hipótesis nula** (\(H_0\)) indica que el promedio de calificaciones al egreso no ha sufrido modificaciones tras la implementación del nuevo plan de estudios, manteniéndose en **6.50**.  
+La **hipótesis nula** \(\left(H_0\right)\) indica que el promedio de calificaciones al egreso no ha sufrido modificaciones tras la implementación del nuevo plan de estudios, manteniéndose en **6.50**.  
 
-Por otro lado, la **hipótesis alternativa** (\(H_1\)) plantea que el promedio de calificaciones es **diferente** al valor histórico de **6.50**, lo que sugiere que la reforma académica podría haber generado un impacto en el rendimiento estudiantil.  
+Por otro lado, la **hipótesis alternativa** \(\left(H_1\right)\) plantea que el promedio de calificaciones es **diferente** al valor histórico de **6.50**, lo que sugiere que la reforma académica podría haber generado un impacto en el rendimiento estudiantil.  
 
 Dado que la hipótesis alternativa no especifica la dirección del cambio, se trata de una **prueba bilateral**, cuyo objetivo es detectar cualquier desviación significativa en la calificación promedio, sin asumir previamente si el cambio ha sido un aumento o una disminución.
 
@@ -508,11 +509,13 @@ En ambos ejemplos se observa que la **regla de decisión** depende del nivel de 
 Cuando el nivel de significación se fija en **5%**, la regla se expresa de la siguiente manera:
 
 - Si el valor de \(z\) correspondiente a la media muestral observada (\(\bar{x}\)) se encuentra en el intervalo \([-1.96, 1.96]\), **no se puede rechazar \(H_0\)**.
+
 - Si el valor de \(z\) es inferior a **-1.96** o superior a **1.96**, **se debe rechazar \(H_0\)**.
 
 Por otro lado, cuando el nivel de significación es **10%**, la regla de decisión se modifica:
 
 - Si el valor de \(z\) correspondiente a la media muestral observada (\(\bar{x}\)) se encuentra en el intervalo \([-1.64, 1.64]\), **no se puede rechazar \(H_0\)**.
+
 - Si el valor de \(z\) es inferior a **-1.64** o superior a **1.64**, **se debe rechazar \(H_0\)**.
 
 Estos umbrales reflejan la influencia del nivel de significación en la toma de decisiones, estableciendo diferentes grados de exigencia para considerar un resultado como evidencia suficiente para rechazar la hipótesis nula.
@@ -529,7 +532,7 @@ En el segundo ejemplo, donde la decisión fue **rechazar \(H_0\)**, resulta fund
 
 
 </br></br>
-<h3> Puntos Críticos en Términos del Estimador</h3>
+<h3> Puntos críticos en términos del estimador</h3>
 
 
 
@@ -571,6 +574,7 @@ Al realizar las operaciones, se obtiene:
 Estos valores representan los puntos críticos expresados en términos de la variable original. Con base en estos resultados, la **regla de decisión** se define de la siguiente manera:
 
 - Si el valor observado de la media muestral \(\bar{x}_{obs}\) se encuentra en el intervalo **[7.05, 7.55]**, **no se puede rechazar \(H_0\)**.
+
 - Si el valor observado de \(\bar{x}_{obs}\) es inferior a **7.05** o superior a **7.55**, **se debe rechazar \(H_0\)**.
 
 La expresión en términos de probabilidad condicional es:
@@ -648,6 +652,7 @@ A. Uso de valores críticos de \(z\)
    Se evalúa la ubicación de \(z_{obs}\) dentro de la distribución normal estándar:
 
    - Si \(z_{obs}\) se encuentra dentro del intervalo \([-z_c, z_c]\), **no se rechaza \(H_0\)**.
+   
    - Si \(z_{obs}\) es menor que \(-z_c\) o mayor que \(z_c\), **se rechaza \(H_0\)**.
 
 Este procedimiento permite tomar una decisión sobre la hipótesis nula comparando directamente el estadístico de prueba con los valores críticos en la escala de \(z\).
@@ -724,6 +729,7 @@ B. Uso de valores críticos de \(\bar{x}\)
    Se evalúa la ubicación de la media muestral observada \(\bar{x}_{obs}\) dentro de la distribución de probabilidad de \(\bar{x}\):
 
    - Si \(\bar{x}_{obs}\) se encuentra dentro del intervalo \([\bar{x}_c^-, \bar{x}_c^+]\), **no se rechaza \(H_0\)**.
+   
    - Si \(\bar{x}_{obs}\) es menor que \(\bar{x}_c^-\) o mayor que \(\bar{x}_c^+\), **se rechaza \(H_0\)**.
 
 Este procedimiento permite tomar una decisión sobre la hipótesis nula comparando directamente el valor observado de la media muestral con los valores críticos en la escala original de la variable de estudio.
@@ -787,12 +793,17 @@ knitr::include_graphics("img/fig259.png")
 La diferencia entre los dos enfoques para establecer los puntos críticos radica en la forma en que se comparan los valores observados con los valores de referencia.
 
 1. **Uso de valores críticos de \(z\)**  
+
    - Se determinan los valores críticos \(z_c\) a partir del nivel de significación \(\alpha\).  
-   - Se transforma el valor muestral observado de \(\bar{x}_{obs}\) en un puntaje \(z_{obs}\).  
+   
+   - Se transforma el valor muestral observado de \(\bar{x}_{obs}\) en un puntaje \(z_{obs}\). 
+   
    - La decisión se toma comparando \(z_{obs}\) con los valores críticos \(z_c\).
 
 2. **Uso de valores críticos de \(\bar{x}\)**  
-   - Los valores críticos \(z_c\) se transforman en puntos críticos de la media muestral \(\bar{x}_c\).  
+
+   - Los valores críticos \(z_c\) se transforman en puntos críticos de la media muestral \(\bar{x}_c\). 
+   
    - Se compara directamente el valor observado \(\bar{x}_{obs}\) con los valores críticos de \(\bar{x}\), sin necesidad de transformarlo a la escala de \(z\).  
 
 Ambos procedimientos conducen a la misma conclusión en la prueba de hipótesis, pero el segundo método permite interpretar los resultados directamente en la escala original de la variable de estudio, facilitando su comprensión y aplicación en contextos no estadísticos.
@@ -802,6 +813,7 @@ Las **Figuras** **2.58** y **2.59** representan el mismo concepto utilizando dif
 Ambos procedimientos son **equivalentes** y pueden aplicarse indistintamente. En los gráficos, las curvas presentan la misma forma, ya que el eje horizontal ha sido ajustado para reflejar la correspondencia entre ambas representaciones. Sin embargo, es importante recordar que la variabilidad de las distribuciones es distinta.  
 
 - La primera distribución corresponde a la **normal estándar**, con \(\sigma = 1\), ya que los valores han sido transformados a la escala de \(z\).  
+
 - La segunda distribución representa la **distribución normal de las medias muestrales** (\(\bar{x}\)), cuya desviación estándar depende de la varianza poblacional y del tamaño de la muestra. En este caso, la desviación estándar de \(\bar{x}\) se obtiene como:
 
 \[
@@ -813,7 +825,7 @@ Ambos procedimientos son **equivalentes** y pueden aplicarse indistintamente. En
 ---
 
 </br></br>
-<h3> Pruebas Unilaterales</h3>
+<h3> Pruebas unilaterales</h3>
 
 
 Con frecuencia, la hipótesis alternativa no solo establece que la media poblacional difiere del valor hipotético, sino que también especifica la dirección en la que se espera dicha diferencia.  
@@ -1170,7 +1182,7 @@ knitr::include_graphics("img/fig262.png")
 
 
 </br></br>
-<h3>Muestras Pequeñas y Pruebas   t</h3>
+<h3>Muestras pequeñas y pruebas   t</h3>
 
 La **distribución \( t \) de Student** se utiliza en pruebas de hipótesis cuando se trabaja con **muestras pequeñas** y la **varianza poblacional es desconocida**. Sin embargo, su aplicación está sujeta a una **restricción importante**:  
 
@@ -1179,12 +1191,14 @@ La **distribución \( t \) de Student** se utiliza en pruebas de hipótesis cuan
 
 1. **Muestras grandes (\( n \geq 30 \))**  
 
-   - Por el **Teorema Central del Límite (TCL)**, la distribución de la media muestral es aproximadamente normal, **independientemente de la distribución de la variable en la población**.  
+   - Por el **Teorema Central del Límite (TCL)**, la distribución de la media muestral es aproximadamente normal, **independientemente de la distribución de la variable en la población**. 
+   
    - Se puede utilizar la **distribución normal** para las pruebas de hipótesis.  
 
 2. **Muestras pequeñas (\( n < 30 \))** 
 
    - **Si la variable en la población sigue una distribución normal**, entonces la media muestral sigue una **distribución \( t \) de Student** con \( n - 1 \) grados de libertad.  
+   
    - **Si la población no tiene distribución normal**, no se puede utilizar la distribución \( t \), y se requieren procedimientos **no paramétricos**.  
 
 Las condiciones para analizar la media poblacional se resumen en la **Tabla 2.12**.
@@ -1207,7 +1221,9 @@ En la mayoría de los **paquetes de análisis de datos**, las **pruebas \( t \)*
 **Justificación del uso de la distribución \( t \) de Student**
 
 - La **distribución \( t \) es la opción adecuada para muestras pequeñas** cuando la varianza poblacional es desconocida.  
+
 - **Los paquetes estadísticos automatizan el cálculo**, utilizando la distribución \( t \) en lugar de \( z \), sin que el usuario tenga que tomar esta decisión manualmente.  
+
 - **Cuando el tamaño de la muestra es grande**, la distribución \( t \) **converge a la normal estándar**, por lo que ambas pruebas proporcionan resultados prácticamente idénticos. 
 
 
@@ -1221,15 +1237,21 @@ De manera análoga a los intervalos de confianza, el análisis de hipótesis sob
 El procedimiento sigue los mismos pasos que en el caso de la media. En primer lugar, se **plantean las hipótesis nula y alternativa**:  
 
 - La **hipótesis nula** establece un valor específico para la proporción poblacional.  
+
 - La **hipótesis alternativa** puede adoptar tres formas:  
-  - Indicar que la proporción poblacional es **diferente** al valor propuesto por \(H_0\) (**prueba bilateral**).  
+
+  - Indicar que la proporción poblacional es **diferente** al valor propuesto por \(H_0\) (**prueba bilateral**). 
+  
   - Plantear que la proporción es **mayor** (**prueba unilateral derecha**).  
+  
   - Establecer que la proporción es **menor** (**prueba unilateral izquierda**).  
 
 Una vez determinado el **nivel de significación** (\(\alpha\)) y la dirección de la prueba (bilateral o unilateral), es necesario identificar los valores de la proporción muestral **\(\hat{p}\)** que delimitan las regiones de rechazo.  
 
-- En una **prueba unilateral derecha**, el área de significación se encuentra en la **cola superior** de la distribución.  
-- En una **prueba unilateral izquierda**, el área de significación se sitúa en la **cola inferior**.  
+- En una **prueba unilateral derecha**, el área de significación se encuentra en la **cola superior** de la distribución. 
+
+- En una **prueba unilateral izquierda**, el área de significación se sitúa en la **cola inferior**. 
+
 - En una **prueba bilateral**, la probabilidad \(\alpha\) se distribuye **simétricamente** en ambas colas.  
 
 Dado que la distribución binomial describe el conteo de éxitos en una muestra de tamaño \(n\), es necesario transformar la **proporción de éxitos** (\(p\)) en el **número de éxitos** (\(X\)). Esta transformación se aplica tanto a la **proporción hipotética** (\(P\)) como a la **proporción observada** (\(\hat{p}\)):
@@ -1356,6 +1378,7 @@ Dado que el criterio de significación es del **5%**, se establece el valor de *
 Con base en este resultado, la **regla de decisión** se define de la siguiente manera:
 
 - **Si el número de votos observados en la muestra es mayor que 20**, **se rechaza \(H_0\)**, lo que sugiere que la proporción de votos ha aumentado significativamente.
+
 - **Si el número de votos observados en la muestra es menor o igual a 20**, **no se rechaza \(H_0\)**, lo que indica que no hay suficiente evidencia para concluir que la proporción de votos ha cambiado respecto al **30%** inicial.
 
 Este criterio permite evaluar si los cambios en la intención de voto observados en la muestra son suficientemente grandes como para considerar que la proporción poblacional ha aumentado de manera significativa.
@@ -1380,6 +1403,7 @@ El **punto crítico** establecido en **20 éxitos** en la muestra equivale a una
 Por lo tanto, la comparación del **número de éxitos muestrales** con el **punto crítico** puede expresarse de dos maneras equivalentes:
 
 - **En términos absolutos:** la comparación de los **16 éxitos observados** frente a los **20 éxitos del punto crítico**.
+
 - **En términos de proporción:** la comparación del **32% muestral** (\(\hat{p} = 0.32\)) frente al **40% crítico** (\(\hat{p}_c = 0.40\)).
 
 Ambas interpretaciones llevan a la misma conclusión en la prueba de hipótesis, evidenciando que la proporción observada en la muestra no supera el umbral establecido para el rechazo de la hipótesis nula.
@@ -1408,6 +1432,7 @@ z_c = 1.64
 Bajo esta aproximación, la **zona de rechazo** se define en términos del estadístico \(z\), quedando establecida de la siguiente manera:
 
 - **Región de rechazo**: valores de \(z\) **mayores** que **1.64**.
+
 - **Región de no rechazo**: valores de \(z\) **menores o iguales** a **1.64**.
 
 
@@ -1444,6 +1469,7 @@ Este es el **estadístico de prueba** que se debe utilizar cuando la aproximaci�
 La **decisión** sobre la hipótesis nula dependerá de la posición del valor calculado \(z_{obs}\):
 
 - **Si \(z_{obs}\) se encuentra en la zona de rechazo**, **se rechaza \(H_0\)**, lo que indica que la proporción muestral observada es significativamente mayor que la proporción poblacional hipotética.
+
 - **Si \(z_{obs}\) se encuentra en la zona de no rechazo**, **no se rechaza \(H_0\)**, lo que implica que no hay suficiente evidencia para concluir que la proporción poblacional ha cambiado.
 
 
@@ -1515,6 +1541,7 @@ Dado que se trata de una **prueba unilateral derecha**, solo se utiliza el **sig
 Esto indica que el punto crítico de la proporción muestral es **0.353**. Por lo tanto:
 
 - Si \(\hat{p}_{obs} > 0.353\), se **rechaza \(H_0\)**.
+
 - Si \(\hat{p}_{obs} \leq 0.353\), **no se rechaza \(H_0\)**.
 
 Dado que en este caso \(\hat{p}_{obs} = 0.32\), la decisión sigue siendo **no rechazar \(H_0\)**.
@@ -1545,7 +1572,7 @@ La **Tabla 2.13** resume las pruebas de hipótesis más comunes para una muestra
 <h2>Tipos de error en las pruebas de hipótesis</h2>
 
 
-Dado que la decisión de aceptar o rechazar la hipótesis nula (\(H_0\)) se basa en un criterio probabilístico, **siempre existe la posibilidad de tomar una decisión incorrecta**.  
+Dado que la decisión de aceptar o rechazar la hipótesis nula \(\left(H_0\right)\) se basa en un criterio probabilístico, **siempre existe la posibilidad de tomar una decisión incorrecta**.  
 
 Esta situación ocurre porque las muestras son seleccionadas de manera **aleatoria**, lo que implica que la muestra utilizada para realizar la inferencia puede no ser representativa de la población. En particular, puede suceder que la muestra analizada corresponda a un **caso extremo**, lo que podría llevar a una conclusión errónea.  
 
@@ -1554,7 +1581,7 @@ Aunque la probabilidad de obtener una muestra atípica es **baja**, no se puede 
 
 
 </br></br>
-<h3>Nivel de Significación y Error Tipo I  </h3>
+<h3>Nivel de significación y error tipo I  </h3>
 
 Como se ha observado, el **nivel de significación** (\(\alpha\)) mide la **probabilidad de obtener un determinado resultado muestral bajo la suposición de que \(H_0\) es cierta**. Este valor se establece como una **probabilidad pequeña**, comúnmente fijada en **0.05** o **0.01**, y define el umbral a partir del cual se considera que el resultado es **suficientemente improbable** como para rechazar \(H_0\).  
 
@@ -1563,6 +1590,7 @@ Si la hipótesis nula es verdadera y la muestra seleccionada es **extrema**, es 
 La decisión de **rechazar \(H_0\)** puede deberse a dos razones:
 
 1. **\(H_0\) es realmente falsa**, en cuyo caso la decisión es correcta.
+
 2. **\(H_0\) es verdadera, pero la muestra seleccionada es extrema**, lo que lleva a una conclusión errónea.
 
 Dado que la inferencia estadística se basa en muestras y no en la observación de toda la población, **siempre existe la posibilidad de cometer errores en la decisión**. En este contexto, el nivel de significación **mide la probabilidad de cometer un error al rechazar una hipótesis nula verdadera**, es decir:
@@ -1573,13 +1601,13 @@ P(\text{Rechazar } H_0 \mid H_0 \text{ verdadera}) = \alpha
 
 Este tipo de error, conocido como **Error de Tipo I (ETI)**, **no es un error de cálculo ni una equivocación**, sino una imprecisión inherente a todos los procesos de inferencia estadística. Se trata de una consecuencia natural de la variabilidad muestral y del establecimiento de un criterio de decisión basado en probabilidades.  
 
-Dado que la posibilidad de cometer un **Error Tipo I** no puede eliminarse por completo, se controla estableciendo un **nivel de significación adecuado**, asegurando que la probabilidad de tomar una decisión incorrecta sea baja y acorde con la precisión deseada en el análisis.
+Dado que la posibilidad de cometer un **error tipoI** no puede eliminarse por completo, se controla estableciendo un **nivel de significación adecuado**, asegurando que la probabilidad de tomar una decisión incorrecta sea baja y acorde con la precisión deseada en el análisis.
 
 
 > *"El Error de Tipo I consiste en rechazar la   $H_0$
 cuando esta es verdadera. Su probabilidad está fijada de antemano y es   $\alpha$, el nivel de significación de la prueba."*
 
-El establecimiento del nivel de significación \(\alpha\) implica aceptar un **riesgo controlado** de cometer un **Error Tipo I (ETI)**. Es decir, al fijar un valor para \(\alpha\), se establece el umbral de probabilidad con el cual se está dispuesto a aceptar la posibilidad de **rechazar \(H_0\) cuando en realidad es verdadera**.  
+El establecimiento del nivel de significación \(\alpha\) implica aceptar un **riesgo controlado** de cometer un **error tipoI (ETI)**. Es decir, al fijar un valor para \(\alpha\), se establece el umbral de probabilidad con el cual se está dispuesto a aceptar la posibilidad de **rechazar \(H_0\) cuando en realidad es verdadera**.  
 
 Por ejemplo, en un experimento diseñado para evaluar si un fármaco produce efectos sobre una determinada patología, la hipótesis nula se formula como:
 
@@ -1587,22 +1615,22 @@ Por ejemplo, en un experimento diseñado para evaluar si un fármaco produce efe
 H_0: \text{El fármaco no tiene efecto sobre la patología}
 \]
 
-Si se comete un **Error Tipo I**, la conclusión será que el fármaco tiene efecto (**rechazo incorrecto de \(H_0\)**), cuando en realidad **no lo tiene**.  
+Si se comete un **error tipoI**, la conclusión será que el fármaco tiene efecto (**rechazo incorrecto de \(H_0\)**), cuando en realidad **no lo tiene**.  
 
 
 Dado que en la práctica **no se conoce si \(H_0\) es verdadera o falsa**, cada vez que se toma la decisión de **rechazar \(H_0\)**, se debe recordar que existe una probabilidad \(\alpha\) de haber tomado una decisión incorrecta. Es decir, si el nivel de significación se ha fijado en **5%**, entonces hay una probabilidad del **0.05** de que el rechazo de \(H_0\) sea un error debido a la variabilidad muestral, y no a un verdadero efecto del fármaco.  
 
-Por esta razón, en aplicaciones críticas, como en estudios clínicos o investigaciones científicas, se utilizan niveles de significación más estrictos, como **\( \alpha = 0.01 \) o \( \alpha = 0.001 \)**, con el fin de minimizar la posibilidad de cometer un **Error Tipo I** y evitar conclusiones erróneas con consecuencias graves.
+Por esta razón, en aplicaciones críticas, como en estudios clínicos o investigaciones científicas, se utilizan niveles de significación más estrictos, como **\( \alpha = 0.01 \) o \( \alpha = 0.001 \)**, con el fin de minimizar la posibilidad de cometer un **error tipoI** y evitar conclusiones erróneas con consecuencias graves.
 
 
 
 
 
 </br></br>
-<h3>Error Tipo II  </h3>
+<h3>Error tipo II  </h3>
 
 
-Además del **Error Tipo I (ETI)**, existe otro tipo de error en la inferencia estadística, denominado **Error Tipo II (ETII)**. Este error ocurre cuando **no se rechaza \(H_0\) a pesar de que esta es falsa**.  
+Además del **error tipoI (ETI)**, existe otro tipo de error en la inferencia estadística, denominado **error tipoII (ETII)**. Este error ocurre cuando **no se rechaza \(H_0\) a pesar de que esta es falsa**.  
 
 
 
@@ -1612,23 +1640,27 @@ En el experimento sobre la efectividad de un fármaco en el tratamiento de una p
 H_0: \text{El fármaco no tiene efecto sobre la patología}
 \]
 
-Si se comete un **Error Tipo II**, la conclusión será que el fármaco **no tiene efecto** (**no se rechaza \(H_0\)**), cuando en realidad **sí lo tiene** (\(H_0\) es falsa). Es decir, se deja pasar una oportunidad de detectar un efecto real debido a la variabilidad muestral.  
+Si se comete un **error tipoII**, la conclusión será que el fármaco **no tiene efecto** (**no se rechaza \(H_0\)**), cuando en realidad **sí lo tiene** (\(H_0\) es falsa). Es decir, se deja pasar una oportunidad de detectar un efecto real debido a la variabilidad muestral.  
 
 
-La probabilidad de cometer el **Error Tipo II** se denota como \(\beta\), y su probabilidad está relacionada con el **nivel de significación** (\(\alpha\)) y con el **poder estadístico** de la prueba (\(1 - \beta\)):
+La probabilidad de cometer el **error tipoII** se denota como \(\beta\), y su probabilidad está relacionada con el **nivel de significación** (\(\alpha\)) y con el **poder estadístico** de la prueba (\(1 - \beta\)):
 
-- **\(\alpha\)**: Probabilidad de cometer un **Error Tipo I** (rechazar \(H_0\) cuando es verdadera).
-- **\(\beta\)**: Probabilidad de cometer un **Error Tipo II** (no rechazar \(H_0\) cuando es falsa).
+- **\(\alpha\)**: Probabilidad de cometer un **error tipoI** (rechazar \(H_0\) cuando es verdadera).
+
+- **\(\beta\)**: Probabilidad de cometer un **error tipoII** (no rechazar \(H_0\) cuando es falsa).
+
 - **\(1 - \beta\)**: **Poder estadístico**, es decir, la capacidad de la prueba para detectar un efecto real cuando este existe.
 
 
 
-Cometer un **Error Tipo II** puede tener consecuencias importantes, especialmente en contextos como la investigación médica, donde no detectar un efecto significativo puede llevar a la conclusión errónea de que un tratamiento no es eficaz, cuando en realidad sí lo es.  
+Cometer un **error tipoII** puede tener consecuencias importantes, especialmente en contextos como la investigación médica, donde no detectar un efecto significativo puede llevar a la conclusión errónea de que un tratamiento no es eficaz, cuando en realidad sí lo es.  
 
-Para reducir la probabilidad de un **Error Tipo II**, es fundamental:
+Para reducir la probabilidad de un **error tipoII**, es fundamental:
 
 - **Aumentar el tamaño de la muestra**, lo que disminuye la variabilidad muestral.
-- **Incrementar el nivel de significación (\(\alpha\))**, aunque esto incrementa el riesgo de un **Error Tipo I**.
+
+- **Incrementar el nivel de significación (\(\alpha\))**, aunque esto incrementa el riesgo de un **error tipoI**.
+
 - **Asegurar que la prueba tenga suficiente poder estadístico (\(1 - \beta\))**.
 
 El balance entre los errores tipo I y tipo II es un aspecto clave en el diseño experimental y en la toma de decisiones estadísticas.
@@ -1641,7 +1673,7 @@ El balance entre los errores tipo I y tipo II es un aspecto clave en el diseño 
 <h3>Impacto diferencial de los errores tipo I y tipo II </h3>
 
 
-El costo de cometer un **Error Tipo I (ETI)** o un **Error Tipo II (ETII)** varía según el contexto de la prueba de hipótesis. La gravedad de cada error depende de las implicaciones prácticas de la decisión que se tome con base en los resultados estadísticos.  
+El costo de cometer un **error tipoI (ETI)** o un **error tipoII (ETII)** varía según el contexto de la prueba de hipótesis. La gravedad de cada error depende de las implicaciones prácticas de la decisión que se tome con base en los resultados estadísticos.  
 
 
 Cuando se analiza la efectividad de un tratamiento médico, la hipótesis nula se establece como:
@@ -1652,20 +1684,25 @@ H_0: \text{La intervención terapéutica no tiene efectos}
 
 En este caso, los posibles errores se interpretan de la siguiente manera:
 
-- **Error Tipo I (ETI):** Se concluye que la intervención tiene efecto (**se rechaza \(H_0\)**) cuando en realidad no lo tiene.  
+- **Error tipoI (ETI):** Se concluye que la intervención tiene efecto (**se rechaza \(H_0\)**) cuando en realidad no lo tiene. 
+
   - Esto llevaría a recomendar un tratamiento que en realidad **no es efectivo**, lo que podría exponer a los pacientes a riesgos innecesarios o efectos secundarios sin obtener beneficios terapéuticos.  
-  - Si la intervención es altamente riesgosa, el **Error Tipo I** es particularmente grave, ya que implicaría someter a los pacientes a un procedimiento peligroso sin justificación científica.  
+  
+  - Si la intervención es altamente riesgosa, el **error tipo I** es particularmente grave, ya que implicaría someter a los pacientes a un procedimiento peligroso sin justificación científica.  
 
-- **Error Tipo II (ETII):** Se concluye que la intervención **no tiene efecto** (**no se rechaza \(H_0\)**) cuando en realidad sí lo tiene.  
+- **Error tipo II (ETII):** Se concluye que la intervención **no tiene efecto** (**no se rechaza \(H_0\)**) cuando en realidad sí lo tiene. 
+
   - Esto llevaría a **descartar un tratamiento que sí es beneficioso**, lo que privaría a los pacientes de una terapia efectiva.  
-  - En este caso, el **Error Tipo II** representa la pérdida de una oportunidad de mejora en la salud de los pacientes.  
+  
+  - En este caso, el **error tipo II** representa la pérdida de una oportunidad de mejora en la salud de los pacientes.  
 
 
 
-La determinación de cuál error es más grave depende del contexto específico de la investigación o aplicación. En algunos casos, es preferible **minimizar la probabilidad de un Error Tipo I**, mientras que en otros se prioriza **reducir el Error Tipo II**.  
+La determinación de cuál error es más grave depende del contexto específico de la investigación o aplicación. En algunos casos, es preferible **minimizar la probabilidad de un error tipo I**, mientras que en otros se prioriza **reducir el error tipo II**.  
 
-- En estudios clínicos de tratamientos con **efectos adversos potencialmente graves**, se suele utilizar un nivel de significación **más estricto** (\(\alpha = 0.01\) o \(\alpha = 0.001\)) para minimizar la probabilidad de un **Error Tipo I**.
-- En investigaciones donde el objetivo es **detectar efectos beneficiosos con alta sensibilidad**, se busca aumentar el **poder estadístico** (\(1 - \beta\)) para reducir la probabilidad de un **Error Tipo II**.
+- En estudios clínicos de tratamientos con **efectos adversos potencialmente graves**, se suele utilizar un nivel de significación **más estricto** (\(\alpha = 0.01\) o \(\alpha = 0.001\)) para minimizar la probabilidad de un **error tipo I**.
+
+- En investigaciones donde el objetivo es **detectar efectos beneficiosos con alta sensibilidad**, se busca aumentar el **poder estadístico** (\(1 - \beta\)) para reducir la probabilidad de un **error tipo II**.
 
 La decisión sobre qué error es más grave **no pertenece al ámbito de la estadística**, sino que debe ser evaluada en función del impacto y las consecuencias prácticas de cada decisión.
 
@@ -1676,36 +1713,42 @@ La decisión sobre qué error es más grave **no pertenece al ámbito de la esta
 
 
 </br></br>
-<h3>Falsos Positivos y Falsos Negativos</h3>
+<h3>Falsos positivos y falsos negativos</h3>
 
 
-En el ámbito de las pruebas diagnósticas y la inferencia estadística, los **Errores Tipo I y Tipo II** tienen equivalentes en términos de resultados erróneos en pruebas médicas o experimentos científicos.  
+En el ámbito de las pruebas diagnósticas y la inferencia estadística, los **errores tipo I y tipo II** tienen equivalentes en términos de resultados erróneos en pruebas médicas o experimentos científicos.  
 
 
 
 - **Falso positivo:** Ocurre cuando una prueba produce un resultado **positivo** en una persona sana. En términos generales, este tipo de error consiste en **concluir que "algo sucedió" cuando en realidad no fue así**.  
-  - En pruebas de hipótesis, un **falso positivo equivale a un Error Tipo I (ETI)**, es decir, se **rechaza \(H_0\) cuando en realidad es verdadera**.  
+
+  - En pruebas de hipótesis, un **falso positivo equivale a un error tipo I (ETI)**, es decir, se **rechaza \(H_0\) cuando en realidad es verdadera**.  
 
 - **Falso negativo:** Se produce cuando una prueba da un resultado **negativo** en una persona que sí está enferma. Este error consiste en **creer que "nada sucedió" cuando en realidad sí sucedió**.  
-  - En pruebas de hipótesis, un **falso negativo equivale a un Error Tipo II (ETII)**, es decir, **no se rechaza \(H_0\) cuando en realidad es falsa**.  
+
+  - En pruebas de hipótesis, un **falso negativo equivale a un error tipo II (ETII)**, es decir, **no se rechaza \(H_0\) cuando en realidad es falsa**.  
 
 
 
 
 
 </br></br>
-<h3>Implicaciones de los Errores en Pruebas de Hipótesis </h3>
+<h3>Implicaciones de los errores en pruebas de hipótesis </h3>
 
 
 El análisis de estos errores permite destacar dos aspectos fundamentales de las pruebas de hipótesis:
 
-1. **Las conclusiones son probabilísticas, no absolutas.**  
-   - Una prueba de hipótesis no establece verdades absolutas, sino que proporciona **evidencia** a favor o en contra de una hipótesis con cierto nivel de confianza.  
+1. **Las conclusiones son probabilísticas, no absolutas.**
+
+   - Una prueba de hipótesis no establece verdades absolutas, sino que proporciona **evidencia** a favor o en contra de una hipótesis con cierto nivel de confianza. 
+   
    - Aun cuando una prueba sugiera un resultado significativo, siempre existe una **probabilidad de error** asociada a la decisión tomada.
 
-2. **Toda conclusión proveniente de procedimientos estadísticos está sujeta a error.**  
-   - Ninguna prueba de hipótesis es infalible, ya que se basa en muestras y no en el análisis de toda la población.  
-   - Tanto los **Errores Tipo I y Tipo II** como los **falsos positivos y falsos negativos** son consecuencias naturales de la variabilidad inherente a los datos.
+2. **Toda conclusión proveniente de procedimientos estadísticos está sujeta a error.** 
+
+   - Ninguna prueba de hipótesis es infalible, ya que se basa en muestras y no en el análisis de toda la población. 
+   
+   - Tanto los **errores tipo I y tipo II** como los **falsos positivos y falsos negativos** son consecuencias naturales de la variabilidad inherente a los datos.
 
 
 Estos errores **no representan fallos en el procedimiento de prueba de hipótesis**, sino que reflejan **las limitaciones inherentes al proceso de generación de conocimiento**. En estadística y en cualquier disciplina científica, **no existen certezas absolutas, solo aproximaciones basadas en la evidencia disponible**.  
@@ -1718,21 +1761,22 @@ Comprender esta naturaleza probabilística es esencial para interpretar correcta
 
 
 </br></br>
-<h3>Relación entre Error Tipo I, Tamaño de Muestra y Potencia de una Prueba</h3>
+<h3>Relación entre error tipo I, tamaño de muestra y potencia de una prueba</h3>
 
 
 
-A diferencia del **Error Tipo I (ETI)**, cuya probabilidad \(\alpha\) se fija de antemano al establecer el nivel de significación de la prueba, la **probabilidad de cometer un Error Tipo II (ETII)** no es un valor predefinido, sino que depende del **valor real del parámetro** en la población.  
+A diferencia del **error tipo I (ETI)**, cuya probabilidad \(\alpha\) se fija de antemano al establecer el nivel de significación de la prueba, la **probabilidad de cometer un error tipo II (ETII)** no es un valor predefinido, sino que depende del **valor real del parámetro** en la población.  
 
 El riesgo de no rechazar \(H_0\) cuando en realidad es falsa depende de **qué tan diferente sea el valor real del parámetro respecto al valor especificado en \(H_0\)**. Intuitivamente, **es más difícil detectar una diferencia pequeña que una diferencia grande**:
 
-- **Si la diferencia entre el valor real y el valor hipotético es pequeña**, es más probable que la variabilidad muestral impida detectarla, lo que aumenta la probabilidad de cometer un **Error Tipo II** (\(\beta\)).
-- **Si la diferencia entre el valor real y el valor hipotético es grande**, es menos probable que se confundan ambos valores, reduciendo así la probabilidad de cometer un **Error Tipo II**.  
+- **Si la diferencia entre el valor real y el valor hipotético es pequeña**, es más probable que la variabilidad muestral impida detectarla, lo que aumenta la probabilidad de cometer un **error tipo II** (\(\beta\)).
 
-En términos generales, **es más fácil confundir valores cercanos que valores muy distintos**, lo que explica por qué la probabilidad de cometer un **Error Tipo II** varía según la distancia entre el verdadero valor del parámetro y el valor hipotético.
+- **Si la diferencia entre el valor real y el valor hipotético es grande**, es menos probable que se confundan ambos valores, reduciendo así la probabilidad de cometer un **error tipo II**.  
+
+En términos generales, **es más fácil confundir valores cercanos que valores muy distintos**, lo que explica por qué la probabilidad de cometer un **error tipo II** varía según la distancia entre el verdadero valor del parámetro y el valor hipotético.
 
 
-Se denota con \(\beta\) la **probabilidad de cometer un Error Tipo II**, es decir:
+Se denota con \(\beta\) la **probabilidad de cometer un error tipo II**, es decir:
 
 \[
 \beta = P(\text{No rechazar } H_0 \mid H_0 \text{ es falsa})
@@ -1746,7 +1790,7 @@ A continuación se explorará el cálculo de \(\beta\) y su relación con el **p
 1 - \beta = P(\text{Rechazar } H_0 \mid H_0 \text{ es falsa})
 \]
 
-Este concepto es clave en el diseño experimental y permite ajustar los parámetros de la prueba para minimizar el riesgo de cometer un **Error Tipo II**.
+Este concepto es clave en el diseño experimental y permite ajustar los parámetros de la prueba para minimizar el riesgo de cometer un **error tipo II**.
 
 El gráfico de la **Figura 2.63**  ilustra una prueba de hipótesis **unilateral derecha** aplicada a la media poblacional, donde las hipótesis se formulan de la siguiente manera:
 
@@ -1802,8 +1846,8 @@ poly4 <- df1 %>% filter(x <= z_crit) %>%
   rbind(c(z_crit, 0)) # Correcto (1 - Alpha)
 
 # Asignar etiquetas a las áreas con los nuevos nombres
-poly1$id <- "ETI (Alpha)"      # Error Tipo I (α)
-poly2$id <- "ETII (Beta)"      # Error Tipo II (β)
+poly1$id <- "ETI (Alpha)"      # error tipo I (α)
+poly2$id <- "ETII (Beta)"      # error tipo II (β)
 poly3$id <- "Potencia (1 - Beta)" # Potencia (1 - β)
 poly4$id <- "Correcto (1 - Alpha)" # Nueva área 1 - α con líneas punteadas
 
@@ -1868,19 +1912,23 @@ En esta prueba, \(\mu_0\) representa un valor **determinado e hipotético** para
 Además, se ha representado otra curva que ilustra la distribución de la media muestral bajo una **media poblacional alternativa**.  
 
 - **Curva izquierda (azul):** Representa la distribución de probabilidad de \(\bar{x}\) si la hipótesis nula fuera **verdadera** (\(\mu = \mu_0\)).  
+
 - **Curva derecha (roja):** Representa la distribución de probabilidad de \(\bar{x}\) si la hipótesis nula fuera **falsa**, es decir, si la verdadera media poblacional fuera \(\mu_1\), donde \(\mu_1 > \mu_0\).  
 
 
 La **curva azul** representa la distribución de la media muestral \(\bar{x}\) bajo la hipótesis nula \(H_0\). En este contexto:
 
 - Si \(H_0\) es **verdadera**, \(\bar{x}\) tiene una **probabilidad \(\alpha\)** de ubicarse en la **zona de rechazo**.  
-- Si \(H_0\) es **verdadera** y \(\bar{x}\) cae dentro de la zona de rechazo, se cometerá un **Error Tipo I (ETI)** al rechazar incorrectamente \(H_0\).  
+
+- Si \(H_0\) es **verdadera** y \(\bar{x}\) cae dentro de la zona de rechazo, se cometerá un **error tipo I (ETI)** al rechazar incorrectamente \(H_0\).  
+
 - El complemento del nivel de significación, es decir, **\(1 - \alpha\)**, representa la **probabilidad de tomar la decisión correcta cuando \(H_0\) es verdadera**. Este valor corresponde a la **probabilidad de que \(\bar{x}\) se encuentre dentro de la región de no rechazo** bajo la hipótesis nula.  
 
 
 La **curva roja** representa la distribución de la media muestral \(\bar{x}\) bajo la hipótesis alternativa. En este contexto:
 
 - **Si \(H_0\) es falsa**, \(\bar{x}\) tiene una **probabilidad \(1 - \beta\)** de ubicarse en la **zona de rechazo**, lo que llevará a tomar la **decisión correcta de rechazar una \(H_0\) falsa**.
+
 - **Si \(H_0\) es falsa**, la probabilidad de no rechazarla es **\(\beta\)**, lo que equivale a aceptar erróneamente una hipótesis nula falsa.
 
 
@@ -1895,8 +1943,8 @@ En una prueba de hipótesis, existen **dos posibles estados de la realidad** y *
 
 | **Estado de la realidad** | **No rechazar \(H_0\)** | **Rechazar \(H_0\)** |
 |---------------------------|------------------------|----------------------|
-| \(H_0\) **verdadera**    | Decisión correcta (\(1 - \alpha\)) | **Error Tipo I** (\(\alpha\)) |
-| \(H_0\) **falsa**        | **Error Tipo II** (\(\beta\)) | Decisión correcta (\(1 - \beta\)) |
+| \(H_0\) **verdadera**    | Decisión correcta (\(1 - \alpha\)) | **Error tipo I** (\(\alpha\)) |
+| \(H_0\) **falsa**        | **Error tipo II** (\(\beta\)) | Decisión correcta (\(1 - \beta\)) |
 
 
 
@@ -1934,7 +1982,7 @@ poly2 <- df2 %>% filter(x >= z_crit) %>%
   rbind(c(z_crit, 0)) # Potencia = 1 - β
 
 # Asignar etiquetas a las áreas con los nombres correctos
-poly1$id <- "ETI (Alpha)"      # Error Tipo I (α)
+poly1$id <- "ETI (Alpha)"      # error tipo I (α)
 poly2$id <- "Potencia (1 - Beta)" # Potencia (1 - β)
 
 # Unión de datos para las regiones
@@ -1989,20 +2037,25 @@ knitr::include_graphics("img/fig264.png")
 
 
 
-La **Figura 2.64** ilustra la relación entre el **nivel de significación** (\(\alpha\)), la **potencia de la prueba** (\(1 - \beta\)) y la **probabilidad de cometer un Error Tipo II** (\(\beta\)):  
+La **Figura 2.64** ilustra la relación entre el **nivel de significación** (\(\alpha\)), la **potencia de la prueba** (\(1 - \beta\)) y la **probabilidad de cometer un error tipo II** (\(\beta\)):  
 
 
 - **El punto crítico \(x_c\)** define la frontera entre la **zona de no rechazo** y la **zona de rechazo** de \(H_0\).
-- **El área amarilla** representa el **nivel de significación (\(\alpha\))**, es decir, la probabilidad de rechazar incorrectamente \(H_0\) cuando es verdadera (**Error Tipo I**).
+
+- **El área amarilla** representa el **nivel de significación (\(\alpha\))**, es decir, la probabilidad de rechazar incorrectamente \(H_0\) cuando es verdadera (**error tipo I**).
+
 - **El área verde** representa la **potencia de la prueba (\(1 - \beta\))**, que indica la probabilidad de rechazar correctamente \(H_0\) cuando es falsa.
-- **El área restante (color complementario a verde y amarillo)** representa la **probabilidad de cometer un Error Tipo II (\(\beta\))**, es decir, aceptar incorrectamente \(H_0\) cuando es falsa.
+
+- **El área restante (color complementario a verde y amarillo)** representa la **probabilidad de cometer un error tipo II (\(\beta\))**, es decir, aceptar incorrectamente \(H_0\) cuando es falsa.
  
 
 
-La **Figura 2.65** muestra como la reducción del nivel de significación **del 5% al 1%** provoca un **desplazamiento del punto crítico hacia la derecha** en la distribución bajo la hipótesis nula. Como consecuencia, disminuye \(1- \beta\), por tanto aumenta el área bajo la **curva correspondiente a \(H_0\) falsa**, lo que incrementa la probabilidad de cometer un **Error Tipo II (\(\beta\))**.  
+La **Figura 2.65** muestra como la reducción del nivel de significación **del 5% al 1%** provoca un **desplazamiento del punto crítico hacia la derecha** en la distribución bajo la hipótesis nula. Como consecuencia, disminuye \(1- \beta\), por tanto aumenta el área bajo la **curva correspondiente a \(H_0\) falsa**, lo que incrementa la probabilidad de cometer un **error tipo II (\(\beta\))**.  
 
-- **Al reducir el nivel de significación \(\alpha\), se hace la prueba más estricta**, disminuyendo la probabilidad de **rechazar \(H_0\) por error** (Error Tipo I).  
-- **Sin embargo, este cambio aumenta la probabilidad de aceptar erróneamente \(H_0\)** cuando en realidad es falsa, es decir, incrementa el **Error Tipo II (\(\beta\))**.
+- **Al reducir el nivel de significación \(\alpha\), se hace la prueba más estricta**, disminuyendo la probabilidad de **rechazar \(H_0\) por error** (error tipo I).  
+
+- **Sin embargo, este cambio aumenta la probabilidad de aceptar erróneamente \(H_0\)** cuando en realidad es falsa, es decir, incrementa el **error tipo II (\(\beta\))**.
+
 - **El poder de la prueba (\(1 - \beta\)) se reduce**, ya que ahora es más difícil detectar un efecto real cuando existe.  
 
 ```{r,echo=FALSE,warning=FALSE}
@@ -2043,7 +2096,7 @@ poly2 <- df2 %>% filter(x >= z_crit) %>%
   rbind(c(z_crit, 0)) # Potencia = 1 - β
 
 # Asignar etiquetas a las áreas con los nombres correctos
-poly1$id <- "ETI (Alpha)"      # Error Tipo I (α)
+poly1$id <- "ETI (Alpha)"      # error tipo I (α)
 poly2$id <- "Potencia (1 - Beta)" # Potencia (1 - β)
 
 # Unión de datos para las regiones
@@ -2110,7 +2163,7 @@ poly2 <- df2 %>% filter(x >= z_crit) %>%
   rbind(c(z_crit, 0)) # Potencia = 1 - β
 
 # Asignar etiquetas a las áreas con los nombres correctos
-poly1$id <- "ETI (Alpha)"      # Error Tipo I (α)
+poly1$id <- "ETI (Alpha)"      # error tipo I (α)
 poly2$id <- "Potencia (1 - Beta)" # Potencia (1 - β)
 
 # Unión de datos para las regiones
@@ -2234,10 +2287,12 @@ knitr::include_graphics("img/fig265.png")
 <br/><br/>
 
 
-También es posible mostrar graficamente que  si la verdadera media poblacional **se aleja significativamente** de la media hipotética bajo la hipótesis nula (\(\mu_0\)), la **probabilidad de cometer un Error Tipo II (\(\beta\)) disminuye**.  
+También es posible mostrar graficamente que  si la verdadera media poblacional **se aleja significativamente** de la media hipotética bajo la hipótesis nula (\(\mu_0\)), la **probabilidad de cometer un error tipo II (\(\beta\)) disminuye**.  
 
 - Para valores de la media poblacional cercanos a \(\mu_0\), la distribución de la media muestral bajo \(H_1\) **se superpone en gran medida con la distribución bajo \(H_0\)**, lo que **aumenta la probabilidad de no detectar la diferencia** y aceptar incorrectamente \(H_0\).  
-- A medida que la **verdadera media poblacional se aleja** (\(\mu_3 > \mu_1 > \mu_0\)), la **superposición entre ambas distribuciones se reduce**, lo que **disminuye la probabilidad de cometer un Error Tipo II (\(\beta\))**.
+
+- A medida que la **verdadera media poblacional se aleja** (\(\mu_3 > \mu_1 > \mu_0\)), la **superposición entre ambas distribuciones se reduce**, lo que **disminuye la probabilidad de cometer un error tipo II (\(\beta\))**.
+
 - Este comportamiento indica que la prueba tiene **mayor capacidad de detección** cuando la diferencia entre la media real y la media hipotética es grande.  
 
 
@@ -2256,7 +2311,7 @@ H_0: \mu  \leq 6.50
 H_1: \mu > 6.50
 \]
 
-El objetivo es determinar la probabilidad de **no rechazar incorrectamente \(H_0\)** si la **verdadera media** de notas al egreso fuera **6.55**. Es decir, se busca calcular la probabilidad de cometer un **Error Tipo II (\(\beta\))**, que corresponde a:
+El objetivo es determinar la probabilidad de **no rechazar incorrectamente \(H_0\)** si la **verdadera media** de notas al egreso fuera **6.55**. Es decir, se busca calcular la probabilidad de cometer un **error tipo II (\(\beta\))**, que corresponde a:
 
 \[
 \beta = P(\text{No rechazar } H_0 \mid H_0 \text{ es falsa})=P(\bar{x} < \bar{x}_c \mid \mu = 6.55)
@@ -2265,10 +2320,11 @@ El objetivo es determinar la probabilidad de **no rechazar incorrectamente \(H_0
 donde:
 
 - \( \bar{x}_c \) es el **punto crítico** previamente calculado, que a un **nivel de significación del 5%** es **6.60**.
+
 - La distribución de la media muestral bajo **\(H_1\)** (cuando \(\mu = 6.55\)) sigue una distribución normal con media **6.55** y un error estándar que depende de la desviación estándar muestral y el tamaño de la muestra.
 
 
-En este caso, la **probabilidad de cometer un Error Tipo II (\(\beta\))** se define como el **área bajo la curva inferior** que está por debajo del **punto crítico \(x_c = 6.60\)**.  
+En este caso, la **probabilidad de cometer un error tipo II (\(\beta\))** se define como el **área bajo la curva inferior** que está por debajo del **punto crítico \(x_c = 6.60\)**.  
 
 Para determinar \(\beta\), es necesario calcular la **probabilidad acumulada bajo la distribución normal** cuando la verdadera media es \(\mu = 6.55\), lo cual requiere transformar el punto crítico a un **puntaje estándar \(z\)**:
 
@@ -2279,7 +2335,9 @@ z = \frac{x_c - \mu_1}{\sigma_{\bar{x}}}
 donde:
 
 - \(x_c = 6.60\) es el **punto crítico**, determinado previamente con un **nivel de significación del 5%**.
+
 - \(\mu_1 = 6.55\) es la **verdadera media poblacional bajo \(H_1\)**.
+
 - \(\sigma_{\bar{x}}\) es el **error estándar de la media**, dado por:
 
 \[
@@ -2298,7 +2356,7 @@ A partir de la **función de distribución acumulada de la normal estándar**, s
 P(Z < 0.83) = 0.7977
 \]
 
-Por lo tanto, la **probabilidad de cometer un Error Tipo II (\(\beta\))** es **0.7977**. Es decir, si el verdadero promedio al egreso fuera de 6.55, habría una probabilidad de 0.7967 de creer que sigue siendo igual al histórico, de 6.60.
+Por lo tanto, la **probabilidad de cometer un error tipo II (\(\beta\))** es **0.7977**. Es decir, si el verdadero promedio al egreso fuera de 6.55, habría una probabilidad de 0.7967 de creer que sigue siendo igual al histórico, de 6.60.
 
 
 La **potencia de una prueba estadística** se define como la probabilidad de detectar correctamente un efecto real cuando este existe. Se calcula como:
@@ -2334,7 +2392,7 @@ potencia<-1-beta
 
 # Mostrar resultados
 cat("Puntaje Z asociado a Beta:", round(z_beta, 3), "\n")
-cat("Probabilidad de cometer un Error Tipo II (Beta):", round(beta, 4), "\n")
+cat("Probabilidad de cometer un error tipo II (Beta):", round(beta, 4), "\n")
 cat("Potencia:", round(potencia, 4), "\n")
 </pre>
 
@@ -2357,7 +2415,7 @@ potencia<-1-beta
 
 # Mostrar resultados
 cat("Puntaje Z asociado a Beta:", round(z_beta, 3), "\n")
-cat("Probabilidad de cometer un Error Tipo II (Beta):", round(beta, 4), "\n")
+cat("Probabilidad de cometer un error tipo II (Beta):", round(beta, 4), "\n")
 cat("Potencia:", round(potencia, 4), "\n")
 ```
 
@@ -2407,10 +2465,10 @@ power.t.test(n=n,delta=d,sig.level=0.05,type= "one.sample", alternative="one.sid
 
 
 </br></br>
-<h3>Curva de Potencia</h3>
+<h3>Curva de potencia</h3>
 
 
-Dado que la **verdadera media poblacional** es desconocida, solo es posible **conjeturar** sobre ella y calcular la **probabilidad de cometer un Error Tipo II (\(\beta\))** y la **potencia de la prueba (\(1 - \beta\))** para distintos valores posibles de la media poblacional alternativa.  
+Dado que la **verdadera media poblacional** es desconocida, solo es posible **conjeturar** sobre ella y calcular la **probabilidad de cometer un error tipo II (\(\beta\))** y la **potencia de la prueba (\(1 - \beta\))** para distintos valores posibles de la media poblacional alternativa.  
 
 La **Figura 2.66** ilustra cómo varía la potencia cuando se consideran **valores diferentes** de la media alternativa. En la práctica, resulta más útil calcular la **potencia de la prueba para un rango más amplio de valores de la media alternativa**, lo que permite evaluar la **calidad de la prueba estadística**.  
 
@@ -2420,7 +2478,9 @@ El cálculo de \(\beta\) y \(1 - \beta\) sigue el mismo procedimiento descrito a
 Para este cálculo, se mantiene constante:  
 
 - **El punto crítico \(x_c = 6.60\)** (determinado previamente con un nivel de significación del 5%).  
+
 - **La desviación estándar \(\sigma = 0.60\)**.  
+
 - **El tamaño de la muestra \(n = 100\)**.  
 
 Para cada media alternativa \(\mu_k\), se calcula el **puntaje estándar \(z\)** y se obtiene \(\beta\) a partir de la función de distribución acumulada de la normal estándar:
@@ -2702,10 +2762,12 @@ knitr::include_graphics("img/fig267.png")
 
 En el contexto de una **prueba  unilateral**, la **potencia de la prueba (\(1 - \beta\))** varía en función de los diferentes valores posibles de la **media alternativa** (\(\mu_k\)).  
 
-A medida que la **verdadera media poblacional** se aleja de la **media nula** (\(\mu_0 = 6.50\)), la **probabilidad de cometer un Error Tipo II (\(\beta\)) disminuye**, y, en consecuencia, la **potencia de la prueba aumenta** (ver **Tablas 2.13** y **2.14**).  
+A medida que la **verdadera media poblacional** se aleja de la **media nula** (\(\mu_0 = 6.50\)), la **probabilidad de cometer un error tipo II (\(\beta\)) disminuye**, y, en consecuencia, la **potencia de la prueba aumenta** (ver **Tablas 2.13** y **2.14**).  
 
 - **Cuando la media alternativa (\(\mu_k\)) es cercana a la media nula (\(\mu_0\)), la potencia es baja**, lo que implica una **alta probabilidad de no rechazar incorrectamente \(H_0\)**.  
+
 - **Cuando la diferencia entre \(\mu_k\) y \(\mu_0\) aumenta, la potencia se incrementa**, ya que la prueba se vuelve más efectiva en detectar la diferencia.  
+
 - Este comportamiento se **representa gráficamente mediante la curva de potencia**, donde el eje **\(x\)** corresponde a los valores de la media alternativa (\(\mu_k\)), y el eje **\(y\)** representa la **potencia** (ver **Figuras 2.66** y **2.67**).  
 
 
@@ -2717,7 +2779,7 @@ A medida que la **verdadera media poblacional** se aleja de la **media nula** (\
 
 
 </br></br>
-<h3>Significación Estadística y Valor-p</h3>
+<h3>Significación estadística y \(valor-p\)</h3>
 
 
 Hasta este punto, se ha indicado que el **equipo de investigación** es quien **establece el nivel de significación estadística** al realizar una prueba de hipótesis. A partir de este valor, se determinan las **zonas de rechazo y no rechazo** de la hipótesis nula (\(H_0\)).  
@@ -2726,19 +2788,22 @@ Hasta este punto, se ha indicado que el **equipo de investigación** es quien **
 
 1. **Determinación del nivel de significación (\(\alpha\))**:  
 
-   - Se fija un umbral que define la probabilidad de cometer un **Error Tipo I (\(\alpha\))**.  
+   - Se fija un umbral que define la probabilidad de cometer un **error tipo I (\(\alpha\))**.  
+   
    - Valores típicos de \(\alpha\) son **0.05, 0.01 o 0.10**, dependiendo del contexto del estudio.  
 
 2. **Definición de las zonas de rechazo y no rechazo**:  
 
    - Se determinan los **valores críticos** para la estadística de prueba, utilizando distribuciones teóricas (normal, t, chi-cuadrado, etc.).  
+   
    - Estas zonas pueden expresarse en términos de **valores estandarizados (z o t)** o **directamente sobre el estimador** (media muestral, proporción, etc.).  
 
 3. **Cálculo del valor de la estadística de prueba con los datos muestrales**.  
 
 4. **Comparación con los valores críticos**: 
 
-   - Si la estadística de prueba cae en la **zona de rechazo**, se concluye que hay suficiente evidencia para **rechazar \(H_0\)**.  
+   - Si la estadística de prueba cae en la **zona de rechazo**, se concluye que hay suficiente evidencia para **rechazar \(H_0\)**. 
+   
    - Si cae en la **zona de no rechazo**, no se puede descartar \(H_0\) con los datos disponibles.  
 
 5. **Comunicación de los resultados**:  
@@ -2749,7 +2814,7 @@ Hasta este punto, se ha indicado que el **equipo de investigación** es quien **
 \text{"Se rechaza \(H_0\) a un nivel del 5%."}
 \]
 
-Esto indica que, dado un **nivel de significación de 5%**, la evidencia muestral respalda la hipótesis alternativa \(H_1\) con un **riesgo del 5% de cometer un Error Tipo I**.
+Esto indica que, dado un **nivel de significación de 5%**, la evidencia muestral respalda la hipótesis alternativa \(H_1\) con un **riesgo del 5% de cometer un error tipo I**.
 
 
 
@@ -2871,12 +2936,12 @@ Dado que **\( z_{obs} = 3.20 \)** es menos probable bajo \( H_0 \) que **\( z_{o
 no se distingue entre una diferencia pequeña y una diferencia grande, lo que puede llevar a interpretaciones ambiguas.  
 
 
-**Interpretación del valor-p en pruebas de hipótesis **
+**Interpretación del \(valor-p\) en pruebas de hipótesis **
 
-El **valor-p** es una medida fundamental en la **inferencia estadística**, ya que permite cuantificar la evidencia en contra de la **hipótesis nula (\( H_0 \))**.  
+El \(valor-p\) es una medida fundamental en la **inferencia estadística**, ya que permite cuantificar la evidencia en contra de la **hipótesis nula (\( H_0 \))**.  
 
 
-El **valor-p** se define como la **probabilidad de obtener un resultado igual o más extremo que el observado en la muestra, suponiendo que \( H_0 \) es verdadera**. Es decir, indica **qué tan probable es que la diferencia observada ocurra solo por azar**.
+El \(valor-p\) se define como la **probabilidad de obtener un resultado igual o más extremo que el observado en la muestra, suponiendo que \( H_0 \) es verdadera**. Es decir, indica **qué tan probable es que la diferencia observada ocurra solo por azar**.
 
 Formalmente, se expresa como:
 
@@ -2886,26 +2951,30 @@ valor-p = P(|U| \geq U_{obs} \mid H_0 \text{ verdadera})
 
 Donde:  
 
-- \( U \) es el **estimador del parámetro poblacional** bajo prueba.  
-- \( U_{obs} \) es el **valor observado del estadístico de prueba** en la muestra.  
+- \( U \) es el **estimador del parámetro poblacional** bajo prueba. 
+
+- \( U_{obs} \) es el **valor observado del estadístico de prueba** en la muestra. 
+
 - \( |U| \geq U_{obs} \) representa **resultados tan extremos o más extremos que el observado**.  
 
 
-**Interpretación del valor-p **
+**Interpretación del \(valor-p\) **
 
-- **Un valor-p pequeño indica que los datos observados son poco probables bajo \( H_0 \)**, lo que sugiere **evidencia en contra de la hipótesis nula**.  
-- **Si valor-p es mayor que el nivel de significación (\( \alpha \)), no se rechaza \( H_0 \)**, ya que el resultado podría deberse al azar.  
-- **Si valor-p es menor que \( \alpha \), se rechaza \( H_0 \)**, indicando que la diferencia observada es estadísticamente significativa.  
+- **Un \(valor-p\) pequeño indica que los datos observados son poco probables bajo \( H_0 \)**, lo que sugiere **evidencia en contra de la hipótesis nula**.  
 
+- **Si \(valor-p\) es mayor que el nivel de significación (\( \alpha \)), no se rechaza \( H_0 \)**, ya que el resultado podría deberse al azar. 
 
-
-
-El **valor-p** es una medida que permite evaluar la fuerza de la evidencia en contra de la hipótesis nula (\( H_0 \)). Su magnitud es clave en la interpretación de los resultados de una prueba de hipótesis.  
+- **Si \(valor-p\) es menor que \( \alpha \), se rechaza \( H_0 \)**, indicando que la diferencia observada es estadísticamente significativa.  
 
 
-**Cuanto más pequeño sea el valor-p, mayor será la evidencia para rechazar \( H_0 \)**. Un valor-p bajo indica que el resultado observado es poco probable bajo el supuesto de que \( H_0 \) es verdadera, lo que sugiere que la hipótesis alternativa (\( H_1 \)) podría ser cierta.  
 
-**Un valor-p grande indica que el resultado observado es compatible con \( H_0 \)**. En este caso, no hay suficiente evidencia para rechazar la hipótesis nula, lo que implica que la diferencia observada podría deberse al azar.  
+
+El \(valor-p\) es una medida que permite evaluar la fuerza de la evidencia en contra de la hipótesis nula (\( H_0 \)). Su magnitud es clave en la interpretación de los resultados de una prueba de hipótesis.  
+
+
+**Cuanto más pequeño sea el \(valor-p\), mayor será la evidencia para rechazar \( H_0 \)**. Un \(valor-p\) bajo indica que el resultado observado es poco probable bajo el supuesto de que \( H_0 \) es verdadera, lo que sugiere que la hipótesis alternativa (\( H_1 \)) podría ser cierta.  
+
+**Un \(valor-p\) grande indica que el resultado observado es compatible con \( H_0 \)**. En este caso, no hay suficiente evidencia para rechazar la hipótesis nula, lo que implica que la diferencia observada podría deberse al azar.  
 
 
 </br></br>
@@ -2926,7 +2995,9 @@ H_1: \mu > 6.50
 En una muestra de **100 estudiantes**, se ha obtenido:
 
 - **Media muestral observada**: \(\bar{x}_{obs} = 6.65\)  
+
 - **Desviación estándar muestral**: \( s = 0.60 \)  
+
 - **Tamaño de la muestra**: \( n = 100 \)  
 
 Se debe calcular la **probabilidad de obtener un valor tan extremo o más extremo que el observado, si \( H_0 \) es verdadera**, tomando como cierto que \( \mu =6.50 \). Esto se expresa como la siguiente **probabilidad condicional**:
@@ -3003,10 +3074,12 @@ p_value <- 1 - pnorm(z_obs)
 ```
 
 
-En el caso anterior, donde **\(valor-p = 0.0062 \)**:
+En el caso anterior, donde \(valor-p = 0.0062 \):
 
 - Se puede decir que **\( H_0 \) se rechaza al nivel del 5%**. 
-- También se puede indicar que **\( H_0 \) se rechaza al nivel del 1%**, ya que \( valor-p < 0.01 \).  
+
+- También se puede indicar que **\( H_0 \) se rechaza al nivel del 1%**, ya que \( valor-p < 0.01 \). 
+
 - **Reportar el valor exacto (\( valor-p = 0.0062 \)) permite que otros investigadores interpreten la magnitud de la evidencia en contra de \( H_0 \)**.  
 
 
@@ -3072,11 +3145,16 @@ s <- sd(x)  # Desviación estándar muestral
 
 El comando **`t.test()`** en **R** permite realizar una **prueba de hipótesis para la media poblacional**. Para su uso, se deben proporcionar los siguientes argumentos:  
 
-1. **La variable de interés** (proveniente de una matriz de datos o un vector).  
+1. **La variable de interés** (proveniente de una matriz de datos o un vector).
+
 2. **El valor de la media bajo la hipótesis nula** (`mu`).  
+
 3. **La lateralidad de la prueba**, definida con el argumento `alternative`:  
+
    - **Bilateral**: `alternative = "two.sided"`  
+   
    - **Unilateral derecha**: `alternative = "greater"`  
+   
    - **Unilateral izquierda**: `alternative = "less"`  
 
 
@@ -3135,12 +3213,14 @@ mean of x
 
 Se dispone de una muestra de **150 observaciones**, con los siguientes resultados:
 
-- **Estadístico de prueba \( t \)**: \( 2.4448 \)  
-- **Valor-p**: \( 0.007829 \)  
+- **Estadístico de prueba \( t \)**: \( 2.4448 \) 
+
+- \(valor-p= 0.007829 \) 
+
 - **Intervalo de confianza del 95% para \( \mu \)**: \( [2.073491, +\infty) \)  
 
 
-El valor-p=0.007829 es menor a los niveles de significación del 5% y 1%, lo que permite rechazar 
+El \(valor-p=0.007829\) es menor a los niveles de significación del 5% y 1%, lo que permite rechazar 
 la hipótesis nula en ambas instancias, 5% y 1% de significancia.
 
 El intervalo de confianza al 95% para la media está limitado inferiormente por 
@@ -3156,6 +3236,7 @@ dentro del rango de medias mayores a 2.
 En la mayoría de los **paquetes de análisis de datos** la **prueba \( t \) se usa como estándar** en la evaluación de hipótesis sobre la media poblacional. En estos procedimientos, el **estadístico de prueba** se basa en la distribución \( t \), en lugar de la normal estándar (\( z \)), debido a que:
 
 - **La distribución \( t \) es la opción adecuada para muestras pequeñas cuando la varianza poblacional es desconocida**.  
+
 - **Cuando el tamaño de la muestra es grande (\( n \geq 30 \)), la distribución \( t \) converge a la normal estándar**, por lo que ambas pruebas producen resultados equivalentes.  
 
 
@@ -3166,7 +3247,7 @@ En la mayoría de los **paquetes de análisis de datos** la **prueba \( t \) se 
 <h3>Ejemplo:</h3>
 <p>
 
-Se plantea una **prueba de hipótesis** con el objetivo de comparar la proporción de población adulta con obesidad en **Argentina** con el valor de referencia global reportado por la **Organización Mundial de la Salud (OMS, 2016)**. Según este informe, en 2016, el **13% de la población mundial adulta sufría de obesidad**.  
+Se plantea una **prueba de hipótesis** con el objetivo de comparar la proporción de población adulta con obesidad en Argentina con el valor de referencia global reportado por la *Organización Mundial de la Salud (OMS, 2016)*. Según este informe, en 2016, el **13% de la población mundial adulta sufría de obesidad**.  
 
 
 Se define como **persona obesa** a aquella cuyo **Índice de Masa Corporal (IMC)** es mayor o igual a **30**, donde el IMC se calcula como:  
@@ -3178,8 +3259,11 @@ IMC = \frac{\text{Peso (kg)}}{\text{Altura (m)}^2}
 Para el presente estudio, se emplean datos de la **Encuesta Nacional de Factores de Riesgo (ENFR) 2013**, en la que la variable `"IMC_agrupado"` clasifica a las personas en las siguientes categorías:
 
 1. **Peso normal**  
+
 2. **Sobrepeso**  
+
 3. **Obesidad**  
+
 9. **No sabe/No contesta (NS/NC) sobre peso y/o talla**  
 
 Con las siguientes frecuencias absolutas por categoría:
@@ -3202,7 +3286,8 @@ H_1: P > 0.13
 
 Donde: 
 
-- \( P \) representa la **proporción de población adulta en Argentina con obesidad**.  
+- \( P \) representa la **proporción de población adulta en Argentina con obesidad**. 
+
 - La prueba es **unilateral derecha**, ya que se analiza si la prevalencia en Argentina es **mayor** que el 13% global.  
 
 
@@ -3241,7 +3326,7 @@ prop_test_result  <- prop.test(x, n, p = p_0, alternative = "greater", correct =
 ```
 
 
-Se obtine un valor-p inferior a 2.2e-16, por tanto se ha encontrado suficiente evidencia estadística para afirmar que la proporción de obesidad en Argentina es superior a la prevalencia mundial del 13%, con una significancia del 1%.
+Se obtine un \(valor-p\) inferior a \(2.2 \times 10^{-16} \), por tanto se ha encontrado suficiente evidencia estadística para afirmar que la proporción de obesidad en Argentina es superior a la prevalencia mundial del 13%, con una significancia del 1%.
 
 </p>
 </div>
@@ -3258,7 +3343,9 @@ El **test de hipótesis para una varianza** es una prueba estadística utilizada
 Dado un conjunto de datos provenientes de una población normal, se desea contrastar la hipótesis sobre su varianza \( \sigma^2 \). Las **Hipótesis alternativa (\( H_1 \))** pueden ser alguna de las siguientes, donde  \( \sigma_0^2 \) es un valor dado respecto al que se quiere comparar la varianza de la población:
 
   - **Bilateral**: \( \sigma^2 \neq \sigma_0^2 \) (la varianza es diferente de \( \sigma_0^2 \)).
+  
   - **Unilateral derecha**: \( \sigma^2 > \sigma_0^2 \) (la varianza es mayor que \( \sigma_0^2 \)).
+  
   - **Unilateral izquierda**: \( \sigma^2 < \sigma_0^2 \) (la varianza es menor que \( \sigma_0^2 \)).
 
 El test se basa en la distribución **Chi-cuadrado** (\( \chi^2 \)), dado que la varianza muestral sigue la distribución:
@@ -3270,7 +3357,9 @@ El test se basa en la distribución **Chi-cuadrado** (\( \chi^2 \)), dado que la
 donde:
 
 - \( n \) es el tamaño de la muestra,
+
 - \( S^2 \) es la varianza muestral,
+
 - \( \sigma_0^2 \) es la varianza poblacional bajo la hipótesis nula.
 
 Bajo \( H_0 \), el estadístico \( \chi^2 \) sigue una distribución Chi-cuadrado con \( n - 1 \) grados de libertad.
@@ -3278,7 +3367,9 @@ Bajo \( H_0 \), el estadístico \( \chi^2 \) sigue una distribución Chi-cuadrad
 La decisión de rechazar \( H_0 \) se toma comparando el valor calculado de \( \chi^2 \) con los valores críticos obtenidos de la distribución Chi-cuadrado para un nivel de significancia \( \alpha \):
 
 - **Prueba bilateral**: Rechazar \( H_0 \) si \( \chi^2 \) cae fuera del intervalo \( (\chi^2_{\alpha/2, n-1}, \chi^2_{1-\alpha/2, n-1}) \).
+
 - **Prueba unilateral derecha**: Rechazar \( H_0 \) si \( \chi^2 > \chi^2_{1-\alpha, n-1} \).
+
 - **Prueba unilateral izquierda**: Rechazar \( H_0 \) si \( \chi^2 < \chi^2_{\alpha, n-1} \).
 
 En casos donde los datos no sigan una distribución normal, se recomienda utilizar pruebas no paramétricas o métodos basados en permutaciones para evaluar la varianza.
@@ -3303,7 +3394,8 @@ H_1: \sigma^2 \neq 100
 
 Donde: 
 
-- \( \sigma^2 \) representa la **varianza poblacional**.  
+- \( \sigma^2 \) representa la **varianza poblacional**. 
+
 - La prueba es **bilateral**, ya que se evalúa si la varianza es **diferente** del valor de referencia (100).  
 
 La implementación en **R** se realiza con los siguientes códigos:
@@ -3350,12 +3442,15 @@ Se ha llevado a cabo una **prueba de hipótesis para la varianza poblacional**, 
 A partir de la muestra analizada, se obtienen los siguientes valores:
 
 - **Estadístico de prueba \( \chi^2 \)**: \( 27.91022 \).  
+
 - **Grados de libertad**: \( v = n - 1 = 29 \).  
+
 - **Valor \( p \)**: \( 0.954565 \).  
+
 - **Nivel de significación (\( \alpha \)) considerado**: \( 5\% \) (\( 0.05 \)).  
 
 
-Dado que el **valor-p obtenido es mayor que el nivel de significación del 5%**, **no se rechaza la hipótesis nula** \( H_0 \), lo que indica que **no hay evidencia suficiente para afirmar que la varianza poblacional difiere de 100 con una significancia del 5%**.
+Dado que el **\(valor-p\) obtenido es mayor que el nivel de significación del 5%**, **no se rechaza la hipótesis nula** \( H_0 \), lo que indica que **no hay evidencia suficiente para afirmar que la varianza poblacional difiere de 100 con una significancia del 5%**.
 
 
 </p>
@@ -3365,7 +3460,7 @@ Dado que el **valor-p obtenido es mayor que el nivel de significación del 5%**,
 
 La **Tabla 2.17** presenta un resumen de los **test estadísticos** aplicados a una muestra cuando el **parámetro de interés** es la **media**, la **varianza** o la **proporción**. En esta tabla se especifican los **supuestos necesarios** para aplicar cada prueba, el **estadístico de prueba** y su **distribución asociada**, que puede ser **normal** (\( Z \)), **t de Student** (\( t \)) o **chi-cuadrado** (\( \chi^2 \)).
 
-La **Tabla 2.18** resume el **criterio de decisión** para rechazar o no la **hipótesis nula**, utilizando tanto la **región de rechazo** como el **valor-p**. Se detallan las reglas de decisión según el nivel de significación \( \alpha \) y el valor observado del estadístico de prueba.
+La **Tabla 2.18** resume el **criterio de decisión** para rechazar o no la **hipótesis nula**, utilizando tanto la **región de rechazo** como el \(valor-p\). Se detallan las reglas de decisión según el nivel de significación \( \alpha \) y el valor observado del estadístico de prueba.
 
 La **Tabla 2.19** presenta las **diferentes opciones de formulación de hipótesis**, ya sea **unilateral** o **bilateral**, utilizando el parámetro general \( \theta \), el cual puede representar la **media poblacional** (\( \mu \)), la **varianza poblacional** (\( \sigma^2 \)) o la **proporción poblacional** (\( P \)), según el contexto del análisis.
 
@@ -3376,7 +3471,7 @@ La **Tabla 2.19** presenta las **diferentes opciones de formulación de hipótes
 </center> 
 
 
-| **Parámetro**               |              **Supuestos**              |              **Hipótesis Nula \( H_0 \)**              |              **Estadístico de Prueba y Distribución**              |
+| **Parámetro**               |              **Supuestos**              |              **Hipótesis nula \( H_0 \)**              |              **Estadístico de prueba y distribución**              |
 |:----------------------------:|:--------------------------------------:|:--------------------------------------------------:|:--------------------------------------------------------------:|
 | **Media \( \mu \)**          | Población normal o \( n \geq 30 \), varianza \( \sigma^2 \) conocida  | \( \mu = \mu_0 \) | \( Z = \frac{\bar{x} - \mu_0}{\frac{\sigma}{\sqrt{n}}} \sim N(0,1) \) |
 |                              | Población normal, varianza \( \sigma^2 \) desconocida, \( n \geq 30 \)  | \( \mu = \mu_0 \) | \( Z = \frac{\bar{x} - \mu_0}{\frac{S}{\sqrt{n}}} \sim N(0,1) \) |
@@ -3392,17 +3487,17 @@ La **Tabla 2.19** presenta las **diferentes opciones de formulación de hipótes
 **Tabla 2.18** Reglas de decisión.
 </center> 
 
-| **Regla**       | **Criterio de Decisión** |
+| **Regla**       | **Criterio de decisión** |
 |:---------------:|:---------------------------------------------------------------|
-| **Regla 1**     | Si el **Estadístico de Prueba** cae en la **Región de Rechazo**, entonces se rechaza \( H_{0} \) y se **acepta** la hipótesis alternativa \( H_{1} \). <br> Si, por el contrario, el **Estadístico de Prueba** **No** cae en la **Región de Rechazo**, entonces **No** se rechaza \( H_{0} \), es decir, no existe suficiente evidencia para descartarla. |
-| **Regla 2**     | Si \( \alpha > \) **valor-p**, entonces se **rechaza** \( H_{0} \) y se **acepta** \( H_{1} \). <br> Si, por el contrario, \( \alpha < \) **valor-p**, entonces **No** se rechaza \( H_{0} \). |
+| **Regla 1**     | Si el **Estadístico de prueba** cae en la **Región de rechazo**, entonces se rechaza \( H_{0} \) y se **acepta** la hipótesis alternativa \( H_{1} \). <br> Si, por el contrario, el **Estadístico de prueba** **No** cae en la **Región de rechazo**, entonces **No** se rechaza \( H_{0} \), es decir, no existe suficiente evidencia para descartarla. |
+| **Regla 2**     | Si \( \alpha > valor-p\), entonces se **rechaza** \( H_{0} \) y se **acepta** \( H_{1} \). <br> Si, por el contrario, \( \alpha < valor-p\), entonces **No** se rechaza \( H_{0} \). |
 
 
 <br/><br/>
 <center>
-**Tabla 2.19** Tipos de Pruebas de Hipótesis.
+**Tabla 2.19** Tipos de pruebas de hipótesis.
 </center> 
-| **Tipo de Prueba** | **Formulación de Hipótesis** |
+| **Tipo de Prueba** | **Formulación de hipótesis** |
 |:------------------:|:----------------------------------------------------------------|
 | **Dos colas**      | \( H_{0}: \theta = \theta_{0} \) vs \( H_{1}: \theta \neq \theta_{0} \) |
 | **Cola superior**  | \( H_{0}: \theta \leq \theta_{0} \) vs \( H_{1}: \theta > \theta_{0} \) |
@@ -3420,14 +3515,17 @@ La **Tabla 2.19** presenta las **diferentes opciones de formulación de hipótes
 
 El supuesto de **normalidad** es fundamental en los intervalos de confianza paramétricos, las pruebas paramétricas, como la **prueba t de Student**, **ANOVA** y **regresión lineal**, ya que la validez de estas pruebas depende de la normalidad de los datos. Si bien en muestras grandes, para sumas, promedios y proporciones,  el **teorema central del límite** permite que los resultados sean robustos frente a pequeñas desviaciones de la normalidad, en muestras pequeñas, la verificación de este supuesto es crucial.
 
-En la **Tabla 2.20**, se presenta un resumen de las **pruebas de normalidad** y estadísticas  más comunes, especificando el **tamaño de muestra recomendado** y las **hipótesis** correspondientes.
+Las pruebas de normalidad pueden clasificarse según si requieren o no supuestos paramétricos sobre la distribución. Entre las **no paramétricas**, se encuentran la **Kolmogorov-Smirnov**, su versión modificada **Lilliefors**, y la **Cramér-von Mises**, las cuales comparan la función de distribución empírica con una teórica sin asumir parámetros poblacionales específicos (aunque en la práctica pueden requerir correcciones cuando se estiman). En contraste, las pruebas **paramétricas** como **Shapiro-Wilk**, **D’Agostino-Pearson** y **Anderson-Darling** se basan en estadísticas que dependen de parámetros como la media, varianza, asimetría o curtosis, por lo cual su validez está sujeta a supuestos más específicos sobre la distribución normal subyacente.
+
+
+En la **Tabla 2.20**, se presenta un resumen de algunas de las **pruebas de normalidad** y estadísticas  más comunes, especificando el **tamaño de muestra recomendado** y las **hipótesis** correspondientes.
 
 <br/><br/>
 <center>
 **Tabla 2.20** Herramientas para revisar la normalidad.
 </center> 
 
-| **Test** | **Adecuado para muestras grandes** | **Tamaño de muestra recomendado** | **Características** | **Hipótesis Nula \( H_0 \)** | **Hipótesis Alternativa \( H_1 \)** |
+| **Test** | **Adecuado para muestras grandes** | **Tamaño de muestra recomendado** | **Características** | **Hipótesis nula \( H_0 \)** | **Hipótesis alternativa \( H_1 \)** |
 |----------------------------|----------------------|----------------------|-------------------------------|-------------------------------------------------|-----------------------------------------------|
 | **Shapiro-Wilk (`shapiro.test()`)** | No | \( n \leq 50 \) (hasta 5000, pero pierde potencia) | Alta potencia en muestras pequeñas, pero demasiado sensible en muestras grandes. | Los datos siguen una distribución normal. | Los datos no siguen una distribución normal. |
 | **Kolmogorov-Smirnov (`ks.test()`)** | No | \( n > 30 \), pero **no recomendado para normalidad** | Evalúa la distancia entre la distribución empírica y la normal teórica. Sensible a valores atípicos. | Los datos siguen una distribución normal. | Los datos no siguen una distribución normal. |
@@ -3450,7 +3548,7 @@ En la **Tabla 2.20**, se presenta un resumen de las **pruebas de normalidad** y 
 <h3>Ejemplo:</h3>
 <p>
 
-Para analizar la edad de los participantes de la Carrera La Luz, se toma una muestra aleatoria de tamaño 50. Antes de realizar un test de media, se verifica si la distribución de la población de la que proviene la muestra es aproximadamente normal mediante un test de normalidad. Si se cumple el supuesto de normalidad, se procede a realizar una **prueba t** para una media, dado que la varianza poblacional es desconocida. En caso contrario, se recomienda utilizar una prueba no paramétrica  para comparar la mediana con el valor de referencia. Se desea contrastar si la edad promedio de los participantes es significativamente diferente de 31 años con un nivel de confianza del 90 %.
+Para analizar la edad de los participantes de la Carrera La Luz, se toma una muestra aleatoria de tamaño 50. Antes de realizar un test de media, se verifica si la distribución de la población de la que proviene la muestra es aproximadamente normal mediante un test de normalidad. Si se cumple el supuesto de normalidad, se procede a realizar una prueba t para una media, dado que la varianza poblacional es desconocida. En caso contrario, se recomienda utilizar una prueba no paramétrica  para comparar la mediana con el valor de referencia. Se desea contrastar si la edad promedio de los participantes es significativamente diferente de 31 años con un nivel de confianza del 90 %.
 
 Con el objetivo de analizar la distribución de la variable Edad, se implementaron los siguientes códigos, con los cuales se ajustaron cuatro pruebas de normalidad, además de la generación de un histograma con curva de densidad y la realización de una prueba de hipótesis para la media.
 
@@ -3576,12 +3674,12 @@ knitr::include_graphics("img/fig269.png")
 </center>
 <br/><br/>
 
-Según la **Figura 2.69**, la distribución de la edad presenta una ligera asimetría y dos clases modales claramente marcadas. No obstante, las pruebas de normalidad Shapiro-Wilk, Anderson-Darling, Lilliefors (Kolmogorov-Smirnov) y Cramér-von Mises arrojaron valores-p superiores a 0.05. Esto indica que, con un nivel de significancia del 5%, no hay suficiente información en la muestra para rechazar la hipótesis nula de normalidad para la variable Edad.
+Según la **Figura 2.69**, la distribución de la edad presenta una ligera asimetría y dos clases modales claramente marcadas. No obstante, las pruebas de normalidad Shapiro-Wilk, Anderson-Darling, Lilliefors (Kolmogorov-Smirnov) y Cramér-von Mises arrojaron $valores-p$ superiores a 0.05. Esto indica que, con un nivel de significancia del 5%, no hay suficiente información en la muestra para rechazar la hipótesis nula de normalidad para la variable Edad.
 
 
-En la **prueba t** de dos colas para una media, donde la hipótesis alternativa plantea que la media de la edad es **diferente de 30**, se obtuvo un **valor-p = 0.03051**.  
+En la **prueba t** de dos colas para una media, donde la hipótesis alternativa plantea que la media de la edad es **diferente de 30**, se obtuvo un \(valor-p= 0.03051\).  
 
-Dado que el **nivel de significación** es del **5%** (\( \alpha = 0.05 \)), y el valor-p es **menor** que este umbral (\( 0.03051 < 0.05 \)), **se rechaza la hipótesis nula** \( H_0: \mu = 30 \).  
+Dado que el **nivel de significación** es del **5%** (\( \alpha = 0.05 \)), y el \(valor-p\) es **menor** que este umbral (\( 0.03051 < 0.05 \)), **se rechaza la hipótesis nula** \( H_0: \mu = 30 \).  
 
 En consecuencia, se concluye que **existe evidencia estadística suficiente** para inferir que la **media de la edad es significativamente diferente de 30**, con un **nivel de significación del 5%**.
 
@@ -3625,13 +3723,13 @@ Una empresa somete a sus aspirantes a un curso de entrenamiento como parte del p
 
 El objetivo es determinar si los cambios en el programa **redujeron significativamente la tasa de aprobación**. Para ello, se plantea la siguiente prueba de hipótesis para la proporción de éxito \( p \):
 
-- **Hipótesis nula** (\( H_0 \)): La proporción de aprobación **no ha disminuido** o es incluso mayor que antes.  
+- **Hipótesis nula** \(\left(H_0\right)\): La proporción de aprobación **no ha disminuido** o es incluso mayor que antes.  
   \[
   H_0: P \geq 0.76
   \]
-- **Hipótesis alternativa** (\( H_a \)): La proporción de aprobación **ha disminuido** respecto a la tasa histórica.  
+- **Hipótesis alternativa** \(\left(H_1\right)\): La proporción de aprobación **ha disminuido** respecto a la tasa histórica.  
   \[
-  H_a: P < 0.76
+  H_1: P < 0.76
   \]
 
 Dado que el interés radica en evaluar una posible reducción en la tasa de aprobación, se emplea una **prueba de proporciones de una cola** (*cola inferior*). La prueba se implementa con el siguiente código en **R**:
@@ -3666,9 +3764,9 @@ sample estimates:
 0.6 
 </pre>
 
-El valor p obtenido en la prueba es **0.01447**, el cual es menor que el nivel de significancia establecido (\(\alpha = 0.05\)). Por lo tanto, se rechaza la hipótesis nula en favor de la hipótesis alternativa.
+El \(valor-p\) obtenido en la prueba es **0.01447**, el cual es menor que el nivel de significancia establecido (\(\alpha = 0.05\)). Por lo tanto, se rechaza la hipótesis nula en favor de la hipótesis alternativa.
 
-Los resultados sugieren que la proporción de aprobación en la nueva versión del programa es **significativamente menor que el 76 %** registrado en procesos anteriores. Por lo tanto, se puede inferir con un **95 % de confianza** que los cambios en el programa de entrenamiento han reducido la tasa de selección.
+Los resultados sugieren que la proporción de aprobación en la nueva versión del programa es **significativamente menor que el 76%** registrado en procesos anteriores. Por lo tanto, se puede inferir con un **95% de confianza** que los cambios en el programa de entrenamiento han reducido la tasa de selección.
 
 
 </p>
@@ -3706,7 +3804,7 @@ H_0: \sigma^2 = 81
 \]
 
 \[
-H_a: \sigma^2 \neq 81
+H_1: \sigma^2 \neq 81
 \]
 
 Con los siguientes códigos se realiza el test de normalidad de Shapiro-Wilk y de varianza:
@@ -3748,7 +3846,7 @@ print(test_varianza)
 ```
 
 
-De acuerdo con el test de normalidad, el valor-p=0.06699, por tanto, con una significancia
+De acuerdo con el test de normalidad, el \(valor-p=0.06699\), por tanto, con una significancia
 del 5% no hay suficiente información en la muestra para rechazar la hipótesis de normalidad de los tiempos.
 Esto permite la realización del test paramétrico de varianza que se analiza a continuación.
 
@@ -3760,7 +3858,7 @@ data:  tiempos
 W = 0.85522, p-value = 0.06699
 </pre>
 
-De acuerdo con el test de varianzas, el valor-p= 0.00188424, por tanto, con una
+De acuerdo con el test de varianzas, el \(valor-p= 0.00188424\), por tanto, con una
 significancia del 1%, se rechaza que la varianza de los tiempos sea igual a 81,
 por tanto se acepta que la variabilidad de los tiempos respecto a la media es distinta a
 81 $horas^2$.

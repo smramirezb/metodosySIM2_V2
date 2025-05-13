@@ -21,16 +21,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, comment = N
 
 En estadística inferencial, uno de los principales objetivos es **estimar los parámetros desconocidos** de una distribución de probabilidad a partir de una muestra de datos observados. Existen varios enfoques para realizar estas estimaciones, siendo dos de los más utilizados el **método de los momentos** y el **método de máxima verosimilitud**.
 
-Los métodos de estimación permiten obtener valores aproximados de parámetros poblacionales desconocidos, como la **media**, la **varianza**, la **tasa de ocurrencia de eventos**, entre otros. Estos métodos son fundamentales en diversas áreas, tales como:
-
-- **Econometría y Finanzas:** Para estimar tasas de crecimiento, volatilidad o distribuciones de precios de activos.
-
-- **Ingeniería y Fiabilidad:** Para modelar la vida útil de componentes y sistemas.
-
-- **Biometría y Ciencias de la Salud:** Para estimar parámetros en modelos epidemiológicos o tasas de incidencia de enfermedades.
-
-- **Machine Learning y Ciencia de Datos:** En ajuste de modelos probabilísticos y optimización de parámetros en aprendizaje automático.
-
+Los métodos de estimación permiten obtener valores aproximados de parámetros poblacionales desconocidos, como la **media**, la **varianza**, la **tasa de ocurrencia de eventos**, entre otros. 
 
 
 </br></br>
@@ -105,7 +96,7 @@ Características del método de máxima verosimilitud:
 <h3>Ejemplo:</h3>
 <p>
 
-En una **fábrica de bombillas**, se estudia la **duración de vida útil** (en horas) de las bombillas antes de que fallen. Se ha observado que la vida útil de una bombilla sigue una **distribución Gamma** con parámetros \( \alpha \) (forma) y \( \beta \) (escala). 
+En una **fábrica de bombillas**, se estudia la **duración de vida útil** (en horas) de las bombillas antes de que fallen. Se ha observado que la vida útil de una bombilla sigue una **distribución Gamma** con parámetros \( \alpha \) (forma) y \( \sigma \) (escala). 
 
 Para estimar los parámetros de esta distribución, se selecciona una muestra aleatoria de **10 bombillas** y se registran sus tiempos de vida útil en horas:
 
@@ -113,28 +104,23 @@ Para estimar los parámetros de esta distribución, se selecciona una muestra al
 vida_util <- c(1200, 1350, 1100, 1450, 1300, 1250, 1400, 1280, 1320, 1380)
 </pre>
 
-Se desea estimar los valores de $\alpha$ y $\beta$ utilizando el método de los momentos. 
+Se desea estimar los valores de $\alpha$ y $\sigma$ utilizando el método de los momentos. 
 
 ---
 Paso 1:  Determinación de los momentos poblacionales
 
-Para una **distribución Gamma** con parámetros \( \alpha \) (forma) y \( \beta \) (escala), los primeros momentos poblacionales están dados por:
+Para una **distribución Gamma** con parámetros \( \alpha \) (forma) y \( \sigma \) (escala), los primeros momentos poblacionales están dados por:
 
-- **Media poblacional**:
-
-  \[
-  E[X] = \alpha \beta
-  \]
-
-  Esto significa que el valor esperado de la duración de vida útil de una bombilla es igual al producto de los parámetros \( \alpha \) y \( \beta \).
-
-- **Varianza poblacional**:
+- **Primer momento poblacional**:
 
   \[
-  \text{Var}(X) = \alpha \beta^2
+  E[X] = \alpha \sigma
   \]
 
-  
+  Esto significa que el valor esperado de la duración de vida útil de una bombilla es igual al producto de los parámetros de forma y escala, denotados por \( \alpha \) y \( \sigma \).
+
+ 
+
 - **Segundo momento poblacional**:  
 
   Se puede obtener utilizando la propiedad de la varianza:
@@ -142,17 +128,31 @@ Para una **distribución Gamma** con parámetros \( \alpha \) (forma) y \( \beta
   \[
   E[X^2] = \text{Var}(X) + (E[X])^2
   \]
-
-  Sustituyendo las expresiones de la varianza y la media:
+  
+  Donde,
+  
+  la **varianza poblacional** está dada por:
 
   \[
-  E[X^2] = \alpha \beta^2 + (\alpha \beta)^2
+  \text{Var}(X) = \alpha \sigma^2
+  \]
+
+  y la **media poblacional** por:
+  
+  \[
+  E[X] = \alpha \sigma
+  \]
+
+  Sustituyendo las expresiones de la varianza y la media en el segundo momento poblacional se tiene:
+
+  \[
+  E[X^2] = \alpha \sigma ^2 + (\alpha \sigma)^2
   \]
 
   Factorizando:
 
   \[
-  E[X^2] = \alpha \beta^2 (1 + \alpha)
+  E[X^2] = \alpha \sigma^2 (1 + \alpha)
   \]
 
 
@@ -160,7 +160,7 @@ Paso 2:  Determinación de los momentos muestrales
 
 En la práctica, los momentos poblacionales son desconocidos, por lo que deben ser estimados a partir de una muestra aleatoria de tamaño \( n \). Los **momentos muestrales** son las estimaciones empíricas de los momentos poblacionales y se calculan como sigue:
 
-- **Media muestral**:
+- **Primer momento  muestral**:
 
   \[
   M_1 = \bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i
@@ -168,13 +168,6 @@ En la práctica, los momentos poblacionales son desconocidos, por lo que deben s
 
   La media muestral \( \bar{X} \) es la estimación empírica del valor esperado \( E[X] \).
 
-- **Varianza muestral**:
-
-  \[
-  S^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2
-  \]
-
-  La varianza muestral \( S^2 \) estima la varianza poblacional \( \text{Var}(X) \) y nos da una medida de la dispersión de los datos alrededor de la media.
 
 - **Segundo momento muestral**:
 
@@ -187,18 +180,26 @@ En la práctica, los momentos poblacionales son desconocidos, por lo que deben s
   \[
   M_2 = S^2 + \bar{X}^2
   \]
+  
+  Donde, la **varianza muestral** está dada por:
 
-  Estos momentos muestrales nos permitirán encontrar estimaciones para los parámetros \( \alpha \) y \( \beta \) en el siguiente paso, mediante la igualación con los momentos poblacionales.
+  \[
+  S^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - \bar{X}^2
+  \]
+
+
+
+  Estos momentos muestrales, $M_1$ y $M_2$, permitirán encontrar estimaciones para los parámetros \( \alpha \) y \( \sigma \) en el siguiente paso, mediante la igualación con los momentos poblacionales.
  
 
-Paso 3:  Aplicación del Método de los Momentos
+Paso 3:  Aplicación del método de los momentos
 
 El **método de los momentos** consiste en igualar los momentos muestrales con los momentos poblacionales y resolver el sistema resultante para obtener estimaciones de los parámetros desconocidos.
 
-A partir de los **momentos poblacionales** de una distribución Gamma \( X \sim \text{Gamma}(\alpha, \beta) \):
+A partir de los **momentos poblacionales** de una distribución Gamma \( X \sim \text{Gamma}(\alpha, \sigma) \):
 
 \[
-E[X] = \alpha \beta, \quad E[X^2] = \alpha \beta^2 + (\alpha \beta)^2
+E[X] = \alpha \sigma, \quad E[X^2] = \alpha \sigma^2 + (\alpha \sigma)^2
 \]
 
 Y los **momentos muestrales** determinados:
@@ -207,38 +208,38 @@ Y los **momentos muestrales** determinados:
 M_1 = \bar{X}, \quad M_2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2
 \]
 
-Igualamos los momentos muestrales con los poblacionales:
+Se igualan los momentos muestrales con los poblacionales:
 
 \[
-M_1 = E[X] \quad \Rightarrow \quad \bar{X} = \alpha \beta
+M_1 = E[X] \quad \Rightarrow \quad \bar{X} = \alpha \sigma
 \]
 
 \[
-M_2 = E[X^2] \quad \Rightarrow \quad S^2 + \bar{X}^2 = \alpha \beta^2 + (\alpha \beta)^2
+M_2 = E[X^2] \quad \Rightarrow \quad S^2 + \bar{X}^2 = \alpha \sigma^2 + (\alpha \sigma)^2
 \]
 
-Reemplazamos \( \alpha \beta = \bar{X} \):
+Se reemplaza \( \alpha \sigma = \bar{X} \):
 
 \[
 S^2 + \bar{X}^2 = \frac{\bar{X}^2}{\alpha} + \bar{X}^2
 \]
 
-Despejamos \( \alpha \):
+Se despeja \( \alpha \):
 
 \[
 S^2 = \frac{\bar{X}^2}{\alpha} \quad \Rightarrow \quad \alpha = \frac{\bar{X}^2}{S^2}
 \]
 
-Ahora, sustituimos \( \alpha \) en la ecuación \( \bar{X} = \alpha \beta \) para despejar \( \beta \):
+Ahora, se sustituye \( \alpha \) en la ecuación \( \bar{X} = \alpha \sigma \) para despejar \( \sigma \):
 
 \[
-\beta = \frac{S^2}{\bar{X}}
+\sigma = \frac{S^2}{\bar{X}}
 \]
 
-Por lo tanto, los estimadores de los parámetros \( \alpha \) y \( \beta \) por el método de los momentos son:
+Por lo tanto, los estimadores de los parámetros \( \alpha \) y \( \sigma \) por el método de los momentos son:
 
 \[
-\hat{\alpha} = \frac{\bar{X}^2}{S^2}, \quad \hat{\beta} = \frac{S^2}{\bar{X}}
+\hat{\alpha} = \frac{\bar{X}^2}{S^2}, \quad \hat{\sigma} = \frac{S^2}{\bar{X}}
 \]
 
 Estos estimadores permiten obtener aproximaciones de los parámetros poblacionales basándose en una muestra aleatoria. En la siguiente sección, se analizará su interpretación y comparación con otros métodos de estimación.
@@ -260,11 +261,11 @@ segundo_momento_muestral <- mean(vida_util^2)
 # Estimación de alpha
 alpha_est <- media_muestral^2 / (segundo_momento_muestral - media_muestral^2)
 
-# Estimación de beta
-beta_est <- media_muestral / alpha_est
+# Estimación de sigma
+sigma_est <- media_muestral / alpha_est
 
 alpha_est
-beta_est
+sigma_est
 </pre>
 
 ```{r, echo=TRUE, fig.height=3.5}
@@ -280,11 +281,11 @@ segundo_momento_muestral <- mean(vida_util^2)
 # Estimación de alpha
 alpha_est <- media_muestral^2 / (segundo_momento_muestral - media_muestral^2)
 
-# Estimación de beta
-beta_est <- media_muestral / alpha_est
+# Estimación de sigma
+sigma_est <- media_muestral / alpha_est
 
 alpha_est
-beta_est
+sigma_est
 
 ```
 
@@ -296,7 +297,7 @@ son:
 
 > alpha_est
 [1] 179.4534
-> beta_est
+> sigma_est
 [1] 7.260936
 
 </pre>
@@ -317,11 +318,11 @@ segundo_momento_muestral <- mean(vida_util^2)
 # Estimación de alpha
 alpha_est <- media_muestral^2 / (segundo_momento_muestral - media_muestral^2)
 
-# Estimación de beta
-beta_est <- media_muestral / alpha_est
+# Estimación de sigma
+sigma_est <- media_muestral / alpha_est
 
 alpha_est
-beta_est
+sigma_est
 
 </pre>
 
@@ -340,11 +341,11 @@ segundo_momento_muestral <- mean(vida_util^2)
 # Estimación de alpha
 alpha_est <- media_muestral^2 / (segundo_momento_muestral - media_muestral^2)
 
-# Estimación de beta
-beta_est <- media_muestral / alpha_est
+# Estimación de sigma
+sigma_est <- media_muestral / alpha_est
 
 alpha_est
-beta_est
+sigma_est
 ```
 
 </p>
@@ -355,7 +356,7 @@ También se obtuvieron los mismos resultados:
 
 > alpha_est
 [1] 179.4534
-> beta_est
+> sigma_est
 [1] 7.260936
 
 </pre>
@@ -396,7 +397,7 @@ muestra <- rexp(10, rate = 1/5000)  # Vida media esperada de 5000 horas
 
 Paso 1: Planteamiento de la función de verosimilitud
 
-Para estimar el parámetro \( \lambda \) de la distribución **Exponencial**, consideramos que los tiempos de vida útil de las bombillas \( X_1, X_2, \dots, X_n \) son variables aleatorias **independientes e idénticamente distribuidas (i.i.d.)** con función de densidad:
+Para estimar el parámetro \( \lambda \) de la distribución **Exponencial**, se considera que los tiempos de vida útil de las bombillas \( X_1, X_2, \dots, X_n \) son variables aleatorias **independientes e idénticamente distribuidas (i.i.d.)** con función de densidad:
 
 \[
 f(x; \lambda) = \lambda e^{-\lambda x}, \quad x > 0
@@ -431,31 +432,31 @@ Utilizando las propiedades del logaritmo:
 \ell(\lambda) = n \log \lambda - \lambda \sum X_i
 \]
 
-Para encontrar el **estimador de máxima verosimilitud (EMV)** de \( \lambda \), derivamos la función log-verosimilitud con respecto a \( \lambda \):
+Para encontrar el **estimador de máxima verosimilitud (EMV)** de \( \lambda \), se deriva la función log-verosimilitud con respecto a \( \lambda \):
 
 \[
 \frac{d\ell(\lambda)}{d\lambda} = \frac{n}{\lambda} - \sum X_i
 \]
 
-Igualamos a **cero** para encontrar el valor óptimo de \( \lambda \):
+Se iguala a **cero** para encontrar el valor óptimo de \( \lambda \):
 
 \[
 \frac{n}{\lambda} - \sum X_i = 0
 \]
 
-Despejamos \( \lambda \):
+Se despeja \( \lambda \):
 
 \[
 \hat{\lambda} = \frac{n}{\sum X_i}
 \]
 
-Este es el **estimador de máxima verosimilitud** de \( \lambda \). En términos de la **media muestral** \( \bar{X} \), podemos reescribirlo como:
+Este es el **estimador de máxima verosimilitud** de \( \lambda \). En términos de la **media muestral** \( \bar{X} \), se puede reescribirlo como:
 
 \[
 \hat{\lambda} = \frac{1}{\bar{X}}
 \]
 
-Este resultado muestra que el estimador de máxima verosimilitud del parámetro \( \lambda \) es el **inverso de la media muestral**. A continuación, implementaremos este estimador en **R** para calcularlo a partir de una muestra simulada.
+Este resultado muestra que el estimador de máxima verosimilitud del parámetro \( \lambda \) es el **recíproco de la media muestral**. A continuación, se implementa este estimador en **R** para calcularlo a partir de una muestra simulada.
 
 <pre>
 # Cargar librería
@@ -505,7 +506,7 @@ Los resultados obtenidos a partir de la muestra generada son:
   \bar{X} = 3184.148
   \]
   
-- **Estimador de \( \lambda \) (EMV) calculado**:  
+- **Estimación de \( \lambda \) (EMV) calculado usando la muestra**:  
   \[
   \hat{\lambda} = \frac{1}{\bar{X}} = 0.0003141
   \]

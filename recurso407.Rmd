@@ -1,5 +1,5 @@
 ---
-title: <span style="color:#686868"> **Simulación No.1. Probabilidad**</span>
+title: <span style="color:#686868"> **Problema No. 1. Normal bivariada**</span>
 author: "Métodos y Simulación Estadística"
 output:
   html_document:
@@ -14,268 +14,7 @@ output:
 
 </br></br>
 <div class="caja-ejemplo">
-<h3>Simulación:</h3>
-<p>
-
-Una fábrica de dispositivos electrónicos realiza pruebas de calidad a cada lote de producción. Se sabe que, en promedio, el **10% de los productos presentan defectos**. Suponiendo que la cantidad de productos defectuosos en un lote sigue una **distribución Binomial**, se realizarán varios análisis de simulación.
-
-- Cada lote contiene **50 productos**.
-
-- Cada producto puede estar **defectuoso** (\( X=1 \)) o **no defectuoso** (\( X=0 \)).
-
-- La probabilidad de que un producto sea defectuoso es **\( p = 0.10 \)**.
-
-- Si se selecciona un lote de **50 productos**, el número de productos defectuosos sigue una distribución binomial: $$ X \sim Bin(50, 0.10) $$
-
-donde \( X \) representa la cantidad de productos defectuosos en un lote de 50 productos.
-
-
-Realiza el siguiente experimento computacional:
-
----
-
-a) **Cálculo de probabilidad teórica**: Calcula la probabilidad de que en un lote de **50 productos** haya exactamente  **5 defectuosos** usando la distribución binomial.
-
-
-La función de probabilidad de la distribución **Binomial** se define como:
-
-   $$ P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k} $$
-
-   donde:
-
-   - \( n = 50 \) es el número total de ensayos (productos en un lote).
-   
-   - \( k = 5 \) es el número de éxitos (productos defectuosos).
-   
-   - \( p = 0.10 \) es la probabilidad de éxito (que un producto sea defectuoso).
-   
-   - \( \binom{n}{k} \) es el coeficiente binomial, que se calcula como:
-   
-   $$ \binom{n}{k} = \frac{n!}{k!(n-k)!} $$
-
-Ahora, reemplazamos los valores en la fórmula. Primero se calcula el coeficiente binomial:
-
-<pre>
-bin_coeff <- choose(50, 5)
-bin_coeff
-</pre>
-
-```{r,eval=FALSE}
-bin_coeff <- choose(50, 5)
-bin_coeff
-```
-
-Posteriormente se calcula la probabilidad
-<pre>
-prob_x_5 <- bin_coeff * (0.10^5) * (0.90^(50 - 5))
-prob_x_5
-</pre>
-
-```{r,eval=FALSE}
-prob_x_5 <- bin_coeff * (0.10^5) * (0.90^(50 - 5))
-prob_x_5
-```
-
-La solución en **R** se puede calcular directamente con la función de la distribución binomial, como se muestra   acontinuación
-<pre>
-size <- 50  # Tamaño del lote
-prob <- 0.10  # Probabilidad de defecto
-x <- 5  # Número de defectuosos
-
-p_x5 <- dbinom(x, size, prob)
-p_x5
-</pre>
-
-```{r,eval=TRUE}
-size <- 50  # Tamaño del lote
-prob <- 0.10  # Probabilidad de defecto
-x <- 5  # Número de defectuosos
-
-p_x5 <- dbinom(x, size, prob)
-p_x5
-```
-
-La probabilidad de que 5 dispositivos sean defectuosos en un lote de 50 dispositivos es 0.1849. En términos prácticos, esto significa que, si se selecciona un gran número de lotes de 50 dispositivos (por ejemplo 1,000 lotes), aproximadamente el 18.5\% de esos lotes contendrán exactamente 5 dispositivos defectuosos.
-
----
-
-b) **Simulación con una muestra grande**: Genera **una muestra aleatoria** de **1,000 lotes**, cada uno con **50 productos**. Calcula la frecuencia relativa para \( X=5 \), esto es \( f_n(X=5) \). 
-Compara e interpreta el resultado frente a la probabilidad teórica.
-
-Usando los códigos siguientes se obtiene la frecuencia relativa:
-
-<pre>
-set.seed(123)
-n <- 1000  # Número de lotes
-sim_data <- rbinom(n, size, prob)
-
-# Frecuencia relativa de X = 5
-f_x5 <- sum(sim_data == x) / n
-f_x5
-</pre>
-
-```{r,eval=TRUE}
-set.seed(123)
-n <- 1000  # Número de lotes
-sim_data <- rbinom(n, size, prob)
-
-# Frecuencia relativa de X = 5
-f_x5 <- sum(sim_data == x) / n
-f_x5
-```
-
-La frecuencia relativa obtenida es 0.173, asegurando reproducibilidad al fijar la semilla con `set.seed(123)`, lo que permite generar la misma muestra cada vez que se ejecuta el código. Se observa que este valor se aproxima a la probabilidad teórica de 0.1849, lo cual es esperable dado que se seleccionó un gran número de lotes (en este caso, 1,000 lotes). A medida que el número de lotes aumenta, la frecuencia relativa tiende a converger hacia la probabilidad teórica, en concordancia con la Ley de los Grandes Números.
-
----
-
-c) **Análisis de la variabilidad entre múltiples muestras**: Genera **100 muestras independientes**, cada una con **1,000 lotes**, y analiza la variabilidad de la estimación de la probabilidad. Construye un gráfico de dispersión que relacione la muestra y su frecuencia relativa, como también el valor de  la probabilidad teórica.
-
-Con los códigos siguientes se obtienen los resultados:
-
-
-<pre>
-muestras <- 100
-freq_rel_x5 <- numeric(muestras)
-
-for (i in 1:muestras) {
-  sim_data <- rbinom(n, size, prob)
-  freq_rel_x5[i] <- sum(sim_data == x) / n
-}
-
-plot(1:muestras, freq_rel_x5, xlab = "Número de muestra", ylab = "Frecuencia relativa de X=5", main = "Variabilidad de la frecuencia relativa", pch = 19)
-abline(h = p_x5, col = "red", lwd = 2)
-</pre>
-
-```{r,eval=TRUE}
-muestras <- 100
-freq_rel_x5 <- numeric(muestras)
-
-for (i in 1:muestras) {
-  sim_data <- rbinom(n, size, prob)
-  freq_rel_x5[i] <- sum(sim_data == x) / n
-}
-
-plot(1:muestras, freq_rel_x5, xlab = "Número de muestra", ylab = "Frecuencia relativa de X=5", main = "Variabilidad de la frecuencia relativa", pch = 19)
-abline(h = p_x5, col = "red", lwd = 2)
-```
-
-La gráfica muestra la variabilidad de la frecuencia relativa de $X=5$ a lo largo de 100 repeticiones del experimento, donde en cada repetición se extrajeron 1,000 lotes de tamaño 50. Los puntos representan la frecuencia relativa obtenida en cada repetición del experimento, mientras que la línea roja indica el valor de la probabilidad teórica de 0.1849.
-
-Se observa que las frecuencias relativas fluctúan en torno al valor teórico de 0.1849, lo que refleja la variabilidad del muestreo. Aunque hay dispersión en las observaciones, la mayoría de los valores se concentran en un rango cercano a la probabilidad teórica. Este comportamiento es consistente con la Ley de los Grandes Números, que establece que conforme aumenta el número de repeticiones (mayor cantidad de lotes), la frecuencia relativa tiende a acercarse a la probabilidad teórica.
-
-En conclusión, esta simulación ilustra cómo la frecuencia relativa se estabiliza cerca del valor esperado teórico, pero puede presentar fluctuaciones debido al muestreo aleatorio en cada repetición del experimento.
-
-
-d) **Impacto del tamaño muestral en la estimación de la probabilidad**: Analiza cómo cambia la frecuencia relativa de \( X=5 \) al aumentar el tamaño de la muestra.
-
-
-<pre>
-tamanos_muestra <- c(5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)
-freq_tamanos <- numeric(length(tamanos_muestra))
-
-for (i in seq_along(tamanos_muestra)) {
-  sim_data <- rbinom(tamanos_muestra[i], size, prob)
-  freq_tamanos[i] <- sum(sim_data == x) / tamanos_muestra[i]
-}
-
-plot(tamanos_muestra, freq_tamanos, type = "b", xlab = "Tamaño de muestra (número de lotes)", ylab = "Frecuencia relativa de X=5", main = "Impacto del tamaño muestral")
-abline(h = p_x5, col = "red", lwd = 2)
-</pre>
-
-
-```{r,eval=TRUE}
-tamanos_muestra <- c(5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)
-freq_tamanos <- numeric(length(tamanos_muestra))
-
-for (i in seq_along(tamanos_muestra)) {
-  sim_data <- rbinom(tamanos_muestra[i], size, prob)
-  freq_tamanos[i] <- sum(sim_data == x) / tamanos_muestra[i]
-}
-
-plot(tamanos_muestra, freq_tamanos, type = "b", xlab = "Tamaño de muestra (número de lotes)", ylab = "Frecuencia relativa de X=5", main = "Impacto del tamaño muestral")
-abline(h = p_x5, col = "red", lwd = 2)
-```
-
-El gráfico muestra el impacto del tamaño muestral en la frecuencia relativa de $X=5$ a medida que aumenta el número de lotes (cada uno con tamaño 50). La línea roja representa la probabilidad teórica de 0.1849, mientras que los puntos y la línea negra conectada indican la frecuencia relativa obtenida en cada tamaño muestral.
-
-
-Para tamaños de muestra pequeños (pocos lotes), la frecuencia relativa presenta una alta variabilidad, con valores que oscilan ampliamente por encima y por debajo de la probabilidad teórica. A medida que el número de lotes aumenta, la frecuencia relativa tiende a estabilizarse alrededor de la probabilidad teórica. Se observa una menor dispersión en las estimaciones conforme aumenta el tamaño muestral.
-
-Este comportamiento es consistente con la Ley de los Grandes Números, que establece que, a medida que se toman más muestras, la frecuencia relativa de un evento tiende a aproximarse a su probabilidad teórica. 
-
-
-e) **Convergencia de la media muestral**: Genera **100 muestras independientes**, cada una con **1,000 lotes**, y analiza la convergencia de la media muestral. 
-
-<pre>
-media_muestras <- numeric(muestras)
-
-for (i in 1:muestras) {
-  sim_data <- rbinom(n, size, prob)
-  media_muestras[i] <- mean(sim_data)
-}
-
-plot(1:muestras, media_muestras, xlab = "Número de muestra", ylab = "Media muestral de defectuosos", main = "Convergencia de la media muestral", pch = 19)
-abline(h = size * prob, col = "red", lwd = 2)
-</pre>
-
-
-```{r,eval=TRUE}
-media_muestras <- numeric(muestras)
-
-for (i in 1:muestras) {
-  sim_data <- rbinom(n, size, prob)
-  media_muestras[i] <- mean(sim_data)
-}
-
-plot(1:muestras, media_muestras, xlab = "Número de muestra", ylab = "Media muestral de defectuosos", main = "Convergencia de la media muestral", pch = 19)
-abline(h = size * prob, col = "red", lwd = 2)
-```
-
-
-El gráfico representa la media muestral del número de dispositivos defectuosos en 100 muestras, donde cada muestra está compuesta por 1,000 lotes de tamaño 50. La línea roja indica la media teórica esperada de 5. 
-
-Cada punto en el gráfico representa la media de defectuosos en una de las 100 muestras de 1,000 lotes. Se observa que las medias muestrales fluctúan en torno a 5, pero con variaciones ligeras entre muestras. La dispersión de los puntos es reducida y las medias tienden a agruparse muy cerca del valor teórico de 5. Este comportamiento es esperado, dado que la Ley de los Grandes Números indica que la media muestral converge a la media teórica conforme aumenta el tamaño de cada muestra.
-
-f) **Impacto del tamaño muestral en la media estimada**: Analiza cómo la media muestral se estabiliza al aumentar el tamaño de la muestra.
-
-
-<pre>
-media_tamanos <- numeric(length(tamanos_muestra))
-
-for (i in seq_along(tamanos_muestra)) {
-  sim_data <- rbinom(tamanos_muestra[i], size, prob)
-  media_tamanos[i] <- mean(sim_data)
-}
-
-plot(tamanos_muestra, media_tamanos, type = "b", xlab = "Tamaño de muestra (número de lotes)", ylab = "Media de defectuosos", main = "Impacto del tamaño muestral en la media")
-abline(h = size * prob, col = "red", lwd = 2)
-</pre>
-
-
-```{r,eval=TRUE}
-media_tamanos <- numeric(length(tamanos_muestra))
-
-for (i in seq_along(tamanos_muestra)) {
-  sim_data <- rbinom(tamanos_muestra[i], size, prob)
-  media_tamanos[i] <- mean(sim_data)
-}
-
-plot(tamanos_muestra, media_tamanos, type = "b", xlab = "Tamaño de muestra (número de lotes)", ylab = "Media de defectuosos", main = "Impacto del tamaño muestral en la media")
-abline(h = size * prob, col = "red", lwd = 2)
-```
-
-El gráfico muestra el impacto del tamaño muestral en la media, donde el eje X representa el número de lotes considerados y el eje Y la media de defectuosos observada en cada tamaño muestral. La línea roja indica la media teórica esperada de 5. 
-
-Para tamaños de muestra pequeños (pocos lotes), la media muestral fluctúa significativamente alrededor del valor teórico. Se observan desviaciones grandes, con valores que pueden estar muy por debajo o por encima de la media esperada. A medida que el número de lotes considerados aumenta, la media muestral se acerca progresivamente al valor esperado de 5 defectuosos por lote. La variabilidad disminuye y las oscilaciones se reducen, indicando una mayor estabilidad en la estimación de la media. Esto confirma el efecto de la Ley de los Grandes Números, que establece que la media muestral converge a la media teórica cuando el tamaño muestral aumenta.
-
-</p>
-</div>
-
-
-
-</br></br>
-<div class="caja-ejemplo">
-<h3>Problema:</h3>
+<h3>Problema 1:</h3>
 <p>
 
 Una fábrica de mecanizado de precisión produce ejes metálicos utilizados en motores eléctricos de maquinaria industrial.  Estos componentes deben cumplir con altos estándares de calidad, ya que cualquier desviación en sus dimensiones o en la calidad de la superficie puede afectar el ensamblaje, el rendimiento y la vida útil del motor.  
@@ -978,111 +717,111 @@ La **esperanza condicional de la rugosidad** dado un diámetro fijo de **50.01 m
 
 Este resultado sugiere que **si el diámetro de los ejes se mantiene muy cerca de 50.01 mm**, la rugosidad tenderá a estar alrededor de **0.92 μm**, lo que puede ayudar a prever la calidad superficial de los ejes fabricados.  
 
-<!-- --- -->
+---
 
-<!-- <br/><br/> -->
-<!-- **Relación con la regresión lineal**   -->
+<br/><br/>
+**Relación con la regresión lineal**  
 
-<!-- Hasta este punto, se ha analizado la relación entre **el diámetro del eje \( X\) y la rugosidad superficial \( Y\)**, evaluando probabilidades conjuntas, condicionales y valores esperados en el contexto del **control de calidad en la fabricación de ejes metálicos**.   -->
+Hasta este punto, se ha analizado la relación entre **el diámetro del eje \( X\) y la rugosidad superficial \( Y\)**, evaluando probabilidades conjuntas, condicionales y valores esperados en el contexto del **control de calidad en la fabricación de ejes metálicos**.  
 
-<!-- Sin embargo, el análisis realizado tiene una conexión importante con la **regresión lineal**, una técnica ampliamente utilizada en estadística para modelar relaciones entre variables.  -->
-
-
-<!-- - **Relación entre la esperanza condicional y la regresión lineal**   -->
-
-<!--   En los cálculos anteriores, se determino que la **esperanza condicional de la rugosidad \( Y \) dado un diámetro         específico \( X = x \)** está dada por la ecuación: -->
-
-<!--   \[ -->
-<!--   E[Y \mid X = x] = \mu_Y + \rho \frac{\sigma_Y}{\sigma_X} (x - \mu_X) -->
-<!--   \] -->
-
-<!--   Esta ecuación es equivalente a la **ecuación de una regresión lineal simple**: -->
-
-<!--   \[ -->
-<!--   E[Y \mid X = x] = \beta_0 + \beta_1 x -->
-<!--   \] -->
-
-<!--   donde los coeficientes de regresión son: -->
-
-<!--   - **Intercepto:** \( \beta_0 = \mu_Y - \rho \frac{\sigma_Y}{\sigma_X} \mu_X \)  -->
-
-<!--   - **Pendiente:** \( \beta_1 = \rho \frac{\sigma_Y}{\sigma_X} \)   -->
+Sin embargo, el análisis realizado tiene una conexión importante con la **regresión lineal**, una técnica ampliamente utilizada en estadística para modelar relaciones entre variables. 
 
 
+- **Relación entre la esperanza condicional y la regresión lineal**  
 
-<!--   **¿Qué significa esto en el contexto del problema?**  -->
+  En los cálculos anteriores, se determino que la **esperanza condicional de la rugosidad \( Y \) dado un diámetro         específico \( X = x \)** está dada por la ecuación:
 
-<!--     - La ecuación muestra que se **puede predecir la rugosidad esperada en función del diámetro**, lo que es clave para    el **control de calidad**.   -->
+  \[
+  E[Y \mid X = x] = \mu_Y + \rho \frac{\sigma_Y}{\sigma_X} (x - \mu_X)
+  \]
 
-<!--     - La pendiente **\( \beta_1 \)** nos indica la dirección y magnitud del efecto del diámetro sobre la rugosidad.   -->
+  Esta ecuación es equivalente a la **ecuación de una regresión lineal simple**:
 
-<!--     - Como **\( \rho < 0 \)** en este problema, esto significa que **un mayor diámetro tiende a estar asociado con una menor rugosidad**.   -->
+  \[
+  E[Y \mid X = x] = \beta_0 + \beta_1 x
+  \]
+
+  donde los coeficientes de regresión son:
+
+  - **Intercepto:** \( \beta_0 = \mu_Y - \rho \frac{\sigma_Y}{\sigma_X} \mu_X \) 
+
+  - **Pendiente:** \( \beta_1 = \rho \frac{\sigma_Y}{\sigma_X} \)  
 
 
 
-<!-- - **Varianza condicional y dispersión en la regresión**  -->
+  **¿Qué significa esto en el contexto del problema?** 
 
-<!--   La **varianza condicional** está dada por: -->
+    - La ecuación muestra que se **puede predecir la rugosidad esperada en función del diámetro**, lo que es clave para    el **control de calidad**.  
 
-<!--   \[ -->
-<!--   Var(Y \mid X = x) = \sigma_Y^2 (1 - \rho^2) -->
-<!--   \] -->
+    - La pendiente **\( \beta_1 \)** nos indica la dirección y magnitud del efecto del diámetro sobre la rugosidad.  
 
-<!--   donde: -->
-
-<!--   - \( \sigma_Y^2 \) es la varianza total de la rugosidad.  -->
-
-<!--   - \( \rho \) es el **coeficiente de correlación** entre \( X \) y \( Y \).  -->
-
-<!--   De esta expresión se puede decir en términos de control de calidad que aunque **se puede predecir un valor     esperado de rugosidad para un diámetro dado**, siempre habrá **cierta variabilidad residual** debida a otros         factores en el proceso de fabricación (herramientas, vibraciones, desgaste, etc.).  -->
-
-<!--     - **¿Cómo afecta el valor de \( \rho  \)?** -->
-
-<!--       - Si \( \rho = 0 \) **(no hay correlación entre diámetro y rugosidad)**: \( Var(Y \mid X = x) = \sigma_Y^2\). En         consecuencia, la varianza condicional **no cambia**, es decir, la dispersión de la rugosidad es la misma                 independientemente del valor de \( X \).   En términos prácticos, esto significa que **el diámetro no aporta         información útil para predecir la rugosidad**, por lo que controlar \( X \) no ayuda a mejorar la calidad del            acabado     superficial.   -->
-
-<!--       - Si \( \rho \) está cerca de \( \pm 1 \) **(correlación fuerte entre diámetro y rugosidad)**:  -->
-<!--   \(Var(Y \mid X = x)\approx 0\). La varianza condicional se reduce significativamente.  **Cuando \( \rho \to \pm1 \), la varianza condicional tiende a     0, lo que significa que la rugosidad es totalmente predecible a partir del diámetro**.  En términos industriales,    esto implica que **controlar \( X \) con precisión garantizaría la rugosidad deseada, eliminando prácticamente la        variabilidad en \( Y \)**.   -->
-
-<!--       - Si \( \rho \) es moderado (\( -1 < \rho < 1 \)):  La varianza condicional es **menor que la varianza total** de     \( Y \), pero sigue habiendo cierta variabilidad.  **A mayor \( |\rho| \), menor será la varianza condicional**, lo     que significa que **la predicción de rugosidad basada en el diámetro es más confiable**.  **A menor \( |\rho| \),       mayor será la variabilidad en la rugosidad, lo que indica que hay otros factores en el proceso de mecanizado que         influyen en \( Y \)**.   -->
-
-<!--       En este problema, el coeficiente de correlación entre el **diámetro del eje \( X \)** y la **rugosidad          superficial \(     Y \)** es **\( \rho = -0.6 \)**.   -->
-
-<!--       La **varianza condicional de \( Y \) dado \( X \)** está dada por: -->
-
-<!--       \[ -->
-<!--       Var(Y \mid X = x) = \sigma_Y^2 (1 - \rho^2) -->
-<!--       \] -->
-
-<!--       Sustituyendo los valores del problema: -->
-
-<!--       \[ -->
-<!--       Var(Y \mid X = x) = (0.2)^2 (1 - (-0.6)^2) -->
-<!--       \] -->
-
-<!--       \[ -->
-<!--        = 0.04 \times (1 - 0.36) = 0.04 \times 0.64 = 0.0256 -->
-<!--       \] -->
-
-<!--        Tomando la raíz cuadrada para obtener la **desviación estándar condicional**: -->
-
-<!--       \[ -->
-<!--        \sigma_{Y \mid X} = \sqrt{0.0256} = 0.16 -->
-<!--       \] -->
-
-<!--       Antes de considerar el diámetro \( X \), la rugosidad tenía una desviación estándar de **\( \sigma_Y = 0.2 \)  μm**.    Después de condicionar en \( X \), la desviación estándar se reduce a **\( \sigma_{Y|X} = 0.16 \) μm**, lo que         significa que **la dispersión en la rugosidad disminuye un 20%** cuando se conoce el diámetro. Por tanto, el  control     del diámetro ayuda a reducir la incertidumbre en la rugosidad.  -->
+    - Como **\( \rho < 0 \)** en este problema, esto significa que **un mayor diámetro tiende a estar asociado con una menor rugosidad**.  
 
 
-<!--         Dado que \( |\rho| \) no es cercano a 1, la reducción de la variabilidad en \( Y \) es moderada**, lo que sugiere que     **el control del diámetro es útil, pero no suficiente por sí solo para garantizar una rugosidad óptima. -->
+
+- **Varianza condicional y dispersión en la regresión** 
+
+  La **varianza condicional** está dada por:
+
+  \[
+  Var(Y \mid X = x) = \sigma_Y^2 (1 - \rho^2)
+  \]
+
+  donde:
+
+  - \( \sigma_Y^2 \) es la varianza total de la rugosidad. 
+
+  - \( \rho \) es el **coeficiente de correlación** entre \( X \) y \( Y \). 
+
+  De esta expresión se puede decir en términos de control de calidad que aunque **se puede predecir un valor     esperado de rugosidad para un diámetro dado**, siempre habrá **cierta variabilidad residual** debida a otros         factores en el proceso de fabricación (herramientas, vibraciones, desgaste, etc.). 
+
+    - **¿Cómo afecta el valor de \( \rho  \)?**
+
+      - Si \( \rho = 0 \) **(no hay correlación entre diámetro y rugosidad)**: \( Var(Y \mid X = x) = \sigma_Y^2\). En         consecuencia, la varianza condicional **no cambia**, es decir, la dispersión de la rugosidad es la misma                 independientemente del valor de \( X \).   En términos prácticos, esto significa que **el diámetro no aporta         información útil para predecir la rugosidad**, por lo que controlar \( X \) no ayuda a mejorar la calidad del            acabado     superficial.  
+
+      - Si \( \rho \) está cerca de \( \pm 1 \) **(correlación fuerte entre diámetro y rugosidad)**: 
+  \(Var(Y \mid X = x)\approx 0\). La varianza condicional se reduce significativamente.  **Cuando \( \rho \to \pm1 \), la varianza condicional tiende a     0, lo que significa que la rugosidad es totalmente predecible a partir del diámetro**.  En términos industriales,    esto implica que **controlar \( X \) con precisión garantizaría la rugosidad deseada, eliminando prácticamente la        variabilidad en \( Y \)**.  
+
+      - Si \( \rho \) es moderado (\( -1 < \rho < 1 \)):  La varianza condicional es **menor que la varianza total** de     \( Y \), pero sigue habiendo cierta variabilidad.  **A mayor \( |\rho| \), menor será la varianza condicional**, lo     que significa que **la predicción de rugosidad basada en el diámetro es más confiable**.  **A menor \( |\rho| \),       mayor será la variabilidad en la rugosidad, lo que indica que hay otros factores en el proceso de mecanizado que         influyen en \( Y \)**.  
+
+      En este problema, el coeficiente de correlación entre el **diámetro del eje \( X \)** y la **rugosidad          superficial \(     Y \)** es **\( \rho = -0.6 \)**.  
+
+      La **varianza condicional de \( Y \) dado \( X \)** está dada por:
+
+      \[
+      Var(Y \mid X = x) = \sigma_Y^2 (1 - \rho^2)
+      \]
+
+      Sustituyendo los valores del problema:
+
+      \[
+      Var(Y \mid X = x) = (0.2)^2 (1 - (-0.6)^2)
+      \]
+
+      \[
+       = 0.04 \times (1 - 0.36) = 0.04 \times 0.64 = 0.0256
+      \]
+
+       Tomando la raíz cuadrada para obtener la **desviación estándar condicional**:
+
+      \[
+       \sigma_{Y \mid X} = \sqrt{0.0256} = 0.16
+      \]
+
+      Antes de considerar el diámetro \( X \), la rugosidad tenía una desviación estándar de **\( \sigma_Y = 0.2 \)  μm**.    Después de condicionar en \( X \), la desviación estándar se reduce a **\( \sigma_{Y|X} = 0.16 \) μm**, lo que         significa que **la dispersión en la rugosidad disminuye un 20%** cuando se conoce el diámetro. Por tanto, el  control     del diámetro ayuda a reducir la incertidumbre en la rugosidad. 
 
 
-<!-- - **Relación entre la probabilidad condicional y la regresión**:  -->
+        Dado que \( |\rho| \) no es cercano a 1, la reducción de la variabilidad en \( Y \) es moderada**, lo que sugiere que     **el control del diámetro es útil, pero no suficiente por sí solo para garantizar una rugosidad óptima.
 
-<!--     - Se ha calculado la **probabilidad condicional**: \( -->
-<!--   P(Y < 1.2 \mid 49.98 \leq X \leq 50.02)\), que mide **qué tan probable es que la rugosidad esté dentro del rango deseado cuando el diámetro está dentro de las especificaciones**.   -->
 
-<!--     - En **regresión lineal**, se usa la ecuación de la recta de regresión para hacer predicciones de $Y$, pero también se tiene     en cuenta la dispersión de los datos alrededor de la recta.  -->
+- **Relación entre la probabilidad condicional y la regresión**: 
 
-<!--     - La probabilidad condicional intuitivamente se puede comparar **con el cálculo de la probabilidad de que los valores predichos de \( Y \),     más su variabilidad residual, estén dentro de un intervalo de aceptación**.  -->
+    - Se ha calculado la **probabilidad condicional**: \(
+  P(Y < 1.2 \mid 49.98 \leq X \leq 50.02)\), que mide **qué tan probable es que la rugosidad esté dentro del rango deseado cuando el diámetro está dentro de las especificaciones**.  
+
+    - En **regresión lineal**, se usa la ecuación de la recta de regresión para hacer predicciones de $Y$, pero también se tiene     en cuenta la dispersión de los datos alrededor de la recta. 
+
+    - La probabilidad condicional intuitivamente se puede comparar **con el cálculo de la probabilidad de que los valores predichos de \( Y \),     más su variabilidad residual, estén dentro de un intervalo de aceptación**. 
 
 </p>
 </div>

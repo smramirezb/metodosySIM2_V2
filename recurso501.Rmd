@@ -54,7 +54,7 @@ Siguiendo la analogía con los procedimientos estadísticos, esta evidencia equi
 
 Otro ejemplo que ilustra el concepto de prueba de hipótesis en un contexto empresarial es el control de calidad en una línea de producción. Supongamos que una fábrica de botellas de agua desea asegurarse de que el 50% de sus tapas sean de color azul y el otro 50% de color rojo, conforme a su diseño de empaque. Sin embargo, surgen dudas sobre si el proceso de fabricación realmente mantiene esta proporción.
 
-Siguiendo la notación utilizada previamente, formulamos la hipótesis nula ($H_0$) que establece que la proporción de tapas azules es $P=1/2$, es decir, el 50% del total. Esta hipótesis implica que, en un número muy grande de botellas producidas, aproximadamente la mitad debería tener tapas azules y la otra mitad rojas.
+Continuandola notación utilizada previamente, formulamos la hipótesis nula \(\left(H_0\right)\) que establece que la proporción de tapas azules es $P=1/2$, es decir, el 50% del total. Esta hipótesis implica que, en un número muy grande de botellas producidas, aproximadamente la mitad debería tener tapas azules y la otra mitad rojas.
 
 Dado que no es viable inspeccionar todas las botellas producidas, se selecciona una muestra aleatoria de 100 botellas para evaluar si la proporción de tapas azules se ajusta a la esperada. Si la hipótesis nula es correcta, se esperaría observar aproximadamente 50 tapas azules en la muestra. Sin embargo, debido a la variabilidad inherente al proceso, no sería inusual encontrar 51 o 52 tapas azules, ya que pequeñas fluctuaciones son esperadas por el azar.
 
@@ -66,12 +66,11 @@ La lógica subyacente en la prueba de hipótesis radica en asumir inicialmente q
 
 De manera general, la prueba de hipótesis busca determinar la probabilidad de obtener el resultado muestral bajo el supuesto de que la hipótesis nula es correcta. Si esta probabilidad es lo suficientemente baja, se considera que la evidencia empírica respalda el rechazo de la hipótesis nula, lo que sugiere que la diferencia observada difícilmente podría explicarse únicamente por fluctuaciones aleatorias en el muestreo.
 
-Si la respuesta a estas preguntas indica que el resultado observado es altamente probable bajo la hipótesis nula ($H_0$), la decisión será no rechazar $H_0$, dado que la evidencia muestral es coherente con lo esperado en ese escenario. En otras palabras, si la diferencia entre la muestra y la proporción poblacional establecida en $H_0$ puede atribuirse razonablemente a la variabilidad aleatoria, no hay fundamentos suficientes para rechazar la hipótesis nula.
+Si la respuesta a estas preguntas indica que el resultado observado es altamente probable bajo la hipótesis nula \(\left(H_0\right)\), la decisión será no rechazar $H_0$, dado que la evidencia muestral es coherente con lo esperado en ese escenario. En otras palabras, si la diferencia entre la muestra y la proporción poblacional establecida en $H_0$ puede atribuirse razonablemente a la variabilidad aleatoria, no hay fundamentos suficientes para rechazar la hipótesis nula.
 
 Por el contrario, si la probabilidad de obtener el resultado muestral bajo  $H_0$ es extremadamente baja, se considerará que la evidencia empírica es inconsistente con dicha hipótesis, lo que conducirá a su rechazo. En este caso, la diferencia observada en la muestra sugiere que la hipótesis nula no refleja adecuadamente la realidad del fenómeno estudiado, lo que indica la necesidad de adoptar una conclusión alternativa.
 
-En el ámbito de la investigación, la formulación de la prueba de hipótesis suele diseñarse de manera que el rechazo de la hipótesis nula 
-($H_0$) implique la obtención de un nuevo hallazgo o evidencia que respalde un cambio significativo en el fenómeno estudiado. Por el contrario, no rechazar $H_0$  indica que los datos no proporcionan suficiente evidencia para afirmar que se ha producido una modificación respecto a la situación de referencia previamente establecida.
+En el ámbito de la investigación, la formulación de la prueba de hipótesis suele diseñarse de manera que el rechazo de la hipótesis nula  \(\left(H_0\right)\) implique la obtención de un nuevo hallazgo o evidencia que respalde un cambio significativo en el fenómeno estudiado. Por el contrario, no rechazar $H_0$  indica que los datos no proporcionan suficiente evidencia para afirmar que se ha producido una modificación respecto a la situación de referencia previamente establecida.
 
 Este enfoque refleja la naturaleza conservadora del método estadístico, en el que la hipótesis nula representa el estado actual del conocimiento o la condición preexistente, y solo se rechaza cuando la evidencia empírica es lo suficientemente sólida como para justificar una conclusión alternativa.
 
@@ -108,7 +107,7 @@ Desde esta perspectiva, el proceso de prueba de hipótesis permite no solo contr
 <h3>Aportes de Fisher Neyman y Pearson </h3>
 
 
-La prueba de hipótesis se basa en la comparación entre los datos observados y la hipótesis que se somete a evaluación. Ronald A. Fisher conceptualizó este enfoque como un mecanismo para cuantificar el grado de incompatibilidad entre un conjunto de datos y la hipótesis nula $H_0$. Su método consiste en calcular la probabilidad de obtener resultados tan extremos como los observados, o incluso más, bajo la suposición de que $H_0$ es verdadera.
+La prueba de hipótesis se basa en la comparación entre los datos observados y la hipótesis que se somete a evaluación. Ronald A. Fisher conceptualizó este enfoque como un mecanismo para cuantificar el grado de incompatibilidad entre un conjunto de datos y la hipótesis nula \(\left(H_0\right)\). Su método consiste en calcular la probabilidad de obtener resultados tan extremos como los observados, o incluso más, bajo la suposición de que \(\left(H_0\right)\) es verdadera.
 
 Si dicha probabilidad es extremadamente baja, se presentan dos posibles interpretaciones: o bien la muestra seleccionada es atípica debido a fluctuaciones aleatorias, o bien la hipótesis nula no es una representación adecuada de la realidad. **Fisher** sostenía que este procedimiento proporciona un criterio objetivo para evaluar teorías y formular inferencias estadísticas, lo que lo convierte en una herramienta fundamental en diversas disciplinas del conocimiento.
 
@@ -117,9 +116,9 @@ Posteriormente a los desarrollos de **Fisher**, **Jerzy Neyman** y **Egon Pearso
 
 El primer cambio conceptual consistió en redefinir la prueba de hipótesis no solo como un método para validar teorías, sino como un procedimiento basado en **reglas de decisión**. Es decir, más que un mecanismo para evaluar la compatibilidad de los datos con una hipótesis, la prueba se concibe como una herramienta que permite tomar decisiones en contextos donde la información disponible es limitada e incompleta.  
 
-El segundo cambio clave fue la introducción de una **hipótesis alternativa** (\( H_1 \)), la cual se contrapone a la **hipótesis nula** (\( H_0 \)). En este esquema, \( H_1 \) representa la afirmación que se busca demostrar con la evidencia empírica. Así, cuando los datos observados proporcionan suficiente evidencia en contra de \( H_0 \), se opta por rechazarla en favor de \( H_1 \), indicando que los resultados son más compatibles con esta última.  
+El segundo cambio clave fue la introducción de una **hipótesis alternativa** \(\left(H_1\right)\), la cual se contrapone a la **hipótesis nula** \(\left(H_0\right)\). En este esquema, \(\left(H_1\right)\) representa la afirmación que se busca demostrar con la evidencia empírica. Así, cuando los datos observados proporcionan suficiente evidencia en contra de \(\left(H_0\right)\), se opta por rechazarla en favor de \(\left(H_1\right)\), indicando que los resultados son más compatibles con esta última.  
 
-A partir de este modelo, que es el que se utiliza en adelante, a continuación se prsenta su aplicación en un contexto educativo.  
+A partir de este modelo, que es el que se utiliza en adelante, a continuación se presenta su aplicación en un contexto educativo.  
 
 
 </br></br>
@@ -136,18 +135,20 @@ Esta afirmación es de naturaleza general, ya que se refiere a toda la població
 
 Para formalizar esta hipótesis dentro del marco de prueba de hipótesis, se establece:  
 
-- **Hipótesis nula (\( H_0 \))**: "El rendimiento promedio de los estudiantes provenientes de hogares con un alto nivel educativo es superior o igual al promedio general."  
-- **Hipótesis alternativa (\( H_1 \))**: "El rendimiento promedio de los estudiantes provenientes de hogares con un alto nivel educativo es inferior al promedio general."  
+- **Hipótesis nula \(\left(H_0\right)\)**: "El rendimiento promedio de los estudiantes provenientes de hogares con un alto nivel educativo es superior o igual al promedio general." 
+
+- **Hipótesis alternativa \(\left(H_1\right)\)**: "El rendimiento promedio de los estudiantes provenientes de hogares con un alto nivel educativo es inferior al promedio general."  
 
 
  Ahora se supone que se conoce que el rendimiento promedio de la población general de estudiantes, medido a través de una prueba estandarizada, es de **60 puntos**. Se puede entonces reformular las hipótesis de la siguiente manera:  
 
 - **Hipótesis nula (\( H_0 \))**: "El rendimiento promedio de los estudiantes provenientes de hogares con un alto nivel educativo es de 60 puntos o mas."  
+
 - **Hipótesis alternativa (\( H_1 \))**: "El rendimiento promedio de los estudiantes provenientes de hogares con un alto nivel educativo es inferior a 60 puntos."  
 
 Para evaluar estas hipótesis, se selecciona una muestra de estudiantes provenientes de hogares con alto nivel educativo y se calcula su rendimiento promedio en la prueba. Supongamos que la media observada en la muestra es de **58 puntos**. 
 
-A la pregunta ¿Es esta diferencia suficiente para rechazar \( H_0 \)?  
+A la pregunta ¿Es esta diferencia suficiente para rechazar \(H_0\)?  
 
 La respuesta no es inmediata. Aunque **58 puntos** es un valor inferior a **60**, la diferencia de solo **2 puntos** podría deberse a fluctuaciones aleatorias en la muestra y no necesariamente a un efecto real del nivel educativo familiar sobre el rendimiento. Para tomar una decisión informada, es necesario evaluar la **probabilidad de obtener un resultado como el observado (o más extremo) bajo la suposición de que \( H_0 \) es verdadera**.
 
@@ -168,7 +169,7 @@ Es decir, la evidencia empírica indicaría que los estudiantes provenientes de 
  
 
 </br></br>
-<h3>El Enfoque Probabilístico en la Toma de Decisiones </h3>
+<h3>El Enfoque probabilístico en la toma de decisiones </h3>
 
 
 En el proceso de prueba de hipótesis, en lugar de evaluar de manera intuitiva si la diferencia observada es significativa, se cuantifica la **probabilidad de obtener un valor muestral tan extremo como el hallado si \( H_0 \) fuera cierta**.  
@@ -179,7 +180,7 @@ La cuestión central es determinar qué tan baja debe ser esta probabilidad para
 
 
 </br></br>
-<h3> Formalización del Enfoque Probabilístico </h3>
+<h3> Formalización del enfoque probabilístico </h3>
 
 
 Para llevar a cabo una prueba de hipótesis, es necesario calcular la **probabilidad de obtener el resultado observado bajo la suposición de que \( H_0 \) es verdadera**. Matemáticamente, esta probabilidad se expresa de la siguiente manera:  

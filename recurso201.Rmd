@@ -127,7 +127,7 @@ Para caracterizar formalmente esta variable, se introduce la **función de distr
 
 
 </br></br>
-<h3>Función de distribución de probabilidad (fdp)</h3>
+<h3>Función de distribución de probabilidad</h3>
 
 Para una variable aleatoria discreta \(X\), su **función de distribución de probabilidad** \(f(x)\) asigna las probabilidades a todos los valores de su rango \(R_{X}\). Esta función debe cumplir con las siguientes propiedades fundamentales:
 
@@ -173,7 +173,7 @@ A continuación se presentan ejemplos representativos de **variables aleatorias 
 
 
 </br></br>
-<h3>Función de distribución acumulada (fda)</h3>
+<h3>Función de distribución acumulada</h3>
 
 Sea \(X\) una **variable aleatoria discreta** con función de probabilidad \(f_{X}(x)\). La **función de distribución acumulada** \(F_{X}(x)\) se define como la probabilidad de que la variable aleatoria tome un valor menor o igual que \(x\):
 
@@ -291,7 +291,7 @@ La  **Figura 2.11** presenta el gráfico de la función de probabilidad de la va
 <pre>
 library(ggplot2)
 
-# Gráfico de la función de distribución acumulada (fda) para la distribución binomial
+# Gráfico de la función de distribución acumulada  para la distribución binomial
 plot.Fx<-ggplot() +
   stat_function(
     fun = function(q) pbinom(q = q, size = 20, prob = 0.7),
@@ -317,7 +317,7 @@ print(plot.Fx)
 ```{r, echo=TRUE, fig.height=3.5}
 library(ggplot2)
 
-# Gráfico de la función de distribución acumulada (fda) para la distribución binomial
+# Gráfico de la función de distribución acumulada  para la distribución binomial
 plot.Fx<-ggplot() +
   stat_function(
     fun = function(q) pbinom(q = q, size = 20, prob = 0.7),
@@ -358,9 +358,9 @@ La  **Figura 2.12** muestra el gráfico de la función de distribución acumulad
 
 Esta representación escalonada refleja la naturaleza discreta de la distribución y permite observar cómo se acumula la probabilidad conforme aumenta el número de personas. Adicionalmente se visualiza el cumplimiento de las propiedades de esta función:
 
-- La fda es una función monótonamente no decreciente, es decir, su valor nunca disminuye al aumentar \(X\). Esto se refleja en el gráfico con una secuencia de escalones ascendentes.
+- Es una función monótonamente no decreciente, es decir, su valor nunca disminuye al aumentar \(X\). Esto se refleja en el gráfico con una secuencia de escalones ascendentes.
 
-- La fda toma valores  en el intervalo [0, 1], ya que expresa probabilidades acumuladas.
+- Toma valores  en el intervalo [0, 1], ya que expresa probabilidades acumuladas.
 
 - La probabilidad acumulada antes del primer valor es cero y la probabilidad acumulada total es uno.
 
@@ -440,15 +440,15 @@ Estos ejemplos ilustran cómo las variables aleatorias continuas pueden tomar cu
 </br></br>
 <h3>Función de densidad de probabilidad</h3>
 
-A continuación, se presentan las propiedades fundamentales de la **función de densidad de probabilidad (fdp)**, la cual describe la distribución de una variable aleatoria continua:
+A continuación, se presentan las propiedades fundamentales de la **función de densidad de probabilidad**, la cual describe la distribución de una variable aleatoria continua:
 
-- **No negatividad**: La fdp siempre toma valores no negativos, es decir:
+- **No negatividad**: La función siempre toma valores no negativos, es decir:
   \[ f(x) \geq 0, \quad \text{para todo } x. \]
 
-- **Área total bajo la curva**: La integral de la fdp en todo el dominio debe ser igual a 1, lo que asegura que la probabilidad total sea completa:
+- **Área total bajo la curva**: La integral de la función en todo el dominio debe ser igual a 1, lo que asegura que la probabilidad total sea completa:
   \[ \int_{-\infty}^{\infty} f(x) \, dx = 1. \]
 
-- **Probabilidad como área bajo la curva**: La probabilidad de que la variable aleatoria \( X \) tome un valor dentro del intervalo \([a, b]\) se obtiene mediante la integral de la fdp en dicho intervalo:
+- **Probabilidad como área bajo la curva**: La probabilidad de que la variable aleatoria \( X \) tome un valor dentro del intervalo \([a, b]\) se obtiene mediante la integral de la función en dicho intervalo:
   \[ P(a \leq X \leq b) = \int_{a}^{b} f(x) \, dx. \]
 
 
@@ -470,7 +470,7 @@ En el caso de variables continuas, la probabilidad de que \( X \) asuma un valor
 </br></br>
 <h3>Función de distribución acumulada</h3>
 
-Sea \(X\) una **variable aleatoria continua** con función de densidad \(f_{X}(x)\). La **función de distribución acumulada** (fda),  \(F_{X}(x)\), se define como la probabilidad de que la variable aleatoria tome un valor menor o igual que \(x\):
+Sea \(X\) una **variable aleatoria continua** con función de densidad \(f_{X}(x)\). La **función de distribución acumulada**,  \(F_{X}(x)\), se define como la probabilidad de que la variable aleatoria tome un valor menor o igual que \(x\):
 
 \(F_{X}(x) = P(X \leq x) = \int_{-\infty}^{x} f_{X}(t) \, dt\)
 
@@ -488,7 +488,7 @@ Sea \(X\) una **variable aleatoria continua** con función de densidad \(f_{X}(x
 <h3>Nota:</h3>
 >
 <p>
-En el caso de variables continuas, La fdp es la derivada de la función de distribución acumulada (fda): \[ f(x) = \frac{d}{dx}F(x) \]
+En el caso de variables continuas, La función de probabilidad es la derivada de la función de distribución acumulada: \[ f(x) = \frac{d}{dx}F(x) \]
 </p>
 >
 </div>  
@@ -502,7 +502,7 @@ En el caso de variables continuas, La fdp es la derivada de la función de distr
 <h3>Ejemplo:</h3>
 <p>
 
-Una compañía que fabrica lavadoras, basándose en datos históricos, ha determinado que el tiempo $X$ (en años) hasta que un electrodoméstico requiera una reparación mayor se modela mediante la siguiente **función de densidad de probabilidad (fdp):**
+Una compañía que fabrica lavadoras, basándose en datos históricos, ha determinado que el tiempo $X$ (en años) hasta que un electrodoméstico requiera una reparación mayor se modela mediante la siguiente **función de densidad de probabilidad:**
 
 $$
   f_{X}(x) = \begin{cases} \\
@@ -580,7 +580,7 @@ knitr::include_graphics("img/fig2_13.png")
 
 
 
-Para garantizar que $f(x)$ es una **función de densidad de probabilidad (fdp)**, se debe comprobar que el área total bajo la curva es igual a 1, para tal efecto se calcula la integral impropia desde 0 hasta infinito, donde no se anula la función:
+Para garantizar que $f(x)$ es una **función de densidad de probabilidad**, se debe comprobar que el área total bajo la curva es igual a 1, para tal efecto se calcula la integral impropia desde 0 hasta infinito, donde no se anula la función:
 $$
 \int_{0}^{+\infty} \frac{1}{4} e^{-x/4} \,dx=\frac{1}{4} \int_{0}^{+\infty} e^{-x/4} \,dx= \int e^{-x/4} \,dx = -4e^{-x/4} + C
 $$
@@ -653,21 +653,23 @@ $$
 F(x) = \left[-e^{-t/4}\right]_{0}^{x} = 1 - e^{-x/4}
 $$
 
-Puede notar en la **Figura 2.14** que se cumplen las propiedades de la fda:
+Puede notar en la **Figura 2.14** que se cumplen las propiedades de la función de distribución acumulada:
 
 - $F(0) = 0$  
-- $\lim_{x \to +\infty} F(x) = 1$  
+
+- $\lim_{x \to +\infty} F(x) = 1$ 
+
 - Es una función monótonamente no decreciente.
 
 <pre>
 library(ggplot2)
 
-# Definición de la fda
+# Definición de la función de distribución acumulada 
 F <- function(x) {
   1 - exp(-x/4)
 }
 
-# Gráfico de fda
+# Gráfico de función de distribución acumulada 
 plot214<-ggplot(data.frame(x = c(0, 20)), aes(x = x)) +
   geom_function(fun = F, colour = "#4271AE", lwd = 1) +
   labs(title = "",
@@ -681,12 +683,12 @@ print(plot214)
 ```{r,echo=TRUE,message=FALSE, warning=FALSE}
 library(ggplot2)
 
-# Definición de la fda
+# Definición de la función de distribución acumulada 
 F <- function(x) {
   1 - exp(-x/4)
 }
 
-# Gráfico de fda
+# Gráfico de función de distribución acumulada 
 plot214<-ggplot(data.frame(x = c(0, 20)), aes(x = x)) +
   geom_function(fun = F, colour = "#4271AE", lwd = 1) +
   labs(title = "",

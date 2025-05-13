@@ -40,7 +40,9 @@ CarreraLuz22_c3 = subset(CarreraLuz22, CarreraLuz22$categoria=="3. Veteranos A")
 En este análisis, se busca evaluar la **eventual diferencia entre dos grupos** y la **correlación entre dos variables**. Para ello, se aplicarán pruebas estadísticas que permitan determinar si:
 
 1. **Dos poblaciones** presentan la **misma media** o la **misma varianza** en una **variable cuantitativa**.
+
 2. **Dos poblaciones** tienen la **misma proporción** en una **categoría de una variable cualitativa**.
+
 3. Existe una **relación significativa lineal** entre **dos variables cuantitativas** mediante el análisis de correlación.
 
 
@@ -54,7 +56,7 @@ En este análisis, se busca evaluar la **eventual diferencia entre dos grupos** 
 
 
 </br></br>
-<h3>Prueba de Diferencia de Medias</h3>
+<h3>Prueba de diferencia de medias</h3>
 
 En numerosos estudios estadísticos, es común preguntarse si dos poblaciones presentan diferencias en una característica cuantitativa de interés.  
 
@@ -77,6 +79,7 @@ Dado que el valor de los parámetros poblacionales es desconocido, se utiliza la
 donde:
 
 - \( \bar{x}_1 \) y \( \bar{x}_2 \) representan las **medias muestrales** de los dos grupos,
+
 - \( \mu_1 \) y \( \mu_2 \) son las **medias poblacionales desconocidas**.
 
 
@@ -93,6 +96,7 @@ H_1: \mu_1 \neq \mu_2
 donde:
 
 - \( H_0 \) establece que **no hay diferencia significativa** entre las medias poblacionales.
+
 - \( H_1 \) plantea que **existe una diferencia significativa** entre los dos grupos.
 
 
@@ -100,7 +104,7 @@ donde:
 ---
 
 </br></br>
-<h3>Prueba de Cociente de Varianzas</h3>
+<h3>Prueba de cociente de varianzas</h3>
 
 En numerosos estudios estadísticos, es fundamental determinar si dos poblaciones presentan **variabilidad similar** en una característica de interés. 
 
@@ -124,6 +128,7 @@ $$
 donde:
 
 - \( S_1^2 \) y \( S_2^2 \) representan las **varianzas muestrales** de los dos grupos,
+
 - \( \sigma_1^2 \) y \( \sigma_2^2 \) son las **varianzas poblacionales desconocidas**.
 
 
@@ -140,6 +145,7 @@ H_1: \sigma_1^2 \neq \sigma_2^2
 donde:
 
 - \( H_0 \) indica que **no hay diferencia significativa** entre las varianzas poblacionales.
+
 - \( H_1 \) plantea que **las varianzas son diferentes**, lo que implica una dispersión desigual en los datos.
 
 
@@ -147,7 +153,7 @@ donde:
 ---
 
 </br></br>
-<h3>Prueba de Resta de Proporciones</h3>
+<h3>Prueba de resta de proporciones</h3>
 
 En diversas investigaciones, surge la necesidad de comparar **proporciones entre dos poblaciones independientes** para determinar si existe una diferencia significativa en la ocurrencia de una característica específica. 
 
@@ -171,6 +177,7 @@ $$
 donde:
 
 - \( \hat{P}_1 \) y \( \hat{P}_2 \) representan las **proporciones muestrales** de los dos grupos,
+
 - \( P_1 \) y \( P_2 \) son las **proporciones poblacionales desconocidas**.
 
 
@@ -188,6 +195,7 @@ H_1: P_1 \neq P_2
 donde:
 
 - \( H_0 \) indica que **no hay diferencia significativa** entre las proporciones poblacionales.
+
 - \( H_1 \) plantea que **existe una diferencia significativa** entre los dos grupos.
 
 
@@ -199,27 +207,30 @@ Esta prueba es útil cuando se busca evaluar **diferencias individuales** en suj
 
 A diferencia de las pruebas para muestras independientes, donde se contrastan datos de **dos poblaciones distintas**, aquí el interés radica en evaluar **cambios individuales dentro del mismo grupo**.  
 
- **Aplicaciones de la Prueba Pareada**  
+ **Aplicaciones de la prueba pareada**  
 
-**1. Comparaciones Antes y Después** 
+**1. Comparaciones antes y después** 
 
 Un uso común de esta prueba ocurre en estudios donde se mide una variable en dos momentos diferentes, como en los diseños experimentales que incluyen:  
 
-- **Evaluaciones pretest y postest** en intervenciones educativas o médicas.  
-- **Efectos de un tratamiento** sobre la presión arterial, el rendimiento académico o la condición física.  
+- **Evaluaciones pretest y postest** en intervenciones educativas o médicas. 
+
+- **Efectos de un tratamiento** sobre la presión arterial, el rendimiento académico o la condición física. 
+
 - **Estudios longitudinales**, donde los mismos sujetos son observados en distintos periodos de tiempo.  
 
 En estos casos, interesa analizar en qué medida cada individuo **ha cambiado** después de la intervención, en lugar de centrarse en las diferencias entre los sujetos.  
 
-**2. Comparaciones de Condiciones Diferentes en el Mismo Individuo**  
+**2. Comparaciones de condiciones diferentes en el mismo individuo**  
 
-- **Evaluaciones de presión arterial** por la mañana y en la tarde en los mismos pacientes.  
+- **Evaluaciones de presión arterial** por la mañana y en la tarde en los mismos pacientes.
+
 - **Comparación del desempeño en tareas cognitivas** en entornos con y sin distracción.  
 
 
 
 </br></br>
-<h3>Prueba de Diferencia</h3>
+<h3>Prueba de diferencia</h3>
 
 Para analizar la diferencia entre las dos mediciones en la misma unidad de observación, se define la variable \( D \), que representa la diferencia entre los valores de cada par:
 
@@ -240,6 +251,7 @@ H_1: \mu_D \neq 0
 Donde:
 
 - \( H_0 \) establece que **no hay cambios significativos** entre las mediciones.
+
 - \( H_1 \) sugiere que **existe una diferencia significativa** entre los dos momentos.
 
 
@@ -252,14 +264,14 @@ cuando se tienen muestras independientes o pareadas.
 **Tabla 2.21** Resumen de pruebas de hipótesis para muestras independientes y pareadas.
 </center> 
 
-| **Parámetro**              | **Supuestos** | **Hipótesis Nula \( H_0 \)** | **Estadístico de Prueba y Distribución** |
+| **Parámetro**              | **Supuestos** | **Hipótesis nula \( H_0 \)** | **Estadístico de prueba y distribución** |
 |:--------------------------:|:--------------------------------------:|:--------------------------------------------------:|:--------------------------------------------------------------:|
-| **Diferencia de Medias \( \mu_1 - \mu_2 \)** | Muestras independientes, poblaciones normales o \( n_1, n_2 \geq 30 \), varianzas \( \sigma_1^2, \sigma_2^2 \) conocidas | \( \mu_1 - \mu_2 = d_0 \) | \( Z = \frac{(\bar{x}_1 - \bar{x}_2) - d_0}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \sim N(0,1) \) |
+| **Diferencia de medias \( \mu_1 - \mu_2 \)** | Muestras independientes, poblaciones normales o \( n_1, n_2 \geq 30 \), varianzas \( \sigma_1^2, \sigma_2^2 \) conocidas | \( \mu_1 - \mu_2 = d_0 \) | \( Z = \frac{(\bar{x}_1 - \bar{x}_2) - d_0}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \sim N(0,1) \) |
 |                              | Muestras independientes, poblaciones normales, varianzas \( \sigma_1^2 = \sigma_2^2 \) desconocidas | \( \mu_1 - \mu_2 = d_0 \) | \( T = \frac{(\bar{x}_1 - \bar{x}_2) - d_0}{S_p \cdot \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t_{(v=n_1+n_2-2)} \), donde \( S_p^2 = \frac{(n_1 - 1) S_1^2 + (n_2 - 1) S_2^2}{n_1 + n_2 - 2} \) |
 |                              | Muestras independientes, poblaciones normales, varianzas \( \sigma_1^2 \neq \sigma_2^2 \) desconocidas | \( \mu_1 - \mu_2 = d_0 \) | \( T = \frac{(\bar{x}_1 - \bar{x}_2) - d_0}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \sim t_{(v)} \), donde \( v = \frac{\left( \frac{s_1^2}{n_1} + \frac{s_2^2}{n_2} \right)^2}{\frac{(s_1^2/n_1)^2}{n_1 - 1} + \frac{(s_2^2/n_2)^2}{n_2 - 1}} \) |
-| **Diferencia de Medias (Muestras Dependientes) \( \mu_D \)** | Muestras pareadas, diferencias distribuidas normalmente | \( \mu_D = d_0 \) | \( T = \frac{\bar{d} - d_0}{\frac{s_d}{\sqrt{n}}} \sim t_{(v=n-1)} \), donde \( \bar{d} = \frac{1}{n} \sum_{i=1}^{n} d_i \) y \( d_i = x_{1i} - x_{2i} \) |
-| **Diferencia de Proporciones \( P_1 - P_2 \)** | \( n_1 p_1 \geq 5 \), \( n_1 (1 - p_1) \geq 5 \), \( n_2 p_2 \geq 5 \), \( n_2 (1 - p_2) \geq 5 \) | \( P_1 - P_2 = p_0 \) | \( Z = \frac{p_1 - p_2}{\sqrt{p(1 - p) \left( \frac{1}{n_1} + \frac{1}{n_2} \right)}} \sim N(0,1) \), donde \( p_1 = \frac{x_1}{n_1} \), \( p_2 = \frac{x_2}{n_2} \), y \( p = \frac{x_1 + x_2}{n_1 + n_2} \) |
-| **Cociente de Varianzas \( \sigma_1^2 / \sigma_2^2 \)** | Muestras independientes, poblaciones normales | \( \sigma_1^2 = \sigma_2^2 \) | \( F = \frac{s_1^2}{s_2^2} \sim F_{(v_1=n_1-1, v_2=n_2-1)} \) |
+| **Diferencia de medias  \( \mu_D \)** | Muestras pareadas, diferencias distribuidas normalmente | \( \mu_D = d_0 \) | \( T = \frac{\bar{d} - d_0}{\frac{s_d}{\sqrt{n}}} \sim t_{(v=n-1)} \), donde \( \bar{d} = \frac{1}{n} \sum_{i=1}^{n} d_i \) y \( d_i = x_{1i} - x_{2i} \) |
+| **Diferencia de proporciones \( P_1 - P_2 \)** | \( n_1 p_1 \geq 5 \), \( n_1 (1 - p_1) \geq 5 \), \( n_2 p_2 \geq 5 \), \( n_2 (1 - p_2) \geq 5 \) | \( P_1 - P_2 = p_0 \) | \( Z = \frac{p_1 - p_2}{\sqrt{p(1 - p) \left( \frac{1}{n_1} + \frac{1}{n_2} \right)}} \sim N(0,1) \), donde \( p_1 = \frac{x_1}{n_1} \), \( p_2 = \frac{x_2}{n_2} \), y \( p = \frac{x_1 + x_2}{n_1 + n_2} \) |
+| **Cociente de varianzas \( \sigma_1^2 / \sigma_2^2 \)** | Muestras independientes, poblaciones normales | \( \sigma_1^2 = \sigma_2^2 \) | \( F = \frac{s_1^2}{s_2^2} \sim F_{(v_1=n_1-1, v_2=n_2-1)} \) |
 
 
 
@@ -269,17 +281,54 @@ cuando se tienen muestras independientes o pareadas.
 <h3>Ejemplo:</h3>
 <p>
 
-El director de un gimnasio busca determinar si la contratación de un **instructor** para su programa de reducción de peso resulta efectiva. Para tomar esta decisión, se selecciona un grupo de **16 personas** que asisten regularmente al gimnasio y se les somete a una prueba piloto con un aspirante al cargo.  
+El director de un gimnasio busca determinar si la contratación de un instructor para su programa de reducción de peso resulta efectiva. Para tomar esta decisión, se selecciona un grupo de **16 personas** que asisten regularmente al gimnasio y se les somete a una prueba piloto con un aspirante al cargo.  
 
 A fin de evaluar la eficacia del programa, se registran los **pesos iniciales (antes del programa)** y los **pesos finales (después de un mes de participación)** en la iniciativa. El objetivo es determinar si existe una reducción significativa en el peso de los participantes, lo que permitiría justificar la contratación del instructor.  
 
 Se establece un **nivel de significancia de \( \alpha = 0.10 \)** para realizar la prueba estadística.  
 
-|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
-|:----|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|     
-|Antes  |104.5|89   |84.5 |106  |90   |96   |79   |90   |85   |76.5 |91.5 |82.5 |100.5| 89.5|121.5| 72  |
-|Después | 98  |85.5 |85   |103.5|88.5 |95   |79.5 |90   |82   |76   |89.5 |81   | 99.5| 86.5|115.5| 70  |
+<!-- |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     | -->
+<!-- |:----|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|      -->
+<!-- |Antes  |104.5|89   |84.5 |106  |90   |96   |79   |90   |85   |76.5 |91.5 |82.5 |100.5| 89.5|121.5| 72  | -->
+<!-- |Después | 98  |85.5 |85   |103.5|88.5 |95   |79.5 |90   |82   |76   |89.5 |81   | 99.5| 86.5|115.5| 70  | -->
 
+
+```{r,echo=FALSE}
+# Cargar librería si se desea formato HTML enriquecido
+library(knitr)
+
+# Primera tabla
+tabla1 <- data.frame(
+  ` `= c("Antes", "Después"),
+  ` `= c(104.5, 98),
+  ` `= c(89, 85.5),
+  ` `= c(84.5, 85),
+  ` `= c(106, 103.5),
+  ` `= c(90, 88.5),
+  ` `= c(96, 95),
+  ` `= c(79, 79.5),
+  ` `= c(90, 90) # para evitar duplicados en nombres de columnas
+)
+colnames(tabla1)<-c("observación","","","","","","","","")
+kable(tabla1)
+
+# Segunda tabla
+tabla2 <- data.frame(
+  ` `= c("Antes", "Después"),
+  ` `= c(85, 82),
+  ` `= c(76.5, 76),
+  ` `= c(91.5, 89.5),
+  ` `= c(82.5, 81),
+  ` `= c(100.5, 99.5),
+  ` `= c(89.5, 86.5),
+  ` `= c(121.5, 115.5),
+  ` `= c(72, 70)
+)
+
+colnames(tabla2)<-c("observación","","","","","","","","")
+kable(tabla2)
+
+```
 
 En este análisis se evalúa la eficacia de un **programa de reducción de peso**, implementado en un gimnasio bajo la supervisión de un aspirante a instructor. Se dispone de los pesos de un grupo de **16 participantes**, registrados **antes y después** de un mes de entrenamiento.  
 
@@ -287,7 +336,7 @@ Dado que cada individuo tiene **dos mediciones** (una antes y otra después del 
 
 En términos estadísticos, el interés radica en evaluar si la **diferencia promedio entre los pesos antes y después es negativa**, lo que indicaría una reducción efectiva del peso tras la implementación del programa.  
   
-Sea \( D_i = \text{Peso Antes}_i - \text{Peso Después}_i \) la diferencia en el peso de cada individuo. Definiendo \( \mu_D \) como la **media poblacional de las diferencias**, se establecen las siguientes hipótesis:
+Sea \( D_i = \text{peso antes}_i - \text{peso después}_i \) la diferencia en el peso de cada individuo. Definiendo \( \mu_D \) como la **media poblacional de las diferencias**, se establecen las siguientes hipótesis:
 
 \[
 H_0: \mu_D \geq 0
@@ -301,6 +350,7 @@ H_1: \mu_D < 0
 donde: 
 
 - **\( H_0 \)** indica que **no hay reducción significativa en el peso** o que, en promedio, el peso no ha disminuido después del programa.  
+
 - **\( H_1 \)** establece que **el peso promedio después del programa es menor**, lo que sugiere que la intervención ha sido efectiva.  
 
 
@@ -316,7 +366,7 @@ data:  dif
 W = 0.32897, p-value = 1.088e-07
 </pre>
 
-El **valor-p** obtenido es **1.088e-07**, lo que, con un nivel de significancia del 1%, permite inferir que las **diferencias no siguen una distribución normal**.
+El \(valor-p\) obtenido es \(1.088 \times 10^{-7}\), lo que, con un nivel de significancia de menos del 1%, permite inferir que las **diferencias no siguen una distribución normal**.
 
 A pesar de que **la normalidad no se cumple**, se realiza la **prueba t para muestras pareadas** bajo el supuesto de normalidad. Los resultados obtenidos son:
 
@@ -334,7 +384,7 @@ mean difference
 </pre>
 
 
-El **valor-p** obtenido es **0.8889**, lo que indica que **no hay suficiente evidencia para rechazar la hipótesis nula** con una significancia del 5%. Sin embargo, dado que no se cumple el supuesto de normalidad, estos resultados no son confiables, por lo que se requiere aplicar una prueba no paramétrica.
+El **\(valor-p\)** obtenido es 0.8889, lo que indica que **no hay suficiente evidencia para rechazar la hipótesis nula** con una significancia del 5%. Sin embargo, dado que no se cumple el supuesto de normalidad, estos resultados no son confiables, por lo que se requiere aplicar una prueba no paramétrica.
 
 Dado que las **diferencias no siguen una distribución normal**, se emplea la **prueba de rangos con signo de Wilcoxon**, la cual no asume normalidad de las diferencias. En la siguiente sección de describe este test.
 
@@ -349,7 +399,7 @@ V = 116, p-value = 0.9993
 alternative hypothesis: true location shift is less than 0
 </pre>
 
-El **valor-p** obtenido es **0.9993**, lo que indica que, con una significancia del 5%, **no hay suficiente evidencia para rechazar la hipótesis nula**, es decir, que no existe diferencia significativa en la mediana de las diferencias entre ambos grupos.
+El **\(valor-p\)** obtenido es 0.9993, lo que indica que, con una significancia del 5%, **no hay suficiente evidencia para rechazar la hipótesis nula**, es decir, que no existe diferencia significativa en la mediana de las diferencias entre ambos grupos.
 
 
 Los códigos implementados son los siguientes:
@@ -439,6 +489,7 @@ La **prueba no paramétrica de Wilcoxon** tampoco proporciona evidencia suficien
 Una empresa implementa un **programa de entrenamiento** con el objetivo de mejorar las habilidades de sus empleados. Para evaluar la efectividad de las metodologías utilizadas, se forman **dos grupos** de empleados, cada uno sometido a un método diferente de capacitación:
 
 - **Grupo 1 (G1)**: Compuesto por **36 empleados**.
+
 - **Grupo 2 (G2)**: Compuesto por **40 empleados**.
 
 El interés principal es determinar si **el método aplicado al segundo grupo (G2) produce mejores resultados que el aplicado al primer grupo (G1)**.  
@@ -456,6 +507,7 @@ H_1: \mu_1 < \mu_2
 donde:
 
 - **\( H_0 \)** establece que **no hay evidencia suficiente para afirmar que el método 2 es mejor que el método 1**.
+
 - **\( H_1 \)** plantea que **el desempeño promedio del Grupo 2 es significativamente mayor que el del Grupo 1**, lo que sugiere que el **Método 2 es superior**.
 
 Los datos de ambos grupos corresponden a los índices de desempeño por cada método y son los siguientes:
@@ -572,19 +624,20 @@ Para evaluar la adecuación del uso de pruebas paramétricas en la comparación 
 
 
 \[
-H_0: \text{Los datos siguen una distribución normal}
+H_0: \text{Los índices  del método siguen una distribución normal}
 \]
 
 \[
-H_1: \text{Los datos no siguen una distribución normal}
+H_1: \text{Los índices  del método  no siguen una distribución normal}
 \]
 
 El nivel de significancia utilizado para la prueba es **\(\alpha = 0.05\)**.  Los valores obtenidos para cada grupo son:
 
-- **Grupo 1**: \( \text{Valor-p} = 0.3018 \)
-- **Grupo 2**: \( \text{Valor-p} = 0.6424 \)
+- **Grupo 1**: \(valor-p = 0.3018 \)
 
-Dado que en ambos casos los valores-p son mayores al nivel de significancia de 0.05, no se encuentra evidencia suficiente para rechazar la hipótesis nula de normalidad de los índices de cada método. En consecuencia, se asume que las muestras provienen de distribuciones normales, lo que permite la aplicación de pruebas paramétricas para la comparación de los métodos de capacitación.
+- **Grupo 2**: \(valor-p= 0.6424 \)
+
+Dado que en ambos casos los \(valores-p\) son mayores al nivel de significancia de 0.05, no se encuentra evidencia suficiente para rechazar la hipótesis nula de normalidad de los índices de cada método. En consecuencia, se asume que las muestras provienen de distribuciones normales, lo que permite la aplicación de pruebas paramétricas para la comparación de los métodos de capacitación.
 
 <pre>
 	Shapiro-Wilk normality test
@@ -643,6 +696,7 @@ H_1: \sigma^{2}_{1} \neq \sigma^{2}_{2}
 donde:
 
 - \( H_0 \) plantea que las **varianzas poblacionales son iguales** y, por lo tanto, se puede aplicar una **prueba t de Student** con varianzas iguales.
+
 - \( H_1 \) indica que las **varianzas son diferentes**, en cuyo caso se recomienda emplear la **prueba t de Welch**, que no asume igualdad de varianzas.
 
 Para contrastar esta hipótesis, se utiliza el **test de Fisher (prueba F para igualdad de varianzas)**, implementado en **R** mediante la función `var.test()`. Los resultados obtenidos son los siguientes:
@@ -661,7 +715,7 @@ sample estimates:
 
 
 
-La **prueba de Fisher (prueba F para igualdad de varianzas)** ha arrojado un **valor-p de 0.4282**. Dado que este valor es **mayor** al nivel de significación predefinido (\(\alpha = 0.05\)), **no se rechaza la hipótesis nula**. Esto sugiere que **no existe evidencia suficiente** en la muestra para concluir que las varianzas poblacionales sean **diferentes**. 
+La **prueba de Fisher (prueba F para igualdad de varianzas)** ha arrojado un \(valor-p\) de 0.4282. Dado que este valor es **mayor** al nivel de significación predefinido (\(\alpha = 0.05\)), **no se rechaza la hipótesis nula**. Esto sugiere que **no existe evidencia suficiente** en la muestra para concluir que las varianzas poblacionales sean **diferentes**. 
 
 Por lo tanto, se asume que las varianzas son **iguales**, lo que permite utilizar la **prueba t de Student para muestras independientes** bajo esta suposición.
 
@@ -678,6 +732,7 @@ H_1: \mu_{1} < \mu_{2}
 donde:
 
 - **\( H_0 \)** establece que la **media del grupo 1 es mayor o igual** a la del grupo 2.
+
 - **\( H_1 \)** plantea que la **media del grupo 1 es menor** que la del grupo 2, lo que indicaría que el segundo método de capacitación genera mejores resultados.
 
 A continuación, se presentan los códigos utilizados para aplicar los test estadísticos en **R**:
@@ -724,7 +779,7 @@ mean of x mean of y
  5.991667  8.210000 
 </pre>
 
-Dado que el valor-p es menor que 2.2e-16, el cual es significativamente inferior al nivel de significancia de 0.05, se rechaza la hipótesis nula. Esto indica que existe evidencia estadísticamente significativa para concluir que la media del grupo 1 es menor que la media del grupo 2. 
+Dado que el \(valor-p\) es menor que \(2.2 \times 10^{-16}\), el cual es significativamente inferior al nivel de significancia de menos del 1%, se rechaza la hipótesis nula. Esto indica que existe evidencia estadísticamente significativa para concluir que la media del grupo 1 es menor que la media del grupo 2. 
 
 </p>
 </div>
@@ -759,6 +814,7 @@ H_1: \mu_2 > \mu_3
 donde:
 
 - **\( H_0 \)**: La media del **Grupo 2** es menor o igual a la del **Grupo 3**.
+
 - **\( H_1 \)**: La media del **Grupo 2** es mayor que la del **Grupo 3**, lo que indicaría que el método aplicado al **Grupo 2** sigue siendo superior.
 
 Para evaluar si existen diferencias en la distribución de los índices de desempeño según el método de capacitación aplicado, se generan gráficos de densidad y boxplots que permiten una visualización comparativa entre ambos grupos:
@@ -891,7 +947,7 @@ print(shapiro_test_grupo3)
 #print(plot2)
 ```
 
-Dado el resultado del test de normalidad de Shapiro-Wilk para los índices de desempeño del método 3: Valor-p = 0.5961. El valor-p (0.5961) es mayor que 0.05, por lo que no se rechaza la hipótesis nula de normalidad. No hay evidencia suficiente para afirmar que los índices de desempeño del método 3 no siguen una distribución normal con una significancia del 5%.
+Dado el resultado del test de normalidad de Shapiro-Wilk para los índices de desempeño del método 3: \(valor-p\) = 0.5961. El \(valor-p=0.5961\) es mayor que 0.05, por lo que no se rechaza la hipótesis nula de normalidad. No hay evidencia suficiente para afirmar que los índices de desempeño del método 3 no siguen una distribución normal con una significancia del 5%.
 
 La **Figura 2.72** presenta la curva de densidad de los índices obtenidos mediante el método 3. Se observa que la distribución de los valores es aproximadamente simétrica, lo que respalda los resultados obtenidos en la prueba de normalidad de Shapiro-Wilk. Esta evidencia sugiere que los índices de desempeño del método 3 pueden ser modelados adecuadamente mediante una distribución normal, permitiendo el uso de pruebas paramétricas para el análisis estadístico.
 
@@ -925,7 +981,7 @@ knitr::include_graphics("img/fig273.png")
 </center>
 <br/><br/>
 
-Antes de comparar las medias, es necesario determinar si las varianzas poblacionales de ambos grupos pueden considerarse iguales o diferentes. Se utiliza el test de Fisher (prueba F para igualdad de varianzas), obteniendo los siguientes resultados: El valor-p obtenido es 1.334e-08, que es menor que el nivel de significancia 0.05. Por lo tanto, se rechaza la hipótesis nula, lo que indica que las varianzas poblacionales de los índices de los métodos 2 y 3 son significativamente diferentes. Dado que las varianzas poblacionales no son iguales, se emplea la prueba t de Welch, que no asume igualdad de varianzas.
+Antes de comparar las medias, es necesario determinar si las varianzas poblacionales de ambos grupos pueden considerarse iguales o diferentes. Se utiliza el test de Fisher (prueba F para igualdad de varianzas), obteniendo los siguientes resultados: El \(valor-p\) obtenido es \(1.33 \times 10^{-8}\), que es menor que el nivel de significancia 0.05. Por lo tanto, se rechaza la hipótesis nula, lo que indica que las varianzas poblacionales de los índices de los métodos 2 y 3 son significativamente diferentes. Dado que las varianzas poblacionales no son iguales, se emplea la prueba t de Welch, que no asume igualdad de varianzas.
 
 <pre>
 # Test de Fisher 
@@ -974,7 +1030,7 @@ ratio of variances
 </pre>
 
 
-Respecto al test de medias, el valor-p obtenido es 3.781e-12, que es menor que 0.05. Por lo tanto, se rechaza la hipótesis nula y se acepta la hipótesis alternativa, lo que indica que la media de los índices del grupo 2 es significativamente mayor que la del grupo 3.
+Respecto al test de medias, el \(valor-p\) obtenido es \(3.781 \times 10^{-12}\), que es menor que 0.01. Por lo tanto, se rechaza la hipótesis nula y se acepta la hipótesis alternativa, lo que indica que la media de los índices del grupo 2 es significativamente mayor que la del grupo 3 con una significancia menor al 1%.
 
 
 
@@ -1008,20 +1064,24 @@ mean of x mean of y
 
 El presente análisis tiene como objetivo evaluar si la **campaña publicitaria** implementada por la empresa logró **incrementar el conocimiento** de los usuarios sobre el beneficio de acumulación de millas de viajero al utilizar la tarjeta de crédito. Para ello, se comparan los resultados de dos encuestas independientes, realizadas antes y después de la campaña.
 
-**Datos de la Encuesta**:
+**Datos de la encuesta**:
 
 Se dispone de la siguiente información:
 
 - **Encuesta 1 (Antes de la campaña):** 
 
   - Tamaño muestral: \( n_1 = 100 \)
+  
   - Usuarios que conocían el beneficio: \( x_1 = 57 \)
+  
   - Proporción muestral: \( \hat{p}_1 = \frac{x_1}{n_1} = 0.57 \)
 
 - **Encuesta 2 (Después de la campaña):** 
 
   - Tamaño muestral: \( n_2 = 150 \)
+  
   - Usuarios que conocían el beneficio: \( x_2 = 87 \)
+  
   - Proporción muestral: \( \hat{p}_2 = \frac{x_2}{n_2} = 0.58 \)
 
 Para determinar si el conocimiento del beneficio aumentó después de la campaña, se plantea la siguiente prueba de hipótesis:
@@ -1037,6 +1097,7 @@ H_1: P_1 < P_2
 donde:
 
 - **\( H_0 \)**: La proporción de usuarios que conocen el beneficio antes de la campaña es mayor o igual a la proporción después de la campaña, lo que sugiere que la campaña no tuvo un impacto positivo.
+
 - **\( H_1 \)**: La proporción de usuarios que conocen el beneficio **es mayor después de la campaña**, lo que indicaría que la estrategia publicitaria fue efectiva.
 
 El siguiente código implementa el **test de proporciones para muestras independientes**, empleando la función `prop.test()` en **R**:
@@ -1056,7 +1117,7 @@ alternative = "less",
 conf.level = 0.95)
 ```
 
-El valor-p obtenido es 0.4896, lo que implica que no se rechaza la hipótesis nula con una significancia del 5%.  Por tanto, no existe evidencia estadística suficiente para concluir que la proporción de usuarios que conocen el beneficio después de la campaña es mayor que la proporción antes de la campaña. Esto sugiere, que con una significancia del 5% que la campaña publicitaria no tuvo un impacto significativo en el conocimiento del beneficio de acumulación de millas.
+El \(valor-p\) obtenido es 0.4896, lo que implica que no se rechaza la hipótesis nula con una significancia del 5%.  Por tanto, no existe evidencia estadística suficiente para concluir que la proporción de usuarios que conocen el beneficio después de la campaña es mayor que la proporción antes de la campaña. Esto sugiere, que con una significancia del 5% que la campaña publicitaria no tuvo un impacto significativo en el conocimiento del beneficio de acumulación de millas.
 
 
 <pre>
@@ -1089,11 +1150,12 @@ Sin embargo, cuando los tamaños de los grupos **son muy desbalanceados**, la po
 
 La **potencia de una prueba estadística** se define formalmente como la **probabilidad de rechazar la hipótesis nula cuando la hipótesis alternativa es verdadera**. Es decir, mide la **capacidad de la prueba** para detectar una diferencia real entre los grupos cuando esta realmente existe.
 
-De manera práctica, si una prueba estadística **tiene baja potencia**, existe un **riesgo elevado** de cometer un **error de Tipo II**, es decir, de **no detectar una diferencia significativa** cuando en realidad la diferencia existe en la población.
+De manera práctica, si una prueba estadística **tiene baja potencia**, existe un **riesgo elevado** de cometer un **error de tipo II**, es decir, de **no detectar una diferencia significativa** cuando en realidad la diferencia existe en la población.
 
 Existen dos factores principales que afectan la **potencia de la prueba**:
 
-1. **El tamaño del efecto (\( d \))**: Cuanto **mayor** es la diferencia entre las medias poblacionales en relación con la variabilidad de los datos, **mayor será la potencia** de la prueba.
+1. **El tamaño del efecto \(\left(d\right)\)**: Cuanto **mayor** es la diferencia entre las medias poblacionales en relación con la variabilidad de los datos, **mayor será la potencia** de la prueba.
+
 2. **El tamaño muestral (\( n \))**: Con **tamaños muestrales más grandes**, la variabilidad en la estimación de las medias disminuye, lo que incrementa la potencia de la prueba.
 
 
@@ -1114,18 +1176,113 @@ Si deseas especificar tamaños de muestra diferentes para cada grupo, debes usar
 
 En el análisis de potencia estadística, se busca modelar la relación entre el **tamaño muestral** y la **potencia de la prueba**, manteniendo **constante el nivel de significancia** (\(\alpha = 0.05\)). Este análisis permite evaluar cómo la cantidad de datos recopilados influye en la capacidad de la prueba para detectar efectos reales en la población.  
 
-A continuación, se presentan los resultados de la simulación para distintos tamaños del **efecto de Cohen (\(d\))**, los cuales se categorizan de la siguiente manera:  
+A continuación, se presentan los resultados de la simulación para distintos tamaños del **efecto de Cohen 
+\(\left(d\right)\)**, los cuales se categorizan de la siguiente manera:  
 
-- **Muy pequeño:** \( d = 0.1 \)  
+- **Muy pequeño:** \( d = 0.1 \) 
+
 - **Pequeño:** \( d = 0.2 \)  
+
 - **Mediano:** \( d = 0.5 \)  
+
 - **Grande:** \( d = 0.8 \)  
 
 Las figuras siguientes ilustran la relación entre el tamaño de la muestra y la potencia estadística para cada uno de estos escenarios, permitiendo visualizar cómo el incremento en el tamaño muestral **aumenta la probabilidad de detectar diferencias significativas** cuando realmente existen.  
 
-La función ´power.t.test´ se usa para calcular la potencia estadística, el tamaño de la muestra, el nivel de significancia o el tamaño del efecto en una prueba t. En este caso, el código está configurado para una prueba t para **dos muestras independientes** (´type="two.sample"´).
+La función `power.t.test`  se usa para calcular la potencia estadística, el tamaño de la muestra, el nivel de significancia o el tamaño del efecto en una prueba t. En este caso, el código está configurado para una prueba t para **dos muestras independientes** (´type="two.sample"´).
 
-```{r,echo=TRUE}
+<pre>
+#Sys.setlocale("LC_ALL", "es_ES.UTF-8")
+
+#Se necesita el paquete pwr 
+if(!require(pwr)){install.packages("pwr");library("pwr")}
+
+# t-TEST
+# Se aplicará power.t.test del paquete stats (ya en R). Calcula la potencia de la prueba t de una o dos muestras, o determina los parámetros para obtener un valor particular de la potencia.
+
+d<-seq(.1,2,by=.1) # 20 tamaños de los efectos
+n<-1:150 # Tamaños muestrales
+
+t.test.power.effect <-as.data.frame(do.call("cbind",lapply(1:length(d),function(i)
+  {
+        sapply(1:length(n),function(j)
+        {
+            power.t.test(n=n[j],d=d[i],sig.level=0.05,power=NULL,type= "two.sample")$power
+        })
+    })))
+
+# Si algunas potencias no se pueden calcular, se ajustan a cero:
+t.test.power.effect[is.na(t.test.power.effect)] <- 0 
+colnames(t.test.power.effect)<-paste (d,"effect size")
+
+#Graficando los resultados
+
+prueba <-t.test.power.effect #data frame de 150 X 20 (para graficar)
+cuts_num<-c(2,5,8) # cortes
+
+#Cortes basados en: Cohen, J. (1988). Statistical Power Analysis for the Behavioral Sciences (2nd ed.). Hillsdale, NJ: Lawrence Erlbaum Associates, Publishers.
+cuts_cat<-c("pequeño","medio","grande") 
+
+columnas <- 1:ncol(prueba) #Lista de los valores 1:20
+color_linea<-rainbow(length(columnas), alpha=.5) # Lista de 20 colores
+grosor_linea=3 # Grosor de la línea
+
+#Para el tipo de línea: (“blank”, “solid”, “dashed”, “dotted”, “dotdash”, “longdash”, “twodash”) ó  (0, 1, 2, 3, 4, 5, 6). 
+#Note que lty = “solid” is idéntica a lty=1.
+
+tipo_linea <- rep(1,length(color_linea))        #Repetir length(color)=20 veces el 1
+tipo_linea[cuts_num]<-c(2:(length(cuts_num)+1)) #Asignar 2, 3, 4 en las posiciones 2, 5, 8 de tipo_linea
+
+#Resaltar posiciones importantes
+cuts_num<-c(2,5,8) # Cortes
+
+#Cortes basados en: Cohen, J. (1988). Statistical Power Analysis for the Behavioral Sciences (2nd ed.). Hillsdale, NJ: Lawrence Erlbaum Associates, Publishers.
+cuts_cat<-c("pequeño","medio","grande") 
+color_linea[cuts_num]<-c("black")
+
+efecto <- d # Listado de los 20 valores de 20
+efecto[cuts_num] <- cuts_cat  #Reemplazar en "efecto" las posiciones cuts_num (2, 5, 8) por las categorías de cuts_cat
+
+par(fig=c(0,.8,0,1),new=TRUE)
+
+#Gráfica
+plot(1, type="n", #no produce puntos ni líneas
+     frame.plot=FALSE, 
+     xlab="Tamaño muestral", ylab="Potencia", 
+     xlim=c(1,150),  ylim=c(0,1), 
+     main="t-Test", axes = FALSE)
+
+#Editando los ejes, grid, etc.
+abline(v=seq(0,150,by=10), col = "lightgray", lty = "dotted") # Grid vertical
+abline(h=seq(0,1,by=.05), col = "lightgray", lty = "dotted")  # Grid horizontal
+axis(1,seq(0,150,by=10)) # Números en eje X
+axis(2,seq(0,1,by=.05))  # Números en eje Y
+
+#Plot de las lineas 
+#columnas <- 1:ncol(prueba) # lista de los valores 1:20
+for(i in 1:length(columnas)) #length(columnas)=20
+  {
+  lines(1:150,
+        #prueba (data frame de 150 X 20, para graficar)
+        #columna <- 1:ncol(prueba) listado de valores 1:20 
+        prueba[,columnas[i]], #filtrar "prueba" para valor de columna
+        col=color_linea[i],   #color_linea[cuts_num]<-c("black")
+        lwd=grosor_linea,     #grosor de cada linea
+        lty=tipo_linea[i]     #tipo_linea[cuts_num]<-c(2:(length(cuts_num)+1))
+       )
+  }
+
+#Leyendas
+par(fig=c(.65,1,0,1),new=TRUE)
+plot.new()
+legend("top",legend=efecto, col=color_linea, lwd=3, lty=tipo_linea, title="Tamaño efecto", 
+        bty="n" #Opciones: o (complete box), n (no box), 7, L, C, U
+      )
+</pre>
+
+
+
+```{r,echo=TRUE,include=FALSE}
 #Sys.setlocale("LC_ALL", "es_ES.UTF-8")
 
 #Se necesita el paquete pwr 
@@ -1226,8 +1383,36 @@ knitr::include_graphics("img/fig274.png")
 <br/><br/>
 
 
-```{r,echo=TRUE}
-#plot using ggplot2
+<pre>
+library(ggplot2)
+library(reshape)
+library(plotly)
+
+obj <- cbind(size=1:150, prueba) #Agregando el tamaño al data frame "prueba" 
+
+# Usar melt y unir con "effect" para el mapeo
+#El data frame "obj" se reconstruye con respecto al parámetro id="size". 
+melted <- cbind(reshape::melt(obj, id="size"), effect=rep(d,each=150)) 
+
+p<- ggplot(data=melted, aes(x=size, y=value, color=as.factor(effect))) + 
+        geom_line(size=0.7,alpha=.5) +
+        ylab("Potencia") + 
+        xlab("Tamaño muestral") + 
+        ggtitle("t-Test")+
+        theme_bw() +
+        #guides(fill=guide_legend(title="Efecto"))
+        #scale_fill_discrete(name = "Efecto")
+        #labs(fill='Efecto') 
+        #scale_fill_manual("Efecto"#,values=c("orange","red")
+        scale_color_discrete(name = "Tamaño del efecto")    
+                             
+# Interactive plot
+plotly::ggplotly(p)
+</pre>
+
+
+```{r,echo=TRUE,include=FALSE}
+
 
 library(ggplot2)
 library(reshape)
@@ -1275,12 +1460,13 @@ knitr::include_graphics("img/fig275.png")
 En el **Ejemplo 7.2** del recurso [RPubs](https://rpubs.com/hllinas/MgEst_Hipotesis_teoriaR), se presentan **simulaciones** que ilustran cómo el **tamaño muestral** y el **tamaño del efecto** influyen en la **potencia estadística** de la **prueba t de Student**. Para este análisis, se emplea la función `pwr.t2n.test` en **R**, lo que permite cuantificar la potencia bajo distintos escenarios experimentales.
 
 
-Para evaluar la influencia del **tamaño del efecto (\(d\))** en la **potencia estadística**, se modela su relación manteniendo constante el **nivel de significancia** (\(\alpha = 0.05\)). Este análisis permite comprender cómo la magnitud del efecto influye en la capacidad de una prueba estadística para detectar diferencias significativas entre grupos.
+Para evaluar la influencia del **tamaño del efecto \(\left(d\right)\)** en la **potencia estadística**, se modela su relación manteniendo constante el **nivel de significancia** (\(\alpha = 0.05\)). Este análisis permite comprender cómo la magnitud del efecto influye en la capacidad de una prueba estadística para detectar diferencias significativas entre grupos.
 
 
 El análisis se lleva a cabo utilizando distintos tamaños de muestra, representados por:  
 
 - **\(n_1\)**: Número de sujetos en el **Grupo 1**  
+
 - **\(n_2\)**: Número de sujetos en el **Grupo 2**  
 
 Dado un tamaño muestral fijo, se exploran distintos valores de **\(d\)** para observar su impacto en la potencia de la prueba. A través de esta evaluación, se pueden identificar los escenarios en los que el tamaño del efecto permite alcanzar una potencia adecuada para el estudio.  
